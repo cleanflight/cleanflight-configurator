@@ -78,13 +78,10 @@ input[type="number"]::-webkit-inner-spin-button {
     }
     #port-picker a {
         float: left;
-
         display: block;
-
         width: 80px;
         height: 18px;
-        border: 1px solid silver;
-
+        border: 1px solid #fff;
         line-height: 18px;
         text-align: center;
     }
@@ -150,30 +147,24 @@ input[type="number"]::-webkit-inner-spin-button {
 
 #sensor-status {
     float: right;
-
     margin-right: 10px;
-
     height: 22px;
     line-height: 22px;
 }
     #sensor-status li {
         float: left;
-
         padding: 0 12px 0 12px;
-
         height: 18px;
         line-height: 18px;
-
         color: white;
         text-align: center;
-
-        border: 1px solid #c0c0c0;
         border-right: 0;
-
+        border-radius: 5px;
+        margin: 0 1px;
         background-color: #901515;
     }
     #sensor-status li:last-child {
-        border-right: 1px solid #c0c0c0;
+        
     }
     #sensor-status .on {
         background-color: #076b0c;

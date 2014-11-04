@@ -7,7 +7,7 @@
     }
     .tab-cli .window {
         margin-top: 10px;
-        height: calc(100% - 80px); /* - (p, textarea) */
+        height: calc(100% - 70px); /* - (p, textarea) */
 
         padding: 5px;
 
@@ -17,7 +17,6 @@
         font-family: monospace;
         color: white;
 
-        border: 1px solid silver;
         background-color: black;
 
         -webkit-user-select: text;
@@ -27,14 +26,14 @@
 
         width: 100%;
 
-        margin-top: 8px;
+        border: none;
 
         height: 22px;
         line-height: 20px;
 
         padding-left: 5px;
 
-        border: 1px solid silver;
-
+        background: #000;
+        color: #fff;
         resize: none;
     }

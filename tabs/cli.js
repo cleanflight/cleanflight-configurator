@@ -70,11 +70,30 @@ TABS.cli.initialize = function (callback) {
         if (callback) callback();
 
         // give input element user focus
-        $('.tab-cli').click(function (){
-            textarea.focus();            
+        textarea.focus();
+        
+        // $('.tab-cli').click(function (){
+        //     textarea.focus();            
+        // });
+
+        $(function() {
+            var counter = 0;
+            var isDragging = false;
+            $('.tab-cli').mousedown(function() {
+                $(window).mousemove(function() {
+                    isDragging = true;
+                    $(window).unbind('mousemove');
+                });
+            }).mouseup(function() {
+                var wasDragging = isDragging;
+                isDragging = false;
+                $(window).unbind('mousemove');
+                if (!wasDragging) {
+                    textarea.focus();         
+                }
+            });
         });
 
-        textarea.focus();
     });
 };
 

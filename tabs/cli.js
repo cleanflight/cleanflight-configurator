@@ -56,11 +56,15 @@ TABS.cli.initialize = function (callback) {
                 textarea.val(self.history.next());
             }
         });
+        
+        if (callback) callback();
 
         // give input element user focus
-        textarea.focus();
+        $('.tab-cli').click(function (){
+            $('.tab-cli textarea').focus();            
+        });
 
-        if (callback) callback();
+        textarea.focus();
     });
 };
 

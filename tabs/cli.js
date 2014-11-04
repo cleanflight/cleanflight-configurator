@@ -56,12 +56,22 @@ TABS.cli.initialize = function (callback) {
                 textarea.val(self.history.next());
             }
         });
-        
+
+        $('.cliBtn').click(function() {
+            textarea.val($(this).html());
+            self.triggerReturn();
+        });
+
+        $('.clrBtn').click(function() {
+            $('.window .wrapper').html('');
+            self.triggerReturn();
+        });
+
         if (callback) callback();
 
         // give input element user focus
         $('.tab-cli').click(function (){
-            $('.tab-cli textarea').focus();            
+            textarea.focus();            
         });
 
         textarea.focus();
@@ -73,6 +83,11 @@ TABS.cli.history = {
     index:  0
 };
 
+TABS.cli.triggerReturn = function() {
+    var tempE = $.Event('keypress');
+    tempE.which = 13;
+    $('.tab-cli textarea').trigger(tempE);
+};
 TABS.cli.history.add = function (str) {
     this.history.push(str);
     this.index = this.history.length;

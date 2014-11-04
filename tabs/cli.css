@@ -6,8 +6,7 @@
         border: 1px dotted silver;
     }
     .tab-cli .window {
-        margin-top: 10px;
-        height: calc(100% - 70px); /* - (p, textarea) */
+        height: calc(100% - 100px); /* - (p, textarea) */
 
         padding: 5px;
 

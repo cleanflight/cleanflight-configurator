@@ -57,10 +57,43 @@ TABS.cli.initialize = function (callback) {
             }
         });
 
-        // give input element user focus
-        textarea.focus();
+        $('.cliBtn').click(function() {
+            textarea.val($(this).html());
+            self.triggerReturn();
+        });
+
+        $('.clrBtn').click(function() {
+            $('.window .wrapper').html('');
+            self.triggerReturn();
+        });
 
         if (callback) callback();
+
+        // give input element user focus
+        textarea.focus();
+        
+        // $('.tab-cli').click(function (){
+        //     textarea.focus();            
+        // });
+
+        $(function() {
+            var counter = 0;
+            var isDragging = false;
+            $('.tab-cli').mousedown(function() {
+                $(window).mousemove(function() {
+                    isDragging = true;
+                    $(window).unbind('mousemove');
+                });
+            }).mouseup(function() {
+                var wasDragging = isDragging;
+                isDragging = false;
+                $(window).unbind('mousemove');
+                if (!wasDragging) {
+                    textarea.focus();         
+                }
+            });
+        });
+
     });
 };
 
@@ -69,6 +102,11 @@ TABS.cli.history = {
     index:  0
 };
 
+TABS.cli.triggerReturn = function() {
+    var tempE = $.Event('keypress');
+    tempE.which = 13;
+    $('.tab-cli textarea').trigger(tempE);
+};
 TABS.cli.history.add = function (str) {
     this.history.push(str);
     this.index = this.history.length;

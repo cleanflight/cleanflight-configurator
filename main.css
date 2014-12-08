@@ -21,6 +21,7 @@ a {
 a:hover {
     text-decoration: none;
 }
+
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
 
@@ -43,6 +44,23 @@ input[type="number"]::-webkit-inner-spin-button {
 .right {
     float: right;
 }
+
+.stdButton {
+    text-align: center;    
+    font-weight: bold;
+    line-height: 27px;
+    height: 27px;
+    border: solid 1px silver;
+    background: #ccc;
+    display: inline-block;
+    padding: 0 10px;
+    margin: 5px 5px 5px 0;
+}
+
+.stdButton:hover {
+    background: #dedcdc;
+}
+
 #main-wrapper {
     margin: 10px auto 0 auto;
     padding: 0 10px 0 10px;
@@ -78,13 +96,10 @@ input[type="number"]::-webkit-inner-spin-button {
     }
     #port-picker a {
         float: left;
-
         display: block;
-
         width: 80px;
         height: 18px;
-        border: 1px solid silver;
-
+        border: 1px solid #fff;
         line-height: 18px;
         text-align: center;
     }
@@ -150,30 +165,24 @@ input[type="number"]::-webkit-inner-spin-button {
 
 #sensor-status {
     float: right;
-
     margin-right: 10px;
-
     height: 22px;
     line-height: 22px;
 }
     #sensor-status li {
         float: left;
-
         padding: 0 12px 0 12px;
-
         height: 18px;
         line-height: 18px;
-
         color: white;
         text-align: center;
-
-        border: 1px solid #c0c0c0;
         border-right: 0;
-
+        border-radius: 5px;
+        margin: 0 1px;
         background-color: #901515;
     }
     #sensor-status li:last-child {
-        border-right: 1px solid #c0c0c0;
+        
     }
     #sensor-status .on {
         background-color: #076b0c;
@@ -216,6 +225,11 @@ input[type="number"]::-webkit-inner-spin-button {
     border: 1px solid silver;
     background-color: white;
 }
+    #options-window .content {
+        position:absolute;
+        bottom: 0;
+    }
+
     #options-window input {
         float: left;
 

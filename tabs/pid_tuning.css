@@ -13,14 +13,13 @@
     .tab-pid_tuning table,
     .tab-pid_tuning table th,
     .tab-pid_tuning table td {
-        padding: 4px;
-        border: 1px solid #8b8b8b;
+        padding: 10px;
     }
     .tab-pid_tuning table tr td:first-child {
         text-align: center;
     }
     .tab-pid_tuning table td {
-        padding: 1px;
+        padding: 3px 2px;
     }
     .tab-pid_tuning table tr:nth-child(odd) {
         background-color: #ececec;
@@ -34,7 +33,27 @@
 
         padding: 0 5px 0 5px;
         text-align: right;
+
+        background: none;
+        border: solid 1px transparent;
     }
+
+    .tab-pid_tuning table input:hover {
+        background: #F8DFDF;
+    }    
+    .tab-pid_tuning table input:focus {
+        border: dotted 1px silver;
+        background: #fff;
+    }
+
+
+    .tab-pid_tuning .proportional,
+    .tab-pid_tuning .integral,
+    .tab-pid_tuning .derivative, 
+    .tab-pid_tuning .rate-tpa th {
+        text-align: right;
+    }
+
     .tab-pid_tuning .profile {
         float: left;
 

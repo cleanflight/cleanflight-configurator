@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Copyright 2014.  All rights reserved.  Used with permission for Baseflight Configurator -->
+<!-- Public domain (CC-BY-SA v2.0 if you or your laws insist), Originator: Kjell Kernen -->
 
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -52,14 +52,7 @@
 
 
 
-<rect
-   style="fill:#808082;fill-opacity:1;stroke:none"
-   id="rect3957"
-   width="121.64046"
-   height="87.397141"
-   x="-9.1996994"
-   y="11.181313"
-   transform="translate(0.69,6.4699984)" /><path
+<path
    inkscape:connector-curvature="0"
    style="fill:#0000ff;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:1.00000003;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
    d="m 70.504819,6.5596077 -9.035434,7.0866153 c 3.047244,2.30315 6.059056,4.606299 9.106299,6.909449 0,0 -0.03543,-2.76378 -0.07087,-4.181102 3.68504,0.566929 4.748032,0.566929 7.830709,3.401574 1.133859,-1.559055 2.267718,-3.153543 3.437009,-4.748031 -4.429135,-3.826772 -5.527559,-4.03937 -11.338583,-4.5 0.03543,-1.3110248 0.07087,-3.9685052 0.07087,-3.9685052 z"

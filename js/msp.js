@@ -2,23 +2,35 @@
 
 // MSP_codes needs to be re-integrated inside MSP object
 var MSP_codes = {
-    MSP_API_VERSION:            1,
-    MSP_FC_VARIANT:             2,
-    MSP_FC_VERSION:             3,
-    MSP_BOARD_INFO:             4,
-    MSP_BUILD_INFO:             5,
-    
+    MSP_API_VERSION:              1,
+    MSP_FC_VARIANT:               2,
+    MSP_FC_VERSION:               3,
+    MSP_BOARD_INFO:               4,
+    MSP_BUILD_INFO:               5,
+
     // MSP commands for Cleanflight original features
-    MSP_CHANNEL_FORWARDING:     32,
-    MSP_SET_CHANNEL_FORWARDING: 33,
-    MSP_MODE_RANGES:            34,
-    MSP_SET_MODE_RANGE:         35,
-    MSP_LED_STRIP_CONFIG:       48,
-    MSP_SET_LED_STRIP_CONFIG:   49,
-    MSP_ADJUSTMENT_RANGES:      52,
-    MSP_SET_ADJUSTMENT_RANGE:   53,
-    MSP_CF_SERIAL_CONFIG:       54,
-    MSP_SET_CF_SERIAL_CONFIG:   55,
+    MSP_CHANNEL_FORWARDING:       32,
+    MSP_SET_CHANNEL_FORWARDING:   33,
+    MSP_MODE_RANGES:              34,
+    MSP_SET_MODE_RANGE:           35,
+    MSP_FEATURE:                  36,
+    MSP_SET_FEATURE:              37,
+    MSP_BOARD_ALIGNMENT:          38,
+    MSP_SET_BOARD_ALIGNMENT:      39,
+    MSP_CURRENT_METER_CONFIG:     40,
+    MSP_SET_CURRENT_METER_CONFIG: 41,
+    MSP_MIXER:                    42,
+    MSP_SET_MIXER:                43,
+    MSP_RX_CONFIG:                44,
+    MSP_SET_RX_CONFIG:            45,
+    MSP_LED_STRIP_CONFIG:         48,
+    MSP_SET_LED_STRIP_CONFIG:     49,
+    MSP_ADJUSTMENT_RANGES:        52,
+    MSP_SET_ADJUSTMENT_RANGE:     53,
+    MSP_CF_SERIAL_CONFIG:         54,
+    MSP_SET_CF_SERIAL_CONFIG:     55,
+    MSP_VOLTAGE_METER_CONFIG:     56,
+    MSP_SET_VOLTAGE_METER_CONFIG: 57,
 
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -667,7 +679,67 @@ var MSP = {
             case MSP_codes.MSP_SET_ADJUSTMENT_RANGE:
                 console.log('Adjustment range saved');
                 break;
-                
+
+            case MSP_codes.MSP_MIXER:
+                BF_CONFIG.mixerConfiguration = data.getUint8(0);
+                break;
+
+            case MSP_codes.MSP_SET_MIXER:
+                console.log('Mixer saved');
+                break;
+
+            case MSP_codes.MSP_BOARD_ALIGNMENT:
+                BF_CONFIG.board_align_roll = data.getInt16(0, 1);
+                BF_CONFIG.board_align_pitch = data.getInt16(2, 1);
+                BF_CONFIG.board_align_yaw = data.getInt16(4, 1);
+                break;
+
+            case MSP_codes.MSP_SET_BOARD_ALIGNMENT:
+                console.log('Board alignment saved');
+                break;
+
+            case MSP_codes.MSP_RX_CONFIG:
+                BF_CONFIG.serialrx_type = data.getUint8(0, 1);
+                MISC.maxcommand = data.getUint16(1, 1);
+                MISC.midrc = data.getUint16(3, 1);
+                MISC.mincommand = data.getUint16(5, 1);
+                BF_CONFIG.spektrum_sat_bind = data.getUint8(7, 1);
+                // todo: build gui for spektrum_sat_bind
+                break;
+
+            case MSP_codes.MSP_SET_RX_CONFIG:
+                console.log('RX config saved');
+                break;
+
+            case MSP_codes.MSP_VOLTAGE_METER_CONFIG:
+                MISC.vbatscale = data.getUint8(0, 1); // 10-200
+                MISC.vbatmincellvoltage = data.getUint8(1, 1) / 10; // 10-50
+                MISC.vbatmaxcellvoltage = data.getUint8(2, 1) / 10; // 10-50
+                MISC.vbatwarningcellvoltage = data.getUint8(3, 1) / 10; // 10-50
+                break;
+
+            case MSP_codes.MSP_SET_VOLTAGE_METER_CONFIG:
+                console.log('Voltage meter saved');
+                break;
+
+            case MSP_codes.MSP_CURRENT_METER_CONFIG:
+                BF_CONFIG.currentscale = data.getInt16(0, 1);
+                BF_CONFIG.currentoffset = data.getUint16(2, 1);
+                BF_CONFIG.currentmeterprovider = data.getUint8(4, 1);
+                BF_CONFIG.batterycapacity = data.getUint16(5, 1);
+                break;
+
+            case MSP_codes.MSP_SET_CURRENT_METER_CONFIG:
+                console.log('Current meter saved');
+                break;
+
+            case MSP_codes.MSP_FEATURE:
+                BF_CONFIG.features = data.getUint32(0, 1);
+                break;
+
+            case MSP_codes.MSP_SET_FEATURE:
+                console.log('Features saved');
+                break;
 
             default:
                 console.log('Unknown code detected: ' + code);
@@ -925,7 +997,55 @@ MSP.crunch = function (code) {
             buffer.push(specificByte(SERIAL_CONFIG.gpsPassthroughBaudRate, 2));
             buffer.push(specificByte(SERIAL_CONFIG.gpsPassthroughBaudRate, 3));
             break;
-            
+
+        case MSP_codes.MSP_SET_MIXER:
+            buffer.push(BF_CONFIG.mixerConfiguration);
+            break;
+
+        case MSP_codes.MSP_SET_BOARD_ALIGNMENT:
+            buffer.push(specificByte(BF_CONFIG.board_align_roll, 0));
+            buffer.push(specificByte(BF_CONFIG.board_align_roll, 1));
+            buffer.push(specificByte(BF_CONFIG.board_align_pitch, 0));
+            buffer.push(specificByte(BF_CONFIG.board_align_pitch, 1));
+            buffer.push(specificByte(BF_CONFIG.board_align_yaw, 0));
+            buffer.push(specificByte(BF_CONFIG.board_align_yaw, 1));
+            break;
+
+        case MSP_codes.MSP_SET_RX_CONFIG:
+            buffer.push(BF_CONFIG.serialrx_type);
+            buffer.push(lowByte(MISC.maxcommand));
+            buffer.push(highByte(MISC.maxcommand));
+            buffer.push(lowByte(MISC.midrc));
+            buffer.push(highByte(MISC.midrc));
+            buffer.push(lowByte(MISC.mincommand));
+            buffer.push(highByte(MISC.mincommand));
+            buffer.push(BF_CONFIG.spektrum_sat_bind);
+            break;
+
+        case MSP_codes.MSP_SET_VOLTAGE_METER_CONFIG:
+            buffer.push(MISC.vbatscale);
+            buffer.push(MISC.vbatmincellvoltage * 10);
+            buffer.push(MISC.vbatmaxcellvoltage * 10);
+            buffer.push(MISC.vbatwarningcellvoltage * 10);
+            break;
+
+        case MSP_codes.MSP_SET_CURRENT_METER_CONFIG:
+            buffer.push(lowByte(BF_CONFIG.currentscale));
+            buffer.push(highByte(BF_CONFIG.currentscale));
+            buffer.push(lowByte(BF_CONFIG.currentoffset));
+            buffer.push(highByte(BF_CONFIG.currentoffset));
+            buffer.push(BF_CONFIG.currentmeterprovider);
+            buffer.push(lowByte(BF_CONFIG.batterycapacity))
+            buffer.push(highByte(BF_CONFIG.batterycapacity))
+            break;
+
+        case MSP_codes.MSP_SET_FEATURE:
+            buffer.push(specificByte(BF_CONFIG.features, 0));
+            buffer.push(specificByte(BF_CONFIG.features, 1));
+            buffer.push(specificByte(BF_CONFIG.features, 2));
+            buffer.push(specificByte(BF_CONFIG.features, 3));
+            break;
+
         default:
             return false;
     }

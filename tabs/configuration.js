@@ -10,8 +10,32 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         googleAnalytics.sendAppView('Configuration');
     }
 
-    function load_config() {
-        MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, load_serial_config);
+    function load_mixer() {
+        MSP.send_message(MSP_codes.MSP_MIXER, false, false, load_board_alignment);
+    }
+
+    function load_board_alignment() {
+        MSP.send_message(MSP_codes.MSP_BOARD_ALIGNMENT, false, false, load_rx_config);
+    }
+
+    function load_rx_config() {
+        MSP.send_message(MSP_codes.MSP_RX_CONFIG, false, false, load_acc_trim);
+    }
+
+    function load_acc_trim() {
+        MSP.send_message(MSP_codes.MSP_ACC_TRIM, false, false, load_voltage_meter);
+    }
+
+    function load_voltage_meter() {
+        MSP.send_message(MSP_codes.MSP_VOLTAGE_METER_CONFIG, false, false, load_current_meter);
+    }
+
+    function load_current_meter() {
+        MSP.send_message(MSP_codes.MSP_CURRENT_METER_CONFIG, false, false, load_feature);
+    }
+
+    function load_feature() {
+        MSP.send_message(MSP_codes.MSP_FEATURE, false, false, load_serial_config);
     }
 
     function load_serial_config() {
@@ -34,7 +58,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         $('#content').load("./tabs/configuration.html", process_html);
     }
 
-    MSP.send_message(MSP_codes.MSP_IDENT, false, false, load_config);
+    MSP.send_message(MSP_codes.MSP_IDENT, false, false, load_mixer);
 
     function process_html() {
         // translate to user-selected language
@@ -226,6 +250,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         // fill current
         $('input[name="currentscale"]').val(BF_CONFIG.currentscale);
         $('input[name="currentoffset"]').val(BF_CONFIG.currentoffset);
+        $('input[name="batterycapacity"]').val(BF_CONFIG.batterycapacity);
         $('input[name="multiwiicurrentoutput"]').prop('checked', MISC.multiwiicurrentoutput);
 
 
@@ -286,6 +311,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
             BF_CONFIG.currentscale = parseInt($('input[name="currentscale"]').val());
             BF_CONFIG.currentoffset = parseInt($('input[name="currentoffset"]').val());
+            BF_CONFIG.batterycapacity = parseInt($('input[name="batterycapacity"]').val());
             MISC.multiwiicurrentoutput = ~~$('input[name="multiwiicurrentoutput"]').is(':checked'); // ~~ boolean to decimal conversion
 
             function save_serial_config() {
@@ -293,11 +319,34 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
 
             function save_misc() {
-                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_acc_trim);
+                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_mixer);
+            }
+
+            function save_mixer() {
+                MSP.send_message(MSP_codes.MSP_SET_MIXER, MSP.crunch(MSP_codes.MSP_SET_MIXER), false, save_board_alignment);
+            }
+
+            function save_board_alignment() {
+                MSP.send_message(MSP_codes.MSP_SET_BOARD_ALIGNMENT, MSP.crunch(MSP_codes.MSP_SET_BOARD_ALIGNMENT), false, save_rx_config);
+            }
+
+            function save_rx_config() {
+                MSP.send_message(MSP_codes.MSP_SET_RX_CONFIG, MSP.crunch(MSP_codes.MSP_SET_RX_CONFIG), false, save_acc_trim);
             }
 
             function save_acc_trim() {
-                MSP.send_message(MSP_codes.MSP_SET_ACC_TRIM, MSP.crunch(MSP_codes.MSP_SET_ACC_TRIM), false, save_to_eeprom);
+                MSP.send_message(MSP_codes.MSP_SET_ACC_TRIM, MSP.crunch(MSP_codes.MSP_SET_ACC_TRIM), false, save_voltage_meter);
+            }
+
+            function save_voltage_meter() {
+                MSP.send_message(MSP_codes.MSP_SET_VOLTAGE_METER_CONFIG, MSP.crunch(MSP_codes.MSP_SET_VOLTAGE_METER_CONFIG), false, save_current_meter);
+            }
+            function save_current_meter() {
+                MSP.send_message(MSP_codes.MSP_SET_CURRENT_METER_CONFIG, MSP.crunch(MSP_codes.MSP_SET_CURRENT_METER_CONFIG), false, save_feature);
+            }
+
+            function save_feature() {
+                MSP.send_message(MSP_codes.MSP_SET_FEATURE, MSP.crunch(MSP_codes.MSP_SET_FEATURE), false, save_to_eeprom);
             }
 
             function save_to_eeprom() {
@@ -323,7 +372,8 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
             }
 
-            MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_serial_config);
+            // call the first save function
+            save_serial_config();
         });
 
         // status data pulled via separate timer with static speed

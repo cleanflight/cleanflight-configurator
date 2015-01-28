@@ -42,6 +42,7 @@ var MSP_codes = {
     MSP_WP:                 118,
     MSP_BOXIDS:             119,
     MSP_SERVO_CONF:         120,
+    MSP_SONAR:              123,
 
     MSP_SET_RAW_RC:         200,
     MSP_SET_RAW_GPS:        201,
@@ -93,8 +94,8 @@ var MSP = {
     callbacks:                  [],
     packet_error:               0,
 
-    ledDirectionLetters:        ['n', 'e', 's', 'w', 'u', 'd'], // in LSB bit order
-    ledFunctionLetters:         ['i', 'w', 'f', 'a', 't'],      // in LSB bit order
+    ledDirectionLetters:        ['n', 'e', 's', 'w', 'u', 'd'],      // in LSB bit order
+    ledFunctionLetters:         ['i', 'w', 'f', 'a', 't', 'r', 'c'], // in LSB bit order
 
     read: function (readInfo) {
         var data = new Uint8Array(readInfo.data);
@@ -259,6 +260,9 @@ var MSP = {
                 break;
             case MSP_codes.MSP_ALTITUDE:
                 SENSOR_DATA.altitude = parseFloat((data.getInt32(0, 1) / 100.0).toFixed(2)); // correct scale factor
+                break;
+            case MSP_codes.MSP_SONAR:
+                SENSOR_DATA.sonar = data.getInt32(0, 1);
                 break;
             case MSP_codes.MSP_ANALOG:
                 ANALOG.voltage = data.getUint8(0) / 10.0;
@@ -482,7 +486,7 @@ var MSP = {
                 BF_CONFIG.board_align_roll = data.getInt16(6, 1);
                 BF_CONFIG.board_align_pitch = data.getInt16(8, 1);
                 BF_CONFIG.board_align_yaw = data.getInt16(10, 1);
-                BF_CONFIG.currentscale = data.getUint16(12, 1);
+                BF_CONFIG.currentscale = data.getInt16(12, 1);
                 BF_CONFIG.currentoffset = data.getUint16(14, 1);
                 break;
             case MSP_codes.MSP_SET_BF_CONFIG:
@@ -620,7 +624,7 @@ var MSP = {
             case MSP_codes.MSP_LED_STRIP_CONFIG:
                 LED_STRIP = [];
                 
-                var ledCount = data.byteLength / 6; // v1.4.0 and below incorrectly reported 4 bytes per led.
+                var ledCount = data.byteLength / 7; // v1.4.0 and below incorrectly reported 4 bytes per led.
                 
                 var offset = 0;
                 for (var i = 0; offset < data.byteLength && i < ledCount; i++) {
@@ -649,7 +653,8 @@ var MSP = {
                         directions: directions,
                         functions: functions,
                         x: data.getUint8(offset++, 1),
-                        y: data.getUint8(offset++, 1)
+                        y: data.getUint8(offset++, 1),
+                        color: data.getUint8(offset++, 1)
                     };
                     
                     LED_STRIP.push(led);
@@ -939,6 +944,10 @@ MSP.sendModeRanges = function(onCompleteCallback) {
     
     var modeRangeIndex = 0;
 
+    if (MODE_RANGES.length == 0) {
+        onCompleteCallback();
+    }
+    
     send_next_mode_range();
 
     
@@ -968,6 +977,10 @@ MSP.sendAdjustmentRanges = function(onCompleteCallback) {
         
     var adjustmentRangeIndex = 0;
 
+    if (ADJUSTMENT_RANGES.length == 0) {
+        onCompleteCallback();
+    }
+    
     send_next_adjustment_range();
 
     
@@ -1000,6 +1013,10 @@ MSP.sendLedStripConfig = function(onCompleteCallback) {
     
     var ledIndex = 0;
 
+    if (LED_STRIP.length == 0) {
+        onCompleteCallback();
+    }
+    
     send_next_led_strip_config();
 
     function send_next_led_strip_config() {
@@ -1032,6 +1049,8 @@ MSP.sendLedStripConfig = function(onCompleteCallback) {
 
         buffer.push(led.x);
         buffer.push(led.y);
+
+        buffer.push(led.color);
 
         
         // prepare for next iteration

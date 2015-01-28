@@ -2,7 +2,7 @@
 
 TABS.led_strip = {
     wireMode: false,
-    functions: ['w', 'f', 'i', 'a', 't'],
+    functions: ['w', 'f', 'i', 'a', 't', 'r', 'c'],
     directions: ['n', 'e', 's', 'w', 'u', 'd'],
 };
 
@@ -53,21 +53,42 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             $(this).select();
         });
 
-        // Clear Button
+        // Clear button
         $('.funcClear').click(function() {
             $('.gPoint').each(function() {
                 if ($(this).is('.ui-selected')) {
-                    $(this).removeClass(function(index, theClass) { 
-                       theClass = theClass.replace(/(^|\s)+gPoint\s+/, '');                    
-                       return theClass;
-                    });
-                    $(this).addClass('ui-selected');
-                    updateBulkCmd();
+                    removeFunctionsAndDirections(this);
+                    $(this).find('.wire').html('');
                 }
             });
 
             $('.controls button').removeClass('btnOn');
+            updateBulkCmd();
         });
+
+        // Clear All button
+        $('.funcClearAll').click(function() {
+            $('.gPoint').each(function() {
+                removeFunctionsAndDirections(this);
+            });
+            $('.gPoint .wire').html('');
+
+            updateBulkCmd();
+
+            $('.controls button').removeClass('btnOn');
+        });
+
+        function removeFunctionsAndDirections(element) {
+            var classesToRemove = [];
+            
+            TABS.led_strip.functions.forEach(function(letter) {
+                classesToRemove.push('function-' + letter);
+            });
+            TABS.led_strip.directions.forEach(function(letter) {
+                classesToRemove.push('dir-' + letter);
+            });
+            $(element).removeClass(classesToRemove.join(' '));
+        }
 
 
         // Directional Buttons
@@ -99,6 +120,25 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
 
                 updateBulkCmd();
             }
+        });
+
+        // Color Buttons
+        $('.colors').on('click', 'button', function() {            
+            var that = this;
+            var colorButtons = $(this).parent().find('button');
+            
+            for (var colorIndex = 0; colorIndex < 16; colorIndex++) {
+                colorButtons.removeClass('btnOn');
+                $('.ui-selected').removeClass('color-' + colorIndex);
+                
+                if ($(that).is('.color-' + colorIndex)) {
+                    $('.ui-selected').addClass('color-' + colorIndex);
+                }
+            }
+
+            $(this).addClass('btnOn');
+
+            updateBulkCmd();
         });
 
         $('.funcWire').click(function() {
@@ -146,20 +186,31 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                     var that = this;
 
                     TABS.led_strip.directions.forEach(function(letter) {
-                        if ($(that).is('.dir-' + letter)) {
-                            $('.dir-' + letter).addClass('btnOn');
+                        var className = '.dir-' + letter;
+                        if ($(that).is(className)) {
+                            $(className).addClass('btnOn');
                         } else {
-                            $('.dir-' + letter).removeClass('btnOn');
+                            $(className).removeClass('btnOn');
                         }
                     });
 
                     TABS.led_strip.functions.forEach(function(letter) {
-                        if ($(that).is('.function-' + letter)) {
-                            $('.function-' + letter).addClass('btnOn');
+                        var className = '.function-' + letter;
+                        if ($(that).is(className)) {
+                            $(className).addClass('btnOn');
                         } else {
-                            $('.function-' + letter).removeClass('btnOn');
+                            $(className).removeClass('btnOn');
                         }
                     });
+
+                    for (var colorIndex = 0; colorIndex < 16; colorIndex++) {
+                        var className = '.color-' + colorIndex;
+                        if ($(this).is(className)) {
+                            $(className).addClass('btnOn');
+                        } else {
+                            $(className).removeClass('btnOn');
+                        }
+                    }
 
                     updateBulkCmd();
                 });
@@ -184,7 +235,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             var ledIndex = ledResult.index;
             var led = ledResult.led;
             
-            if (led.functions.length == 0 && led.directions.length == 0) {
+            if (led.functions.length == 0 && led.directions.length == 0 && led.color == 0) {
                 return;
             }
             
@@ -197,6 +248,8 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             for (var directionIndex = 0; directionIndex < led.directions.length; directionIndex++) {
                 $(this).addClass('dir-' + led.directions[directionIndex]);
             }
+            
+            $(this).addClass('color-' + led.color);
 
         });
         updateBulkCmd(); 
@@ -244,8 +297,14 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                 var wireNumber = $(this).find('.wire').html();
                 var functions = '';
                 var directions = '';
+                var colorIndex = 0;
                 var that = this;
-
+                
+                var match = $(this).attr("class").match(/(^|\s)color-([0-9]+)(\s|$)/);
+                if (match) {
+                    colorIndex = match[2];
+                }
+                
                 TABS.led_strip.functions.forEach(function(letter){
                     if ($(that).is('.function-' + letter)) {
                         functions += letter;
@@ -263,7 +322,8 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                         x: col,
                         y: row,
                         directions: directions,
-                        functions: functions
+                        functions: functions,
+                        color: colorIndex
                     }
                     
                     LED_STRIP[wireNumber] = led;

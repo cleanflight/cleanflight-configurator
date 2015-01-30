@@ -26,7 +26,7 @@ $(document).ready(function () {
                     serial.disconnect(onClosed);
 
                     var wasConnected = CONFIGURATOR.connectionValid;
-                    
+
                     GUI.connected_to = false;
                     CONFIGURATOR.connectionValid = false;
                     GUI.allowedTabs = GUI.defaultAllowedTabsWhenDisconnected.slice();
@@ -52,7 +52,7 @@ $(document).ready(function () {
                         // detach listeners and remove element data
                         $('#content').empty();
                     }
-                    
+
                     $('#tabs .tab_landing a').click();
                 }
 
@@ -62,7 +62,7 @@ $(document).ready(function () {
     });
 
     // auto-connect
-    chrome.storage.local.get('auto_connect', function (result) {
+    chrome.storage.local.get('auto_connect', result => {
         if (result.auto_connect === 'undefined' || result.auto_connect) {
             // default or enabled by user
             GUI.auto_connect = true;
@@ -80,7 +80,7 @@ $(document).ready(function () {
         }
 
         // bind UI hook to auto-connect checkbos
-        $('input.auto_connect').change(function () {
+        $('input.auto_connect').change(() => {
             GUI.auto_connect = $(this).is(':checked');
 
             // update title/tooltip
@@ -113,7 +113,7 @@ function onOpen(openInfo) {
         GUI.log(chrome.i18n.getMessage('serialPortOpened', [openInfo.connectionId]));
 
         // save selected port with chrome.storage if the port differs
-        chrome.storage.local.get('last_used_port', function (result) {
+        chrome.storage.local.get('last_used_port', result => {
             if (result.last_used_port) {
                 if (result.last_used_port != GUI.connected_to) {
                     // last used port doesn't match the one found in local db, we will store the new one
@@ -128,7 +128,7 @@ function onOpen(openInfo) {
         serial.onReceive.addListener(read_serial);
 
         // disconnect after 10 seconds with error if we don't get IDENT data
-        GUI.timeout_add('connecting', function () {
+        GUI.timeout_add('connecting', () => {
             if (!CONFIGURATOR.connectionValid) {
                 GUI.log(chrome.i18n.getMessage('noConfigurationReceived'));
 
@@ -145,36 +145,36 @@ function onOpen(openInfo) {
             if (CONFIG.apiVersion >= CONFIGURATOR.apiVersionAccepted) {
 
                 MSP.send_message(MSP_codes.MSP_FC_VARIANT, false, false, function () {
-                    
+
                     MSP.send_message(MSP_codes.MSP_FC_VERSION, false, false, function () {
-                        
+
                         googleAnalytics.sendEvent('Firmware', 'Variant', CONFIG.flightControllerIdentifier + ',' + CONFIG.flightControllerVersion);
                         GUI.log(chrome.i18n.getMessage('fcInfoReceived', [CONFIG.flightControllerIdentifier, CONFIG.flightControllerVersion]));
-                        
+
                         MSP.send_message(MSP_codes.MSP_BUILD_INFO, false, false, function () {
-                            
+
                             googleAnalytics.sendEvent('Firmware', 'Using', CONFIG.buildInfo);
                             GUI.log(chrome.i18n.getMessage('buildInfoReceived', [CONFIG.buildInfo]));
-                            
+
                             MSP.send_message(MSP_codes.MSP_BOARD_INFO, false, false, function () {
-                                
+
                                 googleAnalytics.sendEvent('Board', 'Using', CONFIG.boardIdentifier + ',' + CONFIG.boardVersion);
                                 GUI.log(chrome.i18n.getMessage('boardInfoReceived', [CONFIG.boardIdentifier, CONFIG.boardVersion]));
-                                
+
                                 MSP.send_message(MSP_codes.MSP_UID, false, false, function () {
                                     GUI.log(chrome.i18n.getMessage('uniqueDeviceIdReceived', [CONFIG.uid[0].toString(16) + CONFIG.uid[1].toString(16) + CONFIG.uid[2].toString(16)]));
-                                    
+
                                     // continue as usually
                                     CONFIGURATOR.connectionValid = true;
                                     GUI.allowedTabs = GUI.defaultAllowedTabsWhenConnected.slice();
                                     if (CONFIG.apiVersion < 1.4) {
                                         GUI.allowedTabs.splice(GUI.allowedTabs.indexOf('led_strip'), 1);
                                     }
-                                    
+
                                     GUI.canChangePidController = CONFIG.apiVersion >= CONFIGURATOR.pidControllerChangeMinApiVersion;
 
                                     onConnect();
-                                    
+
                                     $('#tabs ul.mode-connected .tab_setup a').click();
                                 });
                             });
@@ -227,7 +227,7 @@ function onClosed(result) {
 
     $('#tabs ul.mode-connected').hide();
     $('#tabs ul.mode-disconnected').show();
-    
+
     var documentationButton = $('#button-documentation');
     documentationButton.hide();
 }

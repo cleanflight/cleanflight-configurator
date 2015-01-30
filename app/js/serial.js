@@ -16,7 +16,7 @@ var serial = {
         var self = this;
         self.openRequested = true;
 
-        chrome.serial.connect(path, options, function (connectionInfo) {
+        chrome.serial.connect(path, options, connectionInfo => {
             if (chrome.runtime.lastError) {
                 console.error(chrome.runtime.lastError.message);
             }
@@ -40,7 +40,7 @@ var serial = {
                     switch (info.error) {
                         case 'system_error': // we might be able to recover from this one
                             if (!self.failed++) {
-                                chrome.serial.setPaused(self.connectionId, false, function () {
+                                chrome.serial.setPaused(self.connectionId, false, () => {
                                     self.getInfo(function (info) {
                                         if (info) {
                                             if (!info.paused) {
@@ -126,7 +126,7 @@ var serial = {
                 self.onReceiveError.removeListener(self.onReceiveError.listeners[i]);
             }
 
-            chrome.serial.disconnect(this.connectionId, function (result) {
+            chrome.serial.disconnect(this.connectionId, result => {
                 if (chrome.runtime.lastError) {
                     console.error(chrome.runtime.lastError.message);
                 }
@@ -150,9 +150,9 @@ var serial = {
         }
     },
     getDevices: function (callback) {
-        chrome.serial.getDevices(function (devices_array) {
+        chrome.serial.getDevices(devices_array => {
             var devices = [];
-            devices_array.forEach(function (device) {
+            devices_array.forEach(device => {
                 devices.push(device.path);
             });
 
@@ -177,7 +177,7 @@ var serial = {
             var data = self.outputBuffer[0].data,
                 callback = self.outputBuffer[0].callback;
 
-            chrome.serial.send(self.connectionId, data, function (sendInfo) {
+            chrome.serial.send(self.connectionId, data, sendInfo => {
                 // track sent bytes for statistics
                 self.bytesSent += sendInfo.bytesSent;
 

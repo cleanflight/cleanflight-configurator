@@ -13,7 +13,7 @@ TABS.cli.initialize = function (callback) {
         googleAnalytics.sendAppView('CLI');
     }
 
-    $('#content').load("./tabs/cli.html", function () {
+    $('#content').load("./tabs/cli.html", () => {
         // translate to user-selected language
         localize();
 
@@ -29,7 +29,7 @@ TABS.cli.initialize = function (callback) {
 
         var textarea = $('.tab-cli textarea');
 
-        textarea.keypress(function (event) {
+        textarea.keypress((event) => {
             if (event.which == 13) { // enter
                 event.preventDefault(); // prevent the adding of new line
 
@@ -46,7 +46,7 @@ TABS.cli.initialize = function (callback) {
             }
         });
 
-        textarea.keyup(function (event) {
+        textarea.keyup((event) => {
             var keyUp = {38: true},
                 keyDown = {40: true};
 
@@ -180,7 +180,7 @@ TABS.cli.cleanup = function (callback) {
     bufView[3] = 0x74; // t
     bufView[4] = 0x0D; // enter
 
-    serial.send(bufferOut, function (writeInfo) {
+    serial.send(bufferOut, (writeInfo) => {
         // we could handle this "nicely", but this will do for now
         // (another approach is however much more complicated):
         // we can setup an interval asking for data lets say every 200ms, when data arrives, callback will be triggered and tab switched

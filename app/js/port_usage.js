@@ -4,14 +4,12 @@ var PortUsage = {
     previous_received:  0,
     previous_sent:      0,
 
-    initialize: function() {
-        var self = this;
-
-        self.main_timer_reference = setInterval(function() {
-            self.update();
+    initialize() {
+        this.main_timer_reference = setInterval(() => {
+            this.update();
         }, 1000);
     },
-    update: function() {
+    update() {
         if (serial.bitrate) {
             var port_usage_down = parseInt(((serial.bytesReceived - this.previous_received) * 10 / serial.bitrate) * 100);
             var port_usage_up = parseInt(((serial.bytesSent - this.previous_sent) * 10 / serial.bitrate) * 100);
@@ -27,7 +25,7 @@ var PortUsage = {
             $('span.port_usage_up').text(chrome.i18n.getMessage('statusbar_usage_upload', [0]));
         }
     },
-    reset: function() {
+    reset() {
         this.previous_received = 0;
         this.previous_sent = 0;
     }

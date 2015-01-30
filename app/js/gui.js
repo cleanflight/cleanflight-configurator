@@ -24,13 +24,13 @@ var GUI_control = function () {
         'configuration',
         'gps',
         'led_strip',
-        'logging', 
+        'logging',
         'modes',
         'motors',
         'pid_tuning',
         'ports',
         'receiver',
-        'sensors', 
+        'sensors',
         'servos',
         'setup'
     ];
@@ -60,7 +60,7 @@ GUI_control.prototype.interval_add = function (name, code, interval, first) {
         data.fired++; // increment counter
     }
 
-    data.timer = setInterval(function() {
+    data.timer = setInterval(() => {
         code(); // execute code
 
         data.fired++; // increment counter
@@ -106,7 +106,7 @@ GUI_control.prototype.interval_resume = function (name) {
         if (this.interval_array[i].name == name && this.interval_array[i].paused) {
             var obj = this.interval_array[i];
 
-            obj.timer = setInterval(function() {
+            obj.timer = setInterval(() => {
                 obj.code(); // execute code
 
                 obj.fired++; // increment counter
@@ -130,7 +130,7 @@ GUI_control.prototype.interval_kill_all = function (keep_array) {
     for (var i = (this.interval_array.length - 1); i >= 0; i--) { // reverse iteration
         var keep = false;
         if (keep_array) { // only run through the array if it exists
-            keep_array.forEach(function (name) {
+            keep_array.forEach(name => {
                 if (self.interval_array[i].name == name) {
                     keep = true;
                 }
@@ -157,7 +157,7 @@ GUI_control.prototype.timeout_add = function (name, code, timeout) {
     var data = {'name': name, 'timer': null, 'timeout': timeout};
 
     // start timer with "cleaning" callback
-    data.timer = setTimeout(function() {
+    data.timer = setTimeout(() => {
         code(); // execute code
 
         // remove object from array

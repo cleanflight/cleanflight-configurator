@@ -51,17 +51,14 @@ var DEFAULT_BOARD_DEFINITION = {
 };
 
 var BOARD = {
-    
-};
-
-BOARD.find_board_definition = function (identifier) {
+  find_board_definition(identifier) {
     for (var i = 0; i < BOARD_DEFINITIONS.length; i++) {
-        var candidate = BOARD_DEFINITIONS[i];
-        
-        if (candidate.identifier == identifier) {
-            return candidate;
-        }
+      var candidate = BOARD_DEFINITIONS[i];
+
+      if (candidate.identifier == identifier) {
+        return candidate;
+      }
     }
     return DEFAULT_BOARD_DEFINITION;
+  }
 };
-

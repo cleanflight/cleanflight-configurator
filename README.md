@@ -10,7 +10,7 @@ Various types of aircraft are supported by the tool and by cleanflight, e.g. qua
 
 ## Authors
 
-Dominic Clifton/hydra - maintainer of the Cleanflight firmware and configurator. 
+Dominic Clifton/hydra - maintainer of the Cleanflight firmware and configurator.
 
 Cleanflight Configurator was originally a [fork](#credits) of Baseflight Configurator with support for Cleanflight instead of Baseflight.
 
@@ -26,12 +26,13 @@ If you are experiencing any problems please make sure you are running the [lates
 
 Please note - the application will automatically update itself when new versions are released.  Please ensure you maintain configuration backups as described in the Cleanflight documentation.
 
-### Alternative way
+### Developer build
 
 1. Clone the repo to any local directory or download it as zip
-2. Start Chromium or Google Chrome and go to tools -> extension
-3. Check the "Developer mode" checkbox
-4. Click on load unpacked extension and point it to the Cleanflight Configurator directory (for example D:/cleanflight-configurator)
+2. Run `npm install && gulp`
+3. Start Chromium or Google Chrome and go to tools -> extension
+4. Check the "Developer mode" checkbox
+5. Click on load unpacked extension and point it to the Cleanflight Configurator dist directory (for example D:/cleanflight-configurator/dist)
 
 ## How to use
 

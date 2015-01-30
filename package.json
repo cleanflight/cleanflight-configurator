@@ -1,0 +1,24 @@
+{
+  "name": "cleanflight-configurator",
+  "version": "1.0.0",
+  "description": "Cleanflight Configurator is a crossplatform configuration tool for the [Cleanflight](http://cleanflight.com/) flight control system.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rbirkby/cleanflight-configurator.git"
+  },
+  "author": "",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/rbirkby/cleanflight-configurator/issues"
+  },
+  "homepage": "https://github.com/rbirkby/cleanflight-configurator",
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.10",
+    "gulp-6to5": "^3.0.0"
+  }
+}

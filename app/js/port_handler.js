@@ -16,7 +16,7 @@ PortHandler.initialize = function () {
 PortHandler.check = function () {
     var self = this;
 
-    serial.getDevices(function(current_ports) {
+    serial.getDevices(current_ports => {
         // port got removed or initial_ports wasn't initialized yet
         if (self.array_difference(self.initial_ports, current_ports).length > 0 || !self.initial_ports) {
             var removed_ports = self.array_difference(self.initial_ports, current_ports);
@@ -60,10 +60,10 @@ PortHandler.check = function () {
 
             // auto-select last used port (only during initialization)
             if (!self.initial_ports) {
-                chrome.storage.local.get('last_used_port', function (result) {
+                chrome.storage.local.get('last_used_port', result => {
                     // if last_used_port was set, we try to select it
                     if (result.last_used_port) {
-                        current_ports.forEach(function(port) {
+                        current_ports.forEach(port => {
                             if (port == result.last_used_port) {
                                 console.log('Selecting last used port: ' + result.last_used_port);
 
@@ -109,7 +109,7 @@ PortHandler.check = function () {
             if (GUI.auto_connect && !GUI.connecting_to && !GUI.connected_to) {
                 // we need firmware flasher protection over here
                 if (GUI.active_tab != 'firmware_flasher') {
-                    GUI.timeout_add('auto-connect_timeout', function () {
+                    GUI.timeout_add('auto-connect_timeout', () => {
                         $('div#port-picker a.connect').click();
                     }, 100); // timeout so bus have time to initialize after being detected by the system
                 }
@@ -137,13 +137,13 @@ PortHandler.check = function () {
             check_usb_devices();
         }
 
-        self.main_timeout_reference = setTimeout(function () {
+        self.main_timeout_reference = setTimeout(() => {
             self.check();
         }, 250);
     });
 
     function check_usb_devices() {
-        chrome.usb.getDevices(usbDevices.STM32DFU, function (result) {
+        chrome.usb.getDevices(usbDevices.STM32DFU, result => {
             if (result.length) {
                 if (!$("div#port-picker #port [value='DFU']").length) {
                     $('div#port-picker #port').append('<option value="DFU">DFU</option>');
@@ -175,7 +175,7 @@ PortHandler.port_detected = function(name, code, timeout, ignore_timeout) {
     var obj = {'name': name, 'code': code, 'timeout': (timeout) ? timeout : 10000};
 
     if (!ignore_timeout) {
-        obj.timer = setTimeout(function() {
+        obj.timer = setTimeout(() => {
             console.log('PortHandler - timeout - ' + obj.name);
 
             // trigger callback
@@ -200,7 +200,7 @@ PortHandler.port_removed = function (name, code, timeout, ignore_timeout) {
     var obj = {'name': name, 'code': code, 'timeout': (timeout) ? timeout : 10000};
 
     if (!ignore_timeout) {
-        obj.timer = setTimeout(function () {
+        obj.timer = setTimeout(() => {
             console.log('PortHandler - timeout - ' + obj.name);
 
             // trigger callback

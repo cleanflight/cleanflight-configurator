@@ -56,19 +56,19 @@
         <div class="groupTitle" i18n="configurationBoardAlignment"></div>
         <div class="number">
             <label>
-                <input type="number" name="board_align_roll" step="1" min="-180" max="180" />
+                <input type="number" name="board_align_roll" step="1" min="-180" max="360" />
                 <span i18n="configurationBoardAlignmentRoll"></span>
             </label>
         </div>
         <div class="number">
             <label>
-                <input type="number" name="board_align_pitch" step="1" min="-180" max="180" />
+                <input type="number" name="board_align_pitch" step="1" min="-180" max="360" />
                 <span i18n="configurationBoardAlignmentPitch"></span>
             </label>
         </div>
         <div class="number">
             <label>
-                <input type="number" name="board_align_yaw" step="1" min="-180" max="180" />
+                <input type="number" name="board_align_yaw" step="1" min="-180" max="360" />
                 <span i18n="configurationBoardAlignmentYaw"></span>
             </label>
         </div>
@@ -179,7 +179,7 @@
         </div>
         <div class="number">
             <label>
-                <input type="number" name="voltagescale" step="1" min="10" max="200" />
+                <input type="number" name="voltagescale" step="1" min="10" max="255" />
                 <span i18n="configurationBatteryScale"></span>
             </label>
         </div>
@@ -198,13 +198,13 @@
         </table>        
         <div class="number">
             <label>
-                <input type="number" name="currentscale" step="1" min="1" max="1000" />
+                <input type="number" name="currentscale" step="1" min="-1000" max="1000" />
                 <span i18n="configurationCurrentScale"></span>
             </label>
         </div>
         <div class="number">
             <label>
-                <input type="number" name="currentoffset" step="1" min="1" max="1000" />
+                <input type="number" name="currentoffset" step="1" min="0" max="3300" />
                 <span i18n="configurationCurrentOffset"></span>
             </label>
         </div>

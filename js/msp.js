@@ -19,6 +19,9 @@ var MSP_codes = {
     MSP_SET_ADJUSTMENT_RANGE:   53,
     MSP_CF_SERIAL_CONFIG:       54,
     MSP_SET_CF_SERIAL_CONFIG:   55,
+    MSP_SONAR:                  58,
+    MSP_PID_CONTROLLER:         59,
+    MSP_SET_PID_CONTROLLER:     60,
 
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -69,7 +72,7 @@ var MSP_codes = {
     MSP_UID:                160, // Unique device ID
     MSP_ACC_TRIM:           240, // get acc angle trim values
     MSP_SET_ACC_TRIM:       239, // set acc angle trim values
-    MSP_GPS_SV_INFO:        164, // get Signal Strength (only U-Blox)
+    MSP_GPS_SV_INFO:        164, // get Signal Strength
 
     // Additional private MSP for baseflight configurator (yes thats us \o/)
     MSP_RCMAP:              64, // get channel map (also returns number of channels total)
@@ -93,8 +96,8 @@ var MSP = {
     callbacks:                  [],
     packet_error:               0,
 
-    ledDirectionLetters:        ['n', 'e', 's', 'w', 'u', 'd'], // in LSB bit order
-    ledFunctionLetters:         ['i', 'w', 'f', 'a', 't'],      // in LSB bit order
+    ledDirectionLetters:        ['n', 'e', 's', 'w', 'u', 'd'],      // in LSB bit order
+    ledFunctionLetters:         ['i', 'w', 'f', 'a', 't', 'r', 'c'], // in LSB bit order
 
     read: function (readInfo) {
         var data = new Uint8Array(readInfo.data);
@@ -260,11 +263,14 @@ var MSP = {
             case MSP_codes.MSP_ALTITUDE:
                 SENSOR_DATA.altitude = parseFloat((data.getInt32(0, 1) / 100.0).toFixed(2)); // correct scale factor
                 break;
+            case MSP_codes.MSP_SONAR:
+                SENSOR_DATA.sonar = data.getInt32(0, 1);
+                break;
             case MSP_codes.MSP_ANALOG:
                 ANALOG.voltage = data.getUint8(0) / 10.0;
                 ANALOG.mAhdrawn = data.getUint16(1, 1);
                 ANALOG.rssi = data.getUint16(3, 1); // 0-1023
-                ANALOG.amperage = data.getUint16(5, 1) / 100; // A
+                ANALOG.amperage = data.getInt16(5, 1) / 100; // A
                 break;
             case MSP_codes.MSP_RC_TUNING:
                 RC_tuning.RC_RATE = parseFloat((data.getUint8(0) / 100).toFixed(2));
@@ -479,10 +485,10 @@ var MSP = {
                 BF_CONFIG.mixerConfiguration = data.getUint8(0);
                 BF_CONFIG.features = data.getUint32(1, 1);
                 BF_CONFIG.serialrx_type = data.getUint8(5);
-                BF_CONFIG.board_align_roll = data.getInt16(6, 1);
-                BF_CONFIG.board_align_pitch = data.getInt16(8, 1);
-                BF_CONFIG.board_align_yaw = data.getInt16(10, 1);
-                BF_CONFIG.currentscale = data.getUint16(12, 1);
+                BF_CONFIG.board_align_roll = data.getInt16(6, 1); // -180 - 360
+                BF_CONFIG.board_align_pitch = data.getInt16(8, 1); // -180 - 360
+                BF_CONFIG.board_align_yaw = data.getInt16(10, 1); // -180 - 360
+                BF_CONFIG.currentscale = data.getInt16(12, 1);
                 BF_CONFIG.currentoffset = data.getUint16(14, 1);
                 break;
             case MSP_codes.MSP_SET_BF_CONFIG:
@@ -620,7 +626,7 @@ var MSP = {
             case MSP_codes.MSP_LED_STRIP_CONFIG:
                 LED_STRIP = [];
                 
-                var ledCount = data.byteLength / 6; // v1.4.0 and below incorrectly reported 4 bytes per led.
+                var ledCount = data.byteLength / 7; // v1.4.0 and below incorrectly reported 4 bytes per led.
                 
                 var offset = 0;
                 for (var i = 0; offset < data.byteLength && i < ledCount; i++) {
@@ -649,7 +655,8 @@ var MSP = {
                         directions: directions,
                         functions: functions,
                         x: data.getUint8(offset++, 1),
-                        y: data.getUint8(offset++, 1)
+                        y: data.getUint8(offset++, 1),
+                        color: data.getUint8(offset++, 1)
                     };
                     
                     LED_STRIP.push(led);
@@ -668,6 +675,13 @@ var MSP = {
                 console.log('Adjustment range saved');
                 break;
                 
+            case MSP_codes.MSP_PID_CONTROLLER:
+                PID.controller = data.getUint8(0, 1);
+                break;
+            case MSP_codes.MSP_SET_PID_CONTROLLER:
+                console.log('PID controller changed');
+                break;
+
 
             default:
                 console.log('Unknown code detected: ' + code);
@@ -800,6 +814,9 @@ MSP.crunch = function (code) {
             buffer.push(highByte(BF_CONFIG.currentscale));
             buffer.push(lowByte(BF_CONFIG.currentoffset));
             buffer.push(highByte(BF_CONFIG.currentoffset));
+            break;
+        case MSP_codes.MSP_SET_PID_CONTROLLER:
+            buffer.push(PID.controller);
             break;
         case MSP_codes.MSP_SET_PID:
             for (var i = 0; i < PIDs.length; i++) {
@@ -939,6 +956,10 @@ MSP.sendModeRanges = function(onCompleteCallback) {
     
     var modeRangeIndex = 0;
 
+    if (MODE_RANGES.length == 0) {
+        onCompleteCallback();
+    }
+    
     send_next_mode_range();
 
     
@@ -968,6 +989,10 @@ MSP.sendAdjustmentRanges = function(onCompleteCallback) {
         
     var adjustmentRangeIndex = 0;
 
+    if (ADJUSTMENT_RANGES.length == 0) {
+        onCompleteCallback();
+    }
+    
     send_next_adjustment_range();
 
     
@@ -1000,6 +1025,10 @@ MSP.sendLedStripConfig = function(onCompleteCallback) {
     
     var ledIndex = 0;
 
+    if (LED_STRIP.length == 0) {
+        onCompleteCallback();
+    }
+    
     send_next_led_strip_config();
 
     function send_next_led_strip_config() {
@@ -1032,6 +1061,8 @@ MSP.sendLedStripConfig = function(onCompleteCallback) {
 
         buffer.push(led.x);
         buffer.push(led.y);
+
+        buffer.push(led.color);
 
         
         // prepare for next iteration

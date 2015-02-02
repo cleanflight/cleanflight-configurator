@@ -7,7 +7,7 @@
 
 .tab-led-strip .section {
     color: #565656;
-    margin: 20px 0 0 0;
+    margin: 20px 0 5px 0;
     border-bottom: 1px solid silver;
 }
 
@@ -29,23 +29,19 @@
     cursor: pointer;
 }
 
-.tab-led-strip .gPoint.function-w { /* warning */
+.tab-led-strip .gPoint.function-w { /* Warning */
     background: red;
     box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
     border-color: red;      
 }
 
-.tab-led-strip .gPoint.function-f { /* flight mode & orientation */
+.tab-led-strip .gPoint.function-f { /* Flight mode & orientation */
     background: rgb(50, 205, 50);
     box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
     border-color: rgb(50, 205, 50);
 }
 
-.tab-led-strip .gPoint.function-w.function-f {
-    background: linear-gradient(to bottom, #42c949 0%,#d2ff52 52%,#d2ff52 52%,#ff5454 52%,#ba3535 100%);
-}
-
-.tab-led-strip .gPoint.function-i { /* indicator */
+.tab-led-strip .gPoint.function-i { /* Indicator */
     background: yellow;
     box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
     border-color: yellow;       
@@ -57,10 +53,54 @@
     border-color: rgb(52, 155, 255);
 }
 
-.tab-led-strip .gPoint.function-t { /* Armed Mode */
+.tab-led-strip .gPoint.function-t { /* Thrust Mode */
     background: orange;
     box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
     border-color: orange;
+}
+
+.tab-led-strip .gPoint.function-c { /* Color */
+    background: linear-gradient( to bottom right, rgba(255, 0, 0, .5) 0%, rgba(255, 255, 0, 0.5) 15%, rgba(0, 255, 0, .5) 30%, rgba(0, 255, 255, .5) 50%, rgba(0, 0, 255, .5) 65%, rgba(255, 0, 255, .5) 80%, rgba(255, 0, 0, .5) 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
+    border-color: grey;
+}
+
+.tab-led-strip .gPoint.function-r { /* Ring */
+    background: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, white 60%,white 70%,black 70%, black 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
+    border-color: black;
+}
+
+.tab-led-strip .gPoint.function-i.function-f {
+    background: linear-gradient(to bottom, yellow 0%,yellow 50%,rgb(50, 205, 50) 50%, rgb(50, 205, 50) 100%);
+}
+
+.tab-led-strip .gPoint.function-i.function-a {
+    background: linear-gradient(to bottom, yellow 0%,yellow 50%,rgb(52, 155, 255) 50%, rgb(52, 155, 255) 100%);
+}
+
+.tab-led-strip .gPoint.function-i.function-f.function-a {
+    background: linear-gradient(to bottom, yellow 0%,yellow 33%,rgb(50, 205, 50) 33%, rgb(50, 205, 50) 66%, rgb(52, 155, 255) 66%, rgb(52, 155, 255) 100%);
+}
+
+.tab-led-strip .gPoint.function-i.function-w.function-a {
+    background: linear-gradient(to bottom, yellow 0%,yellow 33%,red 33%, red 66%, rgb(52, 155, 255) 66%, rgb(52, 155, 255) 100%);
+}
+
+.tab-led-strip .gPoint.function-t.function-f.function-w {
+    background: linear-gradient(to bottom, orange 0%,orange 33%,rgb(50, 205, 50) 33%, rgb(50, 205, 50) 66%, red 66%, red 100%);
+}
+
+.tab-led-strip .gPoint.function-i.function-w {
+    background: linear-gradient(to bottom, yellow 0%,yellow 50%,#ff5454 50%,#ba3535 100%);
+}
+
+.tab-led-strip .gPoint.function-f.function-w {
+    background: linear-gradient(to bottom, rgb(50, 205, 50) 0%,rgb(50, 205, 50) 50%,#ff5454 50%,#ba3535 100%);
+}
+
+.tab-led-strip .gPoint.function-f.function-t {
+    background: linear-gradient(to bottom, rgb(50, 205, 50) 0%,rgb(50, 205, 50) 50%,orange 50%,orange 100%);
 }
 
 .tab-led-strip .gPoint select {
@@ -77,17 +117,18 @@
     padding-top: 0px;
     display: block;
     font-family: monospace;
-    position: absolute;
-    margin-top: -32px;
-    width: 28px;
+    margin-left: -2px;
+    margin-top: -28px;
+    width: 32px;
+    height: 32px;
 }
 
 .gridWire .wire {
     color: rgba(255,255,255,1);
 }
 
-.gridWire .gPoint {
-    background: #CAFFCD !important;
+.gridWire {
+    background: rgba(15, 171, 22, .5) !important;
 }
 
 /*function buttons*/
@@ -99,7 +140,7 @@
     border: 1px solid silver;
     background-color: #ececec;
 
-    padding: 7px 7px;
+    padding: 7px 6px;
     margin: 3px 0;
 }
 
@@ -120,16 +161,16 @@
     width: 49%;
 }
 
-.tab-led-strip button.w33 {
-    width: 32%;
-}
-
 .tab-led-strip .functions .function-w.btnOn {background: red;}
 .tab-led-strip .functions .function-f.btnOn {background: rgb(50, 205, 50);}
 .tab-led-strip .functions .function-i.btnOn {background: yellow; color: #333;}
 .tab-led-strip .functions .function-a.btnOn {background: blue;}
 .tab-led-strip .functions .function-t.btnOn {background: orange;}
-
+.tab-led-strip .functions .function-r.btnOn {background: #acacac;}
+.tab-led-strip .functions .function-c.btnOn {
+    background: linear-gradient( to bottom right, rgba(255, 0, 0, .5) 0%, rgba(255, 255, 0, 0.5) 15%, rgba(0, 255, 0, .5) 30%, rgba(0, 255, 255, .5) 50%, rgba(0, 0, 255, .5) 65%, rgba(255, 0, 255, .5) 80%, rgba(255, 0, 0, .5) 100%);
+}
+.tab-led-strip .colors .btnOn,
 .tab-led-strip .directions .btnOn {background: #FFF; color: #000;}
 
 .tab-led-strip .indicators {
@@ -188,7 +229,6 @@
     right: 10px; 
 }
 
-
 .tab-led-strip .dir-n .north {display: inline;}
 .tab-led-strip .dir-s .south {display: inline;}
 .tab-led-strip .dir-e .east {display: inline;}
@@ -203,10 +243,12 @@
     height: calc((30px + 8px) * 16);
 }
 
-.tab-led-strip .directions {
-    width: 130px;
-    height: 100px;
+.tab-led-strip .directions,
+.tab-led-strip .colors {
+    height: 130px;
     position: relative;
+	display: inline-block;
+    width: 49%;
 }
 
 .tab-led-strip .directions button {
@@ -216,11 +258,15 @@
 }
 
 .tab-led-strip .directions .dir-n {top: 0; left: 32px;}
-.tab-led-strip .directions .dir-s {bottom: 0; left: 32px;}
+.tab-led-strip .directions .dir-s {top: 64px; left: 32px;}
 .tab-led-strip .directions .dir-e {left: 64px; top: 32px;}
 .tab-led-strip .directions .dir-w {left: 0; top: 32px;}
-.tab-led-strip .directions .dir-u {right: 0; top: 15px;}
-.tab-led-strip .directions .dir-d {right: 0; bottom: 15px;}
+.tab-led-strip .directions .dir-u {right: 10px; top: 15px;}
+.tab-led-strip .directions .dir-d {right: 10px; top: 54px;}
+
+.tab-led-strip .colors button {
+    width: 23%;
+}
 
 .tab-led-strip .wires-remaining {
     float: right;
@@ -236,26 +282,6 @@
 
 .tab-led-strip .wires-remaining.error div {
     color: #FF5700;
-}
-
-
-
-/*******JQUERYUI**********/
-
-.tab-led-strip .ui-selected {
-    box-shadow: inset 0 0 30px rgba(255, 255, 255, 1) !important;
-}
-
-.tab-led-strip .ui-selecting {
-    box-shadow: inset 0 0 30px rgba(255, 255, 255, .7) !important;
-    border: solid 2px #000 !important;
-}
-
-.tab-led-strip .ui-selectable-helper {
-    background: rgba(0,0,0,.4);
-    position: absolute;
-    z-index: 100;
-    border: 1px dotted white;   
 }
 
 .tab-led-strip > .buttons {
@@ -277,6 +303,46 @@
     border: 1px solid silver;
     background-color: #ececec;
 }
+
 .tab-led-strip.save:hover {
     background-color: #dedcdc;
+}
+
+.gridSections {
+    position: absolute;
+    z-index: -1;
+    width: 608px;
+    border: 1px solid rgb(236, 236, 236);
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.gridSections .block {
+    width: 150px;
+    height: 150px;
+    float: left;
+    border: solid 1px rgb(236, 236, 236);
+}
+
+
+
+
+
+/*******JQUERYUI**********/
+
+.tab-led-strip .ui-selected {
+    box-shadow: inset 0 0 8px rgba(255, 0, 255, 1) !important;
+    border: solid 2px #000 !important;
+}
+
+.tab-led-strip .ui-selecting {
+    box-shadow: inset 0 0 30px rgba(255, 0, 255, .7) !important;
+    border: solid 2px #000 !important;
+}
+
+.tab-led-strip .ui-selectable-helper {
+    background: rgba(0,0,0,.4);
+    position: absolute;
+    z-index: 100;
+    border: 1px dotted white;   
 }

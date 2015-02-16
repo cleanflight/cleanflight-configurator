@@ -212,7 +212,14 @@ GUI_control.prototype.log = function (message) {
         + ':' + ((d.getMinutes() < 10) ? '0' + d.getMinutes(): d.getMinutes())
         + ':' + ((d.getSeconds() < 10) ? '0' + d.getSeconds(): d.getSeconds());
 
-    $('div.wrapper', command_log).append('<p>' + year + '-' + month + '-' + date + ' @ ' + time + ' -- ' + message + '</p>');
+    var formattedDate = "{0}-{1}-{2} {3}".format(
+                                year,
+                                month,
+                                date,
+                                ' @ ' + time
+                            );
+    $('div.wrapper', command_log).append('<p>' + formattedDate + ' -- ' + message + '</p>');
+    
     command_log.scrollTop($('div.wrapper', command_log).height());
 };
 

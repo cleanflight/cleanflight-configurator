@@ -205,11 +205,14 @@ GUI_control.prototype.timeout_kill_all = function () {
 GUI_control.prototype.log = function (message) {
     var command_log = $('div#log');
     var d = new Date();
+    var year = d.getFullYear();
+    var month = ((d.getMonth() < 9) ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1));
+    var date =  d.getDate();
     var time = ((d.getHours() < 10) ? '0' + d.getHours(): d.getHours())
         + ':' + ((d.getMinutes() < 10) ? '0' + d.getMinutes(): d.getMinutes())
         + ':' + ((d.getSeconds() < 10) ? '0' + d.getSeconds(): d.getSeconds());
 
-    $('div.wrapper', command_log).append('<p>' + time + ' -- ' + message + '</p>');
+    $('div.wrapper', command_log).append('<p>' + year + '-' + month + '-' + date + ' @ ' + time + ' -- ' + message + '</p>');
     command_log.scrollTop($('div.wrapper', command_log).height());
 };
 

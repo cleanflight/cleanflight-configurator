@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var del = require('del');
-var to5 = require('gulp-6to5');
+var babel = require('gulp-babel');
 
 gulp.task('clean', function(cb) {
   del('./dist', cb);
@@ -13,7 +13,7 @@ gulp.task('move',['clean'], function(){
     .pipe(gulp.dest('dist'));
 
   return gulp.src(['./app/**/*.js', '!./app/js/libraries/**/*.js'])
-    .pipe(to5())
+    .pipe(babel())
     .pipe(gulp.dest('dist'));
 });
 

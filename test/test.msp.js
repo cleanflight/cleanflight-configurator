@@ -508,13 +508,13 @@ describe('msp', function(){
   });
 
   describe('given an MSP_BOARD_INFO message', function() {
-    var payload = Array.prototype.slice.call(encoder.encode('CLFL')).concat(0, 1);
+    var payload = Array.prototype.slice.call(encoder.encode('CLFL')).concat(1, 0);
     var message = {data:incoming.concat(6, MSP_codes.MSP_BOARD_INFO, payload, 6)};
     it('should set config data correctly', function() {
       MSP.read(message);
       MSP.packet_error.should.equal(0, 'packet error');
       CONFIG.boardIdentifier.should.equal('CLFL');
-      CONFIG.boardVersion.should.equal(1); // NOTE: big endian
+      CONFIG.boardVersion.should.equal(1);
     });
   });
 

@@ -587,10 +587,10 @@ describe('msp', function(){
     it('should set servo config correctly', function() {
       MSP.read(message);
       MSP.packet_error.should.equal(0, 'packet error');
-      // SERVO_CONFIG[0].indexOfChannelToForward.should.equal(1);
-      // SERVO_CONFIG[1].indexOfChannelToForward.should.equal(2);
-      // SERVO_CONFIG[2].indexOfChannelToForward.should.equal(3);
-      // SERVO_CONFIG[3].indexOfChannelToForward.should.equal(4);
+      SERVO_CONFIG[0].indexOfChannelToForward.should.equal(1);
+      SERVO_CONFIG[1].indexOfChannelToForward.should.equal(2);
+      SERVO_CONFIG[2].indexOfChannelToForward.should.equal(3);
+      SERVO_CONFIG[3].indexOfChannelToForward.should.equal(4);
       Should(SERVO_CONFIG[4].indexOfChannelToForward).undefined;
       Should(SERVO_CONFIG[5].indexOfChannelToForward).undefined;
       Should(SERVO_CONFIG[6].indexOfChannelToForward).undefined;

@@ -75,7 +75,7 @@
 			if(pitch>constants.pitch_bound){pitch = constants.pitch_bound;}
 			else if(pitch<-constants.pitch_bound){pitch = -constants.pitch_bound;}
 			placeholder.each(function(){
-				$(this).find('div.instrument.attitude div.roll div.pitch').css('top', pitch*0.7 + '%');
+				$(this).find('div.instrument.attitude div.roll div.pitch').css('top', -pitch*0.7 + '%');
 			});
 		}
 

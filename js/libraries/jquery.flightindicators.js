@@ -65,7 +65,7 @@
 
 		// Private methods
 		function _setRoll(roll){
-			roll = roll > 0 ? roll*(-1) : roll*(-1);
+			roll = roll*(-1);
 			placeholder.each(function(){
 				$(this).find('div.instrument.attitude div.roll').css('transform', 'rotate('+roll+'deg)');
 			});

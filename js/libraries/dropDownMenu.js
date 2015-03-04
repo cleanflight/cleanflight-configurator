@@ -246,7 +246,7 @@ processReleases:function (){
             releases_e.innerHTML='<a  name="loading">Loading....</a>';
                         
             for (var releaseIndex = 0; releaseIndex < releases.length; releaseIndex++) {
-                if (releaseIndex > 2)
+                if (releaseIndex > 3) //only grab the latest four versions
                     break;
                 var iteration = 0;
                 $.get(releases[releaseIndex].assets_url).done(

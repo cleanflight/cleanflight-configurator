@@ -31,7 +31,7 @@ var fcList = [
 
 var cssdropdown={
 disappeardelay: 250, //set delay in miliseconds before menu disappears onmouseout
-dropdownindicator: '<img src="./images/down.gif" border="0" />', //specify full HTML to add to end of each menu item with a drop down menu
+dropdownindicator: '<img src="./images/down.svg" border="0" />', //specify full HTML to add to end of each menu item with a drop down menu
 enablereveal: [true, 5], //enable swipe effect? [true/false, steps (Number of animation steps. Integer between 1-20. Smaller=faster)]
 enableiframeshim: 1, //enable "iframe shim" in IE5.5 to IE7? (1=yes, 0=no)
 

@@ -1,0 +1,71 @@
+.chromestyle{
+width: 99%;
+font-weight: bold;
+}
+
+.chromestyle:after{ /*Add margin between menu and rest of content in Firefox*/
+content: "."; 
+display: block; 
+height: 0; 
+clear: both; 
+visibility: hidden;
+}
+
+.chromestyle ul{
+border: 1px solid #BBB;
+width: 100%;
+background: url(chromebg2.gif) center center repeat-x; /*THEME CHANGE HERE Blue*/
+padding: 4px 0;
+margin: 0;
+text-align: left; /*set value to "left", "center", or "right"*/
+}
+
+.chromestyle ul li{
+display: inline;
+}
+
+.chromestyle ul li a{
+color: #494949;
+padding: 4px 7px;
+margin: 0;
+text-decoration: none;
+border-right: 1px solid #E8BEBE; /*THEME CHANGE HERE #B5E2FE blue*/
+}
+
+.chromestyle ul li a:hover, .chromestyle ul li a.selected{ /*script dynamically adds a class of "selected" to the current active menu item*/
+background: url(chromebg4-over.gif) center center repeat-x; /*THEME CHANGE HERE*/
+}
+
+
+/* ######### Style for Drop Down Menu ######### */
+
+.dropmenudiv{
+position:inherit;
+top: 0;
+display: block;
+border: 1px solid #E8BEBE; /*THEME CHANGE HERE*/
+border-bottom-width: 0;
+font:normal 12px Verdana;
+line-height:18px;
+z-index:100;
+background-color: white;
+width: 320px;
+visibility: hidden;
+}
+
+
+.dropmenudiv a{
+width: 100%;
+display: block;
+text-indent: 3px;
+border-bottom: 1px solid #E8BEBE; /*THEME CHANGE HERE*/
+padding: 2px 0;
+text-decoration: none;
+font: 11px Verdana;
+font-weight: bold;
+color: black;
+}
+
+.dropmenudiv a:hover{ /*THEME CHANGE HERE  #EBF7FF*/
+background-color: #E8BEBE;
+}

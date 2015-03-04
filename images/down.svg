@@ -1,6 +1,8 @@
-<?xml version="1.0" standalone="yes"?>
-<svg width="9" height="5">
-<path style="fill:#010101; stroke:none;" d="M0 0L4 5L9 0L0 0z"/>
-<path style="fill:#ffffff; stroke:none;" d="M0 1L0 5L4 5L0 1M8 1L5 5L9 5L8 1z"/>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="9pt" height="5pt" viewBox="0 0 9 5" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path fill="#000000" d=" M 0.00 0.00 L 9.00 0.00 L 9.00 0.61 C 7.49 1.99 5.98 3.38 4.71 5.00 L 4.37 5.00 C 3.00 3.46 1.57 1.98 0.00 0.65 L 0.00 0.00 Z" />
+<path fill="#ffffff" d=" M 0.00 0.65 C 1.57 1.98 3.00 3.46 4.37 5.00 L 0.00 5.00 L 0.00 0.65 Z" />
+<path fill="#ffffff" d=" M 4.71 5.00 C 5.98 3.38 7.49 1.99 9.00 0.61 L 9.00 5.00 L 4.71 5.00 Z" />
 </svg>
 

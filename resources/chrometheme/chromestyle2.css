@@ -14,7 +14,7 @@ visibility: hidden;
 .chromestyle ul{
 border: 1px solid #BBB;
 width: 100%;
-background: url(chromebg2.gif) center center repeat-x; /*THEME CHANGE HERE Blue*/
+background: url(chromebg2.svg) center center repeat-x; /*THEME CHANGE HERE Blue*/
 padding: 4px 0;
 margin: 0;
 text-align: left; /*set value to "left", "center", or "right"*/
@@ -33,7 +33,7 @@ border-right: 1px solid #E8BEBE; /*THEME CHANGE HERE #B5E2FE blue*/
 }
 
 .chromestyle ul li a:hover, .chromestyle ul li a.selected{ /*script dynamically adds a class of "selected" to the current active menu item*/
-background: url(chromebg4-over.gif) center center repeat-x; /*THEME CHANGE HERE*/
+background: url(chromebg4-over.svg) center center repeat-x; /*THEME CHANGE HERE*/
 }
 
 

@@ -338,10 +338,10 @@ processReleases:function (){
                     $('div.release_info').slideUp();
                     $('a.flash_firmware').addClass('locked');
                 }
-                $('span.progressLabel').text("Click on Load Firmware [online] to fetch  ->  {0} -- {1}".format(
+                $('span.progressLabel').text("{0} -- {1}  ~  click on Load Firmware [online] to fetch".format(
                         selectedRelease.target,
                         selectedRelease.name)
-                        );
+                 );
             });                    
 
         }).fail(function (data) {

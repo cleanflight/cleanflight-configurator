@@ -21,7 +21,7 @@
 
 var selectedRelease;
 var fcList = [
-    {name: 'AlianWiiF1', revision: '1.0', image: 'AlianWiiF1'},
+    {name: 'AlienWiiF1', revision: '1.0', image: 'AlienWiiF1'},
     {name: 'CJMCU', revision: '1.0', image: 'CJMCU'},
     {name: 'CC3D', revision: '1.0', image: 'AlianWiiF1'},
     {name: 'Naze', revision: '1.0', image: 'AlianWiiF1'},

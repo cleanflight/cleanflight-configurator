@@ -4,11 +4,19 @@ TABS.firmware_flasher = {};
 TABS.firmware_flasher.initialize = function (callback) {
     var self = this;
 
-    if (GUI.active_tab != 'firmware_flasher') {
+    var fcList = [
+        {name: 'AlienWiiF1', revision: '1.0', image: ''},        
+        {name: 'CC3D', revision: '1.0', image: ''},
+        {name: 'CJMCU', revision: '1.0', image: ''},
+        {name: 'Naze', revision: '5.0', image: ''},
+        {name: 'Sparky', revision: '1.0', image: ''}
+    ];
+
+    if (GUI.active_tab !== 'firmware_flasher') {
         GUI.active_tab = 'firmware_flasher';
         googleAnalytics.sendAppView('Firmware Flasher');
     }
-
+    
     var intel_hex = false, // standard intel hex in string format
         parsed_hex = false; // parsed raw hex in array format
         
@@ -16,6 +24,12 @@ TABS.firmware_flasher.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
+        var parent = $('ul.flightControllerList');
+        parent.append(
+                '<li><a href="https://github.com/cleanflight/cleanflight/releases"'
+                + 'title="Navigate to Release Repository to download older versions" target="_blank">Release Repository</a></li>');
+        cssdropdown.buildDropdownMenu(parent, fcList, "selectedFC");
+        
         function parse_hex(str, callback) {
             // parsing hex in different thread
             var worker = new Worker('./js/workers/hex_parser.js');
@@ -27,10 +41,8 @@ TABS.firmware_flasher.initialize = function (callback) {
 
             // send data/string over for processing
             worker.postMessage(str);
-        }
+        }                
         
-        cssdropdown.startchrome();        
-            
         // UI Hooks
         $('a.load_file').click(function () {
             chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['hex']}]}, function (fileEntry) {
@@ -153,11 +165,10 @@ TABS.firmware_flasher.initialize = function (callback) {
             //lock for next iteration
             $('a.load_remote_file').addClass('locked');
             
-            var summary = selectedRelease;
-            if (summary) { // undefined while list is loading or while running offline
-                $('span.progressLabel').text('Fetching Remote File - Please Wait......');
-                $.get(summary.url, function (data) {
-                    process_hex(data, summary);
+            if (cssdropdown.subMenuItem) { // undefined while list is loading or while running offline                                
+                $('span.progressLabel').text('Fetching Remote File - Please Wait  ....');
+                $.get(cssdropdown.subMenuItem.url, function (data) {
+                    process_hex(data, cssdropdown.subMenuItem);
                 }).fail(failed_to_load);
             } else {
                 $('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherFailedToLoadOnlineFirmware'));

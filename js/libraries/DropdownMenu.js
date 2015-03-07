@@ -225,11 +225,11 @@ buildSubMenu:function (){
          
     var releases_e = this.dropMenuObj;
     var itemsArr = [];
-    
+    var limit = 3; // zero based, we only fetch max 4 releases
     $.get('https://api.github.com/repos/cleanflight/cleanflight/releases', function (releases){
             
             for (var releaseIndex = 0; releaseIndex < releases.length; releaseIndex++) {
-                if (releaseIndex > 3) //we only get the latest four releases
+                if (releaseIndex > limit) //we only get the latest four releases
                     break;
                 var iteration = 0;
                 $.get(releases[releaseIndex].assets_url).done(
@@ -291,27 +291,23 @@ buildSubMenu:function (){
                                         )).data('summary', summary);
                                 
                                 itemsArr.push(subMenu_e);
-                                
-                                if (iteration > 0) {
+                                iteration++;
+                                if (iteration >= limit) {
                                     itemsArr.sort(function(a, b) {                                   
                                         return a.data('summary').name === b.data('summary').name
                                                 ? 0
                                                 : (a.data('summary').name < b.data('summary').name 
                                                 ? 1 : -1);
                                     });
-                                }
-                                                                
-                                if(iteration === 3) {
-                                    for (var i = 0; i < 4; i++) {
+                                    
+                                    for (var i = 0; i < itemsArr.length; i++) {
                                         if (i === 0) //replace 'Loading....'                                     
                                             $('a.loading').replaceWith(itemsArr[i]);
                                         else
-                                        $('div.dropmenudiv').append(itemsArr[i]);
+                                            $('div.dropmenudiv').append(itemsArr[i]);
                                     }
-                                }
-                                iteration++;
+                                }     
                             }
-                            
                         }).bind(this, releases, releaseIndex, releases_e)
                 );                 
             }//for release

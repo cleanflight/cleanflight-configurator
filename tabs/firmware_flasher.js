@@ -23,12 +23,6 @@ TABS.firmware_flasher.initialize = function (callback) {
     $('#content').load("./tabs/firmware_flasher.html", function () {
         // translate to user-selected language
         localize();
-
-        var parent = $('ul.flightControllerList');
-        parent.append(
-                '<li><a href="https://github.com/cleanflight/cleanflight/releases"'
-                + 'title="Navigate to Release Repository to download older versions" target="_blank">Release Repository</a></li>');
-        cssdropdown.buildDropdownMenu(parent, fcList, "selectedFC");
         
         function parse_hex(str, callback) {
             // parsing hex in different thread
@@ -42,6 +36,12 @@ TABS.firmware_flasher.initialize = function (callback) {
             // send data/string over for processing
             worker.postMessage(str);
         }                
+        
+        var parent = $('ul.flightControllerList');
+        parent.append(
+                '<li><a href="https://github.com/cleanflight/cleanflight/releases"'
+                + 'title="Navigate to Release Repository to download older versions" target="_blank">Release Repository</a></li>');
+        cssdropdown.buildDropdownMenu(parent, fcList, "selectedFC");
         
         // UI Hooks
         $('a.load_file').click(function () {
@@ -170,8 +170,6 @@ TABS.firmware_flasher.initialize = function (callback) {
                 $.get(cssdropdown.subMenuItem.url, function (data) {
                     process_hex(data, cssdropdown.subMenuItem);
                 }).fail(failed_to_load);
-            } else {
-                $('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherFailedToLoadOnlineFirmware'));
             }
         });
         

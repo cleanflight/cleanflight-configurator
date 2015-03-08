@@ -3,16 +3,21 @@
         <progress class="progress" value="0" min="0" max="100"></progress>
         <span class="progressLabel" i18n="firmwareFlasherLoadFirmwareFile"></span>
     </div>
-    <div class="options">
-        <div class="option releases">
-            <select name="release">
-                <option value="0">Loading ...</option>
-            </select>
-            <span class="description" i18n="firmwareFlasherOnlineReleasesDescription"></span>
+    <div class="fc" style="height: 100px; display: block;">
+        <div class="chromestyle" id="flightControllerMenu">
+            <ul class='flightControllerList'> 
+                <!-- list generated here -->
+            </ul>               
         </div>
+        <!-- drop down menu --> 
+        <div class="dropmenudiv" id="selectedFC" >                                                        
+            <!-- list generated here -->            
+        </div>
+    </div>
+    <div class="options">       
         <div class="option">
             <label>
-                <input class="updating" type="checkbox" />
+                <input class="updating" type="checkbox"/>
                 <span i18n="firmwareFlasherNoReboot"></span>
             </label>
             <span class="description" i18n="firmwareFlasherNoRebootDescription"></span>

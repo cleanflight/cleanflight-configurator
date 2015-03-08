@@ -4,18 +4,26 @@ TABS.firmware_flasher = {};
 TABS.firmware_flasher.initialize = function (callback) {
     var self = this;
 
-    if (GUI.active_tab != 'firmware_flasher') {
+    var fcList = [
+        {name: 'AlienWiiF1', revision: '1.0', image: ''},        
+        {name: 'CC3D', revision: '1.0', image: ''},
+        {name: 'CJMCU', revision: '1.0', image: ''},
+        {name: 'Naze', revision: '5.0', image: ''},
+        {name: 'Sparky', revision: '1.0', image: ''}
+    ];
+
+    if (GUI.active_tab !== 'firmware_flasher') {
         GUI.active_tab = 'firmware_flasher';
         googleAnalytics.sendAppView('Firmware Flasher');
     }
-
+    
     var intel_hex = false, // standard intel hex in string format
         parsed_hex = false; // parsed raw hex in array format
         
     $('#content').load("./tabs/firmware_flasher.html", function () {
         // translate to user-selected language
         localize();
-
+        
         function parse_hex(str, callback) {
             // parsing hex in different thread
             var worker = new Worker('./js/workers/hex_parser.js');
@@ -27,91 +35,14 @@ TABS.firmware_flasher.initialize = function (callback) {
 
             // send data/string over for processing
             worker.postMessage(str);
-        }
-
-        var processReleases = function (releases){
-            var releases_e = $('select[name="release"]').empty();
-
-            releases_e.append($("<option value='0'>{0}</option>".format(chrome.i18n.getMessage('firmwareFlasherOptionLabelSelectFirmware'))));
-
-            for(var releaseIndex = 0; releaseIndex < releases.length; releaseIndex++){
-                $.get(releases[releaseIndex].assets_url).done(
-                    (function (releases, releaseIndex, releases_e, assets){
-                        var release = releases[releaseIndex];
-                        for (var assetIndex = 0; assetIndex < assets.length; assetIndex++) {
-
-                            var asset = assets[assetIndex];
-                            var targetFromFilenameExpression = /.*_(.*)\.(.*)/;
-                            var match = targetFromFilenameExpression.exec(asset.name);
-                            if (!match) {
-                                continue;
-                            }
-                            var target = match[1];
-                            var format = match[2];
-
-                            if (format != 'hex') {
-                                continue;
-                            }
-
-                            var date = new Date(release.published_at);
-                            var formattedDate = "{0}-{1}-{2} {3}:{4}".format(
-                                date.getFullYear(),
-                                date.getMonth() + 1,
-                                date.getDate(),
-                                date.getUTCHours(),
-                                date.getMinutes()
-                            );
-                            
-                            var summary = {
-                                "releaseUrl": release.html_url,
-                                "name"      : release.name,
-                                "url"       : asset.browser_download_url,
-                                "file"      : asset.name,
-                                "target"    : target,
-                                "date"      : formattedDate,
-                                "notes"     : release.body,
-                                "status"    : release.prerelease ? "release-candidate" : "stable"
-                            };
-
-                            var select_e = 
-                                $("<option value='{0}_{1}'>{2} {3} {4} ({5})</option>".format(
-                                    releaseIndex,
-                                    assetIndex,
-                                    summary.name,
-                                    summary.target,
-                                    summary.date,
-                                    summary.status
-                                )).data('summary', summary);
-                            
-                            releases_e.append(select_e);
-                        }
-                    }).bind(this, releases, releaseIndex, releases_e)
-                );
-            }
-        };
-
-        $.get('https://api.github.com/repos/cleanflight/cleanflight/releases', function (releases){
-            processReleases(releases);
-            
-            // bind events
-            $('select[name="release"]').change(function() {
-                if (!GUI.connect_lock) {
-                    $('.progress').val(0).removeClass('valid invalid');
-                    $('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherLoadFirmwareFile'));
-                    $('div.git_info').slideUp();
-                    $('div.release_info').slideUp();
-                    $('a.flash_firmware').addClass('locked');
-                }
-            });
-
-        }).fail(function (data){
-            if (data["responseJSON"]){
-                GUI.log("<b>GITHUB Query Failed: <code>{0}</code></b>".format(data["responseJSON"].message));
-            }
-            $('select[name="release"]').empty().append('<option value="0">Offline</option>');
-        });
+        }                
         
-
+        var parent = $('ul.flightControllerList');
+        parent.append(
+                '<li><a href="https://github.com/cleanflight/cleanflight/releases"'
+                + 'title="Navigate to Release Repository to download older versions" target="_blank">Release Repository</a></li>');
+        cssdropdown.buildDropdownMenu(parent, fcList, "selectedFC");
+        
         // UI Hooks
         $('a.load_file').click(function () {
             chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['hex']}]}, function (fileEntry) {
@@ -164,26 +95,9 @@ TABS.firmware_flasher.initialize = function (callback) {
                 });
             });
         });
-
-        /**
-         * Lock / Unlock the firmware download button according to the firmware selection dropdown.
-         */
-        $('select[name="release"]').change(function(evt){
-            if (evt.target.value=="0") {
-                $("a.load_remote_file").addClass('locked');
-            }
-            else {
-                $("a.load_remote_file").removeClass('locked');
-            }
-        });
-        
+       
         $('a.load_remote_file').click(function (evt) {
-
-            if ($('select[name="release"]').val() == "0") {
-                GUI.log("<b>No firmware selected to load</b>");
-                return;
-            }
-
+            
             function process_hex(data, summary) {
                 intel_hex = data;
 
@@ -247,15 +161,15 @@ TABS.firmware_flasher.initialize = function (callback) {
                 $('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherFailedToLoadOnlineFirmware'));
                 $('a.flash_firmware').addClass('locked');
             }
-
-            var summary = $('select[name="release"] option:selected').data('summary');
-
-            if (summary) { // undefined while list is loading or while running offline
-                $.get(summary.url, function (data) {
-                    process_hex(data, summary);
+            
+            //lock for next iteration
+            $('a.load_remote_file').addClass('locked');
+            
+            if (cssdropdown.subMenuItem) { // undefined while list is loading or while running offline                                
+                $('span.progressLabel').text('Fetching Remote File - Please Wait  ....');
+                $.get(cssdropdown.subMenuItem.url, function (data) {
+                    process_hex(data, cssdropdown.subMenuItem);
                 }).fail(failed_to_load);
-            } else {
-                $('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherFailedToLoadOnlineFirmware'));
             }
         });
         

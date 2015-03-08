@@ -186,7 +186,15 @@ buildDropdownMenu: function(parent, items, related){
     this.standardBody = (document.compatMode === "CSS1Compat")? document.documentElement : document.body;
         
     for (var i = 0; i < items.length; i++) {        
-        parent.append('<li><a href="#" rel="'+ related + '" ' + 'name="'+items[i].name+'">' + items[i].name + '</a></li>');            
+        parent.append('<li><a href="#" rel="'
+                + related
+                + '" '
+                + 'name="'
+                +items[i].name
+                +'" title="Only fetches the latest four Releases">'
+                + items[i].name
+                + '</a></li>'
+                );
     }
     
     var menuitems = document.getElementsByTagName("a");

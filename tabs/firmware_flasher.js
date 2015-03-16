@@ -263,6 +263,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             if (!$(this).hasClass('locked')) {
                 if (!GUI.connect_lock) { // button disabled while flashing is in progress
                     if (parsed_hex != false) {
+                        $('div.release_info').slideUp();//hide it so we can see progress bar in action
                         if (String($('div#port-picker #port').val()) != 'DFU') {
                             if (String($('div#port-picker #port').val()) != '0') {
                                 var options = {},

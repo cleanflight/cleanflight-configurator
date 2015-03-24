@@ -381,6 +381,9 @@
     "initialSetupAccelCalibEnded": {
         "message": "Accelerometer calibration finished"
     },
+    "initialSetupLoopTimeHead": {
+        "message": "Flight Controller Loop Time"
+    },
     "initialSetupMagCalibStarted": {
         "message": "Magnetometer calibration started"
     },

@@ -182,6 +182,10 @@
 .tab-setup .block.instruments {
     width: 185px;
 }
+.tab-setup .block.looptime {
+    width: 185px;
+    margin-top: 10px;
+}
 .tab-setup .buttons {
     width: calc(100% - 20px);
 

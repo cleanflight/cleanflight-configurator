@@ -25,8 +25,13 @@ TABS.setup.initialize = function (callback) {
     }
 
     function load_misc_data() {
-        MSP.send_message(MSP_codes.MSP_MISC, false, false, load_html);
+        MSP.send_message(MSP_codes.MSP_MISC, false, false
+                        , CONFIG.apiVersion >= 1.8 ? load_Loop_time : load_html);
     }
+    
+    function load_Loop_time() {
+        MSP.send_message(MSP_codes.MSP_LOOP_TIME, false, false, load_html);
+    }    
 
     function load_html() {
         $('#content').load("./tabs/setup.html", process_html);
@@ -56,8 +61,16 @@ TABS.setup.initialize = function (callback) {
         }
 
         self.initializeInstruments();
-
+        
+        $('input[name="looptime"]').val(LOOP_TIME);
+        $('span.looptimehz').text(parseFloat((1/LOOP_TIME)*1000*1000).toFixed(0) + '  Cycles per Sec');        
+        
         // UI Hooks
+        $('input[name="looptime"]').change(function() {
+            LOOP_TIME = parseInt($('input[name="looptime"]').val());
+            $('span.looptimehz').text(parseFloat((1/LOOP_TIME)*1000*1000).toFixed(0) + '  Cycles per Sec');
+        });
+        
         $('a.calibrateAccel').click(function () {
             var self = $(this);
 
@@ -140,6 +153,35 @@ TABS.setup.initialize = function (callback) {
                 // get latest settings
                 TABS.setup.initialize();
             });
+        });
+        
+        $('a.save').click(function () {
+            LOOP_TIME = parseInt($('input[name="looptime"]').val());
+            
+            function save_to_eeprom() {
+                MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, reboot);
+            }
+
+            function reboot() {
+                GUI.log(chrome.i18n.getMessage('configurationEepromSaved'));
+
+                GUI.tab_switch_cleanup(function() {
+                    MSP.send_message(MSP_codes.MSP_SET_REBOOT, false, false, reinitialize);
+                });
+            }
+
+            function reinitialize() {
+                GUI.log(chrome.i18n.getMessage('deviceRebooting'));
+
+                GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
+                    MSP.send_message(MSP_codes.MSP_IDENT, false, false, function () {
+                        GUI.log(chrome.i18n.getMessage('deviceReady'));
+                        TABS.setup.initialize(false, $('#content').scrollTop());
+                    });
+                },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
+            }
+            
+            MSP.send_message(MSP_codes.MSP_SET_LOOP_TIME, MSP.crunch(MSP_codes.MSP_SET_LOOP_TIME), false, save_to_eeprom);
         });
 
         // cached elements

@@ -62,8 +62,13 @@ TABS.setup.initialize = function (callback) {
 
         self.initializeInstruments();
         
-        $('input[name="looptime"]').val(LOOP_TIME);
-        $('span.looptimehz').text(parseFloat((1/LOOP_TIME)*1000*1000).toFixed(0) + '  Cycles per Sec');        
+        if(CONFIG.apiVersion >= 1.8) {
+            $('input[name="looptime"]').val(LOOP_TIME);
+            $('span.looptimehz').text(parseFloat((1/LOOP_TIME)*1000*1000).toFixed(0) + '  Cycles per Sec');
+        }
+        else {
+            $('.looptime').hide();
+        }
         
         // UI Hooks
         $('input[name="looptime"]').change(function() {

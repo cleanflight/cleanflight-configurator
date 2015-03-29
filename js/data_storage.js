@@ -1,11 +1,11 @@
 'use strict';
 
 var CONFIGURATOR = {
-    'releaseDate': 1424462791805, // new Date().getTime() - 2015.02.20
+    'releaseDate': 1427641210170, // new Date().getTime() - Sun Mar 29 2015 16:00:25 GMT+0100 (BST)
     'apiVersionAccepted': 1.2,
-    'backupRestoreMinApiVersionAccepted': 1.6,
+    'backupRestoreMinApiVersionAccepted': 1.5,
     'pidControllerChangeMinApiVersion': 1.5,
-    'backupFileMinVersionAccepted': '0.63', // chrome.runtime.getManifest().version is stored as string, so does this one
+    'backupFileMinVersionAccepted': '0.55', // chrome.runtime.getManifest().version is stored as string, so does this one
     'connectionValid': false,
     'connectionValidCliOnly': false,
     'cliActive': false,
@@ -65,7 +65,9 @@ var RC = {
 var RC_tuning = {
     RC_RATE:         0,
     RC_EXPO:         0,
-    roll_pitch_rate: 0,
+    roll_pitch_rate: 0, // pre 1.7 api only
+    roll_rate:       0, 
+    pitch_rate:      0,
     yaw_rate:        0,
     dynamic_THR_PID: 0,
     throttle_MID:    0,
@@ -75,10 +77,6 @@ var RC_tuning = {
 
 var AUX_CONFIG = [];
 var AUX_CONFIG_IDS = [];
-//Disabled, cleanflight does not use MSP_BOX.
-/*
-var AUX_CONFIG_values = [];
-*/
 
 var MODE_RANGES = [];
 var ADJUSTMENT_RANGES = [];
@@ -87,6 +85,8 @@ var SERVO_CONFIG = [];
 
 var SERIAL_CONFIG = {
     ports: [],
+    
+    // pre 1.6 settings
     mspBaudRate: 0,
     gpsBaudRate: 0,
     gpsPassthroughBaudRate: 0,
@@ -130,6 +130,15 @@ var ANALOG = {
     mAhdrawn:   0,
     rssi:       0,
     amperage:   0
+};
+
+var ARMING_CONFIG = {
+    auto_disarm_delay:      0,
+    disarm_kill_switch:     0
+};
+
+var FC_CONFIG = {
+    loopTime: 0
 };
 
 var MISC = {

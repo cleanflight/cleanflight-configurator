@@ -22,9 +22,13 @@ var MSP_codes = {
     MSP_SONAR:                  58,
     MSP_PID_CONTROLLER:         59,
     MSP_SET_PID_CONTROLLER:     60,
+    MSP_ARMING_CONFIG:          61,
+    MSP_SET_ARMING_CONFIG:      62,
     MSP_DATAFLASH_SUMMARY:      70,
     MSP_DATAFLASH_READ:         71,
     MSP_DATAFLASH_ERASE:        72,
+    MSP_LOOP_TIME:              73,
+    MSP_SET_LOOP_TIME:          74,
 
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -48,7 +52,7 @@ var MSP_codes = {
     MSP_WP:                 118,
     MSP_BOXIDS:             119,
     MSP_SERVO_CONF:         120,
-
+    
     MSP_SET_RAW_RC:         200,
     MSP_SET_RAW_GPS:        201,
     MSP_SET_PID:            202,
@@ -63,7 +67,7 @@ var MSP_codes = {
     MSP_SET_HEAD:           211,
     MSP_SET_SERVO_CONF:     212,
     MSP_SET_MOTOR:          214,
-
+    
     // MSP_BIND:               240,
 
     MSP_EEPROM_WRITE:       250,
@@ -78,8 +82,8 @@ var MSP_codes = {
     MSP_GPS_SV_INFO:        164, // get Signal Strength
 
     // Additional private MSP for baseflight configurator (yes thats us \o/)
-    MSP_RCMAP:              64, // get channel map (also returns number of channels total)
-    MSP_SET_RCMAP:          65, // set rc map, numchannels to set comes from MSP_RCMAP
+    MSP_RX_MAP:              64, // get channel map (also returns number of channels total)
+    MSP_SET_RX_MAP:          65, // set rc map, numchannels to set comes from MSP_RX_MAP
     MSP_BF_CONFIG:             66, // baseflight-specific settings that aren't covered elsewhere
     MSP_SET_BF_CONFIG:         67, // baseflight-specific settings save
     MSP_SET_REBOOT:         68, // reboot settings
@@ -108,7 +112,9 @@ var MSP = {
         '19200',
         '38400',
         '57600',
-        '115200'
+        '115200',
+        '230400',
+        '250000',
     ],
     
     serialPortFunctions: // in LSB bit order 
@@ -288,14 +294,22 @@ var MSP = {
                 ANALOG.amperage = data.getInt16(5, 1) / 100; // A
                 break;
             case MSP_codes.MSP_RC_TUNING:
-                RC_tuning.RC_RATE = parseFloat((data.getUint8(0) / 100).toFixed(2));
-                RC_tuning.RC_EXPO = parseFloat((data.getUint8(1) / 100).toFixed(2));
-                RC_tuning.roll_pitch_rate = parseFloat((data.getUint8(2) / 100).toFixed(2));
-                RC_tuning.yaw_rate = parseFloat((data.getUint8(3) / 100).toFixed(2));
-                RC_tuning.dynamic_THR_PID = parseFloat((data.getUint8(4) / 100).toFixed(2));
-                RC_tuning.throttle_MID = parseFloat((data.getUint8(5) / 100).toFixed(2));
-                RC_tuning.throttle_EXPO = parseFloat((data.getUint8(6) / 100).toFixed(2));
-                RC_tuning.dynamic_THR_breakpoint = parseInt(data.getUint16(7, 1));
+                var offset = 0;
+                RC_tuning.RC_RATE = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                RC_tuning.RC_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                if (CONFIG.apiVersion < 1.7) {
+                    RC_tuning.roll_pitch_rate = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                } else {
+                    RC_tuning.roll_rate = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                    RC_tuning.pitch_rate = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                }
+                RC_tuning.yaw_rate = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                RC_tuning.dynamic_THR_PID = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                RC_tuning.throttle_MID = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                RC_tuning.throttle_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                if (CONFIG.apiVersion >= 1.7) {
+                    RC_tuning.dynamic_THR_breakpoint = data.getUint16(offset++, 1);
+                }
                 break;
             case MSP_codes.MSP_PID:
                 // PID data arrived, we need to scale it and save to appropriate bank / array
@@ -338,23 +352,41 @@ var MSP = {
                 }
                 break;
             */
+            case MSP_codes.MSP_ARMING_CONFIG:
+                if (CONFIG.apiVersion >= 1.8) {
+                    ARMING_CONFIG.auto_disarm_delay = data.getUint8(0, 1);
+                    ARMING_CONFIG.disarm_kill_switch = data.getUint8(1);
+                }
+                break;
+            case MSP_codes.MSP_LOOP_TIME:
+                if (CONFIG.apiVersion >= 1.8) {
+                    FC_CONFIG.loopTime = data.getInt16(0, 1);
+                }
+                break;
             case MSP_codes.MSP_MISC: // 22 bytes
-                MISC.midrc = data.getInt16(0, 1);
-                MISC.minthrottle = data.getUint16(2, 1); // 0-2000
-                MISC.maxthrottle = data.getUint16(4, 1); // 0-2000
-                MISC.mincommand = data.getUint16(6, 1); // 0-2000
-                MISC.failsafe_throttle = data.getUint16(8, 1); // 1000-2000
-                MISC.gps_type = data.getUint8(10);
-                MISC.gps_baudrate = data.getUint8(11);
-                MISC.gps_ubx_sbas = data.getInt8(12);
-                MISC.multiwiicurrentoutput = data.getUint8(13);
-                MISC.rssi_channel = data.getUint8(14);
-                MISC.placeholder2 = data.getUint8(15);
-                MISC.mag_declination = data.getInt16(16, 1) / 10; // -18000-18000
-                MISC.vbatscale = data.getUint8(18, 1); // 10-200
-                MISC.vbatmincellvoltage = data.getUint8(19, 1) / 10; // 10-50
-                MISC.vbatmaxcellvoltage = data.getUint8(20, 1) / 10; // 10-50
-                MISC.vbatwarningcellvoltage = data.getUint8(21, 1) / 10; // 10-50
+                var offset = 0;
+                MISC.midrc = data.getInt16(offset, 1);
+                offset += 2;
+                MISC.minthrottle = data.getUint16(offset, 1); // 0-2000
+                offset += 2;
+                MISC.maxthrottle = data.getUint16(offset, 1); // 0-2000
+                offset += 2;
+                MISC.mincommand = data.getUint16(offset, 1); // 0-2000
+                offset += 2;
+                MISC.failsafe_throttle = data.getUint16(offset, 1); // 1000-2000
+                offset += 2;
+                MISC.gps_type = data.getUint8(offset++);
+                MISC.gps_baudrate = data.getUint8(offset++);
+                MISC.gps_ubx_sbas = data.getInt8(offset++);
+                MISC.multiwiicurrentoutput = data.getUint8(offset++);
+                MISC.rssi_channel = data.getUint8(offset++);
+                MISC.placeholder2 = data.getUint8(offset++);
+                MISC.mag_declination = data.getInt16(offset, 1) / 10; // -18000-18000
+                offset += 2;
+                MISC.vbatscale = data.getUint8(offset++, 1); // 10-200
+                MISC.vbatmincellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
+                MISC.vbatmaxcellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
+                MISC.vbatwarningcellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
                 break;
             case MSP_codes.MSP_MOTOR_PINS:
                 console.log(data);
@@ -487,14 +519,14 @@ var MSP = {
                 }
                 break;
             // Additional private MSP for baseflight configurator
-            case MSP_codes.MSP_RCMAP:
+            case MSP_codes.MSP_RX_MAP:
                 RC_MAP = []; // empty the array as new data is coming in
 
                 for (var i = 0; i < data.byteLength; i++) {
                     RC_MAP.push(data.getUint8(i));
                 }
                 break;
-            case MSP_codes.MSP_SET_RCMAP:
+            case MSP_codes.MSP_SET_RX_MAP:
                 console.log('RCMAP saved');
                 break;
             case MSP_codes.MSP_BF_CONFIG:
@@ -742,8 +774,13 @@ var MSP = {
             case MSP_codes.MSP_SET_PID_CONTROLLER:
                 console.log('PID controller changed');
                 break;
-
-
+            case MSP_codes.MSP_SET_LOOP_TIME:
+                console.log('Looptime saved');
+                break;
+            case MSP_codes.MSP_SET_ARMING_CONFIG:
+                console.log('Arming config saved');
+                break;
+                
             default:
                 console.log('Unknown code detected: ' + code);
         }
@@ -913,13 +950,20 @@ MSP.crunch = function (code) {
         case MSP_codes.MSP_SET_RC_TUNING:
             buffer.push(parseInt(RC_tuning.RC_RATE * 100));
             buffer.push(parseInt(RC_tuning.RC_EXPO * 100));
-            buffer.push(parseInt(RC_tuning.roll_pitch_rate * 100));
+            if (CONFIG.apiVersion < 1.7) {
+                buffer.push(parseInt(RC_tuning.roll_pitch_rate * 100));
+            } else {
+                buffer.push(parseInt(RC_tuning.roll_rate * 100));
+                buffer.push(parseInt(RC_tuning.pitch_rate * 100));
+            }
             buffer.push(parseInt(RC_tuning.yaw_rate * 100));
             buffer.push(parseInt(RC_tuning.dynamic_THR_PID * 100));
             buffer.push(parseInt(RC_tuning.throttle_MID * 100));
             buffer.push(parseInt(RC_tuning.throttle_EXPO * 100));
-            buffer.push(lowByte(RC_tuning.dynamic_THR_breakpoint));
-            buffer.push(highByte(RC_tuning.dynamic_THR_breakpoint));
+            if (CONFIG.apiVersion >= 1.7) {
+                buffer.push(lowByte(RC_tuning.dynamic_THR_breakpoint));
+                buffer.push(highByte(RC_tuning.dynamic_THR_breakpoint));
+            }
             break;
         // Disabled, cleanflight does not use MSP_SET_BOX.
         /*
@@ -930,7 +974,7 @@ MSP.crunch = function (code) {
             }
             break;
         */
-        case MSP_codes.MSP_SET_RCMAP:
+        case MSP_codes.MSP_SET_RX_MAP:
             for (var i = 0; i < RC_MAP.length; i++) {
                 buffer.push(RC_MAP[i]);
             }
@@ -940,6 +984,14 @@ MSP.crunch = function (code) {
             buffer.push(highByte(CONFIG.accelerometerTrims[0]));
             buffer.push(lowByte(CONFIG.accelerometerTrims[1]));
             buffer.push(highByte(CONFIG.accelerometerTrims[1]));
+            break;
+        case MSP_codes.MSP_SET_ARMING_CONFIG:
+            buffer.push(ARMING_CONFIG.auto_disarm_delay);
+            buffer.push(ARMING_CONFIG.disarm_kill_switch);
+            break;
+        case MSP_codes.MSP_SET_LOOP_TIME:
+            buffer.push(lowByte(FC_CONFIG.loopTime));
+            buffer.push(highByte(FC_CONFIG.loopTime));
             break;
         case MSP_codes.MSP_SET_MISC:
             buffer.push(lowByte(MISC.midrc));

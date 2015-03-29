@@ -8,7 +8,8 @@ function configuration_backup(callback) {
 
     var configuration = {
         'generatedBy': chrome.runtime.getManifest().version,
-        'profiles': []
+        'apiVersion': CONFIG.apiVersion,
+        'profiles': [],
     };
 
     MSP.send_message(MSP_codes.MSP_STATUS, false, false, function () {
@@ -73,20 +74,25 @@ function configuration_backup(callback) {
     }
 
     var uniqueData = [
-        // Not used by cleanflight, and it's wrong anyway - AUX settings are per-profile in baseflight.
-        /*
-        MSP_codes.MSP_BOX,
-        */
         MSP_codes.MSP_MISC,
-        MSP_codes.MSP_RCMAP,
+        MSP_codes.MSP_RX_MAP,
         MSP_codes.MSP_BF_CONFIG,
         MSP_codes.MSP_CF_SERIAL_CONFIG,
         MSP_codes.MSP_LED_STRIP_CONFIG
     ];
 
+    function update_unique_data_list() {
+        if (CONFIG.apiVersion >= 1.8) {
+            uniqueData.push(MSP_codes.MSP_LOOP_TIME);
+            uniqueData.push(MSP_codes.MSP_ARMING_CONFIG);
+        }
+    }
+    
+    update_unique_data_list();
+
     function fetch_unique_data() {
         var codeKey = 0;
-
+        
         function fetch_unique_data_item() {
             if (codeKey < uniqueData.length) {
                 MSP.send_message(uniqueData[codeKey], false, false, function () {
@@ -94,20 +100,18 @@ function configuration_backup(callback) {
                     fetch_unique_data_item();
                 });
             } else {
-                // Not used by cleanflight, and it's wrong anyway - AUX settings are per-profile in baseflight.
-                /*
-                configuration.AUX = jQuery.extend(true, [], AUX_CONFIG_values);
-                */
                 configuration.MISC = jQuery.extend(true, {}, MISC);
                 configuration.RCMAP = jQuery.extend(true, [], RC_MAP);
                 configuration.BF_CONFIG = jQuery.extend(true, {}, BF_CONFIG);
                 configuration.SERIAL_CONFIG = jQuery.extend(true, {}, SERIAL_CONFIG);
-                configuration.LED_STRIP = jQuery.extend(true, {}, LED_STRIP);
+                configuration.LED_STRIP = jQuery.extend(true, [], LED_STRIP);
+                configuration.FC_CONFIG = jQuery.extend(true, {}, FC_CONFIG);
+                configuration.ARMING_CONFIG = jQuery.extend(true, {}, ARMING_CONFIG);
 
                 save();
             }
         }
-
+        
         // start fetching
         fetch_unique_data_item();
     }
@@ -240,11 +244,9 @@ function configuration_restore(callback) {
                     // validate
                     if (typeof configuration.generatedBy !== 'undefined' && compareVersions(configuration.generatedBy, CONFIGURATOR.backupFileMinVersionAccepted)) {
                                                 
-                        if (configuration.generatedBy != chrome.runtime.getManifest().version) {
-                            if (!migrate(configuration)) {
-                                GUI.log(chrome.i18n.getMessage('backupFileUnmigratable'));
-                                return;
-                            }
+                        if (!migrate(configuration)) {
+                            GUI.log(chrome.i18n.getMessage('backupFileUnmigratable'));
+                            return;
                         }
                         
                         configuration_upload(configuration, callback);
@@ -262,6 +264,9 @@ function configuration_restore(callback) {
     });
 
     function compareVersions(generated, required) {
+        if (generated == undefined) {
+            return false;
+        }
         var a = generated.split('.'),
             b = required.split('.');
 
@@ -314,7 +319,7 @@ function configuration_restore(callback) {
             GUI.log(chrome.i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-
+        
         if (!compareVersions(migratedVersion, '0.61.0')) {
             
             // Changing PID controller via UI was added.
@@ -330,7 +335,104 @@ function configuration_restore(callback) {
             appliedMigrationsCount++;
         }
 
-        GUI.log(chrome.i18n.getMessage('configMigrationSuccessful', [appliedMigrationsCount]));
+        if (!compareVersions(migratedVersion, '0.63.0')) {
+            
+            // LED Strip was saved as object instead of array.
+            if (typeof(configuration.LED_STRIP) == 'object') {
+                var fixed_led_strip = [];
+
+                var index = 0;
+                while (configuration.LED_STRIP[index]) {
+                    fixed_led_strip.push(configuration.LED_STRIP[index++]);
+                }
+                configuration.LED_STRIP = fixed_led_strip;
+            }
+
+            
+            for (var profileIndex = 0; profileIndex < 3; profileIndex++) {
+                var RC = configuration.profiles[profileIndex].RC;
+                // TPA breakpoint was added
+                if (!RC.dynamic_THR_breakpoint) {
+                    RC.dynamic_THR_breakpoint = 1500; // firmware default
+                }
+                
+                // Roll and pitch rates were split
+                RC.roll_rate = RC.roll_pitch_rate;
+                RC.pitch_rate = RC.roll_pitch_rate;
+            }
+            
+            migratedVersion = '0.63.0';
+            GUI.log(chrome.i18n.getMessage('configMigratedTo', [migratedVersion]));
+            appliedMigrationsCount++;
+        }
+
+        if (compareVersions(migratedVersion, '0.63.0') && !compareVersions(configuration.apiVersion, '1.7')) {
+            // Serial configuation redesigned, 0.63.0 saves old and new configurations.
+            var ports = [];
+            for (var portIndex = 0; portIndex < configuration.SERIAL_CONFIG.ports.length; portIndex++) {
+                var oldPort = configuration.SERIAL_CONFIG.ports[portIndex];
+
+                var newPort = {
+                    identifier: oldPort.identifier,
+                    functions: [],
+                    msp_baudrate: String(configuration.SERIAL_CONFIG.mspBaudRate),
+                    gps_baudrate: String(configuration.SERIAL_CONFIG.gpsBaudRate),
+                    telemetry_baudrate: 'AUTO',
+                    blackbox_baudrate: '115200',
+                };
+                
+                switch(oldPort.scenario) {
+                    case 1: // MSP, CLI, TELEMETRY, SMARTPORT TELEMETRY, GPS-PASSTHROUGH
+                    case 5: // MSP, CLI, GPS-PASSTHROUGH
+                    case 8: // MSP ONLY
+                        newPort.functions.push('MSP');
+                    break;
+                    case 2: // GPS 
+                        newPort.functions.push('GPS');
+                    break;
+                    case 3: // RX_SERIAL 
+                        newPort.functions.push('RX_SERIAL');
+                    break;
+                    case 10: // BLACKBOX ONLY
+                        newPort.functions.push('BLACKBOX');
+                    break;
+                    case 11: // MSP, CLI, BLACKBOX, GPS-PASSTHROUGH
+                        newPort.functions.push('MSP');
+                        newPort.functions.push('BLACKBOX');
+                    break;
+                }
+                
+                ports.push(newPort);
+            }
+            configuration.SERIAL_CONFIG = { 
+                ports: ports 
+            };
+            
+            appliedMigrationsCount++;
+        }
+        
+        if (compareVersions(migratedVersion, '0.63.0') && !compareVersions(configuration.apiVersion, '1.8')) {
+            // api 1.8 exposes looptime and arming config
+            
+            if (configuration.FC_CONFIG == undefined) {
+                configuration.FC_CONFIG = {
+                    loopTime: 3500
+                };
+            }
+
+            if (configuration.ARMING_CONFIG == undefined) {
+                configuration.ARMING_CONFIG = {
+                    auto_disarm_delay:      5,
+                    disarm_kill_switch:     1
+                };
+            }
+            appliedMigrationsCount++;
+        }
+        
+        if (appliedMigrationsCount > 0) {
+            GUI.log(chrome.i18n.getMessage('configMigrationSuccessful', [appliedMigrationsCount]));
+        }
+                
         return true;
     }
     
@@ -416,26 +518,27 @@ function configuration_restore(callback) {
                 var codeKey = 0;
 
                 var uniqueData = [
-                    // Not used by cleanflight, and it's wrong anyway - AUX settings are per-profile in baseflight.
-                    /*
-                    MSP_codes.MSP_SET_BOX,
-                    */
                     MSP_codes.MSP_SET_MISC,
-                    MSP_codes.MSP_SET_RCMAP,
+                    MSP_codes.MSP_SET_RX_MAP,
                     MSP_codes.MSP_SET_BF_CONFIG,
                     MSP_codes.MSP_SET_CF_SERIAL_CONFIG
                 ];
-
+                
+                function update_unique_data_list() {
+                    if (CONFIG.apiVersion >= 1.8) {
+                        uniqueData.push(MSP_codes.MSP_SET_LOOP_TIME);
+                        uniqueData.push(MSP_codes.MSP_SET_ARMING_CONFIG);
+                    }
+                }
+                
                 function load_objects() {
-                    // Disabled, cleanflight does not use MSP_BOX.
-                    /*
-                    AUX_CONFIG_values = configuration.AUX;
-                    */
                     MISC = configuration.MISC;
                     RC_MAP = configuration.RCMAP;
                     BF_CONFIG = configuration.BF_CONFIG;
                     SERIAL_CONFIG = configuration.SERIAL_CONFIG;
                     LED_STRIP = configuration.LED_STRIP;
+                    ARMING_CONFIG = configuration.ARMING_CONFIG;
+                    FC_CONFIG = configuration.FC_CONFIG;
                 }
 
                 function send_unique_data_item() {
@@ -450,7 +553,9 @@ function configuration_restore(callback) {
                 }
 
                 load_objects();
-                
+
+                update_unique_data_list();
+
                 // start uploading
                 send_unique_data_item();
             }

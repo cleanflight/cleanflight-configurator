@@ -36,7 +36,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     }
 
     function load_arming_config() {
-        MSP.send_message(MSP_codes.MSP_ARMING_CONFIG, false, false, load_html);
+        MSP.send_message(MSP_codes.MSP_ARMING_CONFIG, false, false, load_loop_time);
+    }
+
+    function load_loop_time() {
+        MSP.send_message(MSP_codes.MSP_LOOP_TIME, false, false, load_html);
     }
 
     function load_html() {
@@ -256,15 +260,25 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         // fill magnetometer
         $('input[name="mag_declination"]').val(MISC.mag_declination);
 
-        //fill motor disarm params        
+        //fill motor disarm params and FC loop time       
         if(CONFIG.apiVersion >= 1.8) {
             $('input[name="autodisarmdelay"]').val(ARMING_CONFIG.auto_disarm_delay);
             $('input[name="disarmkillswitch"]').prop('checked', ARMING_CONFIG.disarm_kill_switch);
-            if(bit_check(BF_CONFIG.features, 4 + 1))//MOTOR_STOP
+            $('div.disarm').show();            
+            if(bit_check(BF_CONFIG.features, 4))//MOTOR_STOP
                 $('div.disarmdelay').show();
+            else
+                $('div.disarmdelay').hide();
+            
+            // fill FC loop time
+            $('input[name="looptime"]').val(FC_CONFIG.loopTime);
+            if(FC_CONFIG.loopTime > 0)
+                $('span.looptimehz').text(parseFloat((1/FC_CONFIG.loopTime)*1000*1000).toFixed(0) + '  Cycles per Sec');
+            else
+                $('span.looptimehz').text('Maximum Cycles per Sec');
+            
+            $('div.cycles').show();
         }
-        else       
-            $('div.disarm').hide();
         
         // fill throttle
         $('input[name="minthrottle"]').val(MISC.minthrottle);
@@ -286,6 +300,14 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
 
         // UI hooks
+        $('input[name="looptime"]').change(function() {
+            FC_CONFIG.loopTime = parseInt($('input[name="looptime"]').val());
+            if(FC_CONFIG.loopTime > 0)
+                $('span.looptimehz').text(parseFloat((1/FC_CONFIG.loopTime)*1000*1000).toFixed(0) + '  Cycles per Sec');
+            else
+                $('span.looptimehz').text('Maximum Cycles per Sec');
+        });
+        
         $('input[type="checkbox"].feature', features_e).change(function () {
             var element = $(this),
                 index = element.data('bit'),
@@ -337,6 +359,8 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             if(CONFIG.apiVersion >= 1.8) {
                 ARMING_CONFIG.auto_disarm_delay = parseInt($('input[name="autodisarmdelay"]').val());
                 ARMING_CONFIG.disarm_kill_switch = ~~$('input[name="disarmkillswitch"]').is(':checked'); // ~~ boolean to decimal conversion
+                
+                FC_CONFIG.loopTime = parseInt($('input[name="looptime"]').val());
             }
             
             MISC.minthrottle = parseInt($('input[name="minthrottle"]').val());
@@ -372,7 +396,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
 
             function save_arming_config() {
-                MSP.send_message(MSP_codes.MSP_SET_ARMING_CONFIG, MSP.crunch(MSP_codes.MSP_SET_ARMING_CONFIG), false, save_to_eeprom);
+                MSP.send_message(MSP_codes.MSP_SET_ARMING_CONFIG, MSP.crunch(MSP_codes.MSP_SET_ARMING_CONFIG), false, save_looptime_config);
+            }
+            
+            function save_looptime_config() {
+                MSP.send_message(MSP_codes.MSP_SET_LOOP_TIME, MSP.crunch(MSP_codes.MSP_SET_LOOP_TIME), false, save_to_eeprom);
             }
 
             function save_to_eeprom() {

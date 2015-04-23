@@ -26,8 +26,8 @@ var mixerList = [
      {name: 'A-tail Quad',   model: 'quad_atail',   image: 'atail_quad'},
      {name: 'QuadXTilt',     model: 'quad_x', 		image: 'quad_x'},
      {name: 'QuadXCosine',   model: 'quad_x', 		image: 'quad_x'},
-	 {name: 'QuadXThrust',   model: 'quad_x', 		image: 'quad_x'},
-	 {name: 'QuadXPitch',    model: 'quad_x', 		image: 'quad_x'},
-	 {name: 'QuadXAll',      model: 'quad_x', 		image: 'quad_x'},
+     {name: 'QuadXThrust',   model: 'quad_x', 		image: 'quad_x'},
+     {name: 'QuadXPitch',    model: 'quad_x', 		image: 'quad_x'},
+     {name: 'QuadXAll',      model: 'quad_x', 		image: 'quad_x'},
      {name: 'Custom',        model: 'custom',       image: 'custom'}
 ];

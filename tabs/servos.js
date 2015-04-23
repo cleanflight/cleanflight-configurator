@@ -129,7 +129,21 @@ TABS.servos.initialize = function (callback) {
 
                 // select current rate
                 select.val(SERVO_CONFIG[obj].rate);
-            } else {
+            }  else if (directions == 3) {
+                // removing checkboxes
+                $('div.tab-servos table.fields tr:last td.direction').html('');
+                
+                // adding radio button
+                $('div.tab-servos table.fields tr:last td.direction').append('\
+                <div class="radio"> \
+                <input type="radio" name="direction" value="false">Normal<br>\
+                <input type="radio" name="direction" value="true">Reverse\
+                </div>\
+                ');
+
+                //selecting default value
+                $('input:radio[name=direction]').val([bit_check(SERVO_CONFIG[obj].rate, 0)]);
+            }else {
                 // removing checkboxes
                 $('div.tab-servos table.fields tr:last td.direction').html('');
             }
@@ -176,7 +190,12 @@ TABS.servos.initialize = function (callback) {
                 SERVO_CONFIG[info.obj].max = parseInt($('.max input', this).val());
 
                 // update rate if direction fields exist
-                if ($('.direction input', this).length) {
+                if ($('.direction .radio', this).length){
+                    var val = $('input:radio[name=direction]:checked').val();
+                    console.log('direction radio:'+val);
+                    if (val == 'true') SERVO_CONFIG[info.obj].rate = bit_set(SERVO_CONFIG[info.obj].rate, 0);
+                    else SERVO_CONFIG[info.obj].rate = bit_clear(SERVO_CONFIG[info.obj].rate, 0);
+                }else if ($('.direction input', this).length) {
                     if ($('.direction input:first', this).is(':checked')) SERVO_CONFIG[info.obj].rate = bit_set(SERVO_CONFIG[info.obj].rate, 0);
                     else SERVO_CONFIG[info.obj].rate = bit_clear(SERVO_CONFIG[info.obj].rate, 0);
 
@@ -205,7 +224,7 @@ TABS.servos.initialize = function (callback) {
         $('div.tab-servos table.fields tr:not(:first)').remove();
 
         var model = $('div.tab-servos strong.model');
-        var supported_models = [1, 4, 5, 8, 14, 20, 21];
+        var supported_models = [1, 4, 5, 8, 14, 20, 21, 23, 24, 25, 26];
 
         switch (CONFIG.multiType) {
             case 1: // TRI
@@ -276,7 +295,23 @@ TABS.servos.initialize = function (callback) {
                 process_servos('Front', 'F YAW', 5, true);
                 process_servos('Rear', 'YAW', 6, true);
                 break;
+            case 5: // Gimbal
+                // needs to be verified
+                model.text('Gimbal');
 
+                // rate
+                process_servos('Pitch Servo', '', 0, 2);
+                process_servos('Roll Servo', '', 1, 2);
+                break;
+            case 23: // Tilting servo
+            case 24: // Tilting servo
+            case 25: // Tilting servo
+            case 26: // Tilting servo
+                // needs to be verified
+                model.text('Tilting pitch');
+
+                process_servos('Pitch Servo', '', 0, 3);
+                break;
             default:
                 model.text(chrome.i18n.getMessage('servosModelNoSupport'));
 

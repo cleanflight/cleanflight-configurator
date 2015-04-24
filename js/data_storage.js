@@ -134,7 +134,7 @@ var ANALOG = {
 
 var ARMING_CONFIG = {
     auto_disarm_delay:      0,
-    disarm_kill_switch:     1
+    disarm_kill_switch:     0
 };
 
 var FC_CONFIG = {

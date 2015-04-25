@@ -29,6 +29,8 @@ var MSP_codes = {
     MSP_DATAFLASH_ERASE:        72,
     MSP_LOOP_TIME:              73,
     MSP_SET_LOOP_TIME:          74,
+    MSP_FAILSAFE_CONFIG:        75,
+    MSP_SET_FAILSAFE_CONFIG:    76,
 
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -361,6 +363,15 @@ var MSP = {
             case MSP_codes.MSP_LOOP_TIME:
                 if (CONFIG.apiVersion >= 1.8) {
                     FC_CONFIG.loopTime = data.getInt16(0, 1);
+                }
+                break;
+            case MSP_codes.MSP_FAILSAFE_CONFIG:
+                if (CONFIG.apiVersion >= 1.9) {
+                    FAILSAFE_CONFIG.delay = data.getUint8(0, 1);
+                    FAILSAFE_CONFIG.off_delay = data.getUint8(1, 1);
+                    FAILSAFE_CONFIG.failsafe_throttle = data.getUint16(2, 1);
+                    FAILSAFE_CONFIG.min_usec = data.getUint16(4, 1);
+                    FAILSAFE_CONFIG.max_usec = data.getUint16(6, 1);                                        
                 }
                 break;
             case MSP_codes.MSP_MISC: // 22 bytes
@@ -992,6 +1003,16 @@ MSP.crunch = function (code) {
         case MSP_codes.MSP_SET_LOOP_TIME:
             buffer.push(lowByte(FC_CONFIG.loopTime));
             buffer.push(highByte(FC_CONFIG.loopTime));
+            break;
+        case MSP_codes.MSP_SET_FAILSAFE_CONFIG:
+            buffer.push(FAILSAFE_CONFIG.delay);
+            buffer.push(FAILSAFE_CONFIG.off_delay);
+            buffer.push(lowByte(FAILSAFE_CONFIG.failsafe_throttle));
+            buffer.push(highByte(FAILSAFE_CONFIG.failsafe_throttle));
+            buffer.push(lowByte(FAILSAFE_CONFIG.min_usec));
+            buffer.push(highByte(FAILSAFE_CONFIG.min_usec));
+            buffer.push(lowByte(FAILSAFE_CONFIG.max_usec));
+            buffer.push(highByte(FAILSAFE_CONFIG.max_usec));
             break;
         case MSP_codes.MSP_SET_MISC:
             buffer.push(lowByte(MISC.midrc));

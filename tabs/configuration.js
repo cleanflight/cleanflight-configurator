@@ -256,7 +256,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         // fill magnetometer
         $('input[name="mag_declination"]').val(MISC.mag_declination);
 
-        //fill motor disarm params        
+        //fill motor disarm params       
         if(CONFIG.apiVersion >= 1.8) {
             $('input[name="autodisarmdelay"]').val(ARMING_CONFIG.auto_disarm_delay);
             $('input[name="disarmkillswitch"]').prop('checked', ARMING_CONFIG.disarm_kill_switch);
@@ -375,7 +375,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             function save_arming_config() {
                 MSP.send_message(MSP_codes.MSP_SET_ARMING_CONFIG, MSP.crunch(MSP_codes.MSP_SET_ARMING_CONFIG), false, save_to_eeprom);
             }
-
+            
             function save_to_eeprom() {
                 MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, reboot);
             }

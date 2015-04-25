@@ -141,6 +141,14 @@ var FC_CONFIG = {
     loopTime: 0
 };
 
+var FAILSAFE_CONFIG = {
+    delay:                  0,
+    off_delay:              0,
+    failsafe_throttle:      0,
+    min_usec:               0,
+    max_usec:               0        
+};
+
 var MISC = {
     midrc:                  0,
     minthrottle:            0,

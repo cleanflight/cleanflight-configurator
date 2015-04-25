@@ -51,19 +51,16 @@ TABS.pid_tuning.initialize = function (callback) {
                 	data = PIDs[0][i++].toFixed(1);
                     $(this).val(data);
                     cp += data + ':';
-                    // $(this).val(PIDs[0][i++].toFixed(1));
                     break;
                 case 1:
                 	data = PIDs[0][i++].toFixed(3);
                     $(this).val(data);
                     cp += data + ':';
-                    // $(this).val(PIDs[0][i++].toFixed(3));
                     break;
                 case 2:
                 	data = PIDs[0][i++].toFixed(0);
                     $(this).val(data);
                     cp += data;
-                    // $(this).val(PIDs[0][i++].toFixed(0));
                     break;
             }
         });
@@ -76,19 +73,16 @@ TABS.pid_tuning.initialize = function (callback) {
                 	data = PIDs[1][i++].toFixed(1);
                     $(this).val(data);
                     cp += data + ':';
-                    // $(this).val(PIDs[1][i++].toFixed(1));
                     break;
                 case 1:
-                	data = PIDs[0][i++].toFixed(3);
+                	data = PIDs[1][i++].toFixed(3);
                     $(this).val(data);
                     cp += data + ':';
-                    //$(this).val(PIDs[1][i++].toFixed(3));
                     break;
                 case 2:
-                	data = PIDs[0][i++].toFixed(0);
+                	data = PIDs[1][i++].toFixed(0);
                     $(this).val(data);
                     cp += data;
-                    // $(this).val(PIDs[1][i++].toFixed(0));
                     break;
             }
         });
@@ -101,19 +95,16 @@ TABS.pid_tuning.initialize = function (callback) {
                 	data = PIDs[2][i++].toFixed(1);
                     $(this).val(data);
                     cp += data + ':';
-                    // $(this).val(PIDs[2][i++].toFixed(1));
                     break;
                 case 1:
-                	data = PIDs[0][i++].toFixed(3);
+                	data = PIDs[2][i++].toFixed(3);
                     $(this).val(data);
                     cp += data + ':';
-                    // $(this).val(PIDs[2][i++].toFixed(3));
                     break;
                 case 2:
-                	data = PIDs[0][i++].toFixed(0);
+                	data = PIDs[2][i++].toFixed(0);
                     $(this).val(data);
                     cp += data;
-                    //$(this).val(PIDs[2][i++].toFixed(0));
                     break;
             }
         });
@@ -212,7 +203,6 @@ TABS.pid_tuning.initialize = function (callback) {
         $('.rate-tpa input[name="tpa-breakpoint"]').val(RC_tuning.dynamic_THR_breakpoint);
         
         $('.pid_tuning .QUICKCOPY input').val(cp);
-        // $('.pid-copy input[name="pid-copy-and-paste"]').html('test');
     }
 
     function form_to_pid_and_rc() {

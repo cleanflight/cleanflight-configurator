@@ -176,6 +176,19 @@ input[type="number"]::-webkit-inner-spin-button {
     margin-right: 10px;
 }
 
+#profile-selector {
+    float: right;
+    height: 22px;
+    line-height: 22px;
+    margin: -1px 10px 0 5px;
+}
+
+.profile select {
+    float: right;
+    margin-top: 3px;
+    margin-left: 0.5em;
+}
+
 #button-documentation {
     float: left;
 

@@ -215,6 +215,10 @@ function onConnect() {
         documentationButton.show();
         documentationButton.html("Documentation for "+CONFIG.flightControllerVersion);
         documentationButton.attr("href","https://github.com/cleanflight/cleanflight/tree/v{0}/docs".format(CONFIG.flightControllerVersion));
+
+        // Fill in currently selected profile
+        $('select[name="profile"]').prop("disabled", false).find("option[value='']").remove();
+
     }
 }
 
@@ -230,6 +234,8 @@ function onClosed(result) {
     
     var documentationButton = $('#button-documentation');
     documentationButton.hide();
+
+    $('select[name="profile"]').prop("disabled", true).prepend("<option value=''>-</option>").val('');
 }
 
 function read_serial(info) {

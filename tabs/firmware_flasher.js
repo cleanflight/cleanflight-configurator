@@ -262,6 +262,7 @@ TABS.firmware_flasher.initialize = function (callback) {
         $('a.flash_firmware').click(function () {
             if (!$(this).hasClass('locked')) {
                 if (!GUI.connect_lock) { // button disabled while flashing is in progress
+                    $('#content').animate({scrollTop: 0}, 500);
                     if (parsed_hex != false) {
                         if (String($('div#port-picker #port').val()) != 'DFU') {
                             if (String($('div#port-picker #port').val()) != '0') {

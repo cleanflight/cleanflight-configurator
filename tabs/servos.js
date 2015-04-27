@@ -94,6 +94,8 @@ TABS.servos.initialize = function (callback) {
                     <td class="middle"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].middle + '" /></td>\
                     <td class="min"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].min +'" /></td>\
                     <td class="max"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].max +'" /></td>\
+                    <td class="min"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].limitmin +'" /></td>\
+                    <td class="max"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].limitmax +'" /></td>\
                     ' + servoCheckbox + '\
                     <td class="direction">\
                         <input class="first" type="checkbox"/><span class="name">' + name + '</span>\
@@ -188,7 +190,9 @@ TABS.servos.initialize = function (callback) {
                 SERVO_CONFIG[info.obj].middle = parseInt($('.middle input', this).val());
                 SERVO_CONFIG[info.obj].min = parseInt($('.min input', this).val());
                 SERVO_CONFIG[info.obj].max = parseInt($('.max input', this).val());
-
+				SERVO_CONFIG[info.obj].minlimit = parseInt($('.minlimit input', this).val());
+				SERVO_CONFIG[info.obj].maxlimit = parseInt($('.maxlimit input', this).val());
+				
                 // update rate if direction fields exist
                 if ($('.direction .radio', this).length){
                     var val = $('input:radio[name=direction]:checked').val();

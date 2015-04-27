@@ -434,12 +434,15 @@ var MSP = {
             case MSP_codes.MSP_SERVO_CONF:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
-                for (var i = 0; i < 56; i += 7) {
+                for (var i = 0; i < 8; i ++) { // 8 is the max number of Servo
+					var initialByte = i * 9;//10 is the nember of byte in a packet
                     var arr = {
-                        'min': data.getInt16(i, 1),
-                        'max': data.getInt16(i + 2, 1),
-                        'middle': data.getInt16(i + 4, 1),
-                        'rate': data.getInt8(i + 6)
+						'min': data.getInt16(initialByte, 1), //microseconds
+						'max': data.getInt16(initialByte + 2, 1), //microseconds
+						'middle': data.getInt16(initialByte + 4, 1), //microseconds
+						'rate': data.getInt8(initialByte + 6), 
+						'limitmin': data.getUint8(initialByte + 7), //degree 0-180
+						'limitmax': data.getUint8(initialByte + 8) //degree 0-180
                     };
 
                     SERVO_CONFIG.push(arr);
@@ -1029,6 +1032,10 @@ MSP.crunch = function (code) {
                 buffer.push(highByte(SERVO_CONFIG[i].middle));
 
                 buffer.push(lowByte(SERVO_CONFIG[i].rate));
+				
+				buffer.push(lowByte(SERVO_CONFIG[i].limitmin));
+				
+				buffer.push(lowByte(SERVO_CONFIG[i].limitmax));
             }
             break;
         case MSP_codes.MSP_SET_CHANNEL_FORWARDING:

@@ -785,6 +785,12 @@
     "servosMax": {
         "message": "MAX"
     },
+    "servosMinLimit": {
+        "message": "MIN Degree"
+    },
+    "servosMaxLimit": {
+        "message": "MAX Degree"
+    },
     "servosDirection": {
         "message": "Direction"
     },

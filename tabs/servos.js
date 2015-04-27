@@ -94,8 +94,8 @@ TABS.servos.initialize = function (callback) {
                     <td class="middle"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].middle + '" /></td>\
                     <td class="min"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].min +'" /></td>\
                     <td class="max"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].max +'" /></td>\
-                    <td class="min"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].limitmin +'" /></td>\
-                    <td class="max"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].limitmax +'" /></td>\
+                    <td class="minLimit"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].minLimit +'" /></td>\
+                    <td class="maxLimit"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].maxLimit +'" /></td>\
                     ' + servoCheckbox + '\
                     <td class="direction">\
                         <input class="first" type="checkbox"/><span class="name">' + name + '</span>\
@@ -190,9 +190,9 @@ TABS.servos.initialize = function (callback) {
                 SERVO_CONFIG[info.obj].middle = parseInt($('.middle input', this).val());
                 SERVO_CONFIG[info.obj].min = parseInt($('.min input', this).val());
                 SERVO_CONFIG[info.obj].max = parseInt($('.max input', this).val());
-				SERVO_CONFIG[info.obj].minlimit = parseInt($('.minlimit input', this).val());
-				SERVO_CONFIG[info.obj].maxlimit = parseInt($('.maxlimit input', this).val());
-				
+                SERVO_CONFIG[info.obj].minLimit = parseInt($('.minLimit input', this).val());
+                SERVO_CONFIG[info.obj].maxLimit = parseInt($('.maxLimit input', this).val());
+
                 // update rate if direction fields exist
                 if ($('.direction .radio', this).length){
                     var val = $('input:radio[name=direction]:checked').val();
@@ -212,7 +212,9 @@ TABS.servos.initialize = function (callback) {
             });
             
             MSP.send_message(MSP_codes.MSP_SET_CHANNEL_FORWARDING, MSP.crunch(MSP_codes.MSP_SET_CHANNEL_FORWARDING), false, function () {
+                console.log("channel forward ok");
                 MSP.send_message(MSP_codes.MSP_SET_SERVO_CONF, MSP.crunch(MSP_codes.MSP_SET_SERVO_CONF), false, function () {
+                    console.log("servo conf ok");
                     if (save_to_eeprom) {
                         // Save changes to EEPROM
                         MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {

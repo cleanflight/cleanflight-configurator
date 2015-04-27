@@ -434,15 +434,15 @@ var MSP = {
             case MSP_codes.MSP_SERVO_CONF:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
-                for (var i = 0; i < 8; i ++) { // 8 is the max number of Servo
-					var initialByte = i * 9;//10 is the nember of byte in a packet
+                for (var i = 0; i < 8; i++) { // 8 is the max number of Servo
+                    var initialByte = i * 9;//10 is the nember of byte in a packet
                     var arr = {
-						'min': data.getInt16(initialByte, 1), //microseconds
-						'max': data.getInt16(initialByte + 2, 1), //microseconds
-						'middle': data.getInt16(initialByte + 4, 1), //microseconds
-						'rate': data.getInt8(initialByte + 6), 
-						'limitmin': data.getUint8(initialByte + 7), //degree 0-180
-						'limitmax': data.getUint8(initialByte + 8) //degree 0-180
+                        'min': data.getInt16(initialByte, 1), //microseconds
+                        'max': data.getInt16(initialByte + 2, 1), //microseconds
+                        'middle': data.getInt16(initialByte + 4, 1), //microseconds
+                        'rate': data.getInt8(initialByte + 6), 
+                        'minLimit': data.getUint8(initialByte + 7), //degree 0-180
+                        'maxLimit': data.getUint8(initialByte + 8) //degree 0-180
                     };
 
                     SERVO_CONFIG.push(arr);
@@ -815,6 +815,7 @@ var MSP = {
                 checksum = 0;
 
             bufferOut = new ArrayBuffer(size);
+            console.log("sending data: "+data.length+" "+bufferOut.byteLength+" "+data);
             bufView = new Uint8Array(bufferOut);
 
             bufView[0] = 36; // $
@@ -871,8 +872,12 @@ var MSP = {
         // always send messages with data payload (even when there is a message already in the queue)
         if (data || !requestExists) {
             serial.send(bufferOut, function (sendInfo) {
-                if (sendInfo.bytesSent == bufferOut.length) {
+                if (sendInfo.bytesSent == bufferOut.byteLength) {
+                    if (bufferOut.byteLength > 6)
+                        console.log("sendInfo.bytesSent OK");
                     if (callback_sent) callback_sent();
+                }else{
+                    console.log("sendInfo.bytesSent "+sendInfo.bytesSent+" - bufferOut.byteLength " +bufferOut.byteLength);
                 }
             });
         }
@@ -1032,11 +1037,12 @@ MSP.crunch = function (code) {
                 buffer.push(highByte(SERVO_CONFIG[i].middle));
 
                 buffer.push(lowByte(SERVO_CONFIG[i].rate));
-				
-				buffer.push(lowByte(SERVO_CONFIG[i].limitmin));
-				
-				buffer.push(lowByte(SERVO_CONFIG[i].limitmax));
+
+                buffer.push(lowByte(SERVO_CONFIG[i].minLimit));
+
+                buffer.push(lowByte(SERVO_CONFIG[i].maxLimit));
             }
+            console.log("buffer size for servo: " + buffer.length+" number: "+SERVO_CONFIG.length);
             break;
         case MSP_codes.MSP_SET_CHANNEL_FORWARDING:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

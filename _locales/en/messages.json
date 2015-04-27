@@ -777,19 +777,19 @@
         "message": "Name"
     },
     "servosMid": {
-        "message": "MID"
+        "message": "90deg PWM"
     },
     "servosMin": {
-        "message": "MIN"
+        "message": "0deg PWM"
     },
     "servosMax": {
-        "message": "MAX"
+        "message": "180deg PWM"
     },
     "servosMinLimit": {
-        "message": "MIN Degree"
+        "message": "MIN limit deg"
     },
     "servosMaxLimit": {
-        "message": "MAX Degree"
+        "message": "MAX limit deg"
     },
     "servosDirection": {
         "message": "Direction"

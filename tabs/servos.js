@@ -91,8 +91,8 @@ TABS.servos.initialize = function (callback) {
             $('div.tab-servos table.fields').append('\
                 <tr> \
                     <td style="text-align: center">' + name + '</td>\
-                    <td class="middle"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].middle + '" /></td>\
-                    <td class="min"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].min +'" /></td>\
+                    <td class="min"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].min + '" /></td>\
+                    <td class="middle"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].middle +'" /></td>\
                     <td class="max"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].max +'" /></td>\
                     <td class="minLimit"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].minLimit +'" /></td>\
                     <td class="maxLimit"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].maxLimit +'" /></td>\

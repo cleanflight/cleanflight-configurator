@@ -442,8 +442,8 @@ var MSP = {
                         'max': data.getInt16(initialByte + 2, 1), //microseconds
                         'middle': data.getInt16(initialByte + 4, 1), //microseconds
                         'rate': data.getInt8(initialByte + 6), 
-                        'minLimit': data.getUint8(initialByte + 7), //degree 0-180
-                        'maxLimit': data.getUint8(initialByte + 8) //degree 0-180
+                        'minLimit': data.getInt8(initialByte + 7), //degree 0-180
+                        'maxLimit': data.getInt8(initialByte + 8) //degree 0-180
                     };
 
                     SERVO_CONFIG.push(arr);

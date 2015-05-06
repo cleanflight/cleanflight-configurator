@@ -297,6 +297,7 @@ var MSP = {
                 var offset = 0;
                 RC_tuning.RC_RATE = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 RC_tuning.RC_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+				RC_tuning.RC_YAW_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 if (CONFIG.apiVersion < 1.7) {
                     RC_tuning.roll_pitch_rate = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 } else {
@@ -964,6 +965,9 @@ MSP.crunch = function (code) {
                 buffer.push(lowByte(RC_tuning.dynamic_THR_breakpoint));
                 buffer.push(highByte(RC_tuning.dynamic_THR_breakpoint));
             }
+			if (CONFIG.apiVersion >= 1.8) {
+				buffer.push(parseInt(RC_tuning.RC_YAW_EXPO * 100));
+			}
             break;
         // Disabled, cleanflight does not use MSP_SET_BOX.
         /*

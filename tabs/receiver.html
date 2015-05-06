@@ -17,10 +17,12 @@
             <tr>
                 <th i18n="receiverRcRate"></th>
                 <th i18n="receiverRcExpo"></th>
+				<th i18n="receiverRcYawExpo"></th>
             </tr>
             <tr>
                 <td><input type="number" name="rate" step="0.01" min="0" max="2.5" /></td>
                 <td><input type="number" name="expo" step="0.01" min="0" max="1" /></td>
+				<td><input type="number" name="yaw_expo" step="0.01" min="0" max="1" /></td>
             </tr>
         </table>
         <div class="rssi_channel_wrapper">
@@ -45,10 +47,10 @@
     </div>
     <div class="curves">
         <div class="throttle_curve">
-            <canvas width="220" height="58"></canvas>
+            <canvas width="110" height="29"></canvas>
         </div>
         <div class="pitch_roll_curve">
-            <canvas width="220" height="58"></canvas>
+            <canvas width="110" height="29"></canvas>
         </div>
     </div>
     <div class="clear-both"></div>

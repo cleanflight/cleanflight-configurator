@@ -297,7 +297,6 @@ var MSP = {
                 var offset = 0;
                 RC_tuning.RC_RATE = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 RC_tuning.RC_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
-				RC_tuning.RC_YAW_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 if (CONFIG.apiVersion < 1.7) {
                     RC_tuning.roll_pitch_rate = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 } else {
@@ -310,6 +309,9 @@ var MSP = {
                 RC_tuning.throttle_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 if (CONFIG.apiVersion >= 1.7) {
                     RC_tuning.dynamic_THR_breakpoint = data.getUint16(offset++, 1);
+                }
+				if (CONFIG.apiVersion >= 1.8) {
+                    RC_tuning.RC_YAW_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 }
                 break;
             case MSP_codes.MSP_PID:

@@ -625,9 +625,6 @@
     "receiverRcExpo": {
         "message": "RC Expo"
     },
-	"receiverRcYawExpo": {
-        "message": "RC Yaw Expo"
-    },
     "receiverChannelMap": {
         "message": "Channel Map"
     },
@@ -636,6 +633,9 @@
     },
     "receiverRssiChannel": {
         "message": "RSSI Channel"
+    },
+	"receiverRcYawExpo": {
+        "message": "RC Yaw Expo"
     },
     "receiverRefreshRateTitle": {
         "message": "Graph refresh rate"

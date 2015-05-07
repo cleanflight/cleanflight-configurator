@@ -37,8 +37,12 @@ TABS.receiver.initialize = function (callback) {
 
         $('.tunings .rate input[name="rate"]').val(RC_tuning.RC_RATE.toFixed(2));
         $('.tunings .rate input[name="expo"]').val(RC_tuning.RC_EXPO.toFixed(2));
-		$('.tunings .rate input[name="yaw_expo"]').val(RC_tuning.RC_YAW_EXPO.toFixed(2));
-
+        $('.tunings .rate input[name="yaw_expo"]').val(RC_tuning.RC_YAW_EXPO.toFixed(2));
+		
+		if (CONFIG.apiVersion < 2.0) {
+            $('.tunings .rate input[name="yaw_expo"]').hide();
+        }
+		
         chrome.storage.local.get('rx_refresh_rate', function (result) {
             if (result.rx_refresh_rate) {
                 $('select[name="rx_refresh_rate"]').val(result.rx_refresh_rate).change();
@@ -255,7 +259,7 @@ TABS.receiver.initialize = function (callback) {
 
                 $('.tunings .rate input[name="rate"]').val(RC_tuning.RC_RATE.toFixed(2));
                 $('.tunings .rate input[name="expo"]').val(RC_tuning.RC_EXPO.toFixed(2));
-				$('.tunings .rate input[name="yaw_expo"]').val(RC_tuning.RC_YAW_EXPO.toFixed(2));
+                $('.tunings .rate input[name="yaw_expo"]').val(RC_tuning.RC_YAW_EXPO.toFixed(2));
 
                 // update visual representation
                 $('.tunings .throttle input').change();

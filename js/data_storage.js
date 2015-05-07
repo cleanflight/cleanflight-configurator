@@ -2,10 +2,13 @@
 
 var CONFIGURATOR = {
     'releaseDate': 1429014724688, // new Date().getTime() - Tue Apr 14 2015 13:32:17 GMT+0100 (BST)
-    'apiVersionAccepted': 1.2,
-    'backupRestoreMinApiVersionAccepted': 1.5,
-    'pidControllerChangeMinApiVersion': 1.5,
-    'backupFileMinVersionAccepted': '0.55', // chrome.runtime.getManifest().version is stored as string, so does this one
+    
+     // all versions are specified and compared using semantic versioning http://semver.org/
+    'apiVersionAccepted': '1.2.0',
+    'backupRestoreMinApiVersionAccepted': '1.5.0',
+    'pidControllerChangeMinApiVersion': '1.5.0',
+    'backupFileMinVersionAccepted': '0.55.0', // chrome.runtime.getManifest().version is stored as string, so does this one
+    
     'connectionValid': false,
     'connectionValidCliOnly': false,
     'cliActive': false,
@@ -13,13 +16,13 @@ var CONFIGURATOR = {
 };
 
 var CONFIG = {
-    apiVersion:    0,
+    apiVersion:    "0.0.0",
     flightControllerIdentifier: '',
     flightControllerVersion: '',
     version:       0,
     buildInfo:     '',
     multiType:     0,
-    msp_version:   0,
+    msp_version:   0, // not specified using semantic versioning
     capability:    0,
     cycleTime:     0,
     i2cError:      0,
@@ -72,7 +75,8 @@ var RC_tuning = {
     dynamic_THR_PID: 0,
     throttle_MID:    0,
     throttle_EXPO:   0,
-    dynamic_THR_breakpoint: 0
+    dynamic_THR_breakpoint: 0,
+	RC_YAW_EXPO:         0
 };
 
 var AUX_CONFIG = [];

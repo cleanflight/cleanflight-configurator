@@ -310,6 +310,9 @@ var MSP = {
                 if (CONFIG.apiVersion >= 1.7) {
                     RC_tuning.dynamic_THR_breakpoint = data.getUint16(offset++, 1);
                 }
+				if (CONFIG.apiVersion >= 2.0) {
+                    RC_tuning.RC_YAW_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
+                }
                 break;
             case MSP_codes.MSP_PID:
                 // PID data arrived, we need to scale it and save to appropriate bank / array
@@ -964,6 +967,9 @@ MSP.crunch = function (code) {
                 buffer.push(lowByte(RC_tuning.dynamic_THR_breakpoint));
                 buffer.push(highByte(RC_tuning.dynamic_THR_breakpoint));
             }
+            if (CONFIG.apiVersion >= 2.0) {
+				buffer.push(parseInt(RC_tuning.RC_YAW_EXPO * 100));
+			}
             break;
         // Disabled, cleanflight does not use MSP_SET_BOX.
         /*

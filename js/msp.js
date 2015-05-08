@@ -368,14 +368,14 @@ var MSP = {
                 }
                 break;
             case MSP_codes.MSP_FAILSAFE_CONFIG:
-                if (CONFIG.apiVersion >= 1.9) {
+                if (semver.gte(CONFIG.apiVersion, "1.9.0")) {
                     FAILSAFE_CONFIG.delay = data.getUint8(0, 1);
                     FAILSAFE_CONFIG.off_delay = data.getUint8(1, 1);
                     FAILSAFE_CONFIG.failsafe_throttle = data.getUint16(2, 1);                                                          
                 }
                 break;
             case MSP_codes.MSP_RX_CONFIG:
-                if (CONFIG.apiVersion >= 1.9) {                    
+                if (semver.gte(CONFIG.apiVersion, "1.9.0")) {                    
                     FAILSAFE_RX_CONFIG.min_usec = data.getUint16(0, 1);
                     FAILSAFE_RX_CONFIG.max_usec = data.getUint16(2, 1);                                        
                 }

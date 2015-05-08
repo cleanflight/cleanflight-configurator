@@ -85,6 +85,7 @@ function configuration_backup(callback) {
         if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
             uniqueData.push(MSP_codes.MSP_LOOP_TIME);
             uniqueData.push(MSP_codes.MSP_ARMING_CONFIG);
+
             if (semver.gte(CONFIG.apiVersion, "1.9.0")) {
                 uniqueData.push(MSP_codes.MSP_FAILSAFE_CONFIG);
                 uniqueData.push(MSP_codes.MSP_RX_CONFIG);
@@ -114,7 +115,8 @@ function configuration_backup(callback) {
                 if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
                     configuration.FC_CONFIG = jQuery.extend(true, {}, FC_CONFIG);
                     configuration.ARMING_CONFIG = jQuery.extend(true, {}, ARMING_CONFIG);
-                    if (semver.gte(CONFIG.apiVersion, "1.9.0")) {
+
+                    if (semver.gte(CONFIG.apiVersion, "1.9.0")) {                     
                         configuration.FAILSAFE_CONFIG = jQuery.extend(true, {}, FAILSAFE_CONFIG);
                         configuration.FAILSAFE_RX_CONFIG = jQuery.extend(true, {}, FAILSAFE_RX_CONFIG);
                     }
@@ -410,12 +412,11 @@ function configuration_restore(callback) {
             };
             
             appliedMigrationsCount++;
-        }
-        
+        }        
 
         if (compareVersions(migratedVersion, '0.63.0') 
                 && !compareVersions(configuration.apiVersion, '1.8.0')
-                && !compareVersions(configuration.apiVersion, '1.9.0')) {            
+                && !compareVersions(configuration.apiVersion, '1.9.0')) {
             // api 1.8 exposes looptime and arming config
             
             if (configuration.FC_CONFIG == undefined) {
@@ -451,6 +452,7 @@ function configuration_restore(callback) {
         }
         
         if (compareVersions(migratedVersion, '0.63.0') && !compareVersions(configuration.apiVersion, '1.9.0')) {
+
             // api 1.9 exposes failsafe config
             if (configuration.FAILSAFE_CONFIG == undefined) {
                 configuration.FAILSAFE_CONFIG = {
@@ -577,7 +579,8 @@ function configuration_restore(callback) {
                     if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
                         uniqueData.push(MSP_codes.MSP_SET_LOOP_TIME);
                         uniqueData.push(MSP_codes.MSP_SET_ARMING_CONFIG);
-                        if (semver.gte(CONFIG.apiVersion, "1.9.0")) {
+                        
+                        if (semver.gte(CONFIG.apiVersion, "1.9.0")) {                        
                             uniqueData.push(MSP_codes.MSP_SET_FAILSAFE_CONFIG);
                             uniqueData.push(MSP_codes.MSP_SET_RX_CONFIG);
                         }

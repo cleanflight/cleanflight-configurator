@@ -375,7 +375,7 @@ var MSP = {
                 }
                 break;
             case MSP_codes.MSP_RX_CONFIG:
-                if (semver.gte(CONFIG.apiVersion, "1.9.0")) {                    
+                if (semver.gte(CONFIG.apiVersion, "1.9.0")) {                
                     FAILSAFE_RX_CONFIG.min_usec = data.getUint16(0, 1);
                     FAILSAFE_RX_CONFIG.max_usec = data.getUint16(2, 1);                                        
                 }

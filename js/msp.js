@@ -300,7 +300,7 @@ var MSP = {
                 var offset = 0;
                 RC_tuning.RC_RATE = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 RC_tuning.RC_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
-                if (CONFIG.apiVersion < 1.7) {
+                if (semver.lt(CONFIG.apiVersion, "1.7.0")) {
                     RC_tuning.roll_pitch_rate = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 } else {
                     RC_tuning.roll_rate = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
@@ -310,7 +310,7 @@ var MSP = {
                 RC_tuning.dynamic_THR_PID = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 RC_tuning.throttle_MID = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
                 RC_tuning.throttle_EXPO = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
-                if (CONFIG.apiVersion >= 1.7) {
+                if (semver.gte(CONFIG.apiVersion, "1.7.0")) {
                     RC_tuning.dynamic_THR_breakpoint = data.getUint16(offset++, 1);
                 }
                 break;
@@ -356,13 +356,13 @@ var MSP = {
                 break;
             */
             case MSP_codes.MSP_ARMING_CONFIG:
-                if (CONFIG.apiVersion >= 1.8) {
+                if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
                     ARMING_CONFIG.auto_disarm_delay = data.getUint8(0, 1);
                     ARMING_CONFIG.disarm_kill_switch = data.getUint8(1);
                 }
                 break;
             case MSP_codes.MSP_LOOP_TIME:
-                if (CONFIG.apiVersion >= 1.8) {
+                if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
                     FC_CONFIG.loopTime = data.getInt16(0, 1);
                 }
                 break;
@@ -437,18 +437,19 @@ var MSP = {
             case MSP_codes.MSP_SERVO_CONF:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
-                for (var i = 0; i < 8; i++) { // 8 is the max number of Servo
-                    var initialByte = i * 9;//10 is the nember of byte in a packet
-                    var arr = {
-                        'min': data.getInt16(initialByte, 1), //microseconds
-                        'max': data.getInt16(initialByte + 2, 1), //microseconds
-                        'middle': data.getInt16(initialByte + 4, 1), //microseconds
-                        'rate': data.getInt8(initialByte + 6), 
-                        'minLimit': data.getInt8(initialByte + 7), //degree 0-180
-                        'maxLimit': data.getInt8(initialByte + 8) //degree 0-180
-                    };
-
-                    SERVO_CONFIG.push(arr);
+                if (data.byteLength % 9 == 0) {
+                    for (var i = 0; i < data.byteLength; i += 9) {
+                        var arr = {
+                            'min': data.getInt16(i, 1), //microseconds
+                            'max': data.getInt16(i + 2, 1), //microseconds
+                            'middle': data.getInt16(i + 4, 1), //microseconds
+                            'rate': data.getInt8(i + 6), 
+                            'minLimit': data.getInt8(i + 7), //degree 0-180
+                            'maxLimit': data.getInt8(i + 8) //degree 0-180
+                        };
+    
+                        SERVO_CONFIG.push(arr);
+                    }
                 }
                 break;
             case MSP_codes.MSP_TILT_ARM_CONFIG:
@@ -566,7 +567,7 @@ var MSP = {
             case MSP_codes.MSP_API_VERSION:
                 var offset = 0;
                 CONFIG.mspProtocolVersion = data.getUint8(offset++); 
-                CONFIG.apiVersion = data.getUint8(offset++) + '.' + data.getUint8(offset++);
+                CONFIG.apiVersion = data.getUint8(offset++) + '.' + data.getUint8(offset++) + '.0';
                 break;
 
             case MSP_codes.MSP_FC_VARIANT:
@@ -617,7 +618,7 @@ var MSP = {
 
             case MSP_codes.MSP_CF_SERIAL_CONFIG:
                 
-                if (CONFIG.apiVersion < 1.6) {
+                if (semver.lt(CONFIG.apiVersion, "1.6.0")) {
                     SERIAL_CONFIG.ports = [];
                     var offset = 0;
                     var serialPortCount = (data.byteLength - (4 * 4)) / 2;
@@ -702,7 +703,7 @@ var MSP = {
                 }
                 break;
             case MSP_codes.MSP_CHANNEL_FORWARDING:
-                for (var i = 0; i < 8; i ++) {
+                for (var i = 0; i < data.byteLength && i < SERVO_CONFIG.length; i ++) {
                     var channelIndex = data.getUint8(i);
                     if (channelIndex < 255) {
                         SERVO_CONFIG[i].indexOfChannelToForward = channelIndex;
@@ -884,8 +885,6 @@ var MSP = {
         if (data || !requestExists) {
             serial.send(bufferOut, function (sendInfo) {
                 if (sendInfo.bytesSent == bufferOut.byteLength) {
-                    if (bufferOut.byteLength > 6)
-                        console.log("sendInfo.bytesSent OK");
                     if (callback_sent) callback_sent();
                 }else{
                     console.log("sendInfo.bytesSent "+sendInfo.bytesSent+" - bufferOut.byteLength " +bufferOut.byteLength);
@@ -969,7 +968,7 @@ MSP.crunch = function (code) {
         case MSP_codes.MSP_SET_RC_TUNING:
             buffer.push(parseInt(RC_tuning.RC_RATE * 100));
             buffer.push(parseInt(RC_tuning.RC_EXPO * 100));
-            if (CONFIG.apiVersion < 1.7) {
+            if (semver.lt(CONFIG.apiVersion, "1.7.0")) {
                 buffer.push(parseInt(RC_tuning.roll_pitch_rate * 100));
             } else {
                 buffer.push(parseInt(RC_tuning.roll_rate * 100));
@@ -979,7 +978,7 @@ MSP.crunch = function (code) {
             buffer.push(parseInt(RC_tuning.dynamic_THR_PID * 100));
             buffer.push(parseInt(RC_tuning.throttle_MID * 100));
             buffer.push(parseInt(RC_tuning.throttle_EXPO * 100));
-            if (CONFIG.apiVersion >= 1.7) {
+            if (semver.gte(CONFIG.apiVersion, "1.7.0")) {
                 buffer.push(lowByte(RC_tuning.dynamic_THR_breakpoint));
                 buffer.push(highByte(RC_tuning.dynamic_THR_breakpoint));
             }
@@ -1073,7 +1072,7 @@ MSP.crunch = function (code) {
             }
             break;
         case MSP_codes.MSP_SET_CF_SERIAL_CONFIG:
-            if (CONFIG.apiVersion < 1.6) {
+            if (semver.lt(CONFIG.apiVersion, "1.6.0")) {
 
                 for (var i = 0; i < SERIAL_CONFIG.ports.length; i++) {
                     buffer.push(SERIAL_CONFIG.ports[i].scenario);

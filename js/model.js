@@ -22,7 +22,7 @@ var mixerList = [
      {name: 'Hex H',         model: 'custom',       image: 'custom'},
      {name: 'PPM to SERVO',  model: 'custom',       image: 'custom'},
      {name: 'Dualcopter',    model: 'custom',       image: 'custom'},
-     {name: 'Singlecopter',  model: 'custom',       image: 'custxom'},
+     {name: 'Singlecopter',  model: 'custom',       image: 'custom'},
      {name: 'A-tail Quad',   model: 'quad_atail',   image: 'atail_quad'},
      {name: 'QuadXTiltArm',  model: 'quad_x',       image: 'quad_x'},
      {name: 'Custom',        model: 'custom',       image: 'custom'}

@@ -52,6 +52,7 @@ var MSP_codes = {
     MSP_WP:                 118,
     MSP_BOXIDS:             119,
     MSP_SERVO_CONF:         120,
+    MSP_TILT_ARM_CONFIG:    123,
     
     MSP_SET_RAW_RC:         200,
     MSP_SET_RAW_GPS:        201,
@@ -68,6 +69,7 @@ var MSP_codes = {
     MSP_SET_SERVO_CONF:     212,
     MSP_SET_MOTOR:          214,
     MSP_SET_SERVO_LIMIT:    216,
+    MSP_SET_TILT_ARM:       217,
     
     // MSP_BIND:               240,
 
@@ -449,6 +451,11 @@ var MSP = {
                     SERVO_CONFIG.push(arr);
                 }
                 break;
+            case MSP_codes.MSP_TILT_ARM_CONFIG:
+				TILT_ARM_CONFIG.flagEnable = data.getUint8(0);
+                TILT_ARM_CONFIG.pitchDivisior = data.getUint8(1);
+                TILT_ARM_CONFIG.thrustLiftoff = data.getUint8(2);
+                break;
             case MSP_codes.MSP_SET_RAW_RC:
                 break;
             case MSP_codes.MSP_SET_RAW_GPS:
@@ -481,6 +488,9 @@ var MSP = {
                 break;
             case MSP_codes.MSP_SET_SERVO_CONF:
                 console.log('Servo Configuration saved');
+                break;
+            case MSP_codes.MSP_SET_TILT_ARM:
+                console.log('TiltArm Configuration saved');
                 break;
             case MSP_codes.MSP_EEPROM_WRITE:
                 console.log('Settings Saved in EEPROM');
@@ -1040,6 +1050,11 @@ MSP.crunch = function (code) {
                 buffer.push(lowByte(SERVO_CONFIG[i].rate));
             }
             console.log("buffer size for servo: " + buffer.length+" number: "+SERVO_CONFIG.length);
+            break;
+        case MSP_codes.MSP_SET_TILT_ARM:
+            buffer.push(lowByte(TILT_ARM_CONFIG.flagEnable));
+            buffer.push(lowByte(TILT_ARM_CONFIG.pitchDivisior));
+            buffer.push(lowByte(TILT_ARM_CONFIG.thrustLiftoff));
             break;
         case MSP_codes.MSP_SET_SERVO_LIMIT:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

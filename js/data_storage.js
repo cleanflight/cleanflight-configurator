@@ -83,6 +83,12 @@ var ADJUSTMENT_RANGES = [];
 
 var SERVO_CONFIG = [];
 
+var TILT_ARM_CONFIG = {
+    flagEnable: 0,
+    pitchDivisior: 1,
+    thrustLiftoff: 0,
+};
+
 var SERIAL_CONFIG = {
     ports: [],
     

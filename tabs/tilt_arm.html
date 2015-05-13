@@ -1,0 +1,32 @@
+<div class="tab-tilt-arm">
+    <span i18n="tiltArmModel"></span> <strong class="model"></strong>
+    <div class="supported_wrapper">
+        <div class="title" i18n="tiltArmConfig"></div>
+        <table class="fields">
+            <tr>
+                <th>Component</th>
+                <th>Enable</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Body pitch suppressor</td>
+                <td><input id="PITCH_ENABLE" type="checkbox" /></td>
+                <td><input id="PITCH_VALUE" type="number" min=1 max=512 /></td>
+            </tr>
+            <tr>
+                <td>Thrust compensation</td>
+                <td><input id="THRUST_ENABLE" type="checkbox"/></td>
+                <td>0%<input id="THRUST_VALUE" type="range" min=0 max=100 />100%</td>
+            </tr>
+            <tr>
+                <td>Yaw and roll compensation</td>
+                <td><input id="YAWROLL_ENABLE" type="checkbox"/></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="clear-both"></div>
+    <div class="buttons">
+        <a class="save" href="#" i18n="tiltArmSave"></a>
+    </div>
+</div>

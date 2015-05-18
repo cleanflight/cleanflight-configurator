@@ -453,9 +453,10 @@ var MSP = {
                 }
                 break;
             case MSP_codes.MSP_TILT_ARM_CONFIG:
-				TILT_ARM_CONFIG.flagEnable = data.getUint8(0);
+                TILT_ARM_CONFIG.flagEnable = data.getUint8(0);
                 TILT_ARM_CONFIG.pitchDivisior = data.getUint8(1);
                 TILT_ARM_CONFIG.thrustLiftoff = data.getUint8(2);
+                TILT_ARM_CONFIG.gearRatio = data.getUint32(3);
                 break;
             case MSP_codes.MSP_SET_RAW_RC:
                 break;
@@ -1054,6 +1055,10 @@ MSP.crunch = function (code) {
             buffer.push(lowByte(TILT_ARM_CONFIG.flagEnable));
             buffer.push(lowByte(TILT_ARM_CONFIG.pitchDivisior));
             buffer.push(lowByte(TILT_ARM_CONFIG.thrustLiftoff));
+            buffer.push(specificByte(TILT_ARM_CONFIG.gearRatio, 0));
+            buffer.push(specificByte(TILT_ARM_CONFIG.gearRatio, 1));
+            buffer.push(specificByte(TILT_ARM_CONFIG.gearRatio, 2));
+            buffer.push(specificByte(TILT_ARM_CONFIG.gearRatio, 3));
             break;
         case MSP_codes.MSP_SET_SERVO_LIMIT:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

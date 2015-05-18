@@ -89,7 +89,8 @@ var SERVO_CONFIG = [];
 var TILT_ARM_CONFIG = {
     flagEnable: 0,
     pitchDivisior: 1,
-    thrustLiftoff: 0,
+    thrustLiftoff: 50,
+    gearRatio: 1,
 };
 
 var SERIAL_CONFIG = {

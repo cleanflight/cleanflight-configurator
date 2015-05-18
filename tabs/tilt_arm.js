@@ -5,12 +5,12 @@ TABS.tilt_arm.initialize = function (callback) {
     var self = this;
 
     if (GUI.active_tab != 'tilt_arm') {
-		GUI.active_tab = 'tilt_arm';
-		googleAnalytics.sendAppView('Tilting_arm');
+        GUI.active_tab = 'tilt_arm';
+        googleAnalytics.sendAppView('Tilting_arm');
     }
 
     function get_tilt_arm_conf_data() {
-		MSP.send_message(MSP_codes.MSP_TILT_ARM_CONFIG, false, false, load_html);
+        MSP.send_message(MSP_codes.MSP_TILT_ARM_CONFIG, false, false, load_html);
     }
 
     function load_html() {
@@ -22,10 +22,6 @@ TABS.tilt_arm.initialize = function (callback) {
     var pitchFlagEnable   =   parseInt('1', 2);
     var thrustFlagEnable  =  parseInt('10', 2);
     var rollyawFlagEnable = parseInt('100', 2);
-    
-    $('#PITCH_ENABLE').val(pitchFlagEnable);
-    $('#THRUST_ENABLE').val(thrustFlagEnable);
-    $('#YAWROLL_ENABLE').val(rollyawFlagEnable);
     
     function process_html() {
 
@@ -62,6 +58,7 @@ TABS.tilt_arm.initialize = function (callback) {
         
         $('#PITCH_VALUE').val(TILT_ARM_CONFIG.pitchDivisior);
         $('#THRUST_VALUE').val(TILT_ARM_CONFIG.thrustLiftoff);
+        $('#GEAR_RATIO').val(TILT_ARM_CONFIG.gearRatio);
 
         $('a.save').click(function () {
             TILT_ARM_CONFIG.flagEnable = 0;
@@ -77,7 +74,8 @@ TABS.tilt_arm.initialize = function (callback) {
 
             TILT_ARM_CONFIG.pitchDivisior = parseInt( $('#PITCH_VALUE').val() );
             TILT_ARM_CONFIG.thrustLiftoff = parseInt( $('#THRUST_VALUE').val() );
-            
+            TILT_ARM_CONFIG.gearRatio = parseInt( $('#GEAR_RATIO').val() );
+
             MSP.send_message(MSP_codes.MSP_SET_TILT_ARM, MSP.crunch(MSP_codes.MSP_SET_TILT_ARM), false, function () {
                 MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {
                     GUI.log(chrome.i18n.getMessage('servosEepromSave'));

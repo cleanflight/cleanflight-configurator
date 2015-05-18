@@ -74,7 +74,8 @@ TABS.tilt_arm.initialize = function (callback) {
 
             TILT_ARM_CONFIG.pitchDivisior = parseInt( $('#PITCH_VALUE').val() );
             TILT_ARM_CONFIG.thrustLiftoff = parseInt( $('#THRUST_VALUE').val() );
-            TILT_ARM_CONFIG.gearRatio = parseInt( $('#GEAR_RATIO').val() );
+            TILT_ARM_CONFIG.gearRatio = parseFloat( $('#GEAR_RATIO').val() );
+            console.log( TILT_ARM_CONFIG.gearRatio+" "+$('#GEAR_RATIO').val() );
 
             MSP.send_message(MSP_codes.MSP_SET_TILT_ARM, MSP.crunch(MSP_codes.MSP_SET_TILT_ARM), false, function () {
                 MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {

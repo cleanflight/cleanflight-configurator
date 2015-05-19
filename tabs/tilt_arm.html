@@ -19,9 +19,14 @@
                 <td><input id="PITCH_VALUE" type="number" min=1 max=512 /></td>
             </tr>
             <tr>
-                <td>Thrust compensation</td>
+                <td>Thrust compensation for servo inclinantion</td>
                 <td><input id="THRUST_ENABLE" type="checkbox"/></td>
                 <td>0%<input id="THRUST_VALUE" type="range" min=0 max=100 />100%</td>
+            </tr>
+			<tr>
+                <td>Thrust compensation for body inclinantion</td>
+                <td></td>
+                <td><input style="width:100%" id="THRUST_BODY_ENABLE" type="number" min=0 max=2 step=0.001 /></td>
             </tr>
             <tr>
                 <td>Yaw and roll compensation</td>

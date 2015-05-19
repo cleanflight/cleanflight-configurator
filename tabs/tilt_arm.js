@@ -19,9 +19,10 @@ TABS.tilt_arm.initialize = function (callback) {
 
     MSP.send_message(MSP_codes.MSP_IDENT, false, false, get_tilt_arm_conf_data);
 
-    var pitchFlagEnable   =   parseInt('1', 2);
-    var thrustFlagEnable  =  parseInt('10', 2);
-    var rollyawFlagEnable = parseInt('100', 2);
+    var pitchFlagEnable      =    parseInt('1', 2);
+    var thrustFlagEnable     =   parseInt('10', 2);
+    var rollyawFlagEnable    =  parseInt('100', 2);
+    var thrustBodyFlagEnable = parseInt('1000', 2);
     
     function process_html() {
 
@@ -56,6 +57,12 @@ TABS.tilt_arm.initialize = function (callback) {
             $('#YAWROLL_ENABLE').prop('checked', false);
         }
         
+        if ( (TILT_ARM_CONFIG.flagEnable & thrustBodyFlagEnable) > 0){
+            $('#THRUST_BODY_ENABLE').prop('checked', true);
+        }else{
+            $('#THRUST_BODY_ENABLE').prop('checked', false);
+        }
+        
         $('#PITCH_VALUE').val(TILT_ARM_CONFIG.pitchDivisior);
         $('#THRUST_VALUE').val(TILT_ARM_CONFIG.thrustLiftoff);
         $('#GEAR_RATIO').val(TILT_ARM_CONFIG.gearRatio);
@@ -71,11 +78,13 @@ TABS.tilt_arm.initialize = function (callback) {
             if ($('#YAWROLL_ENABLE').is(':checked') ){
                 TILT_ARM_CONFIG.flagEnable |= rollyawFlagEnable;
             }
+            if ($('#THRUST_BODY_ENABLE').is(':checked') ){
+                TILT_ARM_CONFIG.flagEnable |= thrustBodyFlagEnable;
+            }
 
             TILT_ARM_CONFIG.pitchDivisior = parseInt( $('#PITCH_VALUE').val() );
             TILT_ARM_CONFIG.thrustLiftoff = parseInt( $('#THRUST_VALUE').val() );
             TILT_ARM_CONFIG.gearRatio = parseFloat( $('#GEAR_RATIO').val() );
-            console.log( TILT_ARM_CONFIG.gearRatio+" "+$('#GEAR_RATIO').val() );
 
             MSP.send_message(MSP_codes.MSP_SET_TILT_ARM, MSP.crunch(MSP_codes.MSP_SET_TILT_ARM), false, function () {
                 MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {

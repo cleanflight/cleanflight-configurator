@@ -65,7 +65,7 @@ TABS.tilt_arm.initialize = function (callback) {
         
         $('#PITCH_VALUE').val(TILT_ARM_CONFIG.pitchDivisior);
         $('#THRUST_VALUE').val(TILT_ARM_CONFIG.thrustLiftoff);
-        $('#GEAR_RATIO').val(TILT_ARM_CONFIG.gearRatio);
+        $('#GEAR_RATIO').val(TILT_ARM_CONFIG.gearRatio/100);
 
         $('a.save').click(function () {
             TILT_ARM_CONFIG.flagEnable = 0;
@@ -84,7 +84,7 @@ TABS.tilt_arm.initialize = function (callback) {
 
             TILT_ARM_CONFIG.pitchDivisior = parseInt( $('#PITCH_VALUE').val() );
             TILT_ARM_CONFIG.thrustLiftoff = parseInt( $('#THRUST_VALUE').val() );
-            TILT_ARM_CONFIG.gearRatio = parseFloat( $('#GEAR_RATIO').val() );
+            TILT_ARM_CONFIG.gearRatio = Math.round(parseFloat( $('#GEAR_RATIO').val() )*100);
 
             MSP.send_message(MSP_codes.MSP_SET_TILT_ARM, MSP.crunch(MSP_codes.MSP_SET_TILT_ARM), false, function () {
                 MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {

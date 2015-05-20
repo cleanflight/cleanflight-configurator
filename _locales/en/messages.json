@@ -214,7 +214,7 @@
         "message": "Request Optional Permissions"
     },
     "defaultWelcomeText": {
-        "message": "Welcome to <strong>Cleanflight - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller.<br /><br />The application supports all hardware that can run cleanflight (sparky, cc3d, acro naze, naze, afromini, flip32, flip32+, cjmcu, chebuzz f3, stm32f3discovery, naze32pro, etc)<br /><br />The firmware source code can be downloaded from <a href=\"https://github.com/cleanflight/cleanflight\" title=\"www.github.com\" target=\"_blank\">here</a><br />The newest binary firmware image is available <a href=\"https://github.com/cleanflight/cleanflight/releases\" title=\"www.github.com\" target=\"_blank\">here</a><br /><br />Latest <strong>CP210x Drivers</strong> can be downloaded from <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com/\" target=\"_blank\">here</a><br />"
+        "message": "Welcome to <strong>Cleanflight - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller.<br /><br />The application supports all hardware that can run cleanflight (spracingf3, sparky, cc3d, paris air hero 32, flip32, flip32+, cjmcu, chebuzz f3, stm32f3discovery, naze32pro, acro naze, naze, afromini, etc)<br /><br />The firmware source code can be downloaded from <a href=\"https://github.com/cleanflight/cleanflight\" title=\"www.github.com\" target=\"_blank\">here</a><br />The newest binary firmware image is available <a href=\"https://github.com/cleanflight/cleanflight/releases\" title=\"www.github.com\" target=\"_blank\">here</a><br /><br />Latest <strong>CP210x Drivers</strong> can be downloaded from <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com/\" target=\"_blank\">here</a><br />"
     },
     "defaultContributingHead": {
         "message": "Contributing"
@@ -262,7 +262,7 @@
         "message": "Calibrate Magnetometer"
     },
     "initialSetupCalibrateMagText": {
-        "message": "Move multirotor atleast <strong>360</strong> degrees on all axis of rotation, you have 30 seconds to perform this task"
+        "message": "Move multirotor at least <strong>360</strong> degrees on all axis of rotation, you have 30 seconds to perform this task"
     },
     "initialSetupButtonReset": {
         "message": "Reset Settings"
@@ -759,6 +759,30 @@
     "adjustmentsFunction12": {
         "message": "Rate Profile Selection"
     },
+    "adjustmentsFunction13": {
+        "message": "Pitch Rate"
+    },
+    "adjustmentsFunction14": {
+        "message": "Roll Rate"
+    },
+    "adjustmentsFunction15": {
+        "message": "Pitch P Adjustment"
+    },
+    "adjustmentsFunction16": {
+        "message": "Pitch I Adjustment"
+    },
+    "adjustmentsFunction17": {
+        "message": "Pitch D Adjustment"
+    },
+    "adjustmentsFunction18": {
+        "message": "Roll P Adjustment"
+    },
+    "adjustmentsFunction19": {
+        "message": "Roll I Adjustment"
+    },
+    "adjustmentsFunction20": {
+        "message": "Roll D Adjustment"
+    },
     "adjustmentsSave": {
         "message": "Save"
     },
@@ -1044,6 +1068,12 @@
     },
     "firmwareFlasherFlashSlowlyDescription": {
         "message": "Use 115200 baudrate for flashing (useful for flashing via bluetooth)"
+    },
+    "firmwareFlasherShowDevelopmentReleases":{
+      "message": "Show unstable releases"
+    },
+    "firmwareFlasherShowDevelopmentReleasesDescription":{
+      "message": "Show Release-Candidates and Development Releases"
     },
     "firmwareFlasherOptionLabelSelectFirmware": {
         "message": "Choose a Firmware / Board"

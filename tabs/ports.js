@@ -87,6 +87,10 @@ TABS.ports.initialize = function (callback, scrollPosition) {
         }
         
         $(".tab-ports").addClass("supported");
+
+        $("#disable-usb-msp-dialog").dialog({ autoOpen: false, modal: true });
+        $(".dialog-button#yes").button({ icons: {primary: "ui-icon-notice", secondary: null} });
+        $(".dialog-button#no").button();
         
         var portIdentifierToNameMapping = {
            0: 'UART1',
@@ -192,6 +196,22 @@ TABS.ports.initialize = function (callback, scrollPosition) {
             }
 
             ports_e.find('tbody').append(port_configuration_e);
+
+            if(CONFIG.boardIdentifier == 'AFNA') {
+                $('#functionCheckbox-0-0-0').change(function() {
+                    if(!$(this).is(':checked')) {
+                        $("#disable-usb-msp-dialog").dialog("open");
+                        $(".dialog-button#no").focus();
+                        $(".dialog-button#no").click(function() {
+                            $('#functionCheckbox-0-0-0').prop("checked", true);
+                            $("#disable-usb-msp-dialog").dialog("close");
+                        });
+                        $(".dialog-button#yes").click(function() {
+                            $("#disable-usb-msp-dialog").dialog("close");
+                        });
+                    }
+                });
+            }
         }
     }
     

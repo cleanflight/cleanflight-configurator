@@ -625,6 +625,9 @@
     "receiverRcExpo": {
         "message": "RC Expo"
     },
+	"receiverRcYawExpo": {
+        "message": "RC Yaw Expo"
+    },
     "receiverChannelMap": {
         "message": "Channel Map"
     },
@@ -872,7 +875,10 @@
         "message": "Master"
     },
     "motorsNotice": {
-        "message": "<strong>Motor Test Mode Notice:</strong><br />Moving the sliders will cause the motors to <strong>spin up</strong>.<br />In order to prevent injury <strong style=\"color: red\">remove ALL propellers</strong> before using this feature.<br />If you understand these instructions check the <strong>box</strong> below to <strong style=\"color: green\">enable</strong> motor test.<br /><br /><label><input type=\"checkbox\" /> Check</label>"
+        "message": "<strong>Motor Test Mode Notice:</strong><br />Moving the sliders will cause the motors to <strong>spin up</strong>.<br />In order to prevent injury <strong style=\"color: red\">remove ALL propellers</strong> before using this feature.<br />"
+    },
+    "motorsEnableControl": {
+        "message": "I understand the risks, propellors are removed - Enable motor control."
     },
 
     "sensorsInfo": {
@@ -1047,11 +1053,11 @@
     "firmwareFlasherFlashDevelopmentFirmwareDescription": {
         "message": "Flash most recent (untested) development firmware"
     },
-    "firmwareFlasherFlashSlowly": {
-        "message": "Flash slowly"
+    "firmwareFlasherManualBaud": {
+        "message": "Manual Baud Rate"
     },
-    "firmwareFlasherFlashSlowlyDescription": {
-        "message": "Use 115200 baudrate for flashing (useful for flashing via bluetooth)"
+    "firmwareFlasherManualBaudDescription": {
+        "message": "Manual selection of baud rate for boards that don't support the default speed or for flashing via bluetooth."
     },
     "firmwareFlasherShowDevelopmentReleases":{
       "message": "Show unstable releases"

@@ -10,7 +10,11 @@ TABS.tilt_arm.initialize = function (callback) {
     }
 
     function get_tilt_arm_conf_data() {
-        MSP.send_message(MSP_codes.MSP_TILT_ARM_CONFIG, false, false, load_html);
+        MSP.send_message(MSP_codes.MSP_TILT_ARM_CONFIG, false, false, get_rc_data());
+    }
+    
+    function get_rc_data() {
+        MSP.send_message(MSP_codes.MSP_RC, false, false, load_html);
     }
 
     function load_html() {
@@ -25,14 +29,26 @@ TABS.tilt_arm.initialize = function (callback) {
     var thrustBodyFlagEnable = parseInt('1000', 2);
     
     function process_html() {
-
+        
         if (CONFIG.multiType != 23){ // QuadXTiltArm
-            var model = $('div.tab-tilt-arm strong.model');
-            model.text(chrome.i18n.getMessage('tiltArmModelNoSupport'));
+            $('div.tab-tilt-arm strong.model').text(chrome.i18n.getMessage('tiltArmModelNoSupport'));
+            $('#TILT_TABLE').hide();
         }
         
         // translate to user-selected language
         localize();
+        
+        /* clear the select and then add elements */
+        $('#CHANNELS').find('option').remove();
+        var selected = '';
+        for (var i = 0; i < (RC.active_channels - 4); i++) {
+            if (TILT_ARM_CONFIG.channel === i){
+                selected = 'selected';
+            }else{
+                selected = '';
+            }
+            $("#CHANNELS").append('<option value='+i+' '+selected+'>AUX'+(i+1)+'</option>');
+        }
         
         console.log("TILT_ARM_CONFIG.flagEnable "+TILT_ARM_CONFIG.flagEnable);
         
@@ -84,6 +100,7 @@ TABS.tilt_arm.initialize = function (callback) {
 
             TILT_ARM_CONFIG.pitchDivisior = parseInt( $('#PITCH_VALUE').val() );
             TILT_ARM_CONFIG.thrustLiftoff = parseInt( $('#THRUST_VALUE').val() );
+            TILT_ARM_CONFIG.channel = parseInt( $('#CHANNELS').val() );
             TILT_ARM_CONFIG.gearRatio = Math.round(parseFloat( $('#GEAR_RATIO').val() )*100);
 
             MSP.send_message(MSP_codes.MSP_SET_TILT_ARM, MSP.crunch(MSP_codes.MSP_SET_TILT_ARM), false, function () {

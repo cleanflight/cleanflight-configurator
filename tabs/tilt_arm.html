@@ -2,33 +2,38 @@
     <span i18n="tiltArmModel"></span> <strong class="model"></strong>
     <div class="supported_wrapper">
         <div class="title" i18n="tiltArmConfig"></div>
-        <table class="fields">
+        <table class="fields" id='TILT_TABLE'>
             <tr>
                 <th>Component</th>
                 <th>Enable</th>
                 <th>Value</th>
             </tr>
-            <tr>
+            <tr class='even'>
                 <td>Servo to Arm GearRatio</td>
                 <td></td>
-                <td><input style="width:100%" id="GEAR_RATIO" type="number" min=0 max=2 step=0.01 /></td>
+                <td><input id="GEAR_RATIO" type="number" min=0 max=2 step=0.01 /></td>
             </tr>
-            <tr>
+            <tr class='odd'>
+                <td>Tilt control channel</td>
+                <td></td>
+                <td><select id='CHANNELS'></select></td>
+            </tr>
+            <tr class='even'>
                 <td>Body pitch suppressor</td>
                 <td><input id="PITCH_ENABLE" type="checkbox" /></td>
                 <td><input id="PITCH_VALUE" type="number" min=1 max=512 /></td>
             </tr>
-            <tr>
+            <tr class='odd'>
                 <td>Thrust compensation for servo inclinantion<br>WARING: EXPERIMENTAL</td>
                 <td><input id="THRUST_ENABLE" type="checkbox"/></td>
                 <td>0%<input id="THRUST_VALUE" type="range" min=0 max=100 />100%</td>
             </tr>
-            <tr>
+            <tr class='even'>
                 <td>Thrust compensation for body inclinantion<br>WARING: EXPERIMENTAL</td>
                 <td><input id="THRUST_BODY_ENABLE" type="checkbox" /></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr class='odd'>
                 <td>Yaw and roll compensation<br>WARING: EXPERIMENTAL</td>
                 <td><input id="YAWROLL_ENABLE" type="checkbox"/></td>
                 <td></td>

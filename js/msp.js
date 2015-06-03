@@ -52,6 +52,7 @@ var MSP_codes = {
     MSP_WP:                 118,
     MSP_BOXIDS:             119,
     MSP_SERVO_CONF:         120,
+    MSP_TILT_ARM_CONFIG:    123,
     
     MSP_SET_RAW_RC:         200,
     MSP_SET_RAW_GPS:        201,
@@ -67,6 +68,7 @@ var MSP_codes = {
     MSP_SET_HEAD:           211,
     MSP_SET_SERVO_CONF:     212,
     MSP_SET_MOTOR:          214,
+    MSP_SET_SERVO_LIMIT:    216,
     
     // MSP_BIND:               240,
 
@@ -447,13 +449,15 @@ var MSP = {
             case MSP_codes.MSP_SERVO_CONF:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
-                if (data.byteLength % 7 == 0) {
-                    for (var i = 0; i < data.byteLength; i += 7) {
+                if (data.byteLength % 9 == 0) {
+                    for (var i = 0; i < data.byteLength; i += 9) {
                         var arr = {
-                            'min': data.getInt16(i, 1),
-                            'max': data.getInt16(i + 2, 1),
-                            'middle': data.getInt16(i + 4, 1),
-                            'rate': data.getInt8(i + 6)
+                            'min': data.getInt16(i, 1), //microseconds
+                            'max': data.getInt16(i + 2, 1), //microseconds
+                            'middle': data.getInt16(i + 4, 1), //microseconds
+                            'rate': data.getInt8(i + 6), 
+                            'minLimit': data.getInt8(i + 7), //degree -90 90
+                            'maxLimit': data.getInt8(i + 8) //degree -90 90
                         };
     
                         SERVO_CONFIG.push(arr);
@@ -492,6 +496,9 @@ var MSP = {
                 break;
             case MSP_codes.MSP_SET_SERVO_CONF:
                 console.log('Servo Configuration saved');
+                break;
+            case MSP_codes.MSP_SET_SERVO_LIMIT:
+                console.log('Servo Limit saved');
                 break;
             case MSP_codes.MSP_EEPROM_WRITE:
                 console.log('Settings Saved in EEPROM');
@@ -1047,6 +1054,14 @@ MSP.crunch = function (code) {
                 buffer.push(highByte(SERVO_CONFIG[i].middle));
 
                 buffer.push(lowByte(SERVO_CONFIG[i].rate));
+            }
+            break;
+
+        case MSP_codes.MSP_SET_SERVO_LIMIT:
+            for (var i = 0; i < SERVO_CONFIG.length; i++) {
+                console.log("setting "+i+" al min:"+lowByte(SERVO_CONFIG[i].minLimit)+" "+SERVO_CONFIG[i].minLimit);
+                buffer.push(lowByte(SERVO_CONFIG[i].minLimit));
+                buffer.push(lowByte(SERVO_CONFIG[i].maxLimit));
             }
             break;
         case MSP_codes.MSP_SET_CHANNEL_FORWARDING:

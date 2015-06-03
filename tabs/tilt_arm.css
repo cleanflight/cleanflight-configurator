@@ -1,15 +1,15 @@
 .tab-tilt-arm .save {
     display: block;
     float: right;
-
+    
     height: 28px;
     line-height: 28px;
-
+    
     padding: 0 15px 0 15px;
-
+    
     text-align: center;
     font-weight: bold;
-
+    
     border: 1px solid silver;
     background-color: #ececec;
 }
@@ -28,19 +28,29 @@
     font-size:24px;
 }
 
+.tab-tilt-arm .title{
+    margin-top: 10px;
+    line-height: 20px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #8b8b8b;
+    border-bottom: 0;
+    background-color: #ececec;
+}
+
 .tab-tilt-arm .fields{
     border-collapse: collapse;
     min-width:1000px;
 }
 
-.tab-tilt-arm .fields td,th {
+.tab-tilt-arm .fields td, .tab-tilt-arm th {
     text-align: center; /* center checkbox horizontally */
     vertical-align: middle; /* center checkbox vertically */
     outline: thin solid;
     height:35px;
 }
 
-input[type="number"] {
+.tab-tilt-arm input[type="number"] {
     display: block;
     width: 100%;
     height: 20px;
@@ -48,14 +58,14 @@ input[type="number"] {
     text-align: right;
 }
 
-input[type="range"] {
+.tab-tilt-arm input[type="range"] {
     width: 80%;
     height: 20px;
     line-height: 20px;
     text-align: right;
 }
 
-select{
+.tab-tilt-arm select{
     display: block;
     width: 100%;
     height: 100%;

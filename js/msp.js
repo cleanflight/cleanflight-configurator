@@ -1056,6 +1056,7 @@ MSP.crunch = function (code) {
             buffer.push(lowByte(TILT_ARM_CONFIG.pitchDivisior));
             buffer.push(lowByte(TILT_ARM_CONFIG.thrustLiftoff));
             buffer.push(lowByte(TILT_ARM_CONFIG.gearRatio));
+			buffer.push(lowByte(TILT_ARM_CONFIG.channel));
             break;
         case MSP_codes.MSP_SET_SERVO_LIMIT:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

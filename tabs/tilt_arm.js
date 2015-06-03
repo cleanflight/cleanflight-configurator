@@ -40,9 +40,10 @@ TABS.tilt_arm.initialize = function (callback) {
         
         /* clear the select and then add elements */
         $('#CHANNELS').find('option').remove();
+
         var selected = '';
         for (var i = 0; i < (RC.active_channels - 4); i++) {
-            if (TILT_ARM_CONFIG.channel === i){
+            if (TILT_ARM_CONFIG.channel-4 === i){
                 selected = 'selected';
             }else{
                 selected = '';
@@ -100,7 +101,7 @@ TABS.tilt_arm.initialize = function (callback) {
             
             TILT_ARM_CONFIG.pitchDivisior = parseInt( $('#PITCH_VALUE').val() );
             TILT_ARM_CONFIG.thrustLiftoff = parseInt( $('#THRUST_VALUE').val() );
-            TILT_ARM_CONFIG.channel = parseInt( $('#CHANNELS').val() );
+            TILT_ARM_CONFIG.channel = parseInt( $('#CHANNELS').val() ) + 4;
             TILT_ARM_CONFIG.gearRatio = Math.round(parseFloat( $('#GEAR_RATIO').val() )*100);
             
             MSP.send_message(MSP_codes.MSP_SET_TILT_ARM, MSP.crunch(MSP_codes.MSP_SET_TILT_ARM), false, function () {

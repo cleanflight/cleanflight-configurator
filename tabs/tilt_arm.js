@@ -42,14 +42,18 @@ TABS.tilt_arm.initialize = function (callback) {
         $('#CHANNELS').find('option').remove();
 
         var selected = '';
+        var found = false;
         for (var i = 0; i < (RC.active_channels - 4); i++) {
             if (TILT_ARM_CONFIG.channel-4 === i){
                 selected = 'selected';
+                found = true;
             }else{
                 selected = '';
             }
             $("#CHANNELS").append('<option value='+i+' '+selected+'>AUX'+(i+1)+'</option>');
         }
+        if (!found)
+            $("#CHANNELS").append('<option value=0 selected>WARNING: SELECT ONE CHANNEL HERE</option>');
         
         console.log("TILT_ARM_CONFIG.flagEnable "+TILT_ARM_CONFIG.flagEnable);
         

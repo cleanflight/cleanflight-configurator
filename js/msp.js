@@ -68,8 +68,7 @@ var MSP_codes = {
     MSP_SET_HEAD:           211,
     MSP_SET_SERVO_CONF:     212,
     MSP_SET_MOTOR:          214,
-    MSP_SET_SERVO_LIMIT:    216,
-    MSP_SET_TILT_ARM:       217,
+    MSP_SET_TILT_ARM:       216,
     
     // MSP_BIND:               240,
 
@@ -1048,6 +1047,9 @@ MSP.crunch = function (code) {
                 buffer.push(highByte(SERVO_CONFIG[i].middle));
 
                 buffer.push(lowByte(SERVO_CONFIG[i].rate));
+
+                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMin));
+                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMax));
             }
             console.log("buffer size for servo: " + buffer.length+" number: "+SERVO_CONFIG.length);
             break;
@@ -1057,13 +1059,6 @@ MSP.crunch = function (code) {
             buffer.push(lowByte(TILT_ARM_CONFIG.thrustLiftoff));
             buffer.push(lowByte(TILT_ARM_CONFIG.gearRatio));
 			buffer.push(lowByte(TILT_ARM_CONFIG.channel));
-            break;
-        case MSP_codes.MSP_SET_SERVO_LIMIT:
-            for (var i = 0; i < SERVO_CONFIG.length; i++) {
-                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMin));
-            
-                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMax));
-            }
             break;
         case MSP_codes.MSP_SET_CHANNEL_FORWARDING:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

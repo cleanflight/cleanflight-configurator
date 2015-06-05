@@ -444,8 +444,8 @@ var MSP = {
                             'max': data.getInt16(i + 2, 1), //microseconds
                             'middle': data.getInt16(i + 4, 1), //microseconds
                             'rate': data.getInt8(i + 6), 
-                            'minLimit': data.getInt8(i + 7), //degree 0-180
-                            'maxLimit': data.getInt8(i + 8) //degree 0-180
+                            'angleAtMin': data.getInt8(i + 7), //degree 0-180
+                            'angleAtMax': data.getInt8(i + 8) //degree 0-180
                         };
     
                         SERVO_CONFIG.push(arr);
@@ -1060,9 +1060,9 @@ MSP.crunch = function (code) {
             break;
         case MSP_codes.MSP_SET_SERVO_LIMIT:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {
-                buffer.push(lowByte(SERVO_CONFIG[i].minLimit));
+                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMin));
             
-                buffer.push(lowByte(SERVO_CONFIG[i].maxLimit));
+                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMax));
             }
             break;
         case MSP_codes.MSP_SET_CHANNEL_FORWARDING:

@@ -87,6 +87,9 @@ TABS.servos.initialize = function (callback) {
             $('div.supported_wrapper').show();
 
 
+            var limitEnabled = 'disabled';
+            if (directions === 3)
+                limitEnabled = '';//enabling angleAtMin and angleAtMax
             
             $('div.tab-servos table.fields').append('\
                 <tr> \
@@ -94,8 +97,8 @@ TABS.servos.initialize = function (callback) {
                     <td class="min"><input type="number" min="100" max="2500" value="' + SERVO_CONFIG[obj].min + '" /></td>\
                     <td class="middle"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].middle +'" /></td>\
                     <td class="max"><input type="number" min="500" max="3000" value="' + SERVO_CONFIG[obj].max +'" /></td>\
-                    <td class="minLimit"><input type="number" min="-90" max="0" value="' + SERVO_CONFIG[obj].minLimit +'" /></td>\
-                    <td class="maxLimit"><input type="number" min="0" max="90" value="' + SERVO_CONFIG[obj].maxLimit +'" /></td>\
+                    <td class="angleAtMin"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].angleAtMin +'" '+limitEnabled+' /></td>\
+                    <td class="angleAtMax"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].angleAtMax +'" '+limitEnabled+' /></td>\
                     ' + servoCheckbox + '\
                     <td class="direction">\
                         <input class="first" type="checkbox"/><span class="name">' + name + '</span>\
@@ -145,6 +148,7 @@ TABS.servos.initialize = function (callback) {
 
                 //selecting default value
                 $('input:radio[name=direction]').val([bit_check(SERVO_CONFIG[obj].rate, 0)]);
+                
             }else {
                 // removing checkboxes
                 $('div.tab-servos table.fields tr:last td.direction').html('');
@@ -190,8 +194,8 @@ TABS.servos.initialize = function (callback) {
                 SERVO_CONFIG[info.obj].middle = parseInt($('.middle input', this).val());
                 SERVO_CONFIG[info.obj].min = parseInt($('.min input', this).val());
                 SERVO_CONFIG[info.obj].max = parseInt($('.max input', this).val());
-                SERVO_CONFIG[info.obj].minLimit = parseInt($('.minLimit input', this).val());
-                SERVO_CONFIG[info.obj].maxLimit = parseInt($('.maxLimit input', this).val());
+                SERVO_CONFIG[info.obj].angleAtMin = parseInt($('.angleAtMin input', this).val());
+                SERVO_CONFIG[info.obj].angleAtMax = parseInt($('.angleAtMax input', this).val());
 
                 // update rate if direction fields exist
                 if ($('.direction .radio', this).length){
@@ -313,6 +317,7 @@ TABS.servos.initialize = function (callback) {
                 process_servos('Roll Servo', '', 1, 2);
                 break;
             case 23: // Tilting servo
+            case 24: // Tilting servo
                 model.text('Tilting pitch');
 
                 process_servos('Pitch Servo', '', 0, 3);

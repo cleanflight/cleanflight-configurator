@@ -30,7 +30,7 @@ TABS.tilt_arm.initialize = function (callback) {
     
     function process_html() {
         
-        if (CONFIG.multiType != 23){ // QuadXTiltArm
+        if (CONFIG.multiType != 23 && CONFIG.multiType != 24){ // QuadXTiltArm, OctoXTiltArm
             $('div.tab-tilt-arm strong.model').text(chrome.i18n.getMessage('tiltArmModelNoSupport'));
             $('#TILT_TABLE').hide();
         }
@@ -53,7 +53,7 @@ TABS.tilt_arm.initialize = function (callback) {
             $("#CHANNELS").append('<option value='+i+' '+selected+'>AUX'+(i+1)+'</option>');
         }
         if (!found)
-            $("#CHANNELS").append('<option value=0 selected>WARNING: SELECT ONE CHANNEL HERE</option>');
+			$("#CHANNELS").append('<option value=0 selected>WARNING: SELECT ONE CHANNEL HERE '+TILT_ARM_CONFIG.channel+'</option>');
         
         console.log("TILT_ARM_CONFIG.flagEnable "+TILT_ARM_CONFIG.flagEnable);
         

@@ -456,6 +456,7 @@ var MSP = {
                 TILT_ARM_CONFIG.pitchDivisior = data.getUint8(1);
                 TILT_ARM_CONFIG.thrustLiftoff = data.getUint8(2);
                 TILT_ARM_CONFIG.gearRatio = data.getUint8(3);
+                TILT_ARM_CONFIG.channel = data.getUint8(4);
                 break;
             case MSP_codes.MSP_SET_RAW_RC:
                 break;

@@ -428,6 +428,15 @@ function configuration_restore(callback) {
             }
         }
         
+        if (!compareVersions(migratedVersion, '0.63.2')) {
+            // backups created before with 0.63.2 does not have the new angleAtMin and angleAtMax
+            for (var i = 0; i < configuration.SERVO_CONFIG.length; i++) {
+                configuration.SERVO_CONFIG[i].angleAtMin = 90; //default value
+                configuration.SERVO_CONFIG[i].angleAtMax = 90; //default value
+            }
+            appliedMigrationsCount++;
+        }
+        
         if (appliedMigrationsCount > 0) {
             GUI.log(chrome.i18n.getMessage('configMigrationSuccessful', [appliedMigrationsCount]));
         }

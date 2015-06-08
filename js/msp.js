@@ -68,8 +68,7 @@ var MSP_codes = {
     MSP_SET_HEAD:           211,
     MSP_SET_SERVO_CONF:     212,
     MSP_SET_MOTOR:          214,
-    MSP_SET_SERVO_LIMIT:    216,
-    MSP_SET_TILT_ARM:       217,
+    MSP_SET_TILT_ARM:       216,
     
     // MSP_BIND:               240,
 
@@ -455,8 +454,8 @@ var MSP = {
                             'max': data.getInt16(i + 2, 1), //microseconds
                             'middle': data.getInt16(i + 4, 1), //microseconds
                             'rate': data.getInt8(i + 6), 
-                            'minLimit': data.getInt8(i + 7), //degree 0-180
-                            'maxLimit': data.getInt8(i + 8) //degree 0-180
+                            'angleAtMin': data.getInt8(i + 7), //degree 0-180
+                            'angleAtMax': data.getInt8(i + 8) //degree 0-180
                         };
     
                         SERVO_CONFIG.push(arr);
@@ -468,7 +467,7 @@ var MSP = {
                 TILT_ARM_CONFIG.pitchDivisior = data.getUint8(1);
                 TILT_ARM_CONFIG.thrustLiftoff = data.getUint8(2);
                 TILT_ARM_CONFIG.gearRatio = data.getUint8(3);
-				TILT_ARM_CONFIG.channel = data.getUint8(4);
+                TILT_ARM_CONFIG.channel = data.getUint8(4);
                 break;
             case MSP_codes.MSP_SET_RAW_RC:
                 break;
@@ -1063,6 +1062,9 @@ MSP.crunch = function (code) {
                 buffer.push(highByte(SERVO_CONFIG[i].middle));
 
                 buffer.push(lowByte(SERVO_CONFIG[i].rate));
+
+                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMin));
+                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMax));
             }
             console.log("buffer size for servo: " + buffer.length+" number: "+SERVO_CONFIG.length);
             break;
@@ -1072,13 +1074,6 @@ MSP.crunch = function (code) {
             buffer.push(lowByte(TILT_ARM_CONFIG.thrustLiftoff));
             buffer.push(lowByte(TILT_ARM_CONFIG.gearRatio));
 			buffer.push(lowByte(TILT_ARM_CONFIG.channel));
-            break;
-        case MSP_codes.MSP_SET_SERVO_LIMIT:
-            for (var i = 0; i < SERVO_CONFIG.length; i++) {
-                buffer.push(lowByte(SERVO_CONFIG[i].minLimit));
-            
-                buffer.push(lowByte(SERVO_CONFIG[i].maxLimit));
-            }
             break;
         case MSP_codes.MSP_SET_CHANNEL_FORWARDING:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

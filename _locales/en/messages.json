@@ -815,11 +815,11 @@
     "servosMax": {
         "message": "180deg PWM"
     },
-    "servosMinLimit": {
-        "message": "MIN limit deg"
+    "angleAtMin": {
+        "message": "angle MIN deg"
     },
-    "servosMaxLimit": {
-        "message": "MAX limit deg"
+    "angleAtMax": {
+        "message": "angle MAX deg"
     },
     "servosDirection": {
         "message": "Direction"
@@ -844,10 +844,10 @@
     },
 
     "tiltArmSave":{
-		"message":"Save"
+        "message":"Save"
     },
     "tiltArmModelNoSupport":{
-		"message":"This model does not support tilting arms"
+        "message":"This model does not support tilting arms"
     },
 
     "gpsHead": {

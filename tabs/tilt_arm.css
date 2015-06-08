@@ -28,16 +28,6 @@
     font-size:24px;
 }
 
-.tab-tilt-arm .title{
-    margin-top: 10px;
-    line-height: 20px;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid #8b8b8b;
-    border-bottom: 0;
-    background-color: #ececec;
-}
-
 .tab-tilt-arm .fields{
     border-collapse: collapse;
     min-width:1000px;

@@ -34,6 +34,7 @@ var GUI_control = function () {
         'receiver',
         'sensors', 
         'servos',
+        'tilt_arm',
         'setup'
     ];
     this.allowedTabs = this.defaultAllowedTabsWhenDisconnected;

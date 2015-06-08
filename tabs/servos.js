@@ -87,13 +87,18 @@ TABS.servos.initialize = function (callback) {
             $('div.supported_wrapper').show();
 
 
+            var limitEnabled = 'disabled';
+            if (directions === 3)
+                limitEnabled = '';//enabling angleAtMin and angleAtMax
             
             $('div.tab-servos table.fields').append('\
                 <tr> \
                     <td style="text-align: center">' + name + '</td>\
-                    <td class="middle"><input type="number" min="1000" max="2000" value="' + SERVO_CONFIG[obj].middle + '" /></td>\
-                    <td class="min"><input type="number" min="1000" max="2000" value="' + SERVO_CONFIG[obj].min +'" /></td>\
-                    <td class="max"><input type="number" min="1000" max="2000" value="' + SERVO_CONFIG[obj].max +'" /></td>\
+                    <td class="min"><input type="number" min="100" max="2500" value="' + SERVO_CONFIG[obj].min + '" /></td>\
+                    <td class="middle"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].middle +'" /></td>\
+                    <td class="max"><input type="number" min="500" max="3000" value="' + SERVO_CONFIG[obj].max +'" /></td>\
+                    <td class="angleAtMin"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].angleAtMin +'" '+limitEnabled+' /></td>\
+                    <td class="angleAtMax"><input type="number" min="0" max="180" value="' + SERVO_CONFIG[obj].angleAtMax +'" '+limitEnabled+' /></td>\
                     ' + servoCheckbox + '\
                     <td class="direction">\
                         <input class="first" type="checkbox"/><span class="name">' + name + '</span>\
@@ -129,7 +134,22 @@ TABS.servos.initialize = function (callback) {
 
                 // select current rate
                 select.val(SERVO_CONFIG[obj].rate);
-            } else {
+            }  else if (directions == 3) {
+                // removing checkboxes
+                $('div.tab-servos table.fields tr:last td.direction').html('');
+                
+                // adding radio button
+                $('div.tab-servos table.fields tr:last td.direction').append('\
+                <div class="radio"> \
+                <input type="radio" name="direction" value="false">Normal<br>\
+                <input type="radio" name="direction" value="true">Reverse\
+                </div>\
+                ');
+
+                //selecting default value
+                $('input:radio[name=direction]').val([bit_check(SERVO_CONFIG[obj].rate, 0)]);
+                
+            }else {
                 // removing checkboxes
                 $('div.tab-servos table.fields tr:last td.direction').html('');
             }
@@ -174,9 +194,16 @@ TABS.servos.initialize = function (callback) {
                 SERVO_CONFIG[info.obj].middle = parseInt($('.middle input', this).val());
                 SERVO_CONFIG[info.obj].min = parseInt($('.min input', this).val());
                 SERVO_CONFIG[info.obj].max = parseInt($('.max input', this).val());
+                SERVO_CONFIG[info.obj].angleAtMin = parseInt($('.angleAtMin input', this).val());
+                SERVO_CONFIG[info.obj].angleAtMax = parseInt($('.angleAtMax input', this).val());
 
                 // update rate if direction fields exist
-                if ($('.direction input', this).length) {
+                if ($('.direction .radio', this).length){
+                    var val = $('input:radio[name=direction]:checked').val();
+                    console.log('direction radio:'+val);
+                    if (val == 'true') SERVO_CONFIG[info.obj].rate = bit_set(SERVO_CONFIG[info.obj].rate, 0);
+                    else SERVO_CONFIG[info.obj].rate = bit_clear(SERVO_CONFIG[info.obj].rate, 0);
+                }else if ($('.direction input', this).length) {
                     if ($('.direction input:first', this).is(':checked')) SERVO_CONFIG[info.obj].rate = bit_set(SERVO_CONFIG[info.obj].rate, 0);
                     else SERVO_CONFIG[info.obj].rate = bit_clear(SERVO_CONFIG[info.obj].rate, 0);
 
@@ -189,13 +216,18 @@ TABS.servos.initialize = function (callback) {
             });
             
             MSP.send_message(MSP_codes.MSP_SET_CHANNEL_FORWARDING, MSP.crunch(MSP_codes.MSP_SET_CHANNEL_FORWARDING), false, function () {
+                console.log("channel forward ok");
                 MSP.send_message(MSP_codes.MSP_SET_SERVO_CONF, MSP.crunch(MSP_codes.MSP_SET_SERVO_CONF), false, function () {
-                    if (save_to_eeprom) {
-                        // Save changes to EEPROM
-                        MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {
-                            GUI.log(chrome.i18n.getMessage('servosEepromSave'));
-                        });
-                    }
+                    console.log("servo conf ok");
+                    MSP.send_message(MSP_codes.MSP_SET_SERVO_LIMIT, MSP.crunch(MSP_codes.MSP_SET_SERVO_LIMIT), false, function () {
+                        console.log("servo limit ok");
+                        if (save_to_eeprom) {
+                            // Save changes to EEPROM
+                            MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {
+                                GUI.log(chrome.i18n.getMessage('servosEepromSave'));
+                            });
+                        }
+                    });
                 });
             });
 
@@ -205,7 +237,7 @@ TABS.servos.initialize = function (callback) {
         $('div.tab-servos table.fields tr:not(:first)').remove();
 
         var model = $('div.tab-servos strong.model');
-        var supported_models = [1, 4, 5, 8, 14, 20, 21];
+        var supported_models = [1, 4, 5, 8, 14, 20, 21, 23];
 
         switch (CONFIG.multiType) {
             case 1: // TRI
@@ -276,7 +308,20 @@ TABS.servos.initialize = function (callback) {
                 process_servos('Front', 'F YAW', 5, true);
                 process_servos('Rear', 'YAW', 6, true);
                 break;
+            case 5: // Gimbal
+                // needs to be verified
+                model.text('Gimbal');
 
+                // rate
+                process_servos('Pitch Servo', '', 0, 2);
+                process_servos('Roll Servo', '', 1, 2);
+                break;
+            case 23: // Tilting servo
+            case 24: // Tilting servo
+                model.text('Tilting pitch');
+
+                process_servos('Pitch Servo', '', 0, 3);
+                break;
             default:
                 model.text(chrome.i18n.getMessage('servosModelNoSupport'));
 

@@ -87,6 +87,9 @@
     "tabServos": {
         "message": "Servos"
     },
+    "tabTiltArm": {
+        "message": "Tilt Arm"
+    },
     "tabGPS": {
         "message": "GPS"
     },
@@ -804,13 +807,19 @@
         "message": "Name"
     },
     "servosMid": {
-        "message": "MID"
+        "message": "90deg PWM"
     },
     "servosMin": {
-        "message": "MIN"
+        "message": "0deg PWM"
     },
     "servosMax": {
-        "message": "MAX"
+        "message": "180deg PWM"
+    },
+    "angleAtMin": {
+        "message": "angle MIN deg"
+    },
+    "angleAtMax": {
+        "message": "angle MAX deg"
     },
     "servosDirection": {
         "message": "Direction"
@@ -832,6 +841,13 @@
     },
     "servosEepromSave": {
         "message": "EEPROM <span style=\"color: green\">saved</span>"
+    },
+
+    "tiltArmSave":{
+        "message":"Save"
+    },
+    "tiltArmModelNoSupport":{
+        "message":"This model does not support tilting arms"
     },
 
     "gpsHead": {

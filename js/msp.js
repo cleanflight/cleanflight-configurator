@@ -52,6 +52,7 @@ var MSP_codes = {
     MSP_WP:                 118,
     MSP_BOXIDS:             119,
     MSP_SERVO_CONF:         120,
+    MSP_TILT_ARM_CONFIG:    123,
     
     MSP_SET_RAW_RC:         200,
     MSP_SET_RAW_GPS:        201,
@@ -67,6 +68,7 @@ var MSP_codes = {
     MSP_SET_HEAD:           211,
     MSP_SET_SERVO_CONF:     212,
     MSP_SET_MOTOR:          214,
+    MSP_SET_TILT_ARM:       216,
     
     // MSP_BIND:               240,
 
@@ -447,18 +449,27 @@ var MSP = {
             case MSP_codes.MSP_SERVO_CONF:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
-                if (data.byteLength % 7 == 0) {
-                    for (var i = 0; i < data.byteLength; i += 7) {
+                if (data.byteLength % 9 == 0) {
+                    for (var i = 0; i < data.byteLength; i += 9) {
                         var arr = {
-                            'min': data.getInt16(i, 1),
-                            'max': data.getInt16(i + 2, 1),
-                            'middle': data.getInt16(i + 4, 1),
-                            'rate': data.getInt8(i + 6)
+                            'min': data.getInt16(i, 1), //microseconds
+                            'max': data.getInt16(i + 2, 1), //microseconds
+                            'middle': data.getInt16(i + 4, 1), //microseconds
+                            'rate': data.getInt8(i + 6), 
+                            'angleAtMin': data.getInt8(i + 7), //degree 0-180
+                            'angleAtMax': data.getInt8(i + 8) //degree 0-180
                         };
     
                         SERVO_CONFIG.push(arr);
                     }
                 }
+                break;
+            case MSP_codes.MSP_TILT_ARM_CONFIG:
+                TILT_ARM_CONFIG.flagEnable = data.getUint8(0);
+                TILT_ARM_CONFIG.pitchDivisior = data.getUint8(1);
+                TILT_ARM_CONFIG.thrustLiftoff = data.getUint8(2);
+                TILT_ARM_CONFIG.gearRatio = data.getUint8(3);
+                TILT_ARM_CONFIG.channel = data.getUint8(4);
                 break;
             case MSP_codes.MSP_SET_RAW_RC:
                 break;
@@ -492,6 +503,9 @@ var MSP = {
                 break;
             case MSP_codes.MSP_SET_SERVO_CONF:
                 console.log('Servo Configuration saved');
+                break;
+            case MSP_codes.MSP_SET_TILT_ARM:
+                console.log('TiltArm Configuration saved');
                 break;
             case MSP_codes.MSP_EEPROM_WRITE:
                 console.log('Settings Saved in EEPROM');
@@ -827,6 +841,7 @@ var MSP = {
                 checksum = 0;
 
             bufferOut = new ArrayBuffer(size);
+            console.log("sending data: "+data.length+" "+bufferOut.byteLength+" "+data);
             bufView = new Uint8Array(bufferOut);
 
             bufView[0] = 36; // $
@@ -885,6 +900,8 @@ var MSP = {
             serial.send(bufferOut, function (sendInfo) {
                 if (sendInfo.bytesSent == bufferOut.byteLength) {
                     if (callback_sent) callback_sent();
+                }else{
+                    console.log("sendInfo.bytesSent "+sendInfo.bytesSent+" - bufferOut.byteLength " +bufferOut.byteLength);
                 }
             });
         }
@@ -1047,7 +1064,18 @@ MSP.crunch = function (code) {
                 buffer.push(highByte(SERVO_CONFIG[i].middle));
 
                 buffer.push(lowByte(SERVO_CONFIG[i].rate));
+
+                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMin));
+                buffer.push(lowByte(SERVO_CONFIG[i].angleAtMax));
             }
+            console.log("buffer size for servo: " + buffer.length+" number: "+SERVO_CONFIG.length);
+            break;
+        case MSP_codes.MSP_SET_TILT_ARM:
+            buffer.push(lowByte(TILT_ARM_CONFIG.flagEnable));
+            buffer.push(lowByte(TILT_ARM_CONFIG.pitchDivisior));
+            buffer.push(lowByte(TILT_ARM_CONFIG.thrustLiftoff));
+            buffer.push(lowByte(TILT_ARM_CONFIG.gearRatio));
+			buffer.push(lowByte(TILT_ARM_CONFIG.channel));
             break;
         case MSP_codes.MSP_SET_CHANNEL_FORWARDING:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

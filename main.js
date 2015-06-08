@@ -144,6 +144,9 @@ $(document).ready(function () {
                     case 'servos':
                         TABS.servos.initialize(content_ready);
                         break;
+                    case 'tilt_arm':
+                        TABS.tilt_arm.initialize(content_ready);
+                        break;
                     case 'gps':
                         TABS.gps.initialize(content_ready);
                         break;

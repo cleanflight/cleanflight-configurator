@@ -448,7 +448,7 @@ var MSP = {
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
                 if (data.byteLength % 7 == 0) {
-                    for (var i = 0; i < data.byteLength; i += 7) {
+                    for (var i = 0; i < 56; i += 7) {
                         var arr = {
                             'min': data.getInt16(i, 1),
                             'max': data.getInt16(i + 2, 1),

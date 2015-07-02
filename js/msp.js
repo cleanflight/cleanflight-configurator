@@ -29,6 +29,8 @@ var MSP_codes = {
     MSP_DATAFLASH_ERASE:        72,
     MSP_LOOP_TIME:              73,
     MSP_SET_LOOP_TIME:          74,
+    MSP_PID_FILTERS:            79, // Returns PID cutoff filter settings
+    MSP_SET_PID_FILTERS:        80, // Sets PID cutoff filter settings
 
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -375,6 +377,15 @@ var MSP = {
                 if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
                     FC_CONFIG.loopTime = data.getInt16(0, 1);
                 }
+                break;
+            case MSP_codes.MSP_PID_FILTERS:
+                var offset = 0;
+                PID_filter.gyro_lpf = data.getUint16(offset, 1);
+                offset += 2;
+                PID_filter.gyro_cut_hz = data.getUint8(offset++);
+                PID_filter.pterm_cut_hz = data.getUint8(offset++);
+                PID_filter.dterm_cut_hz = data.getUint8(offset++);
+                PID_filter.yaw_p_limit = data.getUint16(offset, 1);
                 break;
             case MSP_codes.MSP_MISC: // 22 bytes
                 var offset = 0;
@@ -795,6 +806,9 @@ var MSP = {
             case MSP_codes.MSP_SET_LOOP_TIME:
                 console.log('Looptime saved');
                 break;
+            case MSP_codes.MSP_SET_PID_FILTERS:
+                console.log('Selective Software Filtering saved');
+                break;
             case MSP_codes.MSP_SET_ARMING_CONFIG:
                 console.log('Arming config saved');
                 break;
@@ -1013,6 +1027,15 @@ MSP.crunch = function (code) {
         case MSP_codes.MSP_SET_LOOP_TIME:
             buffer.push(lowByte(FC_CONFIG.loopTime));
             buffer.push(highByte(FC_CONFIG.loopTime));
+            break;
+        case MSP_codes.MSP_SET_PID_FILTERS:
+            buffer.push(lowByte(PID_filter.gyro_lpf));
+            buffer.push(highByte(PID_filter.gyro_lpf));
+            buffer.push(PID_filter.gyro_cut_hz);
+            buffer.push(PID_filter.pterm_cut_hz);
+            buffer.push(PID_filter.dterm_cut_hz);
+            buffer.push(lowByte(PID_filter.yaw_p_limit));
+            buffer.push(highByte(PID_filter.yaw_p_limit));
             break;
         case MSP_codes.MSP_SET_MISC:
             buffer.push(lowByte(MISC.midrc));

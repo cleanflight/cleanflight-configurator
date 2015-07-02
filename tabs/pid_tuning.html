@@ -100,6 +100,37 @@
                 </tr>
             </tbody>
         </table>
+        <table class="pid-filters">
+            <thead>
+                <tr>
+                    <th i18n="pidYawPLimit"></th>
+                    <th i18n="pidFilterGyroLpf"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" name="yawplimit" step="1" min="100" max="500"/></td>
+                    <td><input type="number" name="gyrolpf" step="1" min="0" max="256"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="filter-head" i18n="pidFilterHead"></p>
+        <table class="pid-filters">
+            <thead>
+                <tr>
+                    <th i18n="pidFilterGyroCutHz"></th>
+                    <th i18n="pidFilterPTermCutHz"></th>
+                    <th i18n="pidFilterDTermCutHz"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" name="gyrocuthz" step="1" min="0" max="200"/></td>
+                    <td><input type="number" name="ptermcuthz" step="1" min="0" max="200"/></td>
+                    <td><input type="number" name="dtermcuthz" step="1" min="0" max="200"/></td>
+                </tr>
+            </tbody>
+        </table>
     </form>
     <div class="clear-both"></div>
     <div class="profile">

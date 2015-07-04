@@ -80,6 +80,7 @@ var RC_tuning = {
 };
 
 var PID_filter = {
+    data_valid:      0,
     gyro_lpf:        0,
     gyro_cut_hz:     0,
     pterm_cut_hz:    0,

@@ -184,11 +184,16 @@ TABS.pid_tuning.initialize = function (callback) {
         $('.rate-tpa input[name="tpa-breakpoint"]').val(RC_tuning.dynamic_THR_breakpoint);
 
         // Fill in data from PID_filter object
-        $('.pid-filters input[name="gyrolpf"]').val(PID_filter.gyro_lpf);
-        $('.pid-filters input[name="gyrocuthz"]').val(PID_filter.gyro_cut_hz);
-        $('.pid-filters input[name="ptermcuthz"]').val(PID_filter.pterm_cut_hz);
-        $('.pid-filters input[name="dtermcuthz"]').val(PID_filter.dterm_cut_hz);
-        $('.pid-filters input[name="yawplimit"]').val(PID_filter.yaw_p_limit);
+        if (PID_filter.data_valid == 1) {
+            $('.pid-filters input[name="gyrolpf"]').val(PID_filter.gyro_lpf);
+            $('.pid-filters input[name="gyrocuthz"]').val(PID_filter.gyro_cut_hz);
+            $('.pid-filters input[name="ptermcuthz"]').val(PID_filter.pterm_cut_hz);
+            $('.pid-filters input[name="dtermcuthz"]').val(PID_filter.dterm_cut_hz);
+            $('.pid-filters input[name="yawplimit"]').val(PID_filter.yaw_p_limit);
+        } else {
+            $('.filter-head').hide();
+            $('.pid-filters').hide();
+        }
     }
 
     function form_to_pid_and_rc() {
@@ -252,11 +257,13 @@ TABS.pid_tuning.initialize = function (callback) {
         RC_tuning.dynamic_THR_breakpoint = parseInt($('.rate-tpa input[name="tpa-breakpoint"]').val());
 
         // catch PID_filter changes
-        PID_filter.gyro_lpf = parseFloat($('.pid-filters input[name="gyrolpf"]').val());
-        PID_filter.gyro_cut_hz = parseFloat($('.pid-filters input[name="gyrocuthz"]').val());
-        PID_filter.pterm_cut_hz = parseFloat($('.pid-filters input[name="ptermcuthz"]').val());
-        PID_filter.dterm_cut_hz = parseFloat($('.pid-filters input[name="dtermcuthz"]').val());
-        PID_filter.yaw_p_limit = parseFloat($('.pid-filters input[name="yawplimit"]').val());
+        if (PID_filter.data_valid == 1) {
+            PID_filter.gyro_lpf = parseFloat($('.pid-filters input[name="gyrolpf"]').val());
+            PID_filter.gyro_cut_hz = parseFloat($('.pid-filters input[name="gyrocuthz"]').val());
+            PID_filter.pterm_cut_hz = parseFloat($('.pid-filters input[name="ptermcuthz"]').val());
+            PID_filter.dterm_cut_hz = parseFloat($('.pid-filters input[name="dtermcuthz"]').val());
+            PID_filter.yaw_p_limit = parseFloat($('.pid-filters input[name="yawplimit"]').val());
+        }
     }
 
     function process_html() {

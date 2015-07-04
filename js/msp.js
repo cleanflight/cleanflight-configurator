@@ -385,6 +385,7 @@ var MSP = {
                 break;
             case MSP_codes.MSP_PID_FILTERS:
                 var offset = 0;
+                PID_filter.data_valid = 1;
                 PID_filter.gyro_lpf = data.getUint16(offset, 1);
                 offset += 2;
                 PID_filter.gyro_cut_hz = data.getUint8(offset++);

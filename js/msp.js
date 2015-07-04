@@ -209,7 +209,7 @@ var MSP = {
     process_data: function (code, message_buffer, message_length) {
         var data = new DataView(message_buffer, 0); // DataView (allowing us to view arrayBuffer as struct/union)
 
-        switch (code) {
+        if (!this.unsupported) switch (code) {
             case MSP_codes.MSP_IDENT:
                 console.log('Using deprecated msp command: MSP_IDENT');
                 // Deprecated
@@ -820,6 +820,8 @@ var MSP = {
                 
             default:
                 console.log('Unknown code detected: ' + code);
+        } else {
+            console.log('FC reports unsupported message error: ' + code);
         }
 
         // trigger callbacks, cleanup/remove callback after trigger

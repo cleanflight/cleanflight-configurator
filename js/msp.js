@@ -104,6 +104,7 @@ var MSP = {
 
     callbacks:                  [],
     packet_error:               0,
+    unsupported:                0,
 
     ledDirectionLetters:        ['n', 'e', 's', 'w', 'u', 'd'],      // in LSB bit order
     ledFunctionLetters:         ['i', 'w', 'f', 'a', 't', 'r', 'c'], // in LSB bit order
@@ -140,10 +141,14 @@ var MSP = {
                     }
                     break;
                 case 2: // direction (should be >)
+                    this.unsupported = 0;
                     if (data[i] == 62) { // >
                         this.message_direction = 1;
-                    } else { // <
+                    } else if (data[i] == 60) { // <
                         this.message_direction = 0;
+                    } else if (data[i] == 33) { // !
+                        // FC reports unsupported message error
+                        this.unsupported = 1;
                     }
 
                     this.state++;

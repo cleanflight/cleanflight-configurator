@@ -609,6 +609,9 @@
     "pidFilterHead": {
         "message": "Selective Software Filtering"
     },
+    "pidTuningButtonSuggested": {
+        "message": "Set suggested filter start values"
+    },
     "pidTuningButtonSave": {
         "message": "Save"
     },

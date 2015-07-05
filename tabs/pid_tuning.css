@@ -106,6 +106,7 @@
     bottom: 10px;
 }
 .tab-pid_tuning .update,
+.tab-pid_tuning .suggested,
 .tab-pid_tuning .refresh {
     display: block;
     float: right;
@@ -125,6 +126,7 @@
     margin-right: 10px;
 }
 .tab-pid_tuning .update:hover,
+.tab-pid_tuning .suggested:hover,
 .tab-pid_tuning .refresh:hover {
     background-color: #dedcdc;
 }

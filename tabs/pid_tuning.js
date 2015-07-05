@@ -266,6 +266,19 @@ TABS.pid_tuning.initialize = function (callback) {
         }
     }
 
+    function set_suggested_filter_defaults() {
+        if (PID_filter.data_valid == 1) {
+            PID_filter.gyro_lpf = 256;
+            PID_filter.gyro_cut_hz = 100;
+            PID_filter.pterm_cut_hz = 50;
+            PID_filter.dterm_cut_hz = 15;
+            $('.pid-filters input[name="gyrolpf"]').val(PID_filter.gyro_lpf);
+            $('.pid-filters input[name="gyrocuthz"]').val(PID_filter.gyro_cut_hz);
+            $('.pid-filters input[name="ptermcuthz"]').val(PID_filter.pterm_cut_hz);
+            $('.pid-filters input[name="dtermcuthz"]').val(PID_filter.dterm_cut_hz);
+        }
+    }
+
     function process_html() {
         // translate to user-selected language
         localize();
@@ -329,6 +342,11 @@ TABS.pid_tuning.initialize = function (callback) {
                 GUI.log(chrome.i18n.getMessage('pidTuningDataRefreshed'));
                 TABS.pid_tuning.initialize();
             });
+        });
+
+        $('a.suggested').click(function () {
+            set_suggested_filter_defaults();
+            TABS.pid_tuning.controllerChanged = false;
         });
 
         form_e.find('input').each(function (k, item) {

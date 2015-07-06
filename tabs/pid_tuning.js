@@ -190,6 +190,7 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.pid-filters input[name="ptermcuthz"]').val(PID_filter.pterm_cut_hz);
             $('.pid-filters input[name="dtermcuthz"]').val(PID_filter.dterm_cut_hz);
             $('.pid-filters input[name="yawplimit"]').val(PID_filter.yaw_p_limit);
+            $('.pid-filters input[name="yawjumppreventionlimit"]').val(PID_filter.yaw_jump_prevention_limit);
         } else {
             $('.filter-head').hide();
             $('.pid-filters').hide();
@@ -263,6 +264,7 @@ TABS.pid_tuning.initialize = function (callback) {
             PID_filter.pterm_cut_hz = parseFloat($('.pid-filters input[name="ptermcuthz"]').val());
             PID_filter.dterm_cut_hz = parseFloat($('.pid-filters input[name="dtermcuthz"]').val());
             PID_filter.yaw_p_limit = parseFloat($('.pid-filters input[name="yawplimit"]').val());
+            PID_filter.yaw_jump_prevention_limit = parseFloat($('.pid-filters input[name="yawjumppreventionlimit"]').val());
         }
     }
 

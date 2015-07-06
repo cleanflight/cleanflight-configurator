@@ -392,6 +392,8 @@ var MSP = {
                 PID_filter.pterm_cut_hz = data.getUint8(offset++);
                 PID_filter.dterm_cut_hz = data.getUint8(offset++);
                 PID_filter.yaw_p_limit = data.getUint16(offset, 1);
+                offset += 2;
+                PID_filter.yaw_jump_prevention_limit = data.getUint16(offset, 1);
                 break;
             case MSP_codes.MSP_MISC: // 22 bytes
                 var offset = 0;
@@ -1044,6 +1046,8 @@ MSP.crunch = function (code) {
             buffer.push(PID_filter.dterm_cut_hz);
             buffer.push(lowByte(PID_filter.yaw_p_limit));
             buffer.push(highByte(PID_filter.yaw_p_limit));
+            buffer.push(lowByte(PID_filter.yaw_jump_prevention_limit));
+            buffer.push(highByte(PID_filter.yaw_jump_prevention_limit));
             break;
         case MSP_codes.MSP_SET_MISC:
             buffer.push(lowByte(MISC.midrc));

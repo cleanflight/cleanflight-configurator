@@ -606,6 +606,9 @@
     "pidYawPLimit": {
         "message": "Yaw P-limit"
     },
+    "pidYawJumpPreventionLimit": {
+        "message": "Yaw jump prevention limit"
+    },
     "pidFilterHead": {
         "message": "Selective Software Filtering"
     },

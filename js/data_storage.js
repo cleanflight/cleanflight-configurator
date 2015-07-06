@@ -85,7 +85,8 @@ var PID_filter = {
     gyro_cut_hz:     0,
     pterm_cut_hz:    0,
     dterm_cut_hz:    0,
-    yaw_p_limit:     0
+    yaw_p_limit:     0,
+    yaw_jump_prevention_limit:     0
 };
 
 var AUX_CONFIG = [];

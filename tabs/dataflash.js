@@ -85,6 +85,9 @@ TABS.dataflash.initialize = function (callback) {
         
         // translate to user-selected language
         localize();
+        
+        // apply help dialogs
+        help('./_locales/en/help/dataflash.md');
        
         if (TABS.dataflash.available) {
             var supportsDataflash = DATAFLASH.totalSize > 0;

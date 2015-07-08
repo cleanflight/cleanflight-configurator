@@ -183,6 +183,9 @@ TABS.sensors.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
+        // apply help dialogs
+        help('./_locales/en/help/adjustments.md');
+        
         // disable graphs for sensors that are missing
         var checkboxes = $('.tab-sensors .info .checkboxes input');
         if (!bit_check(CONFIG.activeSensors, 1)) { // baro

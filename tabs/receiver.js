@@ -30,7 +30,10 @@ TABS.receiver.initialize = function (callback) {
     function process_html() {
         // translate to user-selected language
         localize();
-
+        
+        // apply help dialogs
+        help('./_locales/en/help/receiver.md');
+        
         // fill in data from RC_tuning
         $('.tunings .throttle input[name="mid"]').val(RC_tuning.throttle_MID.toFixed(2));
         $('.tunings .throttle input[name="expo"]').val(RC_tuning.throttle_EXPO.toFixed(2));

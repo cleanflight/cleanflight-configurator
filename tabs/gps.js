@@ -19,6 +19,9 @@ TABS.gps.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
+        // apply help dialogs
+        help('./_locales/en/help/gps.md');
+        
         function get_raw_gps_data() {
             MSP.send_message(MSP_codes.MSP_RAW_GPS, false, false, get_comp_gps_data);
         }

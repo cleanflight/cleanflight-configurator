@@ -167,6 +167,9 @@ TABS.auxiliary.initialize = function (callback) {
                 
         // translate to user-selected language
         localize();
+        
+        // apply help dialogs
+        help('./_locales/en/help/modes.md');
 
         // UI Hooks
         $('a.save').click(function () {

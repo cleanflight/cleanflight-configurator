@@ -42,6 +42,9 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     function process_html() {
         
         localize();
+        
+        // apply help dialogs
+        help('./_locales/en/help/adjustments.md');        
 
         // Build Grid
         var theHTML = [];

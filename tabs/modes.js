@@ -46,7 +46,10 @@ TABS.modes.initialize = function (callback) {
 
         // translate to user-selected language
         localize();
-
+        
+        // apply help dialogs
+        help('./_locales/en/help/adjustments.md');
+        
         // generate table from the supplied AUX names and AUX data
         for (var i = 0; i < AUX_CONFIG.length; i++) {
             var line = '<tr class="switches">';

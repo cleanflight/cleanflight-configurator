@@ -245,6 +245,9 @@ TABS.pid_tuning.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
+        // apply help dialogs
+        help('./_locales/en/help/adjustments.md');
+        
         // Fill in the names from PID_names array
         // this needs to be reworked, but will do for now
         $('.pid_tuning tr:eq(1) td:first').text(PID_names[0]);

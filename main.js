@@ -9,6 +9,7 @@ googleAnalyticsService.getConfig().addCallback(function (config) {
 });
 
 $(document).ready(function () {
+
     // translate to user-selected language
     localize();
 
@@ -303,6 +304,7 @@ $(document).ready(function () {
             }
         }
     });
+               
 });
 
 function catch_startup_time(startTime) {

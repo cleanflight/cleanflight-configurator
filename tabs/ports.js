@@ -199,6 +199,9 @@ TABS.ports.initialize = function (callback, scrollPosition) {
 
         localize();
         
+        // apply help dialogs
+        help('./_locales/en/help/adjustments.md');
+        
         update_ui();
 
         $('a.save').click(on_save_handler);

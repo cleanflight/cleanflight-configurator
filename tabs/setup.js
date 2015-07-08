@@ -38,6 +38,9 @@ TABS.setup.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
+        // apply help dialogs
+        help('./_locales/en/help/adjustments.md');
+        
         if (semver.lt(CONFIG.apiVersion, CONFIGURATOR.backupRestoreMinApiVersionAccepted)) {
             $('#content .backup').addClass('disabled');
             $('#content .restore').addClass('disabled');

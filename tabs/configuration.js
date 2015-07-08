@@ -48,6 +48,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     function process_html() {
         // translate to user-selected language
         localize();
+        help('./_locales/en/help/configuration.md');
 
         var mixer_list_e = $('select.mixerList');
         for (var i = 0; i < mixerList.length; i++) {

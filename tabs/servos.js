@@ -104,8 +104,11 @@ TABS.servos.initialize = function (callback) {
 
             
 
-                    // translate to user-selected language
-        localize();
+            // translate to user-selected language
+            localize();
+      
+            // apply help dialogs
+            help('./_locales/en/help/adjustments.md');
 
             $('div.tab-servos table.fields tr:last td.channel input').eq(SERVO_CONFIG[obj].indexOfChannelToForward).prop('checked', true);
 

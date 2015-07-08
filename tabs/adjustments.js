@@ -177,6 +177,9 @@ TABS.adjustments.initialize = function (callback) {
         
         // translate to user-selected language
         localize();
+        
+        // apply help dialogs
+        help('./_locales/en/help/adjustments.md');
 
         // UI Hooks
         $('a.save').click(function () {

@@ -580,6 +580,15 @@
     "portsFunction_BLACKBOX": {
         "message": "Blackbox"
     },
+    "portsDisableUSBMSPWarn": {
+        "message": "Disabling MSP on UART1 will prevent the configurator from connecting to the USB port. Are you sure you want to do this?"
+    },
+    "portsDisableUSBMSPYes": {
+        "message": "Yes, disable USB access!"
+    },
+    "portsDisableUSBMSPNo": {
+        "message": "No"
+    },
 
     "pidTuningUpgradeFirmwareToChangePidController": {
         "message": "<span style=\"color: red\">Changing PID controller disabled - you can change it via the CLI.</span>  You have firmware with API version <span style=\"color: red\">$1</span>, but this functionality requires requires <span style=\"color: green\">$2</span>."

@@ -83,3 +83,6 @@
 .tab-ports.supported .require-upgrade {
     display:none;
 }
+#disable-usb-msp-dialog #yes .ui-button-text {
+    color:red;
+}

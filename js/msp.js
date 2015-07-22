@@ -51,7 +51,8 @@ var MSP_codes = {
     MSP_PIDNAMES:           117,
     MSP_WP:                 118,
     MSP_BOXIDS:             119,
-    MSP_SERVO_CONF:         120,
+    MSP_SERVO_CONFIGURATIONS: 120,
+    MSP_PID_FLOAT:          123,
     
     MSP_SET_RAW_RC:         200,
     MSP_SET_RAW_GPS:        201,
@@ -65,10 +66,14 @@ var MSP_codes = {
     MSP_SET_WP:             209,
     MSP_SELECT_SETTING:     210,
     MSP_SET_HEAD:           211,
-    MSP_SET_SERVO_CONF:     212,
+    MSP_SET_SERVO_CONFIGURATION: 212,
     MSP_SET_MOTOR:          214,
+    MSP_SET_PID_FLOAT:      216,
     
     // MSP_BIND:               240,
+    
+    MSP_SERVO_MIX_RULES:    241,
+    MSP_SET_SERVO_MIX_RULE: 242,
 
     MSP_EEPROM_WRITE:       250,
 
@@ -80,7 +85,7 @@ var MSP_codes = {
     MSP_ACC_TRIM:           240, // get acc angle trim values
     MSP_SET_ACC_TRIM:       239, // set acc angle trim values
     MSP_GPS_SV_INFO:        164, // get Signal Strength
-
+    
     // Additional private MSP for baseflight configurator (yes thats us \o/)
     MSP_RX_MAP:              64, // get channel map (also returns number of channels total)
     MSP_SET_RX_MAP:          65, // set rc map, numchannels to set comes from MSP_RX_MAP
@@ -354,6 +359,45 @@ var MSP = {
                     }
                 }
                 break;
+            case MSP_codes.MSP_PID_FLOAT:
+                // PID data arrived, we need to scale it and save to appropriate bank / array
+                for (var i = 0, needle = 0; i < (message_length / 6); i++, needle += 6) {
+                    // main for loop selecting the pid section
+                    switch (i) {
+                        case 0:
+                        case 1:
+                        case 2:
+                            PIDs[i][0] = parseFloat((data.getUint16(needle, 1) / 1000).toFixed(3));
+                            PIDs[i][1] = parseFloat((data.getUint16(needle + 2, 1) / 1000).toFixed(3));
+                            PIDs[i][2] = parseFloat((data.getUint16(needle + 4, 1) / 1000).toFixed(3));
+                            break;
+                        case 7:
+                            PIDs[i][0] = parseFloat((data.getUint16(needle, 1) / 1000).toFixed(3));
+                            PIDs[i][1] = parseFloat((data.getUint16(needle + 2, 1) / 1000).toFixed(3));
+                            PIDs[i][2] = parseFloat((data.getUint16(needle + 4, 1)));
+                            break;
+                        case 3:
+                        case 8:
+                        case 9:
+                        	PIDs[i][0] = data.getUint16(needle, 1) / 10;
+                            PIDs[i][1] = data.getUint16(needle + 2, 1) / 1000;
+                            PIDs[i][2] = data.getUint16(needle + 4, 1);
+                            break;
+                        case 4:
+                            PIDs[i][0] = data.getUint16(needle, 1) / 100;
+                            PIDs[i][1] = data.getUint16(needle + 2, 1) / 100;
+                            PIDs[i][2] = data.getUint16(needle + 4, 1) / 1000;
+                            break;
+                        case 5:
+                        case 6:
+                        	PIDs[i][0] = data.getUint16(needle, 1) / 10;
+                            PIDs[i][1] = data.getUint16(needle + 2, 1) / 100;
+                            PIDs[i][2] = data.getUint16(needle + 4, 1) / 1000;
+                            break;
+                        break;                        	
+                    }
+                }
+                break;
             // Disabled, cleanflight does not use MSP_BOX.
             /*
             case MSP_codes.MSP_BOX:
@@ -444,19 +488,52 @@ var MSP = {
                     AUX_CONFIG_IDS.push(data.getUint8(i));
                 }
                 break;
-            case MSP_codes.MSP_SERVO_CONF:
+            case MSP_codes.MSP_SERVO_MIX_RULES:
+                break;
+
+            case MSP_codes.MSP_SERVO_CONFIGURATIONS:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
-                if (data.byteLength % 7 == 0) {
-                    for (var i = 0; i < data.byteLength; i += 7) {
-                        var arr = {
-                            'min': data.getInt16(i, 1),
-                            'max': data.getInt16(i + 2, 1),
-                            'middle': data.getInt16(i + 4, 1),
-                            'rate': data.getInt8(i + 6)
-                        };
-    
-                        SERVO_CONFIG.push(arr);
+                if (semver.gte(CONFIG.apiVersion, "1.12.0")) {
+                    if (data.byteLength % 14 == 0) {
+                        for (var i = 0; i < data.byteLength; i += 14) {
+                            var arr = {
+                                'min':                      data.getInt16(i + 0, 1),
+                                'max':                      data.getInt16(i + 2, 1),
+                                'middle':                   data.getInt16(i + 4, 1),
+                                'rate':                     data.getInt8(i + 6),
+                                'angleAtMin':               data.getUint8(i + 7),
+                                'angleAtMax':               data.getUint8(i + 8),
+                                'indexOfChannelToForward':  data.getInt8(i + 9),
+                                'reversedInputSources':     data.getUint32(i + 10)
+                            };
+
+                            SERVO_CONFIG.push(arr);
+                        }
+                    }
+                } else {
+                    if (data.byteLength % 7 == 0) {
+                        for (var i = 0; i < data.byteLength; i += 7) {
+                            var arr = {
+                                'min':                      data.getInt16(i + 0, 1),
+                                'max':                      data.getInt16(i + 2, 1),
+                                'middle':                   data.getInt16(i + 4, 1),
+                                'rate':                     data.getInt8(i + 6),
+                                'angleAtMin':               90,
+                                'angleAtMax':               90,
+                                'indexOfChannelToForward':  undefined,
+                                'reversedInputSources':     0
+                            };
+
+                            SERVO_CONFIG.push(arr);
+                        }
+                    }
+                    
+                    if (semver.eq(CONFIG.apiVersion, '1.10.0')) {
+                        // drop two unused servo configurations due to MSP rx buffer to small)
+                        while (SERVO_CONFIG.length > 8) {
+                            SERVO_CONFIG.pop();
+                        } 
                     }
                 }
                 break;
@@ -490,7 +567,7 @@ var MSP = {
             case MSP_codes.MSP_SELECT_SETTING:
                 console.log('Profile selected');
                 break;
-            case MSP_codes.MSP_SET_SERVO_CONF:
+            case MSP_codes.MSP_SET_SERVO_CONFIGURATION:
                 console.log('Servo Configuration saved');
                 break;
             case MSP_codes.MSP_EEPROM_WRITE:
@@ -962,6 +1039,57 @@ MSP.crunch = function (code) {
                 }
             }
             break;
+        case MSP_codes.MSP_SET_PID_FLOAT:
+            for (var i = 0; i < PIDs.length; i++) {
+                switch (i) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    	buffer.push(lowByte(PIDs[i][0] * 1000));
+                        buffer.push(highByte(PIDs[i][0] * 1000));
+                        buffer.push(lowByte(PIDs[i][1] * 1000));
+                        buffer.push(highByte(PIDs[i][1] * 1000));
+                        buffer.push(lowByte(PIDs[i][2] * 1000));
+                        buffer.push(highByte(PIDs[i][2] * 1000));
+                        break;
+                    case 7:
+                    	buffer.push(lowByte(PIDs[i][0] * 1000));
+                        buffer.push(highByte(PIDs[i][0] * 1000));
+                        buffer.push(lowByte(PIDs[i][1] * 1000));
+                        buffer.push(highByte(PIDs[i][1] * 1000));
+                        buffer.push(lowByte(PIDs[i][2]));
+                        buffer.push(highByte(PIDs[i][2]));
+                        break;
+                    case 3:
+                    case 8:
+                    case 9:
+                        buffer.push(lowByte(PIDs[i][0] * 10));
+                        buffer.push(highByte(PIDs[i][0] * 10));
+                        buffer.push(lowByte(PIDs[i][1] * 1000));
+                        buffer.push(highByte(PIDs[i][1] * 1000));
+                        buffer.push(lowByte(PIDs[i][2]));
+                        buffer.push(highByte(PIDs[i][2]));
+                        break;
+                    case 4:
+                        buffer.push(lowByte(PIDs[i][0] * 100));
+                        buffer.push(highByte(PIDs[i][0] * 100));
+                        buffer.push(lowByte(PIDs[i][1] * 100));
+                        buffer.push(highByte(PIDs[i][1] * 100));
+                        buffer.push(lowByte(PIDs[i][2]));
+                        buffer.push(highByte(PIDs[i][2]));
+                        break;                    	
+                    case 5:
+                    case 6:
+                        buffer.push(lowByte(PIDs[i][0] * 10));
+                        buffer.push(highByte(PIDs[i][0] * 10));
+                        buffer.push(lowByte(PIDs[i][1] * 100));
+                        buffer.push(highByte(PIDs[i][1] * 100));
+                        buffer.push(lowByte(PIDs[i][2] * 1000));
+                        buffer.push(highByte(PIDs[i][2] * 1000));
+                        break;
+                }
+            }
+            break;            
         case MSP_codes.MSP_SET_RC_TUNING:
             buffer.push(parseInt(RC_tuning.RC_RATE * 100));
             buffer.push(parseInt(RC_tuning.RC_EXPO * 100));
@@ -1034,20 +1162,6 @@ MSP.crunch = function (code) {
             buffer.push(MISC.vbatmincellvoltage * 10);
             buffer.push(MISC.vbatmaxcellvoltage * 10);
             buffer.push(MISC.vbatwarningcellvoltage * 10);
-            break;
-        case MSP_codes.MSP_SET_SERVO_CONF:
-            for (var i = 0; i < SERVO_CONFIG.length; i++) {
-                buffer.push(lowByte(SERVO_CONFIG[i].min));
-                buffer.push(highByte(SERVO_CONFIG[i].min));
-
-                buffer.push(lowByte(SERVO_CONFIG[i].max));
-                buffer.push(highByte(SERVO_CONFIG[i].max));
-
-                buffer.push(lowByte(SERVO_CONFIG[i].middle));
-                buffer.push(highByte(SERVO_CONFIG[i].middle));
-
-                buffer.push(lowByte(SERVO_CONFIG[i].rate));
-            }
             break;
         case MSP_codes.MSP_SET_CHANNEL_FORWARDING:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {
@@ -1128,7 +1242,102 @@ MSP.dataflashRead = function(address, onDataCallback) {
             onDataCallback(address, null);
         }
     });
-} ;
+};
+
+MSP.sendServoMixRules = function(onCompleteCallback) {
+    // TODO implement
+    onCompleteCallback();
+};
+
+MSP.sendServoConfigurations = function(onCompleteCallback) {
+    var nextFunction = send_next_servo_configuration; 
+    
+    var servoIndex = 0;
+
+    if (SERVO_CONFIG.length == 0) {
+        onCompleteCallback();
+    }
+    
+    nextFunction();
+    
+    function send_next_servo_configuration() {
+        
+        var buffer = [];
+
+        if (semver.lt(CONFIG.apiVersion, "1.12.0")) {
+            // send all in one go
+            // 1.9.0 had a bug where the MSP input buffer was too small, limit to 8.
+            for (var i = 0; i < SERVO_CONFIG.length && i < 8; i++) {
+                buffer.push(lowByte(SERVO_CONFIG[i].min));
+                buffer.push(highByte(SERVO_CONFIG[i].min));
+
+                buffer.push(lowByte(SERVO_CONFIG[i].max));
+                buffer.push(highByte(SERVO_CONFIG[i].max));
+
+                buffer.push(lowByte(SERVO_CONFIG[i].middle));
+                buffer.push(highByte(SERVO_CONFIG[i].middle));
+
+                buffer.push(lowByte(SERVO_CONFIG[i].rate));
+            }
+            
+            nextFunction = send_channel_forwarding;
+        } else {
+            // send one at a time, with index
+            
+            var servoConfiguration = SERVO_CONFIG[servoIndex];
+            
+            buffer.push(servoIndex);
+            
+            buffer.push(lowByte(servoConfiguration.min));
+            buffer.push(highByte(servoConfiguration.min));
+
+            buffer.push(lowByte(servoConfiguration.max));
+            buffer.push(highByte(servoConfiguration.max));
+
+            buffer.push(lowByte(servoConfiguration.middle));
+            buffer.push(highByte(servoConfiguration.middle));
+
+            buffer.push(lowByte(servoConfiguration.rate));
+            
+            buffer.push(servoConfiguration.angleAtMin);
+            buffer.push(servoConfiguration.angleAtMax);
+
+            var out = servoConfiguration.indexOfChannelToForward;
+            if (out == undefined) {
+                out = 255; // Cleanflight defines "CHANNEL_FORWARDING_DISABLED" as "(uint8_t)0xFF"
+            }
+            buffer.push(out);
+
+            buffer.push(specificByte(servoConfiguration.reversedInputSources, 0));
+            buffer.push(specificByte(servoConfiguration.reversedInputSources, 1));
+            buffer.push(specificByte(servoConfiguration.reversedInputSources, 2));
+            buffer.push(specificByte(servoConfiguration.reversedInputSources, 3));
+            
+            // prepare for next iteration
+            servoIndex++;
+            if (servoIndex == SERVO_CONFIG.length) {
+                nextFunction = onCompleteCallback;
+            }
+        }
+        MSP.send_message(MSP_codes.MSP_SET_SERVO_CONFIGURATION, buffer, false, nextFunction);
+    }
+    
+    function send_channel_forwarding() {
+        var buffer = [];
+
+        for (var i = 0; i < SERVO_CONFIG.length; i++) {
+            var out = SERVO_CONFIG[i].indexOfChannelToForward;
+            if (out == undefined) {
+                out = 255; // Cleanflight defines "CHANNEL_FORWARDING_DISABLED" as "(uint8_t)0xFF"
+            }
+            buffer.push(out);
+        }
+
+        nextFunction = onCompleteCallback;
+
+        MSP.send_message(MSP_codes.MSP_SET_CHANNEL_FORWARDING, buffer, false, nextFunction);
+    }
+};
 
 MSP.sendModeRanges = function(onCompleteCallback) {
     var nextFunction = send_next_mode_range; 
@@ -1146,12 +1355,12 @@ MSP.sendModeRanges = function(onCompleteCallback) {
         
         var modeRange = MODE_RANGES[modeRangeIndex];
                         
-        var AUX_val_buffer_out = [];
-        AUX_val_buffer_out.push(modeRangeIndex);
-        AUX_val_buffer_out.push(modeRange.id);
-        AUX_val_buffer_out.push(modeRange.auxChannelIndex);
-        AUX_val_buffer_out.push((modeRange.range.start - 900) / 25);
-        AUX_val_buffer_out.push((modeRange.range.end - 900) / 25);
+        var buffer = [];
+        buffer.push(modeRangeIndex);
+        buffer.push(modeRange.id);
+        buffer.push(modeRange.auxChannelIndex);
+        buffer.push((modeRange.range.start - 900) / 25);
+        buffer.push((modeRange.range.end - 900) / 25);
         
         // prepare for next iteration
         modeRangeIndex++;
@@ -1159,7 +1368,7 @@ MSP.sendModeRanges = function(onCompleteCallback) {
             nextFunction = onCompleteCallback;
         
         }
-        MSP.send_message(MSP_codes.MSP_SET_MODE_RANGE, AUX_val_buffer_out, false, nextFunction);
+        MSP.send_message(MSP_codes.MSP_SET_MODE_RANGE, buffer, false, nextFunction);
     }
 };
 
@@ -1179,14 +1388,14 @@ MSP.sendAdjustmentRanges = function(onCompleteCallback) {
         
         var adjustmentRange = ADJUSTMENT_RANGES[adjustmentRangeIndex];
                         
-        var ADJUSTMENT_val_buffer_out = [];
-        ADJUSTMENT_val_buffer_out.push(adjustmentRangeIndex);
-        ADJUSTMENT_val_buffer_out.push(adjustmentRange.slotIndex);
-        ADJUSTMENT_val_buffer_out.push(adjustmentRange.auxChannelIndex);
-        ADJUSTMENT_val_buffer_out.push((adjustmentRange.range.start - 900) / 25);
-        ADJUSTMENT_val_buffer_out.push((adjustmentRange.range.end - 900) / 25);
-        ADJUSTMENT_val_buffer_out.push(adjustmentRange.adjustmentFunction);
-        ADJUSTMENT_val_buffer_out.push(adjustmentRange.auxSwitchChannelIndex);
+        var buffer = [];
+        buffer.push(adjustmentRangeIndex);
+        buffer.push(adjustmentRange.slotIndex);
+        buffer.push(adjustmentRange.auxChannelIndex);
+        buffer.push((adjustmentRange.range.start - 900) / 25);
+        buffer.push((adjustmentRange.range.end - 900) / 25);
+        buffer.push(adjustmentRange.adjustmentFunction);
+        buffer.push(adjustmentRange.auxSwitchChannelIndex);
         
         // prepare for next iteration
         adjustmentRangeIndex++;
@@ -1194,7 +1403,7 @@ MSP.sendAdjustmentRanges = function(onCompleteCallback) {
             nextFunction = onCompleteCallback;
         
         }
-        MSP.send_message(MSP_codes.MSP_SET_ADJUSTMENT_RANGE, ADJUSTMENT_val_buffer_out, false, nextFunction);
+        MSP.send_message(MSP_codes.MSP_SET_ADJUSTMENT_RANGE, buffer, false, nextFunction);
     }
 };
 

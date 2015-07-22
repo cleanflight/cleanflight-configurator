@@ -52,6 +52,7 @@ var MSP_codes = {
     MSP_WP:                 118,
     MSP_BOXIDS:             119,
     MSP_SERVO_CONFIGURATIONS: 120,
+    MSP_PID_FLOAT:          123,
     
     MSP_SET_RAW_RC:         200,
     MSP_SET_RAW_GPS:        201,
@@ -67,6 +68,7 @@ var MSP_codes = {
     MSP_SET_HEAD:           211,
     MSP_SET_SERVO_CONFIGURATION: 212,
     MSP_SET_MOTOR:          214,
+    MSP_SET_PID_FLOAT:      216,
     
     // MSP_BIND:               240,
     
@@ -354,6 +356,45 @@ var MSP = {
                             PIDs[i][1] = data.getUint8(needle + 1) / 100;
                             PIDs[i][2] = data.getUint8(needle + 2) / 1000;
                             break;
+                    }
+                }
+                break;
+            case MSP_codes.MSP_PID_FLOAT:
+                // PID data arrived, we need to scale it and save to appropriate bank / array
+                for (var i = 0, needle = 0; i < (message_length / 6); i++, needle += 6) {
+                    // main for loop selecting the pid section
+                    switch (i) {
+                        case 0:
+                        case 1:
+                        case 2:
+                            PIDs[i][0] = parseFloat((data.getUint16(needle, 1) / 1000).toFixed(3));
+                            PIDs[i][1] = parseFloat((data.getUint16(needle + 2, 1) / 1000).toFixed(3));
+                            PIDs[i][2] = parseFloat((data.getUint16(needle + 4, 1) / 1000).toFixed(3));
+                            break;
+                        case 7:
+                            PIDs[i][0] = parseFloat((data.getUint16(needle, 1) / 1000).toFixed(3));
+                            PIDs[i][1] = parseFloat((data.getUint16(needle + 2, 1) / 1000).toFixed(3));
+                            PIDs[i][2] = parseFloat((data.getUint16(needle + 4, 1)));
+                            break;
+                        case 3:
+                        case 8:
+                        case 9:
+                        	PIDs[i][0] = data.getUint16(needle, 1) / 10;
+                            PIDs[i][1] = data.getUint16(needle + 2, 1) / 1000;
+                            PIDs[i][2] = data.getUint16(needle + 4, 1);
+                            break;
+                        case 4:
+                            PIDs[i][0] = data.getUint16(needle, 1) / 100;
+                            PIDs[i][1] = data.getUint16(needle + 2, 1) / 100;
+                            PIDs[i][2] = data.getUint16(needle + 4, 1) / 1000;
+                            break;
+                        case 5:
+                        case 6:
+                        	PIDs[i][0] = data.getUint16(needle, 1) / 10;
+                            PIDs[i][1] = data.getUint16(needle + 2, 1) / 100;
+                            PIDs[i][2] = data.getUint16(needle + 4, 1) / 1000;
+                            break;
+                        break;                        	
                     }
                 }
                 break;
@@ -998,6 +1039,57 @@ MSP.crunch = function (code) {
                 }
             }
             break;
+        case MSP_codes.MSP_SET_PID_FLOAT:
+            for (var i = 0; i < PIDs.length; i++) {
+                switch (i) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    	buffer.push(lowByte(PIDs[i][0] * 1000));
+                        buffer.push(highByte(PIDs[i][0] * 1000));
+                        buffer.push(lowByte(PIDs[i][1] * 1000));
+                        buffer.push(highByte(PIDs[i][1] * 1000));
+                        buffer.push(lowByte(PIDs[i][2] * 1000));
+                        buffer.push(highByte(PIDs[i][2] * 1000));
+                        break;
+                    case 7:
+                    	buffer.push(lowByte(PIDs[i][0] * 1000));
+                        buffer.push(highByte(PIDs[i][0] * 1000));
+                        buffer.push(lowByte(PIDs[i][1] * 1000));
+                        buffer.push(highByte(PIDs[i][1] * 1000));
+                        buffer.push(lowByte(PIDs[i][2]));
+                        buffer.push(highByte(PIDs[i][2]));
+                        break;
+                    case 3:
+                    case 8:
+                    case 9:
+                        buffer.push(lowByte(PIDs[i][0] * 10));
+                        buffer.push(highByte(PIDs[i][0] * 10));
+                        buffer.push(lowByte(PIDs[i][1] * 1000));
+                        buffer.push(highByte(PIDs[i][1] * 1000));
+                        buffer.push(lowByte(PIDs[i][2]));
+                        buffer.push(highByte(PIDs[i][2]));
+                        break;
+                    case 4:
+                        buffer.push(lowByte(PIDs[i][0] * 100));
+                        buffer.push(highByte(PIDs[i][0] * 100));
+                        buffer.push(lowByte(PIDs[i][1] * 100));
+                        buffer.push(highByte(PIDs[i][1] * 100));
+                        buffer.push(lowByte(PIDs[i][2]));
+                        buffer.push(highByte(PIDs[i][2]));
+                        break;                    	
+                    case 5:
+                    case 6:
+                        buffer.push(lowByte(PIDs[i][0] * 10));
+                        buffer.push(highByte(PIDs[i][0] * 10));
+                        buffer.push(lowByte(PIDs[i][1] * 100));
+                        buffer.push(highByte(PIDs[i][1] * 100));
+                        buffer.push(lowByte(PIDs[i][2] * 1000));
+                        buffer.push(highByte(PIDs[i][2] * 1000));
+                        break;
+                }
+            }
+            break;            
         case MSP_codes.MSP_SET_RC_TUNING:
             buffer.push(parseInt(RC_tuning.RC_RATE * 100));
             buffer.push(parseInt(RC_tuning.RC_EXPO * 100));

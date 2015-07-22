@@ -25,7 +25,12 @@ TABS.pid_tuning.initialize = function (callback) {
     }
 
     function get_pid_data() {
-        MSP.send_message(MSP_codes.MSP_PID, false, false, get_rc_tuning_data);
+    	if (PID.controller == 2) {
+            MSP.send_message(MSP_codes.MSP_PID_FLOAT, false, false, get_rc_tuning_data);
+    	}
+    	else {
+    		MSP.send_message(MSP_codes.MSP_PID, false, false, get_rc_tuning_data);
+    	}
     }
 
     function get_rc_tuning_data() {
@@ -33,7 +38,12 @@ TABS.pid_tuning.initialize = function (callback) {
     }
 
     function load_html() {
-        $('#content').load("./tabs/pid_tuning.html", process_html);
+    	if (PID.controller == 2) {
+            $('#content').load("./tabs/pid_tuning_float.html", process_html);
+    	}
+    	else {
+    		 $('#content').load("./tabs/pid_tuning.html", process_html);
+    	}
     }
 
     // requesting MSP_STATUS manually because it contains CONFIG.profile
@@ -45,13 +55,28 @@ TABS.pid_tuning.initialize = function (callback) {
         $('.pid_tuning .ROLL input').each(function () {
             switch (i) {
                 case 0:
-                    $(this).val(PIDs[0][i++].toFixed(1));
+                	if (PID.controller == 2) {
+                        $(this).val(PIDs[0][i++].toFixed(3));
+                	}
+                    else {
+                    	$(this).val(PIDs[0][i++].toFixed(1));                  
+                    }
                     break;
                 case 1:
-                    $(this).val(PIDs[0][i++].toFixed(3));
+                	if (PID.controller == 2) {
+                        $(this).val(PIDs[0][i++].toFixed(3));
+                	}
+                	else {
+                		$(this).val(PIDs[0][i++].toFixed(3));
+                	}
                     break;
                 case 2:
-                    $(this).val(PIDs[0][i++].toFixed(0));
+                	if (PID.controller == 2) {
+                        $(this).val(PIDs[0][i++].toFixed(3));
+                	}
+                	else {
+                		$(this).val(PIDs[0][i++].toFixed(0));
+                	}
                     break;
             }
         });
@@ -59,15 +84,30 @@ TABS.pid_tuning.initialize = function (callback) {
         i = 0;
         $('.pid_tuning .PITCH input').each(function () {
             switch (i) {
-                case 0:
-                    $(this).val(PIDs[1][i++].toFixed(1));
-                    break;
-                case 1:
-                    $(this).val(PIDs[1][i++].toFixed(3));
-                    break;
+               case 0:
+            	   if (PID.controller == 2) {
+                       $(this).val(PIDs[1][i++].toFixed(3));
+                   }
+                    else {
+                	$(this).val(PIDs[1][i++].toFixed(1));                  
+                   }
+                   break;
+               case 1:
+            	   if (PID.controller == 2) {
+                        $(this).val(PIDs[1][i++].toFixed(3));
+            	   }
+            	   else {
+                 		$(this).val(PIDs[1][i++].toFixed(3));
+            	   }
+                   break;
                 case 2:
-                    $(this).val(PIDs[1][i++].toFixed(0));
-                    break;
+            	    if (PID.controller == 2) {
+                       $(this).val(PIDs[1][i++].toFixed(3));
+            	    }
+            	    else {
+            	     	$(this).val(PIDs[1][i++].toFixed(0));
+                 	}
+                     break;
             }
         });
 
@@ -75,13 +115,28 @@ TABS.pid_tuning.initialize = function (callback) {
         $('.pid_tuning .YAW input').each(function () {
             switch (i) {
                 case 0:
-                    $(this).val(PIDs[2][i++].toFixed(1));
+         	        if (PID.controller == 2) {
+                        $(this).val(PIDs[2][i++].toFixed(3));
+                    }
+                    else {
+             	        $(this).val(PIDs[2][i++].toFixed(1));                  
+                    }
                     break;
                 case 1:
-                    $(this).val(PIDs[2][i++].toFixed(3));
+         	        if (PID.controller == 2) {
+                        $(this).val(PIDs[2][i++].toFixed(3));
+         	        }
+         	        else {
+              	        $(this).val(PIDs[2][i++].toFixed(3));
+         	        }
                     break;
                 case 2:
-                    $(this).val(PIDs[2][i++].toFixed(0));
+         	        if (PID.controller == 2) {
+                        $(this).val(PIDs[2][i++].toFixed(3));
+         	        }
+         	        else {
+         	     	    $(this).val(PIDs[2][i++].toFixed(0));
+              	    } 
                     break;
             }
         });
@@ -140,10 +195,20 @@ TABS.pid_tuning.initialize = function (callback) {
         $('.pid_tuning .LEVEL input').each(function () {
             switch (i) {
                 case 0:
-                    $(this).val(PIDs[7][i++].toFixed(1));
+                	if (PID.controller == 2) {
+                        $(this).val(PIDs[7][i++].toFixed(2));
+                	}
+                	else {
+                        $(this).val(PIDs[7][i++].toFixed(1));
+                	}
                     break;
                 case 1:
-                    $(this).val(PIDs[7][i++].toFixed(3));
+                	if (PID.controller == 2) {
+                        $(this).val(PIDs[7][i++].toFixed(2));
+                	}
+                	else {
+                        $(this).val(PIDs[7][i++].toFixed(3));
+                	}
                     break;
                 case 2:
                     $(this).val(PIDs[7][i++].toFixed(0));
@@ -329,7 +394,12 @@ TABS.pid_tuning.initialize = function (callback) {
 
             function send_pids() {
                 if (!TABS.pid_tuning.controllerChanged) {
-                    MSP.send_message(MSP_codes.MSP_SET_PID, MSP.crunch(MSP_codes.MSP_SET_PID), false, send_rc_tuning_changes);
+                	if (PID.controller == 2) {
+                        MSP.send_message(MSP_codes.MSP_SET_PID_FLOAT, MSP.crunch(MSP_codes.MSP_SET_PID_FLOAT), false, send_rc_tuning_changes);
+                	}
+                	else {
+                		MSP.send_message(MSP_codes.MSP_SET_PID, MSP.crunch(MSP_codes.MSP_SET_PID), false, send_rc_tuning_changes);
+                	}
                 }
             }
 

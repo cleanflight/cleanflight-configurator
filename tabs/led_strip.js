@@ -2,7 +2,7 @@
 
 TABS.led_strip = {
     wireMode: false,
-    functions: ['w', 'f', 'i', 'a', 't', 'r', 'c'],
+    functions: ['w', 'f', 'i', 'a', 't', 'r', 'c', 'l'],
     directions: ['n', 'e', 's', 'w', 'u', 'd'],
 };
 

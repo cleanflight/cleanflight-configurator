@@ -1,0 +1,1132 @@
+{
+    "translation_version": {
+        "message": "0"
+    },
+
+    "options_title": {
+        "message": "程式選項"
+    },
+    "options_receive_app_notifications": {
+        "message": "當程式更新時接收<strong>通知</strong>"
+    },
+    "options_improve_configurator": {
+        "message": "以暱名方式傳送使用資料給開發團隊"
+    },
+
+    "connect": {
+        "message": "連線"
+    },
+    "connecting": {
+        "message": "連線中"
+    },
+    "disconnect": {
+        "message": "中斷"
+    },
+    "autoConnect": {
+        "message": "自動連線"
+    },
+    "autoConnectEnabled": {
+        "message": "自動連線: 開啟 - 當偵測到新的usb連接時，Configurator會嘗試自動連線"
+    },
+    "autoConnectDisabled": {
+        "message": "自動連線: 關閉 - 使用者必須選擇欲連線的裝置並點擊\"連線\"按鈕"
+    },
+    "deviceRebooting": {
+        "message": "裝置 - <span style=\"color: red\">重新啟動</span>"
+    },
+    "deviceReady": {
+        "message": "裝置 - <span style=\"color: green\">已準備</span>"
+    },
+
+    "backupFileIncompatible": {
+        "message": "抱歉，備份檔與現在configurator的版本不同且不相容。"
+    },
+
+    "backupFileUnmigratable": {
+        "message": "抱歉，備份檔與現在configurator的版本不同且無法轉移。"
+    },
+
+    "configMigrationFrom": {
+        "message": "轉移configurator: $1的配置檔"
+    },
+    "configMigratedTo": {
+        "message": "轉移配置給configurator: $1"
+    },
+    "configMigrationSuccessful": {
+        "message": "完成配置轉移，已轉至: $1"
+    },
+
+    "tabFirmwareFlasher": {
+        "message": "韌體更新工具"
+    },
+    "tabLanding": {
+        "message": "歡迎"
+    },
+    "tabHelp": {
+        "message": "文件與支援"
+    },
+
+    "tabSetup": {
+        "message": "設定"
+    },
+    "tabConfiguration": {
+        "message": "組態配置"
+    },
+    "tabPorts": {
+        "message": "埠"
+    },
+    "tabPidTuning": {
+        "message": "PID調整"
+    },
+    "tabReceiver": {
+        "message": "遙控接收"
+    },
+    "tabModeSelection": {
+        "message": "模式選擇"
+    },
+    "tabServos": {
+        "message": "伺服器"
+    },
+    "tabGPS": {
+        "message": "GPS"
+    },
+    "tabMotorTesting": {
+        "message": "馬達"
+    },
+    "tabLedStrip": {
+        "message": "LED燈條"
+    },
+    "tabRawSensorData": {
+        "message": "感測器"
+    },
+    "tabCLI": {
+        "message": "指令介面"
+    },
+    "tabLogging": {
+        "message": "日誌"
+    },
+    "tabDataflash": {
+        "message": "快閃資料"
+    },
+    "tabAdjustments": {
+        "message": "調整"
+    },
+    "tabAuxiliary": {
+        "message": "飛行模式"
+    },
+
+    "serialPortOpened": {
+        "message": "序列埠ID: $1 <span style=\"color: green\">成功地</span>開啟"
+    },
+    "serialPortOpenFail": {
+        "message": "開啟序列埠<span style=\"color: red\">失敗</span>"
+    },
+    "serialPortClosedOk": {
+        "message": "序列埠<span style=\"color: green\">成功地</span>關閉"
+    },
+    "serialPortClosedFail": {
+        "message": "序列埠關閉<span style=\"color: red\">失敗</span>"
+    },
+
+    "noConfigurationReceived": {
+        "message": "超過<span style=\"color: red\">10秒</span>沒有收到組態配置，通訊<span style=\"color: red\">失敗</span>"
+    },
+    "firmwareVersionNotSupported": {
+        "message": "<span style=\"color: red\">不支援</span>此版本的韌體。請升級支援版本<strong>$1</strong>或最新的韌體。升級前，可以使用\"指令介面\"做備份。指令介面備份及恢復的程序可以在文件中找到。"
+    },
+
+    "tabSwitchConnectionRequired": {
+        "message": "在您瀏覽任何頁面時，您需要與裝置<strong>連線</strong>。"
+    },
+    "tabSwitchWaitForOperation": {
+        "message": "您<span style=\"color: red\">無法</span>馬上執行此項工作，請等待目前的執行工作完成..."
+    },
+
+    "tabSwitchUpgradeRequired": {
+        "message": "在操作$1頁面前，您需要<strong>升級</strong>您的韌體。"
+    },
+    "firmwareVersion": {
+        "message": "韌體版本: <strong>$1</strong>"
+    },
+    "apiVersionReceived": {
+        "message": "<span style=\"color: green\">偵測到</span>MultiWii API 版本 - <strong>$1</strong>"
+    },
+    "uniqueDeviceIdReceived": {
+        "message": "<span style=\"color: green\">偵測到</span> 特殊裝置 ID - <strong>0x$1</strong>"
+    },
+    "boardInfoReceived": {
+        "message": "板子: <strong>$1</strong>, 版本: <strong>$2</strong>"
+    },
+    "buildInfoReceived": {
+        "message": "正在運行<strong>$1</strong>所釋出的韌體"
+    },
+    "fcInfoReceived": {
+        "message": "飛控資料 - 識別號: <strong>$1</strong>, 版本: <strong>$2</strong>"
+    },
+
+    "notifications_app_just_updated_to_version": {
+        "message": "應用程式已更新到版本: $1"
+    },
+    "notifications_click_here_to_start_app": {
+        "message": "點擊此處來開啟程式"
+    },
+
+    "statusbar_port_utilization": {
+        "message": "Port utilization:"
+    },
+    "statusbar_usage_download": {
+        "message": "下載: $1%"
+    },
+    "statusbar_usage_upload": {
+        "message": "上傳: $1%"
+    },
+    "statusbar_packet_error": {
+        "message": "封包錯誤:"
+    },
+    "statusbar_i2c_error": {
+        "message": "I2C錯誤:"
+    },
+    "statusbar_cycle_time": {
+        "message": "周期數:"
+    },
+
+    "please_grant_usb_permissions": {
+        "message": "請點擊 <strong>\"Request Optional Permissions\"</strong> 按鈕 來允許程式 <strong style=\"color: red\">取得</strong> <strong>USB</strong> 存取權"
+    },
+    "usb_permissions_granted": {
+        "message": "選擇 <strong>USB</strong> 權限 <strong style=\"color: green\">已允許</strong>"
+    },
+
+    "eeprom_saved_ok": {
+        "message": "EEPROM <span style=\"color: green\">已儲存</span>"
+    },
+
+    "default_optional_permissions_head": {
+        "message": "選取USB權限"
+    },
+    "default_optional_permissions_text": {
+        "message": "由於添加的 <strong>Naze32PRO</strong>已支持的硬件系列，設定 <strong style=\"color: red\">取得</strong> USB存取權，來允許韌體通過DFU刷新"
+    },
+    "default_request_optional_permissions": {
+        "message": "請求可選權限"
+    },
+    "defaultWelcomeText": {
+        "message": "歡迎來到 <strong>Cleanflight - Configurator</strong>, 這是一個實用工具，旨在簡化升級，配置和您的飛行控制器的調整。<br /><br />本應用程序支援，可以cleanflight執行的所有硬體 (<a href=\"http://seriouslypro.com/spracingf3\" target=\"_blank\">SPRacingF3</a>, <a href=\"http://www.immersionrc.com/fpv-products/vortex-racing-quad/\" target=\"_blank\">Vortex</a>, <a href=\"https://github.com/TauLabs/TauLabs/wiki/Sparky\" target=\"_blank\">Sparky</a>, <a href=\"https://www.openpilot.org/product/coptercontrol/\" target=\"_blank\">CC3D/EVO</a>, <a href=\"http://www.multiwiicopter.com/products/paris-air-hero-32-naze\" target=\"_blank\">Air Hero 32</a>, <a href=\"http://www.readytoflyquads.com/flight-controllers/flip-series\" target=\"_blank\">Flip32/+/Deluxe</a>, <a href=\"http://www.goodluckbuy.com/micro-quadcopter-flight-driver-controller-9dof-9-axis-altitude-sensor-stm32f103.html\" target=\"_blank\">CJMCU Microquad</a>, Chebuzz F3, <a href=\"http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/PF254044\" target=\"_blank\">STM32F3Discovery</a>, <a href=\"http://www.overskyrc.com/hermit-micro-fpv-brushless-quadcopter-145mm-98g-fully-assembled-p-621.html\" target=\"_blank\">Hermit</a>, <a href=\"http://rcexplorer.se/blog/2015/05/introducing-the-naze32-tricopter-frame/\" target=\"_blank\">Naze32 Tricopter Frame</a>, <a href=\"http://www.2dogrc.com/skyline-32-naze-32-bit-flight-controller-acro-version.html\" target=\"_blank\">Skyline32</a>, <a href=\"http://abusemark.com/store/index.php?main_page=index&cPath=1\" target=\"_blank\">Naze/32/Mini/Pro</a>/<a href=\"http://www.massiverc.com/PrestaShop/en/574-massive-acro-blackbox-flight-control-board.html\" target=\"_blank\">Blackbox</a> 等)<br /><br />韌體原始碼可以從以下地址下載 <a href=\"https://github.com/cleanflight/cleanflight\" title=\"www.github.com\" target=\"_blank\">這裡</a><br />最新可用的韌體映像檔案 <a href=\"https://github.com/cleanflight/cleanflight/releases\" title=\"www.github.com\" target=\"_blank\">這裡</a><br /><br />最新版本 <strong>CP210x 驅動程式</strong> 可以從此 <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com/\" target=\"_blank\">下載</a><br />"
+    },
+    "defaultContributingHead": {
+        "message": "Contributing"
+    },
+    "defaultContributingText": {
+        "message": "你可以在很多方面幫助Cleanflight變得更好，包括：<br /><ul><li>在論壇和IRC回答其他用戶提出的問題</li><li>貢獻韌體的程式和配置 - 新功能，修復，改善</li><li>測試 <a href=\"https://github.com/cleanflight/cleanflight/pulls\" target=\"_blank\">新功能/修復</a>並提供回饋。</li><li>幫助 <a href=\"https://github.com/cleanflight/cleanflight/issues\" target=\"_blank\">提出問題並對新功能及要求提出評論</a>.</li><li><a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TSQKVT6UYKGL6\" target=\"_blank\" title=\"Donate\">捐款</a>, <a href=\"http://www.bcmultirotors.com/#!/Cleanflight/c/12311211/offset=0&sort=nameAsc\" title=\"www.bcmultirotors.com\" target=\"_blank\">買一件T-Shirt</a> 或 <a href=\"http://seriouslypro.com/spracingf3\" title=\"seriouslypro.com\" target=\"_blank\">買一片SPRacingF3板</a></li></ul>"
+    },
+    "defaultChangelogHead": {
+        "message": "Configurator - 更新日誌"
+    },
+    "defaultButtonFirmwareFlasher": {
+        "message": "韌體更新"
+    },
+    "defaultDonateHead": {
+        "message": "開源/捐款聲明"
+    },
+    "defaultDonateText": {
+        "message": "這個工具是完全的<strong>開源</strong>，並免費提供給所有的<strong> cleanflight</STRONG>用戶。<br />如果您發現該cleanflight或cleanflight configurator非常有用，請考慮<STRONG>透過捐款</STRONG>支持。"
+    },
+    "defaultSponsorsHead": {
+        "message": "贊助商"
+    },
+    "defaultDocumentationHead": {
+        "message": "文檔/手冊"
+    },
+    "defaultDocumentation": {
+        "message": "Cleanflight文件提供Markdown和PDF格式。<br/><br/> PDF手冊對應的韌體可以從github上發佈頁下載，<a href=\"https://github.com/cleanflight/cleanflight/releases\" target=\"_blank\">這裡</a>。<br/>Markdown的最新線上文件<a href=\"https://github.com/cleanflight/cleanflight/tree/master/docs\" target=\"_blank\">下載</a> - 您可以通過選擇Tags(github)切換到文件的相應版本。"
+    },
+    "defaultSupportHead": {
+        "message": "支援"
+    },
+    "defaultSupport": {
+        "message": "請先搜尋論壇或聯絡經銷商取得支援.<br /><br />RC Groups 討論串 <a href=\"http://www.rcgroups.com/forums/showthread.php?t=2249574&page=1\" target=\"_blank\">進入</a>. MultiWii forums 討論串 <a href=\"http://www.multiwii.com/forum/viewtopic.php?f=23&t=5149\" target=\"_blank\">進入</a>.<br /><br />開發人員和用戶的IRC頻道在freenode上<br /><a href=\"irc://irc.freenode.net/#cleanflight\" target=\"_blank\">irc://irc.freenode.net/#cleanflight</a> 或 <a href=\"http://webchat.freenode.net/?channels=cleanflight\" target=\"_blank\">加入</a>."
+    },
+    "initialSetupBackupAndRestoreApiVersion": {
+        "message": "<span style=\"color: red\">備份和還原功能取消。</span>  你的韌體API版本為 <span style=\"color: red\">$1</span>, 備份和恢復需要API版本<span style=\"color: green\">$2</span>。 請使用\"指令介面\"來備份您的設置，步驟請參閱Cleanflight文件。"
+    },
+    "initialSetupButtonCalibrateAccel": {
+        "message": "校準加速度計"
+    },
+    "initialSetupCalibrateAccelText": {
+        "message": "將飛控板或機架置於<STRONG>水平</ STRONG>面，進行校準，確保平台在校準期間不被移動"
+    },
+    "initialSetupButtonCalibrateMag": {
+        "message": "校準地磁計"
+    },
+    "initialSetupCalibrateMagText": {
+        "message": "您有30秒的時間，將您的機子在每一個軸向上旋轉<STRONG>360</ STRONG>度"
+    },
+    "initialSetupButtonReset": {
+        "message": "重置設定"
+    },
+    "initialSetupResetText": {
+        "message": "恢復設置為<strong>預設值</ STRONG>"
+    },
+    "initialSetupButtonBackup": {
+        "message": "備份"
+    },
+    "initialSetupButtonRestore": {
+        "message": "回復"
+    },
+    "initialSetupBackupRestoreText": {
+        "message": "預防意外，請<strong>備份</strong>您的配置設定，但是並<span style=\"color: red\">不</span>包含<strong>指令介面</strong>的設定 - 請在指令介面的頁面查看’dump'的指令"
+    },
+    "initialSetupBackupSuccess": {
+        "message": "備份已儲存 <span style=\"color: green\">成功</span>"
+    },
+    "initialSetupRestoreSuccess": {
+        "message": "設定已回復 <span style=\"color: green\">成功</span>"
+    },
+    "initialSetupButtonResetZaxis": {
+        "message": "重設 Z 軸, 偏移: 0 度"
+    },
+    "initialSetupButtonResetZaxisValue": {
+        "message": "重設 Z 軸, 偏移: $1 度"
+    },
+    "initialSetupMixerHead": {
+        "message": "Mixer Type"
+    },
+    "initialSetupThrottleHead": {
+        "message": "油門設定"
+    },
+    "initialSetupMinimum": {
+        "message": "最小值:"
+    },
+    "initialSetupMaximum": {
+        "message": "最大值:"
+    },
+    "initialSetupFailsafe": {
+        "message": "失控保護:"
+    },
+    "initialSetupMinCommand": {
+        "message": "最低油門控制:"
+    },
+    "initialSetupBatteryHead": {
+        "message": "電池"
+    },
+    "initialSetupMinCellV": {
+        "message": "1s最低電壓:"
+    },
+    "initialSetupMaxCellV": {
+        "message": "1s最高電壓:"
+    },
+    "initialSetupVoltageScale": {
+        "message": "電壓比例:"
+    },
+    "initialSetupAccelTrimsHead": {
+        "message": "加速計修正"
+    },
+    "initialSetupPitch": {
+        "message": "俯仰:"
+    },
+    "initialSetupRoll": {
+        "message": "翻滾:"
+    },
+    "initialSetupMagHead": {
+        "message": "地磁計"
+    },
+    "initialSetupDeclination": {
+        "message": "偏差:"
+    },
+    "initialSetupInfoHead": {
+        "message": "資訊"
+    },
+    "initialSetupBattery": {
+        "message": "電壓:"
+    },
+    "initialSetupBatteryValue": {
+        "message": "$1 V"
+    },
+    "initialSetupDrawn": {
+        "message": "已消耗容量:"
+    },
+    "initialSetupDrawing": {
+        "message": "消耗電流:"
+    },
+    "initialSetupBatteryMahValue": {
+        "message": "$1 mAh"
+    },
+    "initialSetupBatteryAValue": {
+        "message": "$1 A"
+    },
+    "initialSetupRSSI": {
+        "message": "RSSI:"
+    },
+    "initialSetupRSSIValue": {
+        "message": "$1 %"
+    },
+    "initialSetupGPSHead": {
+        "message": "GPS"
+    },
+    "initialSetupInstrumentsHead": {
+        "message": "儀表板"
+    },
+    "initialSetupButtonSave": {
+        "message": "儲存"
+    },
+    "initialSetupModel": {
+        "message": "型號: $1"
+    },
+    "initialSetupHeading": {
+        "message": "朝向: $1 度"
+    },
+    "initialSetupAccelCalibStarted": {
+        "message": "開始校正加速計"
+    },
+    "initialSetupAccelCalibEnded": {
+        "message": "完成校正加速計"
+    },
+    "initialSetupMagCalibStarted": {
+        "message": "開始校正地磁計"
+    },
+    "initialSetupMagCalibEnded": {
+        "message": "完成校正地磁計"
+    },
+    "initialSetupSettingsRestored": {
+        "message": "將設定值回復成<strong>預設</strong>"
+    },
+    "initialSetupEepromSaved": {
+        "message": "<span style=\"color: green\">已儲存至</span>EEPROM"
+    },
+
+    "configurationFeatureEnabled": {
+        "message": "開啟"
+    },
+    "configurationFeatureName": {
+        "message": "功能"
+    },
+    "configurationFeatureDescription": {
+        "message": "說明"
+    },
+
+    "configurationMixer": {
+        "message": "機形"
+    },
+    "configurationFeatures": {
+        "message": "其他功能項"
+    },
+    "configurationReceiver": {
+        "message": "接收機模式"
+    },
+    "configurationFailsafe": {
+        "message": "接收機失控保護"
+    },
+    "configurationRSSI": {
+        "message": "RSSI (信號強度)"
+    },
+    "configurationEscFeatures": {
+        "message": "變電(ESC)/馬達功能項"
+    },
+    "configurationFeaturesHelp": {
+        "message": "<strong>注意事項:</strong>不是所有的功能配置是有效的。當飛控板系統偵測到無效的功能配置時，衝突的功能會被關閉。<br /><strong>注意事項:</strong><span style=\"color: red\">在</span>開啟某些需要用到序列埠的功能<span style=\"color: red\">之前</span>，請先把序列埠配置好。"
+    },
+
+    "configurationBoardAlignment": {
+        "message": "飛控板調正"
+    },
+    "configurationBoardAlignmentRoll": {
+        "message": "Roll 調正[度]"
+    },
+    "configurationBoardAlignmentPitch": {
+        "message": "Pitch 調正[度]"
+    },
+    "configurationBoardAlignmentYaw": {
+        "message": "Yaw 調正[度]"
+    },
+    "configurationAccelTrims": {
+        "message": "加速計修正"
+    },
+    "configurationAccelTrimRoll": {
+        "message": "加速計翻滾(Roll)修正"
+    },
+    "configurationAccelTrimPitch": {
+        "message": "加速計俯仰(Pitch)修正"
+    },
+    "configurationMagDeclination": {
+        "message": "磁偏角 [度]"
+    },
+    "configurationAutoDisarmDelay": {
+        "message": "上鎖馬達 - 在待機幾秒之後(需要開啟 MOTOR_STOP 功能)"
+    },
+    "configurationDisarmKillSwitch": {
+        "message": "上鎖馬達 - 無視油門值(當解鎖指令是透過AUX頻道時)"
+    }, 
+    "configurationThrottleMinimum": {
+        "message": "最小油門"
+    },
+    "configurationThrottleMid": {
+        "message": "油門中位[遙桿置中的值]"
+    },
+    "configurationThrottleMaximum": {
+        "message": "最大油門"
+    },
+    "configurationThrottleFailsafe": {
+        "message": "油門失控保護"
+    },
+    "configurationThrottleMinimumCommand": {
+        "message": "最低油門控制"
+    },
+    "configurationBatteryVoltage": {
+        "message": "電壓"
+    },
+    "configurationBatteryMinimum": {
+        "message": "1s的最低電壓"
+    },
+    "configurationBatteryMaximum": {
+        "message": "1s的最高電壓"
+    },
+    "configurationBatteryWarning": {
+        "message": "1s的警告電壓"
+    },
+    "configurationBatteryScale": {
+        "message": "電壓比例"
+    },
+    "configurationCurrent": {
+        "message": "電流感測計"
+    },
+    "configurationCurrentScale": {
+        "message": "將輸出電特對應到亳安培[1/10th mV/A]"
+    },
+    "configurationCurrentOffset": {
+        "message": "以亳伏特等級為偏移量"
+    },
+    "configurationBatteryMultiwiiCurrent": {
+        "message": "開啟對傳統Multiwii MSP電流輸出偵測的支援"
+    },
+    "configurationGPS": {
+        "message": "GPS"
+    },
+    "configurationGPSProtocol": {
+        "message": "協議"
+    },
+    "configurationGPSBaudrate": {
+        "message": "波特率"
+    },
+    "configurationGPSubxSbas": {
+        "message": "地面輔助類別"
+    },
+    "configurationSerialRX": {
+        "message": "序列接收機廠商"
+    },
+    "configurationEepromSaved": {
+        "message": "<span style=\"color: green\">已儲存至</span>EEPROM"
+    },
+    "configurationButtonSave": {
+        "message": "儲存並重新啟動"
+    },
+
+    "portsHelp": {
+        "message": "配置序列埠。<strong>注意事項:</strong>並非所有的組合是有效的。當飛控板偵測到無效的設定時，序列埠的配置將會被重新設定。"
+    },
+    "portsFirmwareUpgradeRequired": {
+        "message": "<span style=\"color: red\">需要</span>韌體更新。不支援韌體版本&lt; 1.8.0的序列埠配置。"
+    },
+    "portsButtonSave": {
+        "message": "儲存並重新啟動"
+    },
+    "portsTelemetryDisabled": {
+        "message": "關閉"
+    },
+    "portsFunction_MSP": {
+        "message": "MSP"
+    },
+    "portsFunction_GSP": {
+        "message": "GSP"
+    },
+    "portsFunction_TELEMETRY_FRSKY": {
+        "message": "FrSky"
+    },
+    "portsFunction_TELEMETRY_HOTT": {
+        "message": "HoTT"
+    },
+    "portsFunction_TELEMETRY_MSP": {
+        "message": "MSP"
+    },
+    "portsFunction_TELEMETRY_SMARTPORT": {
+        "message": "SmartPort"
+    },
+    "portsFunction_RX_SERIAL": {
+        "message": "Serial RX"
+    },
+    "portsFunction_BLACKBOX": {
+        "message": "黑盒子"
+    },
+
+    "pidTuningUpgradeFirmwareToChangePidController": {
+        "message": "<span style=\"color: red\">已關閉 PID 控制器 - 但你可以透過\"指令介面\"選擇其他控制器。</span>  目前韌體版本為 <span style=\"color: red\">$1</span>，要使用此功能需要版本<span style=\"color: green\">$2</span>."
+    },
+    "pidTuningName": {
+        "message": "名稱"
+    },
+    "pidTuningProportional": {
+        "message": "比例(P)"
+    },
+    "pidTuningIntegral": {
+        "message": "積分(I)"
+    },
+    "pidTuningDerivative": {
+        "message": "微分(D)"
+    },
+    "pidTuningRollPitchRate": {
+        "message": "ROLL &amp; PITCH rate"
+    },
+    "pidTuningRollRate": {
+        "message": "ROLL rate"
+    },
+    "pidTuningPitchRate": {
+        "message": "PITCH rate"
+    },
+    "pidTuningYawRate": {
+        "message": "YAW rate"
+    },
+    "pidTuningTPA": {
+        "message": "TPA"
+    },
+    "pidTuningTPABreakPoint": {
+        "message": "TPA Breakpoint"
+    },
+    "pidTuningButtonSave": {
+        "message": "儲存"
+    },
+    "pidTuningButtonRefresh": {
+        "message": "刷新"
+    },
+    "pidTuningProfileHead": {
+        "message": "設定檔"
+    },
+    "pidTuningControllerHead": {
+        "message": "PID 控制器"
+    },
+    "pidTuningLoadedProfile": {
+        "message": "載入設定檔: <strong>$1</strong>"
+    },
+    "pidTuningDataRefreshed": {
+        "message": "<strong>已刷新</strong>PID 資料"
+    },
+    "pidTuningEepromSaved": {
+        "message": "<span style=\"color: green\">已儲存至</span>EEPROM"
+    },
+
+    "receiverThrottleMid": {
+        "message": "Throttle MID"
+    },
+    "receiverThrottleExpo": {
+        "message": "Throttle EXPO"
+    },
+    "receiverRcRate": {
+        "message": "RC Rate"
+    },
+    "receiverRcExpo": {
+        "message": "RC Expo"
+    },
+	"receiverRcYawExpo": {
+        "message": "RC Yaw Expo"
+    },
+    "receiverChannelMap": {
+        "message": "頻道制定"
+    },
+    "receiverChannelMapTitle": {
+        "message": "點擊頻道制定數值框來重新定義"
+    },
+    "receiverRssiChannel": {
+        "message": "RSSI頻道"
+    },
+    "receiverRefreshRateTitle": {
+        "message": "圖形更新率"
+    },
+    "receiverButtonSave": {
+        "message": "儲存"
+    },
+    "receiverButtonRefresh": {
+        "message": "刷新"
+    },
+    "receiverDataRefreshed": {
+        "message": "遙控器遙桿數值<strong>已刷新</strong>"
+    },
+    "receiverEepromSaved": {
+        "message": "<span style=\"color: green\">已儲存至</span>EEPROM"
+    },
+
+    "auxiliaryHelp": {
+        "message": "利用數值範圍定義您的遙控開關與模式的關聯。模式的啟動，是根據飛控板從接收機上讀取到開關數值落在的最小/最大範圍內。記得按下\"儲存\"按鈕來確定您的配置。"
+    },
+    "auxiliaryMin": {
+        "message": "最小"
+    },
+    "auxiliaryMax": {
+        "message": "最大"
+    },
+    "auxiliaryAddRange": {
+        "message": "增加範圍"
+    },
+    "auxiliaryButtonSave": {
+        "message": "儲存"
+    },
+    "auxiliaryEepromSaved": {
+        "message": "<span style=\"color: green\">已儲存至</span>EEPROM"
+    },
+
+    "adjustmentsHelp": {
+        "message": "配置調整切換開關。手冊有詳細記載'in-flight adjustments'的細節。更改此頁面的設定並不會自動儲存，請更改後點擊儲存。總共有4組slots。請確認這4組配置不會互相覆蓋欲調整的對象。"
+    },
+    "adjustmentsExamples": {
+        "message": "範例:"
+    },
+    "adjustmentsExample1": {
+        "message": "前置動作(遙控器) - 第一個3切開關對應到AUX1，第二個3切開闢對應到AUX2；在此頁，[使用slot] Slot 1，[當頻道在]AUX1並設定不同的[數值範圍][套用]Pitch &amp; Roll P, I 跟 D 調整，[透過頻道]AUX2來增加或減少數值。"
+    },
+    "adjustmentsExample2": {
+        "message": "前置動作(遙控器) - 3切開關對應到AUX4；在此頁，[使用slot] Slot 2，[當頻道在]AUX4時[套用]Rate設定檔選擇器，[透過頻道]同樣的AUX4來切換不同的設定檔。"
+    },
+    "adjustmentsColumnEnable": {
+        "message": "當開啟時"
+    },
+    "adjustmentsColumnUsingSlot": {
+        "message": "使用slot"
+    },
+    "adjustmentsColumnWhenChannel": {
+        "message": "當頻道在"
+    },
+    "adjustmentsColumnIsInRange": {
+        "message": "數值範圍為"
+    },
+    "adjustmentsColumnThenApplyFunction": {
+        "message": "套用"
+    },
+    "adjustmentsColumnViaChannel": {
+        "message": "透過頻道"
+    },
+    "adjustmentsSlot0": {
+        "message": "Slot 1"
+    },
+    "adjustmentsSlot1": {
+        "message": "Slot 2"
+    },
+    "adjustmentsSlot2": {
+        "message": "Slot 3"
+    },
+    "adjustmentsSlot3": {
+        "message": "Slot 4"
+    },
+    "adjustmentsMin": {
+        "message": "最小"
+    },
+    "adjustmentsMax": {
+        "message": "最大"
+    },
+    "adjustmentsFunction0": {
+        "message": "不改變"
+    },
+    "adjustmentsFunction1": {
+        "message": "RC Rate 調整"
+    },
+    "adjustmentsFunction2": {
+        "message": "RC Expo 調整"
+    },
+    "adjustmentsFunction3": {
+        "message": "Throttle Expo 調整"
+    },
+    "adjustmentsFunction4": {
+        "message": "Pitch & Roll Rate 調整"
+    },
+    "adjustmentsFunction5": {
+        "message": "Yaw Rate 調整"
+    },
+    "adjustmentsFunction6": {
+        "message": "Pitch & Roll P 調整"
+    },
+    "adjustmentsFunction7": {
+        "message": "Pitch & Roll I 調整"
+    },
+    "adjustmentsFunction8": {
+        "message": "Pitch & Roll D 調整"
+    },
+    "adjustmentsFunction9": {
+        "message": "Yaw P 調整"
+    },
+    "adjustmentsFunction10": {
+        "message": "Yaw I 調整"
+    },
+    "adjustmentsFunction11": {
+        "message": "Yaw D 調整"
+    },
+    "adjustmentsFunction12": {
+        "message": "Rate設定檔選擇器"
+    },
+    "adjustmentsFunction13": {
+        "message": "Pitch Rate"
+    },
+    "adjustmentsFunction14": {
+        "message": "Roll Rate"
+    },
+    "adjustmentsFunction15": {
+        "message": "Pitch P 調整"
+    },
+    "adjustmentsFunction16": {
+        "message": "Pitch I 調整"
+    },
+    "adjustmentsFunction17": {
+        "message": "Pitch D 調整"
+    },
+    "adjustmentsFunction18": {
+        "message": "Roll P 調整"
+    },
+    "adjustmentsFunction19": {
+        "message": "Roll I 調整"
+    },
+    "adjustmentsFunction20": {
+        "message": "Roll D 調整"
+    },
+    "adjustmentsSave": {
+        "message": "儲存"
+    },
+    "adjustmentsEepromSaved": {
+        "message": "<span style=\"color: green\">已儲存至</span>EEPROM"
+    },
+
+
+    "servosModel": {
+        "message": "型號:"
+    },
+    "servosChangeDirection": {
+        "message": "為了符合由TX改變方向"
+    },
+    "servosGyroAccelDirection": {
+        "message": "陀螺儀 / 加速計 方向"
+    },
+    "servosName": {
+        "message": "名稱"
+    },
+    "servosMid": {
+        "message": "中間"
+    },
+    "servosMin": {
+        "message": "最小"
+    },
+    "servosMax": {
+        "message": "最大"
+    },
+    "servosDirection": {
+        "message": "方向"
+    },
+    "servosLiveMode": {
+        "message": "開啟Live模式:"
+    },
+    "servosButtonSave": {
+        "message": "儲存"
+    },
+    "servosModelNoSupport": {
+        "message": "此型號不支援伺服機"
+    },
+    "servosNormal": {
+        "message": "正向"
+    },
+    "servosReverse": {
+        "message": "反向"
+    },
+    "servosEepromSave": {
+        "message": "<span style=\"color: green\">已儲存至</span>EEPROM"
+    },
+
+    "gpsHead": {
+        "message": "GPS"
+    },
+    "gps3dFix": {
+        "message": "3D鎖定:"
+    },
+    "gpsFixTrue": {
+        "message": "<span style=\"color: green\">是</span>"
+    },
+    "gpsFixFalse": {
+        "message": "<span style=\"color: red\">否</span>"
+    },
+    "gpsAltitude": {
+        "message": "高度:"
+    },
+    "gpsLat": {
+        "message": "緯度:"
+    },
+    "gpsLon": {
+        "message": "經度:"
+    },
+    "gpsSpeed": {
+        "message": "速度:"
+    },
+    "gpsSats": {
+        "message": "衛星數:"
+    },
+    "gpsDistToHome": {
+        "message": "離家的距離:"
+    },
+    "gpsSignalStrHead": {
+        "message": "GPS信號強度"
+    },
+    "gpsSignalStr": {
+        "message": "信號強度"
+    },
+
+    "motorsMaster": {
+        "message": "主要的"
+    },
+    "motorsNotice": {
+        "message": "<strong>馬達測試模式:</strong><br />拖動這些滑塊會<strong>啟動</strong>這些馬達。<br />為了避免受傷在使用此功能之前請 <strong style=\"color: red\">移除所有的螺旋槳</strong。<br />"
+    },
+    "motorsEnableControl": {
+        "message": "我了解這些風險，螺旋槳已移除 - 開啟馬達控制。"
+    },
+
+    "sensorsInfo": {
+        "message": "請記住，當您在使用筆電時，較快的更新週期過多的顯示資料將會吃掉較多的電腦資源，電池耗電量也會增加。<br />我們建議您，只顯示你有興趣感測器資訊，並選擇合適的更新週期。"
+    },
+    "sensorsRefresh": {
+        "message": "刷新:"
+    },
+    "sensorsScale": {
+        "message": "比例:"
+    },
+
+    "cliInfo": {
+        "message": "<span style=\"color: red\">注意事項</span>: 離開指令介面的頁面或者點擊斷線將會<strong>自動</strong>送出\"<strong>exit</strong>\"的指令給飛控板。在最新的韌體版本下會將飛控板<span style=\"color: red\">重新啟動</span>，所以未儲存的變更將會<span style=\"color: red\">遺失</span>。"
+    },
+    "cliInputPlaceholder": {
+        "message": "在此處寫下你的指令"
+    },
+
+    "loggingNote": {
+        "message": "日誌記錄的動作<span style=\"color: red\">只</span>會在這個頁面執行，離開了這個頁面會<span style=\"color: red\">取消</span>記錄日誌，程式會跳回一般的<strong>\"Configurator\"</strong>狀態。<br />你可以自由選擇更新週期，但是由於效能考量，資料只會以<strong>每一秒</strong>的時間間隔去記錄。"
+    },
+    "loggingSamplesSaved": {
+        "message": "取樣資料已儲存:"
+    },
+    "loggingLogSize": {
+        "message": "日誌大小:"
+    },
+    "loggingButtonLogFile": {
+        "message": "選擇日誌檔"
+    },
+    "loggingStart": {
+        "message": "開始寫入日誌"
+    },
+    "loggingStop": {
+        "message": "停止寫入日誌"
+    },
+    "loggingBack": {
+        "message": "離開寫日誌 / 斷線"
+    },
+    "loggingErrorNotConnected": {
+        "message": "您必需先開啟<strong>連線</strong>"
+    },
+    "loggingErrorLogFile": {
+        "message": "請選擇日誌檔"
+    },
+    "loggingErrorOneProperty": {
+        "message": "請選擇至少一個屬性項目"
+    },
+    "loggingAutomaticallyRetained": {
+        "message": "自動載入上一個日誌檔: <strong>$1</strong>"
+    },
+
+    "dataflashNote": {
+        "message": "黑盒子飛行日誌被記錄在飛控版的快閃記憶體中。"
+    },
+    "dataflashNotSupportedNote": {
+        "message": "您的飛控版不支援快閃記憶體。"
+    },
+    "dataflashFirmwareUpgradeRequired": {
+        "message": "使用快閃資料功能，韌體版本最低需求為1.8.0。"
+    },
+    "dataflashButtonSaveFile": {
+        "message": "儲存快閃到檔案..."
+    },
+    "dataflashButtonErase": {
+        "message": "清除快閃"
+    },
+    "dataflashConfirmEraseTitle": {
+        "message": "確定刪除快閃資料"
+    },
+    "dataflashConfirmEraseNote": {
+        "message": "你確定嗎？這動作會將黑盒日誌或其他儲存在快閃記憶體中的資料清除，這個過程大約花費20秒。"
+    },
+    "dataflashSavingTitle": {
+        "message": "儲存快閃資料到檔案"
+    },
+    "dataflashSavingNote": {
+        "message": "儲存的動作會花費數分鐘，請耐心等候。"
+    },
+    "dataflashSavingNoteAfter": {
+        "message": "完成儲存！請點擊\"確認\"並繼續。"
+    },
+    "dataflashButtonSaveCancel": {
+        "message": "取消"
+    },
+    "dataflashButtonSaveDismiss": {
+        "message": "確認"
+    },
+    "dataflashButtonEraseConfirm": {
+        "message": "是的, 刪除dataflash"
+    },
+    "dataflashButtonEraseCancel": {
+        "message": "取消"
+    },
+    "dataflashFileWriteFailed": {
+        "message": "寫入失敗到您指定的檔案，請確認權限是否允許。"
+    },
+    "firmwareFlasherReleaseSummaryHead": {
+        "message": "發行資訊"
+    },
+    "firmwareFlasherReleaseName": {
+        "message": "名稱/版本:"
+    },
+    "firmwareFlasherReleaseVersionUrl": {
+        "message": "瀏覽發行說明頁面。"
+    },
+    "firmwareFlasherReleaseNotes": {
+        "message": "發行說明:"
+    },
+    "firmwareFlasherReleaseDate": {
+        "message": "日期:"
+    },
+    "firmwareFlasherReleaseStatus": {
+        "message": "狀態:"
+    },
+    "firmwareFlasherReleaseTarget": {
+        "message": "目標:"
+    },
+    "firmwareFlasherReleaseFile": {
+        "message": "二元檔:"
+    },
+    "firmwareFlasherReleaseStatusReleaseCandidate": {
+        "message": "<span style=\"color: red\">重要: 此版本為搶先版。如果遇到什麼問題，請立即回報。</span>"
+    },
+    "firmwareFlasherReleaseFileUrl": {
+        "message": "手動下載."
+    },
+    "firmwareFlasherTargetWarning": {
+        "message": "<span style=\"color: red\">重要</span>: 請確認更新的檔案適用您的飛控板。更新了不匹配的檔案會發生<span style=\"color: red\">不好的</span>事情。"
+    },
+
+    "firmwareFlasherPath": {
+        "message": "路徑:"
+    },
+    "firmwareFlasherSize": {
+        "message": "大小:"
+    },
+    "firmwareFlasherStatus": {
+        "message": "狀態:"
+    },
+    "firmwareFlasherProgress": {
+        "message": "進度:"
+    },
+    "firmwareFlasherLoadFirmwareFile": {
+        "message": "請載入韌體檔案"
+    },
+    "firmwareFlasherNoReboot": {
+        "message": "無重啟程序"
+    },
+    "firmwareFlasherOnlineReleasesDescription": {
+        "message": "開放的線上韌體版本 - 請選擇與您飛控板匹配的韌體。"
+    },
+    "firmwareFlasherNoRebootDescription": {
+        "message": "請開啟，如果你欲更新的飛控板上已將 bootloader 腳位短路"
+    },
+    "firmwareFlasherFlashOnConnect": {
+        "message": "更新到連線的飛控版"
+    },
+    "firmwareFlasherFlashOnConnectDescription": {
+        "message": "試著自動更新到飛控板(使用最近連接的序列埠)"
+    },
+    "firmwareFlasherFullChipErase": {
+        "message": "全部清除"
+    },
+    "firmwareFlasherFullChipEraseDescription": {
+        "message": "清除所有儲存在飛控板上的設定"
+    },
+    "firmwareFlasherFlashDevelopmentFirmware": {
+        "message": "使用開發版韌體"
+    },
+    "firmwareFlasherFlashDevelopmentFirmwareDescription": {
+        "message": "更新最近(沒測試過的)開發版韌體"
+    },
+    "firmwareFlasherManualBaud": {
+        "message": "自訂波特率"
+    },
+    "firmwareFlasherManualBaudDescription": {
+        "message": "非使用預設波特率的飛控板或透過藍牙裝置，請自訂連接的波特率。"
+    },
+    "firmwareFlasherShowDevelopmentReleases":{
+      "message": "顯示非穩定的版本"
+    },
+    "firmwareFlasherShowDevelopmentReleasesDescription":{
+      "message": "顯示搶先版以及開發中的版本"
+    },
+    "firmwareFlasherOptionLabelSelectFirmware": {
+        "message": "選擇韌體/飛控板"
+    },
+    "firmwareFlasherButtonLoadLocal": {
+        "message": "載入韌體 [本地]"
+    },
+    "firmwareFlasherButtonLoadOnline": {
+        "message": "載入韌體 [線上]"
+    },
+    "firmwareFlasherFlashFirmware": {
+        "message": "更新韌體"
+    },
+    "firmwareFlasherGithubInfoHead": {
+        "message": "Github 韌體資訊"
+    },
+    "firmwareFlasherCommiter": {
+        "message": "更改者:"
+    },
+    "firmwareFlasherDate": {
+        "message": "日期:"
+    },
+    "firmwareFlasherHash": {
+        "message": "亂數號:"
+    },
+    "firmwareFlasherUrl": {
+        "message": "到 GitHub 網站看這次的更改..."
+    },
+    "firmwareFlasherMessage": {
+        "message": "訊息"
+    },
+    "firmwareFlasherWarninghead": {
+        "message": "警告"
+    },
+    "firmwareFlasherWarningText": {
+        "message": "請不要用韌體更新器嘗試更新到<strong>非-cleanflight</strong> 的硬體上 (這不會有任何作用)。<br />當在更新時，請不要<strong>拔掉</strong>跟板子的連線或<strong>關閉</strong>你的電腦。<br /><br />注意事項: <strong>STM32</strong> bootloader儲存在<strong>ROM</strong>， 不可能變磚。<br />注意事項: 當在韌體更新器的頁面時，<strong>自動連線</strong>是不能使用的狀態。<br />注意事項: 這動作會清除你所有的設定，包括PIDs, 飛行模式, 以及功能。請確認在動作前已備份您的設定。<br />"
+    },
+    "firmwareFlasherButtonLeave": {
+        "message": "離開韌體更新器"
+    },
+    "firmwareFlasherFirmwareNotLoaded": {
+        "message": "韌體未載入"
+    },
+    "firmwareFlasherHexCorrupted": {
+        "message": "HEX檔似乎損毀"
+    },
+    "firmwareFlasherRemoteFirmwareLoaded": {
+        "message": "<span style=\"color: green\">韌體已載入，準備要更新了</span>"
+    },
+    "firmwareFlasherFailedToLoadOnlineFirmware": {
+        "message": "從網路下載韌體失敗"
+    },
+
+    "ledStripHelp": {
+        "message": "透過飛控可以控制燈條(板)的每個LED的顏色跟效果。<br />在配置LED的排列時，點擊[Wiring Order Mode]設定LED的排列順序。"
+    },
+    "ledStripButtonSave": {
+        "message": "儲存"
+    },
+    "ledStripEepromSaved": {
+        "message": "<span style=\"color: green\">已儲存至</span>EEPROM"
+    }
+}
+
+
+
+

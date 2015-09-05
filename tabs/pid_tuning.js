@@ -34,6 +34,23 @@ TABS.pid_tuning.initialize = function (callback) {
 
     function load_html() {
         $('#content').load("./tabs/pid_tuning.html", process_html);
+        if ($('#sensor-status .accel').hasClass('on')) {
+          $('table.pid_tuning tr.LEVEL').show();
+        }
+        if ($('#sensor-status .baro').hasClass('on')) {
+          $('table.pid_tuning tr.ALT').show();
+        }
+        if ($('#sensor-status .mag').hasClass('on')) {
+          $('table.pid_tuning tr.MAG').show();
+        }
+        if ($('#sensor-status .gps').hasClass('on')) {
+          $('table.pid_tuning tr.Pos').show();
+          $('table.pid_tuning tr.PosR').show();
+          $('table.pid_tuning tr.NavR').show();
+        }
+        if ($('#sensor-status .sonar').hasClass('on')) {
+          $('table.pid_tuning tr.Vario').show();
+        }
     }
 
     // requesting MSP_STATUS manually because it contains CONFIG.profile
@@ -274,7 +291,7 @@ TABS.pid_tuning.initialize = function (callback) {
 
             pidController_e.prop('disabled', true);
         }
-        
+
         if (semver.lt(CONFIG.apiVersion, "1.7.0")) {
             $('.rate-tpa .tpa-breakpoint').hide();
             $('.rate-tpa .roll').hide();

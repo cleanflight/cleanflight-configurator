@@ -18,14 +18,13 @@
 }
 .tab-pid_tuning table tr td:first-child {
     text-align: center;
+    width:30%;
 }
-.tab-pid_tuning table tr.LEVEL,
-.tab-pid_tuning table tr.ALT,
-.tab-pid_tuning table tr.MAG,
-.tab-pid_tuning table tr.Vario,
-.tab-pid_tuning table tr.Pos,
-.tab-pid_tuning table tr.PosR,
-.tab-pid_tuning table tr.NavR {
+.tab-pid_tuning table#pid_accel,
+.tab-pid_tuning table#pid_mag,
+.tab-pid_tuning table#pid_baro,
+.tab-pid_tuning table#pid_sonar,
+.tab-pid_tuning table#pid_gps {
   display:none;
 }
 .tab-pid_tuning table td {

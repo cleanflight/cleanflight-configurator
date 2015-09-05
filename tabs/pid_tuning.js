@@ -34,23 +34,6 @@ TABS.pid_tuning.initialize = function (callback) {
 
     function load_html() {
         $('#content').load("./tabs/pid_tuning.html", process_html);
-        if ($('#sensor-status .accel').hasClass('on')) {
-          $('table.pid_tuning tr.LEVEL').show();
-        }
-        if ($('#sensor-status .baro').hasClass('on')) {
-          $('table.pid_tuning tr.ALT').show();
-        }
-        if ($('#sensor-status .mag').hasClass('on')) {
-          $('table.pid_tuning tr.MAG').show();
-        }
-        if ($('#sensor-status .gps').hasClass('on')) {
-          $('table.pid_tuning tr.Pos').show();
-          $('table.pid_tuning tr.PosR').show();
-          $('table.pid_tuning tr.NavR').show();
-        }
-        if ($('#sensor-status .sonar').hasClass('on')) {
-          $('table.pid_tuning tr.Vario').show();
-        }
     }
 
     // requesting MSP_STATUS manually because it contains CONFIG.profile
@@ -262,18 +245,29 @@ TABS.pid_tuning.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
-        // Fill in the names from PID_names array
-        // this needs to be reworked, but will do for now
-        $('.pid_tuning tr:eq(1) td:first').text(PID_names[0]);
-        $('.pid_tuning tr:eq(2) td:first').text(PID_names[1]);
-        $('.pid_tuning tr:eq(3) td:first').text(PID_names[2]);
-        $('.pid_tuning tr:eq(4) td:first').text(PID_names[3]);
-        $('.pid_tuning tr:eq(5) td:first').text(PID_names[9]);
-        $('.pid_tuning tr:eq(6) td:first').text(PID_names[4]);
-        $('.pid_tuning tr:eq(7) td:first').text(PID_names[5]);
-        $('.pid_tuning tr:eq(8) td:first').text(PID_names[6]);
-        $('.pid_tuning tr:eq(9) td:first').text(PID_names[7]);
-        $('.pid_tuning tr:eq(10) td:first').text(PID_names[8]);
+        if ($('#sensor-status li.accel').hasClass('on')) {
+          $('#pid_accel').show();
+        }
+        if ($('#sensor-status li.baro').hasClass('on')) {
+          $('#pid_baro').show();
+        }
+        if ($('#sensor-status li.mag').hasClass('on')) {
+          $('#pid_mag').show();
+        }
+        if ($('#sensor-status li.gps').hasClass('on')) {
+          $('#pid_gps').show();
+        }
+        if ($('#sensor-status li.sonar').hasClass('on')) {
+          $('#pid_sonar').show();
+        }
+        
+        $('.pid_tuning tr').each(function(){
+          for(i = 0; i < PID_names.length; i++) {
+            if($(this).hasClass(PID_names[i])) {
+              $(this).find('td:first').text(PID_names[i]);
+            }
+          }
+        });
 
         pid_and_rc_to_form();
 

@@ -14,6 +14,7 @@
     <div class="clear-both"></div>
     <form name="pid-tuning" id="pid-tuning">
         <table class="pid_tuning">
+            <tr class="title"><td colspan="4">Basic/Acro</td></tr>
             <tr>
                 <th class="name" i18n="pidTuningName"></th>
                 <th class="proportional" i18n="pidTuningProportional"></th>
@@ -38,28 +39,33 @@
                 <td><input type="number" name="i" step="0.001" min="0" max="0.255"/></td>
                 <td><input type="number" name="d" step="1" min="0" max="255"/></td>
             </tr>
+            <tr class="title"><td colspan="4">Accelerometer/Level</td></tr>
             <tr class="LEVEL"><!-- 7 -->
                 <td></td>
                 <td><input type="number" name="p" step="0.1" min="0" max="25.5"/></td>
                 <td><input type="number" name="i" step="0.001" min="0" max="0.255"/></td>
                 <td><input type="number" name="d" step="1" min="0" max="255"/></td>
             </tr>
+            <tr class="title"><td colspan="4">Barometer/Altitude</td></tr>
             <tr class="ALT"><!-- 3 -->
                 <td></td>
                 <td><input type="number" name="p" step="0.1" min="0" max="25.5"/></td>
                 <td><input type="number" name="i" step="0.001" min="0" max="0.255"/></td>
                 <td><input type="number" name="d" step="1" min="0" max="255"/></td>
             </tr>
+            <tr class="title"><td colspan="4">Magnometer/Heading</td></tr>
             <tr class="MAG"><!-- 8 -->
                 <td></td>
                 <td><input type="number" name="p" step="0.1" min="0" max="25.5"/></td>
             </tr>
+            <tr class="title"><td colspan="4">Sonar</td></tr>
             <tr class="Vario"><!-- 9 -->
                 <td></td>
                 <td><input type="number" name="p" step="0.1" min="0" max="25.5"/></td>
                 <td><input type="number" name="i" step="0.001" min="0" max="0.255"/></td>
                 <td><input type="number" name="d" step="1" min="0" max="255"/></td>
             </tr>
+            <tr class="title"><td colspan="4">GPS Navigation</td></tr>
             <tr class="Pos"><!-- 4 -->
                 <td></td>
                 <td><input type="number" name="p" step="0.01" min="0" max="2.55"/></td>

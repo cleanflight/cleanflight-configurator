@@ -49,7 +49,7 @@ TABS.pid_tuning.initialize = function (callback) {
           $('table.pid_tuning tr.NavR').show();
         }
         if ($('#sensor-status .sonar').hasClass('on')) {
-          $('table.pid_tuning tr.LEVEL').show();
+          $('table.pid_tuning tr.Vario').show();
         }
     }
 

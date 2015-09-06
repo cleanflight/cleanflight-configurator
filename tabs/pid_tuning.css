@@ -20,13 +20,6 @@
     text-align: center;
     width:30%;
 }
-.tab-pid_tuning table#pid_accel,
-.tab-pid_tuning table#pid_mag,
-.tab-pid_tuning table#pid_baro,
-.tab-pid_tuning table#pid_sonar,
-.tab-pid_tuning table#pid_gps {
-  display:none;
-}
 .tab-pid_tuning table td {
     padding: 1px;
 }

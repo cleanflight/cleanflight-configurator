@@ -240,26 +240,41 @@ TABS.pid_tuning.initialize = function (callback) {
         RC_tuning.dynamic_THR_PID = parseFloat($('.rate-tpa input[name="tpa"]').val());
         RC_tuning.dynamic_THR_breakpoint = parseInt($('.rate-tpa input[name="tpa-breakpoint"]').val());
     }
+    function hideUnusedPids(sensors_detected) {
+      $('.tab-pid_tuning table.pid_tuning').hide();
+      $('#pid_main').show();
 
+      if (have_sensor(sensors_detected, 'acc')) {
+        $('#pid_accel').show();
+      }
+      if (have_sensor(sensors_detected, 'baro')) {
+        $('#pid_baro').show();
+      }
+      if (have_sensor(sensors_detected, 'mag')) {
+        $('#pid_mag').show();
+      }
+      if (bit_check(BF_CONFIG.features, 7)) {   //This will need to be reworked to remove BF_CONFIG reference eventually
+        $('#pid_gps').show();
+      }
+      if (have_sensor(sensors_detected, 'sonar')) {
+        $('#pid_sonar').show();
+      }
+    }
     function process_html() {
         // translate to user-selected language
         localize();
 
-        if (have_sensor(1, 'acc')) {
-          $('#pid_accel').show();
-        }
-        if (have_sensor(1, 'baro')) {
-          $('#pid_baro').show();
-        }
-        if (have_sensor(1, 'mag')) {
-          $('#pid_mag').show();
-        }
-        if (bit_check(BF_CONFIG.features, 7)) {   //This will need to be reworked to remove BF_CONFIG reference eventually
-          $('#pid_gps').show();
-        }
-        if (have_sensor(1, 'sonar')) {
-          $('#pid_sonar').show();
-        }
+        hideUnusedPids(CONFIG.activeSensors);
+
+        $('#showAllPids').on('click', function(){
+          if($(this).text() == "Show All PIDs") {
+            $('.tab-pid_tuning table.pid_tuning').show();
+            $(this).text('Hide Unused PIDs');
+          } else {
+            hideUnusedPids(CONFIG.activeSensors);
+            $(this).text('Show All PIDs');
+          }
+        });
 
         $('.pid_tuning tr').each(function(){
           for(i = 0; i < PID_names.length; i++) {
@@ -268,6 +283,7 @@ TABS.pid_tuning.initialize = function (callback) {
             }
           }
         });
+
 
         pid_and_rc_to_form();
 

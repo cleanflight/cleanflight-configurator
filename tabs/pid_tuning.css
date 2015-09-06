@@ -127,3 +127,6 @@
 .tab-pid_tuning .refresh:hover {
     background-color: #dedcdc;
 }
+.tab-pid_tuning .top-buttons {
+  float:right;
+}

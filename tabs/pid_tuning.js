@@ -245,19 +245,19 @@ TABS.pid_tuning.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
-        if (have_sensor(sensors_detected, 'acc')) {
+        if (have_sensor(1, 'acc')) {
           $('#pid_accel').show();
         }
-        if (have_sensor(sensors_detected, 'baro')) {
+        if (have_sensor(1, 'baro')) {
           $('#pid_baro').show();
         }
-        if (have_sensor(sensors_detected, 'mag')) {
+        if (have_sensor(1, 'mag')) {
           $('#pid_mag').show();
         }
         if (bit_check(BF_CONFIG.features, 7)) {   //This will need to be reworked to remove BF_CONFIG reference eventually
           $('#pid_gps').show();
         }
-        if (have_sensor(sensors_detected, 'sonar')) {
+        if (have_sensor(1, 'sonar')) {
           $('#pid_sonar').show();
         }
 

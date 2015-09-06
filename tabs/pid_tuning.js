@@ -245,22 +245,22 @@ TABS.pid_tuning.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
-        if ($('#sensor-status li.accel').hasClass('on')) {
+        if (have_sensor(sensors_detected, 'acc')) {
           $('#pid_accel').show();
         }
-        if ($('#sensor-status li.baro').hasClass('on')) {
+        if (have_sensor(sensors_detected, 'baro')) {
           $('#pid_baro').show();
         }
-        if ($('#sensor-status li.mag').hasClass('on')) {
+        if (have_sensor(sensors_detected, 'mag')) {
           $('#pid_mag').show();
         }
-        if ($('#sensor-status li.gps').hasClass('on')) {
+        if (bit_check(BF_CONFIG.features, 7)) {   //This will need to be reworked to remove BF_CONFIG reference eventually
           $('#pid_gps').show();
         }
-        if ($('#sensor-status li.sonar').hasClass('on')) {
+        if (have_sensor(sensors_detected, 'sonar')) {
           $('#pid_sonar').show();
         }
-        
+
         $('.pid_tuning tr').each(function(){
           for(i = 0; i < PID_names.length; i++) {
             if($(this).hasClass(PID_names[i])) {

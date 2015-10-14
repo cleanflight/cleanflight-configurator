@@ -34,6 +34,22 @@ TABS.setup.initialize = function (callback) {
 
     MSP.send_message(MSP_codes.MSP_ACC_TRIM, false, false, load_status);
 
+    //load current pid profile
+    function get_pid_controller() {
+        if (GUI.canChangePidController) {
+            MSP.send_message(MSP_codes.MSP_PID_CONTROLLER, false, false, set_gui_profile());
+        } else {
+            set_gui_profile();
+        }
+    }
+
+    function set_gui_profile() {
+        $('select[name="profile"]').val(CONFIG.profile);
+    }
+
+    // requesting MSP_STATUS manually because it contains CONFIG.profile
+    MSP.send_message(MSP_codes.MSP_STATUS, false, false, get_pid_controller);
+
     function process_html() {
         // translate to user-selected language
         localize();
@@ -63,6 +79,22 @@ TABS.setup.initialize = function (callback) {
         self.initializeInstruments();
 
         // UI Hooks
+        // UI Hooks
+        $('select[name="profile"]').change(function () {
+            var profile = parseInt($(this).val());
+            MSP.send_message(MSP_codes.MSP_SELECT_SETTING, [profile], false, function () {
+                GUI.log(chrome.i18n.getMessage('pidTuningLoadedProfile', [profile + 1]));
+
+                function content_ready() {
+                    GUI.tab_switch_in_progress = false;
+                }
+
+                GUI.tab_switch_cleanup(function () {
+                    load_tab(GUI.active_tab, content_ready);
+                });
+            });
+        });
+
         $('a.calibrateAccel').click(function () {
             var self = $(this);
 

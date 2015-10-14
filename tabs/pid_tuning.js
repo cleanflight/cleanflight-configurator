@@ -245,6 +245,8 @@ TABS.pid_tuning.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
+
+
         // Fill in the names from PID_names array
         // this needs to be reworked, but will do for now
         $('.pid_tuning tr:eq(1) td:first').text(PID_names[0]);
@@ -261,7 +263,6 @@ TABS.pid_tuning.initialize = function (callback) {
         pid_and_rc_to_form();
 
         var pidController_e = $('select[name="controller"]');
-        var profile_e = $('select[name="profile"]');
         var form_e = $('#pid-tuning');
 
         if (GUI.canChangePidController) {
@@ -283,21 +284,6 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.rate-tpa .roll-pitch').hide();
         }
 
-        // Fill in currently selected profile
-
-        profile_e.val(CONFIG.profile);
-
-        // UI Hooks
-        profile_e.change(function () {
-            var profile = parseInt($(this).val());
-            MSP.send_message(MSP_codes.MSP_SELECT_SETTING, [profile], false, function () {
-                GUI.log(chrome.i18n.getMessage('pidTuningLoadedProfile', [profile + 1]));
-
-                GUI.tab_switch_cleanup(function () {
-                    TABS.pid_tuning.initialize();
-                });
-            });
-        });
 
         $('a.refresh').click(function () {
             GUI.tab_switch_cleanup(function () {

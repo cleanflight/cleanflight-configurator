@@ -53,7 +53,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                         return;
                     }
 
-                    var target = match[1].replace("_", "_");
+                    var target = match[1].replace("_", " ");
                     var format = match[2];
 
                     if (format != 'hex') {

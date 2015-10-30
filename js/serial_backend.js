@@ -41,7 +41,8 @@ $(document).ready(function () {
 
                     // lock port select & baud while we are connecting / connected
                     $('div#port-picker #port, div#port-picker #baud, div#port-picker #delay').prop('disabled', true);
-                    $('div#port-picker a.connect').text(chrome.i18n.getMessage('connecting'));
+                    $('div#port-picker a.connect_state').text(chrome.i18n.getMessage('connecting'));
+
 
                     serial.connect(selected_port, {bitrate: selected_baud}, onOpen);
                 } else {
@@ -69,9 +70,9 @@ $(document).ready(function () {
                     if (!GUI.auto_connect) $('div#port-picker #baud').prop('disabled', false);
 
                     // reset connect / disconnect button
-                    $(this).text(chrome.i18n.getMessage('connect'));
-                    $(this).removeClass('active');
-
+        			$('div#port-picker a.connect').removeClass('active');
+					$('div#port-picker a.connect_state').text(chrome.i18n.getMessage('connect'));
+                   
                     // reset active sensor indicators
                     sensor_status(0);
 
@@ -122,12 +123,38 @@ $(document).ready(function () {
             }
 
             chrome.storage.local.set({'auto_connect': GUI.auto_connect});
+            
+
         });
+        
+
+ /** toggle switch **/
+var elems = Array.prototype.slice.call(document.querySelectorAll('#togglesmall'));
+
+elems.forEach(function(html) {
+  var switchery = new Switchery(html,
+  {
+    size: 'small',
+	color: '#59aa29', 
+    secondaryColor: '#c4c4c4' 
+});
+  
+});
+/** toggle switch END **/
+
+
     });
+
 
     PortHandler.initialize();
     PortUsage.initialize();
+    
+
+
 });
+
+
+
 
 function onOpen(openInfo) {
     if (openInfo) {
@@ -220,7 +247,7 @@ function onOpen(openInfo) {
         console.log('Failed to open serial port');
         GUI.log(chrome.i18n.getMessage('serialPortOpenFail'));
 
-        $('div#port-picker a.connect').text(chrome.i18n.getMessage('connect'));
+        $('div#port-picker a.connect_state').text(chrome.i18n.getMessage('connect'));
         $('div#port-picker a.connect').removeClass('active');
 
         // unlock port select & baud
@@ -233,15 +260,27 @@ function onOpen(openInfo) {
 
 function onConnect() {
     GUI.timeout_remove('connecting'); // kill connecting timer
-    $('div#port-picker a.connect').text(chrome.i18n.getMessage('disconnect')).addClass('active');
+    $('a.connect_state').text(chrome.i18n.getMessage('disconnect')).addClass('active');
+    $('div#port-picker a.connect').addClass('active');
     $('#tabs ul.mode-disconnected').hide();
     $('#tabs ul.mode-connected').show();
 
     if ("CLFL" == CONFIG.flightControllerIdentifier){
+        
+        /* placing this elsewhere 
         var documentationButton = $('#button-documentation');
-        documentationButton.show();
+        documentationButton.show(); 
         documentationButton.html("Documentation for "+CONFIG.flightControllerVersion);
         documentationButton.attr("href","https://github.com/cleanflight/cleanflight/tree/v{0}/docs".format(CONFIG.flightControllerVersion));
+       */
+        
+        /* just a thought 
+         var sensor_state = $('#sensor-status');
+        sensor_state.show(); 
+        */
+        
+         var flashstate = $('#header_dataflash');
+        flashstate.show();
     }
 }
 
@@ -255,8 +294,14 @@ function onClosed(result) {
     $('#tabs ul.mode-connected').hide();
     $('#tabs ul.mode-disconnected').show();
 
-    var documentationButton = $('#button-documentation');
-    documentationButton.hide();
+    
+    var flashstate = $('#header_dataflash');
+    flashstate.hide();
+    
+    /* just a thought 
+      var sensor_state = $('#sensor-status');
+    sensor_state.hide();
+    */
 }
 
 function read_serial(info) {
@@ -285,38 +330,54 @@ function sensor_status(sensors_detected) {
 
     if (have_sensor(sensors_detected, 'acc')) {
         $('.accel', e_sensor_status).addClass('on');
+    	$('.accicon', e_sensor_status).addClass('active');
+
     } else {
         $('.accel', e_sensor_status).removeClass('on');
+		$('.accicon', e_sensor_status).removeClass('active');
+
     }
 
     if (have_sensor(sensors_detected, 'gyro')) {
         $('.gyro', e_sensor_status).addClass('on');
+		$('.gyroicon', e_sensor_status).addClass('active');
+
     } else {
         $('.gyro', e_sensor_status).removeClass('on');
+		$('.gyroicon', e_sensor_status).removeClass('active');
+
     }
 
     if (have_sensor(sensors_detected, 'baro')) {
         $('.baro', e_sensor_status).addClass('on');
+		$('.baroicon', e_sensor_status).addClass('active');
     } else {
         $('.baro', e_sensor_status).removeClass('on');
+		$('.baroicon', e_sensor_status).removeClass('active');
     }
 
     if (have_sensor(sensors_detected, 'mag')) {
         $('.mag', e_sensor_status).addClass('on');
+		$('.magicon', e_sensor_status).addClass('active');
     } else {
         $('.mag', e_sensor_status).removeClass('on');
+		$('.magicon', e_sensor_status).removeClass('active');
     }
 
     if (have_sensor(sensors_detected, 'gps')) {
         $('.gps', e_sensor_status).addClass('on');
+		$('.gpsicon', e_sensor_status).addClass('active');
     } else {
         $('.gps', e_sensor_status).removeClass('on');
+		$('.gpsicon', e_sensor_status).removeClass('active');
     }
 
     if (have_sensor(sensors_detected, 'sonar')) {
         $('.sonar', e_sensor_status).addClass('on');
+		$('.sonaricon', e_sensor_status).addClass('active');
     } else {
         $('.sonar', e_sensor_status).removeClass('on');
+		$('.sonaricon', e_sensor_status).removeClass('active');
     }
 }
 
@@ -360,3 +421,5 @@ function bit_set(num, bit) {
 function bit_clear(num, bit) {
     return num & ~(1 << bit);
 }
+
+

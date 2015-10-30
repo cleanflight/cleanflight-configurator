@@ -8,7 +8,8 @@ TABS.firmware_flasher.initialize = function (callback) {
         GUI.active_tab = 'firmware_flasher';
         googleAnalytics.sendAppView('Firmware Flasher');
     }
-
+	
+	
     var intel_hex = false, // standard intel hex in string format
         parsed_hex = false; // parsed raw hex in array format
         
@@ -16,7 +17,19 @@ TABS.firmware_flasher.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
-        function parse_hex(str, callback) {
+	// load switchery
+	var elems = Array.prototype.slice.call(document.querySelectorAll('#toggle'));
+
+elems.forEach(function(html) {
+  var switchery = new Switchery(html,
+  {
+    color: '#59aa29', 
+    secondaryColor: '#c4c4c4' 
+});
+  });
+
+  
+          function parse_hex(str, callback) {
             // parsing hex in different thread
             var worker = new Worker('./js/workers/hex_parser.js');
 
@@ -39,7 +52,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             var showDevReleases = ($('input.show_development_releases').is(':checked'));
             releases_e.append($("<option value='0'>{0}</option>".format(chrome.i18n.getMessage('firmwareFlasherOptionLabelSelectFirmware'))));
 
-            var releaseDescritpors = [];
+            var releaseDescriptors = [];
             TABS.firmware_flasher.releases.forEach(function(release){
                 release.assets.forEach(function(asset){
                     var targetFromFilenameExpression = /.*_(.*)\.(.*)/;
@@ -81,11 +94,11 @@ TABS.firmware_flasher.initialize = function (callback) {
                         "status"    : release.prerelease ? "release-candidate" : "stable"
                     };
 
-                    releaseDescritpors.push(descriptor);
+                    releaseDescriptors.push(descriptor);
                 });
             });
 
-            releaseDescritpors.sort(function(o1,o2){
+            releaseDescriptors.sort(function(o1,o2){
                 // compare versions descending
                 var cmpVal = semver(o2.version).compare(semver(o1.version));
                 if (cmpVal == 0){
@@ -96,7 +109,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             });
 
             var optionIndex = 1;
-            releaseDescritpors.forEach(function(descriptor){
+            releaseDescriptors.forEach(function(descriptor){
                 var select_e =
                         $("<option value='{0}'>{1} {2} {3} ({4})</option>".format(
                                 optionIndex++,
@@ -527,3 +540,6 @@ TABS.firmware_flasher.cleanup = function (callback) {
 
     if (callback) callback();
 };
+
+
+

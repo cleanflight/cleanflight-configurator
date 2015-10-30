@@ -211,6 +211,18 @@ $(document).ready(function () {
                     googleAnalyticsConfig.setTrackingPermitted(check);
                 });
 
+ // CSS TEST
+var css = $("#default");
+$("div#options-window #remove").click(function(){
+    css.remove();
+});
+
+$("div#options-window #restore").click(function(){
+    $("head").append(css);
+});
+   // CSS TEST END
+   
+   
                 function close_and_cleanup(e) {
                     if (e.type == 'click' && !$.contains($('div#options-window')[0], e.target) || e.type == 'keyup' && e.keyCode == 27) {
                         $(document).unbind('click keyup', close_and_cleanup);
@@ -357,3 +369,35 @@ String.prototype.format = function () {
         return args[i] !== void 0 ? args[i] : "{"+(i-args.length)+"}";
     });
 };
+
+/** log trigger **/
+$(document).ready(function () {
+
+$("#showlog").on('click', function() {
+    var state = $(this).data('state');
+    if ( state ) {
+        $("#log").animate({height: 27}, 200);
+        $("#log").removeClass('active');
+		$("#content").removeClass('logopen');
+		$("#tabs").removeClass('logopen');
+        $("#scrollicon").removeClass('active');
+
+        state = false;
+    }else{
+        $("#log").animate({height: 111}, 200);
+        $("#log").addClass('active');
+        $("#content").addClass('logopen');
+        $("#tabs").addClass('logopen');
+        $("#scrollicon").addClass('active');
+
+        state = true;
+    }
+    $(this).text(state ? 'Hide Log' : 'Show Log');
+    $(this).data('state', state);
+    
+});
+
+});
+
+
+

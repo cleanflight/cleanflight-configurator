@@ -36,15 +36,33 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     }
 
     function load_arming_config() {
-        MSP.send_message(MSP_codes.MSP_ARMING_CONFIG, false, false, load_html);
+        MSP.send_message(MSP_codes.MSP_ARMING_CONFIG, false, false, load_loop_time);
+    }
+    
+    function load_loop_time() {
+        MSP.send_message(MSP_codes.MSP_LOOP_TIME, false, false, load_html);
     }
 
     function load_html() {
         $('#content').load("./tabs/configuration.html", process_html);
     }
 
+	
+	
+	
     MSP.send_message(MSP_codes.MSP_IDENT, false, false, load_config);
 
+    function recalculate_cycles_sec() {
+        var looptime = $('input[name="looptime"]').val();
+
+        var message = 'Max';
+        if (looptime > 0) {
+            message = parseFloat((1 / looptime) * 1000 * 1000).toFixed(0);
+        }
+        
+        $('input[name="looptimehz"]').val(message);
+    }
+    
     function process_html() {
         // translate to user-selected language
         localize();
@@ -73,7 +91,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             {bit: 3, group: 'rxMode', mode: 'group', name: 'RX_SERIAL', description: 'Serial-based receiver (SPEKSAT, SBUS, SUMD)'},
             {bit: 4, group: 'esc', name: 'MOTOR_STOP', description: 'Don\'t spin the motors when armed'},
             {bit: 5, group: 'other', name: 'SERVO_TILT', description: 'Servo gimbal'},
-            {bit: 6, group: 'other', name: 'SOFTSERIAL', description: 'Enable CPU based serial ports (configure port scenario first)'},
+            {bit: 6, group: 'other', name: 'SOFTSERIAL', description: 'Enable CPU based serial ports'},
             {bit: 7, group: 'gps', name: 'GPS', description: 'GPS (configure port scenario first)'},
             {bit: 8, group: 'rxFailsafe', name: 'FAILSAFE', description: 'Failsafe settings on RX signal loss'},
             {bit: 9, group: 'other', name: 'SONAR', description: 'Sonar'},
@@ -88,6 +106,12 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             {bit: 18, group: 'esc', name: 'ONESHOT125', description: 'ONESHOT ESC support (disconnect ESCs, remove props)'},
             {bit: 19, group: 'other', name: 'BLACKBOX', description: 'Blackbox flight data recorder'}
         ];
+        
+        if (semver.gte(CONFIG.apiVersion, "1.12.0")) {
+            features.push(
+                {bit: 20, group: 'other', name: 'CHANNEL_FORWARDING', description: 'Forward aux channels to remaining servo outputs'}
+            );
+        }
 
         var radioGroups = [];
         
@@ -108,24 +132,24 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                         + i
                         + '">'
                         + features[i].name
-                        + '</label></td><td>'
+                        + '</label></td><td><span>'
                         + features[i].description
-                        + '</td>');
+                        + '</td><span>');
                 radioGroups.push(features[i].group);
             } else {
-                row_e = $('<tr><td><input class="feature" id="feature-'
+                row_e = $('<tr><td><input class="feature"'
                         + i
                         + '" name="'
                         + features[i].name
                         + '" title="'
                         + features[i].name
-                        + '" type="checkbox" /></td><td><label for="feature-'
+                        + '" type="checkbox" id="toggle"/></td><td><label for="feature-'
                         + i
                         + '">'
                         + features[i].name
-                        + '</label></td><td>'
+                        + '</label></td><td><span>'
                         + features[i].description
-                        + '</td>');
+                        + '</span></td>');
                 
                 var feature_e = row_e.find('input.feature');
 
@@ -256,7 +280,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         // fill magnetometer
         $('input[name="mag_declination"]').val(MISC.mag_declination);
 
-        //fill motor disarm params        
+        //fill motor disarm params and FC loop time        
         if(semver.gte(CONFIG.apiVersion, "1.8.0")) {
             $('input[name="autodisarmdelay"]').val(ARMING_CONFIG.auto_disarm_delay);
             $('input[name="disarmkillswitch"]').prop('checked', ARMING_CONFIG.disarm_kill_switch);
@@ -265,6 +289,13 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 $('div.disarmdelay').show();
             else
                 $('div.disarmdelay').hide();
+            
+            // fill FC loop time
+            $('input[name="looptime"]').val(FC_CONFIG.loopTime);
+
+            recalculate_cycles_sec();
+            
+            $('div.cycles').show();
         }
         
         // fill throttle
@@ -287,6 +318,10 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
 
         // UI hooks
+        $('input[name="looptime"]').change(function() {
+            recalculate_cycles_sec();
+        });
+
         $('input[type="checkbox"].feature', features_e).change(function () {
             var element = $(this),
                 index = element.data('bit'),
@@ -324,6 +359,23 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             });
         });
 
+
+
+// load switchery
+	var elems = Array.prototype.slice.call(document.querySelectorAll('#toggle'));
+
+elems.forEach(function(html) {
+  var switchery = new Switchery(html,
+  {
+    color: '#59aa29', 
+    secondaryColor: '#c4c4c4' 
+});
+  });
+  	// load switchery END
+	
+	
+	
+	
         $('a.save').click(function () {
             // gather data that doesn't have automatic change event bound
             BF_CONFIG.board_align_roll = parseInt($('input[name="board_align_roll"]').val());
@@ -338,6 +390,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             if(semver.gte(CONFIG.apiVersion, "1.8.0")) {
                 ARMING_CONFIG.auto_disarm_delay = parseInt($('input[name="autodisarmdelay"]').val());
                 ARMING_CONFIG.disarm_kill_switch = ~~$('input[name="disarmkillswitch"]').is(':checked'); // ~~ boolean to decimal conversion
+                FC_CONFIG.loopTime = parseInt($('input[name="looptime"]').val());
             }
             
             MISC.minthrottle = parseInt($('input[name="minthrottle"]').val());
@@ -373,7 +426,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
 
             function save_arming_config() {
-                MSP.send_message(MSP_codes.MSP_SET_ARMING_CONFIG, MSP.crunch(MSP_codes.MSP_SET_ARMING_CONFIG), false, save_to_eeprom);
+                MSP.send_message(MSP_codes.MSP_SET_ARMING_CONFIG, MSP.crunch(MSP_codes.MSP_SET_ARMING_CONFIG), false, save_looptime_config);
+            }
+
+            function save_looptime_config() {
+                MSP.send_message(MSP_codes.MSP_SET_LOOP_TIME, MSP.crunch(MSP_codes.MSP_SET_LOOP_TIME), false, save_to_eeprom);
             }
 
             function save_to_eeprom() {
@@ -390,21 +447,13 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
             function reinitialize() {
                 GUI.log(chrome.i18n.getMessage('deviceRebooting'));
-                
-                if (BOARD.find_board_definition(CONFIG.boardIdentifier).vcp) { // VCP-based flight controls may crash old drivers, we catch and reconnect
-                    $('a.connect').click();
-                    GUI.timeout_add('start_connection',function start_connection() {
-                        $('a.connect').click();
-                    },2000);
-                } else {
 
-                    GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
-                        MSP.send_message(MSP_codes.MSP_IDENT, false, false, function () {
-                            GUI.log(chrome.i18n.getMessage('deviceReady'));
-                            TABS.configuration.initialize(false, $('#content').scrollTop());
-                        });
-                    },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
-                }
+                GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
+                    MSP.send_message(MSP_codes.MSP_IDENT, false, false, function () {
+                        GUI.log(chrome.i18n.getMessage('deviceReady'));
+                        TABS.configuration.initialize(false, $('#content').scrollTop());
+                    });
+                },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
             }
 
             MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_serial_config);
@@ -419,6 +468,9 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     }
 };
 
-TABS.configuration.cleanup = function (callback) {
+
+	
+	
+	TABS.configuration.cleanup = function (callback) {
     if (callback) callback();
 };

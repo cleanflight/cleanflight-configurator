@@ -621,6 +621,30 @@
     "pidTuningTPABreakPoint": {
         "message": "TPA Breakpoint"
     },
+    "pidFilterGyroLpf": {
+        "message": "Gyro hardware LPF"
+    },
+    "pidFilterGyroCutHz": {
+        "message": "Gyro Hz"
+    },
+    "pidFilterPTermCutHz": {
+        "message": "P-term Hz"
+    },
+    "pidFilterDTermCutHz": {
+        "message": "D-term Hz"
+    },
+    "pidYawPLimit": {
+        "message": "Yaw P-limit"
+    },
+    "pidYawJumpPreventionLimit": {
+        "message": "Yaw jump prevention limit"
+    },
+    "pidFilterHead": {
+        "message": "Selective Software Filtering"
+    },
+    "pidTuningButtonSuggested": {
+        "message": "Set suggested filter start values"
+    },
     "pidTuningButtonSave": {
         "message": "Save"
     },

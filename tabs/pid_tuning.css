@@ -90,6 +90,15 @@
     float: right;
     width: calc(40% - 10px); /* - ( "virtual" margin) */
 }
+.tab-pid_tuning .pid-filters {
+    float: right;
+    width: calc(40% - 10px); /* - ( "virtual" margin) */
+}
+.tab-pid_tuning .filter-head {
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+}
 .tab-pid_tuning .buttons {
     width: calc(100% - 20px);
 
@@ -97,6 +106,7 @@
     bottom: 10px;
 }
 .tab-pid_tuning .update,
+.tab-pid_tuning .suggested,
 .tab-pid_tuning .refresh {
     display: block;
     float: right;
@@ -116,6 +126,7 @@
     margin-right: 10px;
 }
 .tab-pid_tuning .update:hover,
+.tab-pid_tuning .suggested:hover,
 .tab-pid_tuning .refresh:hover {
     background-color: #dedcdc;
 }

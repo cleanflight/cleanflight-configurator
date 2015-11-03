@@ -79,6 +79,16 @@ var RC_tuning = {
 	RC_YAW_EXPO:         0
 };
 
+var PID_filter = {
+    data_valid:      0,
+    gyro_lpf:        0,
+    gyro_cut_hz:     0,
+    pterm_cut_hz:    0,
+    dterm_cut_hz:    0,
+    yaw_p_limit:     0,
+    yaw_jump_prevention_limit:     0
+};
+
 var AUX_CONFIG = [];
 var AUX_CONFIG_IDS = [];
 

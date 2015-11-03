@@ -29,7 +29,11 @@ TABS.pid_tuning.initialize = function (callback) {
     }
 
     function get_rc_tuning_data() {
-        MSP.send_message(MSP_codes.MSP_RC_TUNING, false, false, load_html);
+        MSP.send_message(MSP_codes.MSP_RC_TUNING, false, false, get_pid_filters);
+    }
+
+    function get_pid_filters() {
+        MSP.send_message(MSP_codes.MSP_PID_FILTERS, false, false, load_html);
     }
 
     function load_html() {
@@ -178,6 +182,19 @@ TABS.pid_tuning.initialize = function (callback) {
         $('.rate-tpa input[name="yaw"]').val(RC_tuning.yaw_rate.toFixed(2));
         $('.rate-tpa input[name="tpa"]').val(RC_tuning.dynamic_THR_PID.toFixed(2));
         $('.rate-tpa input[name="tpa-breakpoint"]').val(RC_tuning.dynamic_THR_breakpoint);
+
+        // Fill in data from PID_filter object
+        if (PID_filter.data_valid == 1) {
+            $('.pid-filters input[name="gyrolpf"]').val(PID_filter.gyro_lpf);
+            $('.pid-filters input[name="gyrocuthz"]').val(PID_filter.gyro_cut_hz);
+            $('.pid-filters input[name="ptermcuthz"]').val(PID_filter.pterm_cut_hz);
+            $('.pid-filters input[name="dtermcuthz"]').val(PID_filter.dterm_cut_hz);
+            $('.pid-filters input[name="yawplimit"]').val(PID_filter.yaw_p_limit);
+            $('.pid-filters input[name="yawjumppreventionlimit"]').val(PID_filter.yaw_jump_prevention_limit);
+        } else {
+            $('.filter-head').hide();
+            $('.pid-filters').hide();
+        }
     }
 
     function form_to_pid_and_rc() {
@@ -239,6 +256,29 @@ TABS.pid_tuning.initialize = function (callback) {
         RC_tuning.yaw_rate = parseFloat($('.rate-tpa input[name="yaw"]').val());
         RC_tuning.dynamic_THR_PID = parseFloat($('.rate-tpa input[name="tpa"]').val());
         RC_tuning.dynamic_THR_breakpoint = parseInt($('.rate-tpa input[name="tpa-breakpoint"]').val());
+
+        // catch PID_filter changes
+        if (PID_filter.data_valid == 1) {
+            PID_filter.gyro_lpf = parseFloat($('.pid-filters input[name="gyrolpf"]').val());
+            PID_filter.gyro_cut_hz = parseFloat($('.pid-filters input[name="gyrocuthz"]').val());
+            PID_filter.pterm_cut_hz = parseFloat($('.pid-filters input[name="ptermcuthz"]').val());
+            PID_filter.dterm_cut_hz = parseFloat($('.pid-filters input[name="dtermcuthz"]').val());
+            PID_filter.yaw_p_limit = parseFloat($('.pid-filters input[name="yawplimit"]').val());
+            PID_filter.yaw_jump_prevention_limit = parseFloat($('.pid-filters input[name="yawjumppreventionlimit"]').val());
+        }
+    }
+
+    function set_suggested_filter_defaults() {
+        if (PID_filter.data_valid == 1) {
+            PID_filter.gyro_lpf = 256;
+            PID_filter.gyro_cut_hz = 100;
+            PID_filter.pterm_cut_hz = 50;
+            PID_filter.dterm_cut_hz = 15;
+            $('.pid-filters input[name="gyrolpf"]').val(PID_filter.gyro_lpf);
+            $('.pid-filters input[name="gyrocuthz"]').val(PID_filter.gyro_cut_hz);
+            $('.pid-filters input[name="ptermcuthz"]').val(PID_filter.pterm_cut_hz);
+            $('.pid-filters input[name="dtermcuthz"]').val(PID_filter.dterm_cut_hz);
+        }
     }
 
     function process_html() {
@@ -306,6 +346,11 @@ TABS.pid_tuning.initialize = function (callback) {
             });
         });
 
+        $('a.suggested').click(function () {
+            set_suggested_filter_defaults();
+            TABS.pid_tuning.controllerChanged = false;
+        });
+
         form_e.find('input').each(function (k, item) {
             $(item).change(function () {
                 pidController_e.prop("disabled", true);
@@ -334,7 +379,11 @@ TABS.pid_tuning.initialize = function (callback) {
             }
 
             function send_rc_tuning_changes() {
-                MSP.send_message(MSP_codes.MSP_SET_RC_TUNING, MSP.crunch(MSP_codes.MSP_SET_RC_TUNING), false, save_to_eeprom);
+                MSP.send_message(MSP_codes.MSP_SET_RC_TUNING, MSP.crunch(MSP_codes.MSP_SET_RC_TUNING), false, send_pid_filters);
+            }
+
+            function send_pid_filters() {
+                MSP.send_message(MSP_codes.MSP_SET_PID_FILTERS, MSP.crunch(MSP_codes.MSP_SET_PID_FILTERS), false, save_to_eeprom);
             }
 
             function save_to_eeprom() {

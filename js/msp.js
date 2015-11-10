@@ -108,7 +108,7 @@ var MSP = {
     unsupported:                0,
 
     ledDirectionLetters:        ['n', 'e', 's', 'w', 'u', 'd'],      // in LSB bit order
-    ledFunctionLetters:         ['i', 'w', 'f', 'a', 't', 'r', 'c'], // in LSB bit order
+    ledFunctionLetters:         ['i', 'w', 'f', 'a', 't', 'r', 'c', 'l'], // in LSB bit order
 
     supportedBaudRates: [ // 0 based index.
         'AUTO',

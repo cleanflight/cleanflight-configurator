@@ -42,7 +42,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             var releaseDescriptors = [];
             TABS.firmware_flasher.releases.forEach(function(release){
                 release.assets.forEach(function(asset){
-                    var targetFromFilenameExpression = /w*_(.*)\.(.*)/;
+                    var targetFromFilenameExpression = /.*_(.*)\.(.*)/;
                     var match = targetFromFilenameExpression.exec(asset.name);
 
                     if (!showDevReleases && release.prerelease) {
@@ -53,7 +53,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                         return;
                     }
 
-                    var target = match[1].replace("_", " ");
+                    var target = match[1];
                     var format = match[2];
 
                     if (format != 'hex') {

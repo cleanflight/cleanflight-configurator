@@ -277,12 +277,44 @@ function onClosed(result) {
    
 }
 
+var SERIAL_BUFFER = {'connectionId': -1, 'data': new ArrayBuffer(), 'timeout': null};
+
+// The received data is buffered until either
+// - a certain buffer size is accumulated, or
+// - no new data has been received for a period of time
 function read_serial(info) {
+    // clear the timeout, we will soon set a new one if needed
+    if (SERIAL_BUFFER.timeout)
+        clearTimeout(SERIAL_BUFFER.timeout);
+
+    // flush buffer immediately if different connection
+    if (info.connectionId != SERIAL_BUFFER.connectionId)
+        flush_serial();
+    SERIAL_BUFFER.connectionId = info.connectionId;
+
+    // append to existing buffer
+    // inspired by https://gist.github.com/72lions/4528834
+    var tmp = new Uint8Array(SERIAL_BUFFER.data.byteLength + info.data.byteLength);
+    tmp.set(new Uint8Array(SERIAL_BUFFER.data), 0);
+    tmp.set(new Uint8Array(info.data), SERIAL_BUFFER.data.byteLength);
+    SERIAL_BUFFER.data = tmp.buffer;
+
+    // flush the buffer if it's reach a certain size
+    // or else set a timeout to flush it
+    if(SERIAL_BUFFER.data.byteLength > 20)
+        flush_serial();
+    else
+        SERIAL_BUFFER.timeout = setTimeout(flush_serial, 5); // ms
+}
+
+function flush_serial() {
     if (!CONFIGURATOR.cliActive) {
-        MSP.read(info);
+        MSP.read(SERIAL_BUFFER);
     } else if (CONFIGURATOR.cliActive) {
-        TABS.cli.read(info);
+        TABS.cli.read(SERIAL_BUFFER);
     }
+    // clear the buffer
+    SERIAL_BUFFER.data = new ArrayBuffer();
 }
 
 function sensor_status(sensors_detected) {

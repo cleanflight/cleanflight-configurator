@@ -15,10 +15,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     }
 
     function load_serial_config() {
+        var next_callback = load_rc_map;
         if (semver.lt(CONFIG.apiVersion, "1.6.0")) {
-            MSP.send_message(MSP_codes.MSP_CF_SERIAL_CONFIG, false, false, load_rc_map);
+            MSP.send_message(MSP_codes.MSP_CF_SERIAL_CONFIG, false, false, next_callback);
         } else {
-            load_rc_map();
+            next_callback();
         }
     }
 
@@ -29,18 +30,36 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     function load_misc() {
         MSP.send_message(MSP_codes.MSP_MISC, false, false, load_acc_trim);
     }
-
+    
     function load_acc_trim() {
-        MSP.send_message(MSP_codes.MSP_ACC_TRIM, false, false
-                        , semver.gte(CONFIG.apiVersion, "1.8.0") ? load_arming_config : load_html);
+        MSP.send_message(MSP_codes.MSP_ACC_TRIM, false, false, load_arming_config);
     }
 
     function load_arming_config() {
-        MSP.send_message(MSP_codes.MSP_ARMING_CONFIG, false, false, load_loop_time);
+        var next_callback = load_loop_time;
+        if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
+            MSP.send_message(MSP_codes.MSP_ARMING_CONFIG, false, false, next_callback);
+        } else {
+            next_callback();
+        }
     }
     
     function load_loop_time() {
-        MSP.send_message(MSP_codes.MSP_LOOP_TIME, false, false, load_html);
+        var next_callback = load_3d;
+        if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
+            MSP.send_message(MSP_codes.MSP_LOOP_TIME, false, false, next_callback);
+        } else {
+            next_callback();
+        }
+    }
+
+    function load_3d() {
+        var next_callback = load_html;
+        if (semver.lt(CONFIG.apiVersion, "1.14.0")) {
+            MSP.send_message(MSP_codes.MSP_3D, false, false, next_callback);
+        } else {
+            next_callback();
+        }
     }
 
     function load_html() {
@@ -89,7 +108,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             {bit: 4, group: 'esc', name: 'MOTOR_STOP', description: 'Don\'t spin the motors when armed'},
             {bit: 5, group: 'other', name: 'SERVO_TILT', description: 'Servo gimbal'},
             {bit: 6, group: 'other', name: 'SOFTSERIAL', description: 'Enable CPU based serial ports'},
-            {bit: 7, group: 'gps', name: 'GPS', description: 'Configure port scenario first<div class="helpicon cf_tip" title="Remember to select port scenario first!"></div>'},
+            {bit: 7, group: 'gps', name: 'GPS', description: 'Configure port scenario first'},
             {bit: 8, group: 'rxFailsafe', name: 'FAILSAFE', description: 'Failsafe settings on RX signal loss'},
             {bit: 9, group: 'other', name: 'SONAR', description: 'Sonar'},
             {bit: 10, group: 'other', name: 'TELEMETRY', description: 'Telemetry output'},
@@ -313,6 +332,15 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         $('input[name="currentoffset"]').val(BF_CONFIG.currentoffset);
         $('input[name="multiwiicurrentoutput"]').prop('checked', MISC.multiwiicurrentoutput);
 
+        //fill 3D
+        if (semver.lt(CONFIG.apiVersion, "1.14.0")) {
+            $('.tab-configuration .3d').hide();
+        } else {
+            $('input[name="3ddeadbandlow"]').val(_3D.deadband3d_low);
+            $('input[name="3ddeadbandhigh"]').val(_3D.deadband3d_high);
+            $('input[name="3dneutral"]').val(_3D.neutral3d);
+            $('input[name="3ddeadbandthrottle"]').val(_3D.deadband3d_throttle);
+        }
 
         // UI hooks
         $('input[name="looptime"]').change(function() {
@@ -355,22 +383,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
             });
         });
-
-
-
-// loading tooltip
-	$(document).ready(function() {
-		$('.cf_tip').jBox('Tooltip', {
-		delayOpen: 100,
-		delayClose: 100,
-		position: {
-			x: 'right',
-			y: 'center'
-		},
-		outside: 'x'
-		});
-	});
-	
 		
 	
         $('a.save').click(function () {
@@ -405,6 +417,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             BF_CONFIG.currentoffset = parseInt($('input[name="currentoffset"]').val());
             MISC.multiwiicurrentoutput = ~~$('input[name="multiwiicurrentoutput"]').is(':checked'); // ~~ boolean to decimal conversion
 
+            _3D.deadband3d_low = parseInt($('input[name="3ddeadbandlow"]').val());
+            _3D.deadband3d_high = parseInt($('input[name="3ddeadbandhigh"]').val());
+            _3D.neutral3d = parseInt($('input[name="3dneutral"]').val());
+            _3D.deadband3d_throttle = ($('input[name="3ddeadbandthrottle"]').val());
+
             function save_serial_config() {
                 if (semver.lt(CONFIG.apiVersion, "1.6.0")) {
                     MSP.send_message(MSP_codes.MSP_SET_CF_SERIAL_CONFIG, MSP.crunch(MSP_codes.MSP_SET_CF_SERIAL_CONFIG), false, save_misc);
@@ -414,7 +431,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
 
             function save_misc() {
-                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_acc_trim);
+                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_3d);
+            }
+            
+            function save_3d() {
+                MSP.send_message(MSP_codes.MSP_SET_3D, MSP.crunch(MSP_codes.MSP_SET_3D), false, save_acc_trim);
             }
 
             function save_acc_trim() {
@@ -469,7 +490,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             MSP.send_message(MSP_codes.MSP_STATUS);
         }, 250, true);
 
-        if (callback) callback();
+        GUI.content_ready(callback);
     }
 };
 

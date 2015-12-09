@@ -101,32 +101,6 @@ $(document).ready(function () {
 
                 function content_ready() {
                     GUI.tab_switch_in_progress = false;
-                    
-                    $('.togglesmall').each(function(index, html) {
-                        var switchery = new Switchery(html,
-                        {
-                          size: 'small',
-                          color: '#59aa29', 
-                          secondaryColor: '#c4c4c4' 
-                        });
-                        
-                        $(html).removeClass('togglesmall');
-                    });
-
-                    $('.toggle').each(function(index, html) {
-                        var switchery = new Switchery(html,
-                        {
-                            color: '#59aa29', 
-                            secondaryColor: '#c4c4c4' 
-                        });
-                        
-                        $(html).removeClass('toggle');
-                    });
-                    
-                    // Build link to in-use CF version documentation
-                    var documentationButton = $('div#content #button-documentation');
-                    documentationButton.html("Documentation for "+CONFIG.flightControllerVersion);
-                    documentationButton.attr("href","https://github.com/cleanflight/cleanflight/tree/v{0}/docs".format(CONFIG.flightControllerVersion));
                 }
 
                 switch (tab) {
@@ -393,8 +367,8 @@ $("#showlog").on('click', function() {
     if ( state ) {
         $("#log").animate({height: 27}, 200);
         $("#log").removeClass('active');
-		$("#content").removeClass('logopen');
-		$("#tabs").removeClass('logopen');
+        $("#content").removeClass('logopen');
+        $(".tab_container").removeClass('logopen');
         $("#scrollicon").removeClass('active');
 
         state = false;
@@ -402,7 +376,7 @@ $("#showlog").on('click', function() {
         $("#log").animate({height: 111}, 200);
         $("#log").addClass('active');
         $("#content").addClass('logopen');
-        $("#tabs").addClass('logopen');
+        $(".tab_container").addClass('logopen');
         $("#scrollicon").addClass('active');
 
         state = true;
@@ -412,21 +386,4 @@ $("#showlog").on('click', function() {
     
 });
 
-});
-
-
-
-
-
-// loading tooltip
-$(document).ready(function() {
-$('.cf_tip').jBox('Tooltip', {
-    delayOpen: 100,
-    delayClose: 100,
-	position: {
-        x: 'right',
-        y: 'center'
-    },
-	outside: 'x'
-});
 });

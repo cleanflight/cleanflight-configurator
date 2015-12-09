@@ -183,7 +183,7 @@ TABS.receiver.initialize = function (callback) {
         // rssi
         var rssi_channel_e = $('select[name="rssi_channel"]');
         rssi_channel_e.append('<option value="0">Disabled</option>');
-        for (var i = 0; i < RC.active_channels; i++) {
+        for (var i = 1; i < RC.active_channels + 1; i++) {
             rssi_channel_e.append('<option value="' + i + '">' + i + '</option>');
         }
 
@@ -458,7 +458,7 @@ TABS.receiver.initialize = function (callback) {
             MSP.send_message(MSP_codes.MSP_STATUS);
         }, 250, true);
 
-        if (callback) callback();
+        GUI.content_ready(callback);
     }
 };
 

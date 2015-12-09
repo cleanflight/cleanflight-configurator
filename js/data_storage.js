@@ -1,7 +1,7 @@
 'use strict';
 
 var CONFIGURATOR = {
-    'releaseDate': 1446278768375, // new Date().getTime() - Fri Oct 02 2015 20:50:49 GMT+0100 (GMT Daylight Time)
+    'releaseDate': 1448724175378, // new Date().getTime() - Sat Nov 28 2015 15:22:51 GMT+0000 (GMT Standard Time)
     
      // all versions are specified and compared using semantic versioning http://semver.org/
     'apiVersionAccepted': '1.2.0',
@@ -163,6 +163,13 @@ var MISC = {
     vbatmincellvoltage:     0,
     vbatmaxcellvoltage:     0,
     vbatwarningcellvoltage: 0
+};
+
+var _3D = {
+    deadband3d_low:         0,
+    deadband3d_high:        0,
+    neutral3d:              0,
+    deadband3d_throttle:    0
 };
 
 var DATAFLASH = {

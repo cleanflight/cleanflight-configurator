@@ -69,8 +69,6 @@ TABS.ports.initialize = function (callback, scrollPosition) {
         MSP.send_message(MSP_codes.MSP_CF_SERIAL_CONFIG, false, false, on_configuration_loaded_handler);
         
         function on_configuration_loaded_handler() {
-            console.log(SERIAL_CONFIG.ports);
-
             $('#content').load("./tabs/ports.html", on_tab_loaded_handler);
             
             board_definition = BOARD.find_board_definition(CONFIG.boardIdentifier);
@@ -163,7 +161,7 @@ TABS.ports.initialize = function (callback, scrollPosition) {
                     var select_e;
                     if (column != 'telemetry') {
                         var checkboxId = 'functionCheckbox-' + portIndex + '-' + columnIndex + '-' + i;
-                        functions_e.prepend('<span class="function"><input type="checkbox" class="togglesmall" id="' + checkboxId + '" value="' + functionName + '" /><label for="' + checkboxId + '"> ' + functionRule.displayName + '</label></span>');
+                        functions_e.prepend('<span class="function"><input type="checkbox" class="togglemedium" id="' + checkboxId + '" value="' + functionName + '" /><label for="' + checkboxId + '"> ' + functionRule.displayName + '</label></span>');
 
                         if (serialPort.functions.indexOf(functionName) >= 0) {
                             var checkbox_e = functions_e.find('#' + checkboxId);
@@ -208,7 +206,7 @@ TABS.ports.initialize = function (callback, scrollPosition) {
             MSP.send_message(MSP_codes.MSP_STATUS);
         }, 250, true);
 
-        if (callback) callback();
+        GUI.content_ready(callback);
     }
 
    function on_save_handler() {

@@ -14,7 +14,6 @@
     border-radius: 5px;
     border: 1px solid #e4e4e4;
     margin-bottom: 10px;
-    /* min-height:400px; */
 }
 
 .attitude_info {
@@ -74,6 +73,12 @@
     background-image: url(../images/paper.jpg);
     background-size: 100%;
     background-position: center;
+    border-radius: 5px;
+}
+
+#canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .gui_box grey .block_wrapper {
@@ -167,7 +172,6 @@
     #interactive_block {
         position: absolute;
         width: calc(75% - 20px);
-        min-height: 300px;
         height: calc(100% - 218px);
     }
 }

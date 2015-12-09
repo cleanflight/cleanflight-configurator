@@ -15,12 +15,7 @@
             </div>
             <div class="controller">
                 <span class="head" i18n="pidTuningControllerHead"></span> <select name="controller">
-                    <option value="0">0 - MultiWii (Old)</option>
-                    <option value="1">1 - MultiWii (rewrite)</option>
-                    <option value="2">2 - LuxFloat</option>
-                    <option value="3">3 - MultiWii (2.3 - latest)</option>
-                    <option value="4">4 - MultiWii (2.3 - hybrid)</option>
-                    <option value="5">5 - Harakiri</option>
+                    <!-- list generated here -->
                 </select>
             </div>
             <div class="cf_column fourth">
@@ -44,7 +39,7 @@
                     <table id="pid_main" class="pid_tuning">
                         <tr>
                             <th colspan="4">
-                                <div class="pid_mode">Basic/Acro</div>
+                                <div class="pid_mode" i18n="pidTuningBasic"></div>
                             </th>
                         </tr>
                         <tr class="ROLL">
@@ -69,28 +64,10 @@
                             <td><input type="number" name="d" step="1" min="0" max="255" /></td>
                         </tr>
                     </table>
-                    <table id="pid_accel" class="pid_tuning">
-                        <tr>
-                            <th colspan="4">
-                                <div class="pid_mode">
-                                    Accelerometer/Level
-                                    <div class="helpicon cf_tip"
-                                        title="The values below change the behaviour of the ANGLE and HORIZON flight modes. Different PID controllers handle the LEVEL values differently. Please check the documentation."></div>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr class="LEVEL">
-                            <!-- 7 -->
-                            <td></td>
-                            <td><input type="number" name="p" step="0.1" min="0" max="25.5" /></td>
-                            <td><input type="number" name="i" step="0.001" min="0" max="0.255" /></td>
-                            <td><input type="number" name="d" step="1" min="0" max="255" /></td>
-                        </tr>
-                    </table>
                     <table id="pid_baro" class="pid_tuning">
                         <tr>
                             <th colspan="4">
-                                <div class="pid_mode">Barometer & Sonar/Altitude</div>
+                                <div class="pid_mode" i18n="pidTuningAltitude"></div>
                             </th>
                         </tr>
                         <tr class="ALT">
@@ -111,7 +88,7 @@
                     <table id="pid_mag" class="pid_tuning">
                         <tr>
                             <th colspan="4">
-                                <div class="pid_mode">Magnometer/Heading</div>
+                                <div class="pid_mode" i18n="pidTuningMag"></div>
                             </th>
                         </tr>
                         <tr class="MAG">
@@ -125,7 +102,7 @@
                     <table id="pid_gps" class="pid_tuning">
                         <tr>
                             <th colspan="4">
-                                <div class="pid_mode">GPS Navigation</div>
+                                <div class="pid_mode" i18n="pidTuningGps"></div>
                             </th>
                         </tr>
                         <tr class="Pos">
@@ -151,6 +128,32 @@
                         </tr>
                     </table>
                 </div>
+<div class="gui_box grey" style="margin-top:10px;">
+<table id="pid_accel" class="pid_tuning">
+                        <tr>
+                            <th colspan="4">
+                                <div class="pid_mode">
+                                    <div style="width: 25%; float: left; text-align: left;">
+                                        <div i18n="pidTuningLevel" style="float:left;"></div>
+                                        <div class="helpicon cf_tip">
+                                            <div class="cf_tooltiptext" i18n="pidHelp1" style="display: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="width:25%; float:left;" i18n="pidTuningLevelP"></div>
+                                    <div style="width:25%; float:left;" i18n="pidTuningLevelI"></div>
+                                    <div style="width:25%; float:left;" i18n="pidTuningLevelD"></div>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr class="LEVEL">
+                            <!-- 7 -->
+                            <td></td>
+                            <td><input type="number" name="p" step="0.1" min="0" max="25.5" /></td>
+                            <td><input type="number" name="i" step="0.001" min="0" max="0.255" /></td>
+                            <td><input type="number" name="d" step="1" min="0" max="255" /></td>
+                        </tr>
+                    </table>
+                  </div>    
             </div>
             <div class="cf_column half">
                 <div class="spacer_left">

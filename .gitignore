@@ -1,3 +1,5 @@
 .DS_store
 nbproject/
-
+.idea/
+**/node_modules/
+support/chrome_app_release.zip

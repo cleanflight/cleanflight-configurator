@@ -1,0 +1,12 @@
+{
+    "known-properties": false,
+    "ids": false,
+    "box-model": false,
+    "universal-selector": false,
+    "compatible-vendor-prefixes": false,
+    "vendor-prefix": false,
+    "gradients": false,
+    "adjoining-classes": false,
+    "qualified-headings": false,
+    "zero-units": false
+}

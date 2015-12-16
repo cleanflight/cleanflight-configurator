@@ -1,5 +1,4 @@
 {
-
     /* consider to enable this options and fix lots of code */
     "eqeqeq": false,
     "maxlen": 0,

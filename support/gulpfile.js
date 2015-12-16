@@ -35,7 +35,6 @@ gulp.task('validate_js', function () {
         .pipe(jshint.reporter('fail'));
 });
 
-
 /**
  * validate html files
  */
@@ -60,8 +59,8 @@ gulp.task('validate_css', function () {
 /**
  * Packages all relevant files for a Chrome App release
  */
-gulp.task('package', function() {
-    return gulp.src(config.releaseFiles,{base:config.base})
+gulp.task('package', function () {
+    return gulp.src(config.releaseFiles, {base: config.base})
         .pipe(zip("chrome_app_release.zip"))
         .pipe(gulp.dest("./"));
 });

@@ -3,3 +3,6 @@ nbproject/
 .idea/
 **/node_modules/
 support/chrome_app_release.zip
+*.iml
+*.*~
+*-debug.log

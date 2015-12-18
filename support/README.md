@@ -17,7 +17,7 @@ the default task will perform all validation steps and package the application. 
 
 ### Installing / Running
 
-Install all npm dev dependencies and optionally update your PATH (sentenv.sh) environment variable if you do not plan on installing gulp globally.
+Install all npm dev dependencies and optionally update your PATH (`setenv.sh`) environment variable if you do not plan on installing gulp globally.
 
 The default Gulp task will validate js, css, html and package a release zip file `chrome_app_release.zip` placed in the support directory.
 

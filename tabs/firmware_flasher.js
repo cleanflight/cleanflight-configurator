@@ -17,9 +17,10 @@ TABS.firmware_flasher.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
-        function parse_hex(str, callback) {
+        // type = 'bin' or 'hex'
+        function parse_firmware(type, str, callback) {
             // parsing hex in different thread
-            var worker = new Worker('./js/workers/hex_parser.js');
+            var worker = new Worker('./js/workers/' + type + '_parser.js');
 
             // "callback"
             worker.onmessage = function (event) {
@@ -29,7 +30,6 @@ TABS.firmware_flasher.initialize = function (callback) {
             // send data/string over for processing
             worker.postMessage(str);
         }
-
 
         $('input.show_development_releases').click(function(){
             buildFirmwareOptions();
@@ -159,7 +159,7 @@ TABS.firmware_flasher.initialize = function (callback) {
 
         // UI Hooks
         $('a.load_file').click(function () {
-            chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['hex']}]}, function (fileEntry) {
+            chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{description: 'Firmware Images (.hex, .bin)', extensions: ['hex', 'bin']}]}, function (fileEntry) {
                 if (chrome.runtime.lastError) {
                     console.error(chrome.runtime.lastError.message);
 
@@ -171,6 +171,7 @@ TABS.firmware_flasher.initialize = function (callback) {
 
                 chrome.fileSystem.getDisplayPath(fileEntry, function (path) {
                     console.log('Loading file from: ' + path);
+                    var extension = path.split(".").pop();
 
                     fileEntry.file(function (file) {
                         var reader = new FileReader();
@@ -187,9 +188,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                             if (e.total != 0 && e.total == e.loaded) {
                                 console.log('File loaded');
 
-                                intel_hex = e.target.result;
-
-                                parse_hex(intel_hex, function (data) {
+                                function firmware_loaded_local(data) {
                                     parsed_hex = data;
 
                                     if (parsed_hex) {
@@ -200,11 +199,21 @@ TABS.firmware_flasher.initialize = function (callback) {
                                     } else {
                                         $('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherHexCorrupted'));
                                     }
-                                });
+                                }
+
+                                var raw_file = e.target.result;
+                                parse_firmware(extension, raw_file, firmware_loaded_local);
                             }
                         };
 
-                        reader.readAsText(file);
+                        switch (extension) {
+                            case 'hex':
+                                reader.readAsText(file);
+                                break;
+                            case 'bin':
+                                reader.readAsArrayBuffer(file);
+                                break;
+                        }
                     });
                 });
             });
@@ -232,7 +241,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             function process_hex(data, summary) {
                 intel_hex = data;
 
-                parse_hex(intel_hex, function (data) {
+                parse_firmware('hex', intel_hex, function (data) {
                     parsed_hex = data;
 
                     if (parsed_hex) {

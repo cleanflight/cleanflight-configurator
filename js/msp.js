@@ -140,7 +140,7 @@ var MSP = {
     ],
     
     serialPortFunctions: // in LSB bit order 
-        ['MSP', 'GPS', 'TELEMETRY_FRSKY', 'TELEMETRY_HOTT', 'TELEMETRY_MSP', 'TELEMETRY_SMARTPORT', 'RX_SERIAL', 'BLACKBOX'],
+        ['MSP', 'GPS', 'TELEMETRY_FRSKY', 'TELEMETRY_HOTT', 'TELEMETRY_MSP', 'TELEMETRY_SMARTPORT', 'RX_SERIAL', 'BLACKBOX', 'TELEMETRY_MAVLINK'],
 
     read: function (readInfo) {
         var data = new Uint8Array(readInfo.data);

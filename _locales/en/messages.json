@@ -729,6 +729,9 @@
     "portsFunction_TELEMETRY_SMARTPORT": {
         "message": "SmartPort"
     },
+    "portsFunction_TELEMETRY_MAVLINK": {
+        "message": "MAVLink"
+    },
     "portsFunction_RX_SERIAL": {
         "message": "Serial RX"
     },

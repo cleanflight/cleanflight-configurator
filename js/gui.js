@@ -17,7 +17,8 @@ var GUI_control = function () {
         'firmware_flasher',
         'help'
     ];
-    this.defaultAllowedTabsWhenConnected = [
+    this.defaultAllowedFCTabsWhenConnected = [
+        'setup',
         'failsafe',
         'transponder',
         'adjustments',
@@ -35,7 +36,10 @@ var GUI_control = function () {
         'receiver',
         'sensors',
         'servos',
-        'setup'
+    ];
+    this.defaultAllowedOSDTabsWhenConnected = [
+        'osd',
+        'sensors'
     ];
     this.allowedTabs = this.defaultAllowedTabsWhenDisconnected;
 

@@ -45,7 +45,16 @@ var MSP_codes = {
 
     MSP_LED_STRIP_MODECOLOR:     127,
     MSP_SET_LED_STRIP_MODECOLOR: 221,
+    
+    MSP_VOLTAGE_METERS:          92,
+    MSP_CURRENT_METERS:          93,
+    MSP_BATTERY_STATES:          94,
 
+    // OSD commands
+    
+    MSP_OSD_VIDEO_CONFIG:       180,
+    MSP_SET_OSD_VIDEO_CONFIG:   181,
+    
     // Multiwii MSP commands
     MSP_IDENT:              100,
     MSP_STATUS:             101,
@@ -344,6 +353,43 @@ var MSP = {
                 ANALOG.amperage = data.getInt16(5, 1) / 100; // A
                 this.analog_last_received_timestamp = Date.now();
                 break;
+            case MSP_codes.MSP_VOLTAGE_METERS:
+                var offset = 0;
+                VOLTAGE_METERS = [];
+                for (var i = 0; i < (message_length); i++) {
+                    var voltageMeter = {};
+                    voltageMeter.voltage = data.getUint8(offset++) / 10.0;
+                    
+                    VOLTAGE_METERS.push(voltageMeter)
+                }
+                break;
+            case MSP_codes.MSP_CURRENT_METERS:
+                var offset = 0;
+                CURRENT_METERS = [];
+                for (var i = 0; i < (message_length / 2); i++) {
+                    var currentMeter = {};
+                    currentMeter.amperage = data.getInt16(offset, 1) / 100; // A
+                    offset += 2;
+                    
+                    CURRENT_METERS.push(currentMeter)
+                }
+                break;
+            case MSP_codes.MSP_BATTERY_STATES:
+                var offset = 0;
+                BATTERY_STATES = [];
+                for (var i = 0; i < (message_length / 4); i++) {
+                    var batteryState = {};
+                    batteryState.connected = data.getUint8(offset, 1); // A
+                    offset += 1;
+                    batteryState.voltage = data.getUint8(offset) / 10.0;
+                    offset += 1;
+                    batteryState.mah_drawn = data.getUint16(offset, 1);
+                    offset += 2;
+                    
+                    BATTERY_STATES.push(batteryState)
+                }
+                break;
+
             case MSP_codes.MSP_RC_TUNING:
                 var offset = 0;
                 RC_tuning.RC_RATE = parseFloat((data.getUint8(offset++) / 100).toFixed(2));
@@ -729,6 +775,12 @@ var MSP = {
                 CONFIG.boardIdentifier = identifier;
                 CONFIG.boardVersion = data.getUint16(offset, 1);
                 offset+=2;
+                if (data.byteLength > offset) {
+                    CONFIG.boardType = data.getUint8(offset, 1);
+                    offset++;
+                } else {
+                    CONFIG.boardType = 0;
+                }
                 break;
 
             case MSP_codes.MSP_SET_CHANNEL_FORWARDING:
@@ -1120,6 +1172,18 @@ var MSP = {
             case MSP_codes.MSP_SET_FAILSAFE_CONFIG:
                 console.log('Failsafe config saved');
                 break;
+                
+            //
+            // OSD specific
+            //
+            case MSP_codes.MSP_OSD_VIDEO_CONFIG:
+                var offset = 0;
+                OSD_VIDEO_CONFIG.video_mode = data.getUint8(offset, 1);
+                break;
+            case MSP_codes.MSP_SET_OSD_VIDEO_CONFIG:
+                console.log('Video config saved');
+                break;
+
             default:
                 console.log('Unknown code detected: ' + code);
         } else {
@@ -1485,6 +1549,10 @@ MSP.crunch = function (code) {
             buffer.push(SENSOR_ALIGNMENT.align_gyro);
             buffer.push(SENSOR_ALIGNMENT.align_acc);
             buffer.push(SENSOR_ALIGNMENT.align_mag);
+            break;
+
+        case MSP_codes.MSP_SET_OSD_VIDEO_CONFIG:
+            buffer.push(OSD_VIDEO_CONFIG.video_mode);
             break;
 
         default:

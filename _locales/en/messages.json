@@ -69,6 +69,9 @@
     "tabSetup": {
         "message": "Setup"
     },
+    "tabOSD": {
+        "message": "OSD"
+    },
     "tabConfiguration": {
         "message": "Configuration"
     },
@@ -1639,6 +1642,7 @@
     "failsafeKillSwitchHelp": {
         "message": "Set this option to make the failsafe switch, configured in the modes tab, act as a direct kill switch, bypassing the selected failsafe procedure. <strong>Note:</strong> Arming is blocked with the failsafe kill switch in the ON position"
     },
+
     "mainHelpArmed": {
         "message": "Motor Arming"
     },
@@ -1651,7 +1655,67 @@
     "configHelp3": {
         "message": "Configure port scenario first before selecting a serial-based receiver."
     },
-        "featureSERVO_TILTTip": {
+    "featureSERVO_TILTTip": {
         "message": "With this feature activated, you can connect a gimbal. Do not activate with motors and battery connected! Ths changes the motor pin mapping. "
+    },
+    
+    "osdInfoHead": {
+        "message": "Info"
+    },
+    "osdBatteryVoltageValue": {
+        "message": "$1 V"
+    },
+    "osdBatteryMahValue": {
+        "message": "$1 mAh"
+    },
+    "osdBatteryAmperageValue": {
+        "message": "$1 A"
+    },    
+    "osdVoltage1": {
+        "message": "Voltage 1"
+    },
+    "osdVoltage2": {
+        "message": "Voltage 2"
+    },
+    "osdVoltage3": {
+        "message": "Voltage 3"
+    },
+    "osdCurrent1": {
+        "message": "Current 1"
+    },
+    "osdBatteryConnected": {
+        "message": "Connected"
+    },
+    "osdBatteryConnectedValueYes": {
+        "message": "Yes"
+    },
+    "osdBatteryConnectedValueNo": {
+        "message": "No"
+    },
+    "osdBatteryVoltage": {
+        "message": "Voltage"
+    },
+    "osdBatteryCurrentDrawn": {
+        "message": "mAh used"
+    },
+    "osdResetText": {
+        "message": "Reset OSD to default"
+    },
+    "osdButtonReset": {
+        "message": "Reset Settings"
+    },
+    
+    "osdConfigurationVideo": {
+        "message": "Video"
+    },
+    "osdConfigurationVideoMode": {
+        "message": "Mode"
+    },
+    "osdButtonSave": {
+        "message": "Save"
+    },
+    "osdEepromSaved": {
+        "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
     }
+    
 }

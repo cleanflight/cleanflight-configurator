@@ -134,6 +134,9 @@ $(document).ready(function () {
                     case 'setup':
                         TABS.setup.initialize(content_ready);
                         break;
+                    case 'osd':
+                        TABS.osd.initialize(content_ready);
+                        break;
                     case 'configuration':
                         TABS.configuration.initialize(content_ready);
                         break;

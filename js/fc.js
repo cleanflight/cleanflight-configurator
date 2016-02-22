@@ -24,6 +24,9 @@ var MOTOR_DATA;
 var SERVO_DATA;
 var GPS_DATA;
 var ANALOG;
+var VOLTAGE_METERS;
+var CURRENT_METERS;
+var BATTERY_STATES;
 var ARMING_CONFIG;
 var FC_CONFIG;
 var MISC;
@@ -163,6 +166,10 @@ var FC = {
             rssi:       0,
             amperage:   0
         };
+        
+        VOLTAGE_METERS = [];
+        CURRENT_METERS = [];
+        BATTERY_STATES = [];
         
         ARMING_CONFIG = {
             auto_disarm_delay:      0,

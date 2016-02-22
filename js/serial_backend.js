@@ -179,6 +179,7 @@ function onOpen(openInfo) {
         }, 10000);
 
         FC.resetState();
+        OSD.resetState();
 
         // request configuration data
         MSP.send_message(MSP_codes.MSP_API_VERSION, false, false, function () {
@@ -208,16 +209,29 @@ function onOpen(openInfo) {
 
                                     // continue as usually
                                     CONFIGURATOR.connectionValid = true;
-                                    GUI.allowedTabs = GUI.defaultAllowedTabsWhenConnected.slice();
-                                    if (semver.lt(CONFIG.apiVersion, "1.4.0")) {
-                                        GUI.allowedTabs.splice(GUI.allowedTabs.indexOf('led_strip'), 1);
-                                    }
 
-                                    GUI.canChangePidController = semver.gte(CONFIG.apiVersion, CONFIGURATOR.pidControllerChangeMinApiVersion);
+                                    GUI.allowedTabs = [];
+                                    
+                                    switch (CONFIG.boardType) {
+                                        case 0:
+                                            GUI.allowedTabs = GUI.defaultAllowedFCTabsWhenConnected.slice();
+                                            if (semver.lt(CONFIG.apiVersion, "1.4.0")) {
+                                                GUI.allowedTabs.splice(GUI.allowedTabs.indexOf('led_strip'), 1);
+                                            }
+                                            
+                                            GUI.canChangePidController = semver.gte(CONFIG.apiVersion, CONFIGURATOR.pidControllerChangeMinApiVersion);
+                                            break;
+                                            
+                                        case 1:
+                                            GUI.allowedTabs = GUI.defaultAllowedOSDTabsWhenConnected.slice();
+                                            break;
+                                    }
 
                                     onConnect();
 
-                                    $('#tabs ul.mode-connected .tab_setup a').click();
+                                    var defaultTab = GUI.allowedTabs[0];
+                                    
+                                    $('#tabs ul.mode-connected .tab_' + defaultTab + ' a').click();
                                 });
                             });
                         });
@@ -266,7 +280,9 @@ function onConnect() {
     var dataflash = $('#dataflash_wrapper_global');
     dataflash.show();
     
-    startLiveDataRefreshTimer();
+    if (CONFIG.boardType == 0) {
+        startLiveDataRefreshTimer();
+    }
     
 }
 
@@ -434,7 +450,7 @@ function update_live_status() {
     });
     
     if (GUI.active_tab != 'cli') {
-        MSP.send_message(MSP_codes.MSP_BOXNAMES, false, false);      
+        MSP.send_message(MSP_codes.MSP_BOXNAMES, false, false);
         MSP.send_message(MSP_codes.MSP_STATUS, false, false);
         MSP.send_message(MSP_codes.MSP_ANALOG, false, false);
     }

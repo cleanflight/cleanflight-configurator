@@ -1,0 +1,29 @@
+
+#interactive_block {
+    position: absolute;
+    width: calc(75% - 30px);
+    height: calc(100% - 245px);
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #e4e4e4;
+    margin-bottom: 10px;
+}
+
+.tab-osd .content_wrapper {
+    position: initial;
+}
+
+.osdinfo {
+    width: 80%;
+}
+
+.tab-osd .leftWrapper {
+    float: left;
+    width: calc(50% - 20px);
+}
+
+.tab-osd .rightWrapper {
+    float: left;
+    width: calc(50% - 0px);
+    margin: 0 0 10px 20px;
+}

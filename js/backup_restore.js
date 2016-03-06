@@ -161,8 +161,11 @@ function configuration_backup(callback) {
         }];
 
         // generate timestamp for the backup file
-        var d = new Date(),
-            now = (d.getMonth() + 1) + '.' + d.getDate() + '.' + d.getFullYear() + '.' + d.getHours() + '.' + d.getMinutes();
+        var d = new Date();
+        var now = d.toISOString().substring(0, 10) + 'T' +
+                (d.getHours() < 10 ? '0' : '') + d.getHours() +
+                '-' +
+                (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
         // create or load the file
         chrome.fileSystem.chooseEntry({type: 'saveFile', suggestedName: 'cleanflight_backup_' + now, accepts: accepts}, function (fileEntry) {

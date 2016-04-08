@@ -139,8 +139,17 @@ var MSP = {
         '250000',
     ],
     
-    serialPortFunctions: // in LSB bit order 
-        ['MSP', 'GPS', 'TELEMETRY_FRSKY', 'TELEMETRY_HOTT', 'TELEMETRY_MSP', 'TELEMETRY_SMARTPORT', 'RX_SERIAL', 'BLACKBOX'],
+    serialPortFunctions: {
+            'MSP': 0,
+            'GPS': 1, 
+            'TELEMETRY_FRSKY': 2, 
+            'TELEMETRY_HOTT': 3,
+            'TELEMETRY_MSP': 4, 
+            'TELEMETRY_LTM': 4, // LTM replaced MSP 
+            'TELEMETRY_SMARTPORT': 5,
+            'RX_SERIAL': 6,
+            'BLACKBOX': 7,
+        },
 
     read: function (readInfo) {
         var data = new Uint8Array(readInfo.data);
@@ -435,8 +444,11 @@ var MSP = {
                 _3D.deadband3d_high = data.getUint16(offset, 1);
                 offset += 2;
                 _3D.neutral3d = data.getUint16(offset, 1);
-                offset += 2;
-                _3D.deadband3d_throttle = data.getUint16(offset, 1);
+                
+                if (semver.lt(CONFIG.apiVersion, "1.17.0")) {
+                    offset += 2;
+                    _3D.deadband3d_throttle = data.getUint16(offset, 1);
+                }
                 break;
             case MSP_codes.MSP_MOTOR_PINS:
                 console.log(data);
@@ -1321,8 +1333,10 @@ MSP.crunch = function (code) {
             buffer.push(highByte(_3D.deadband3d_high));
             buffer.push(lowByte(_3D.neutral3d));
             buffer.push(highByte(_3D.neutral3d));
-            buffer.push(lowByte(_3D.deadband3d_throttle));
-            buffer.push(highByte(_3D.deadband3d_throttle));
+            if (semver.lt(CONFIG.apiVersion, "1.17.0")) {
+                buffer.push(lowByte(_3D.deadband3d_throttle));
+                buffer.push(highByte(_3D.deadband3d_throttle));
+            }
             break;    
 
         case MSP_codes.MSP_SET_RC_DEADBAND:
@@ -1617,9 +1631,12 @@ MSP.sendLedStripConfig = function(onCompleteCallback) {
 MSP.serialPortFunctionMaskToFunctions = function(functionMask) {
     var functions = [];
     
-    for (var index = 0; index < MSP.serialPortFunctions.length; index++) {
-        if (bit_check(functionMask, index)) {
-            functions.push(MSP.serialPortFunctions[index]);
+    var keys = Object.keys(MSP.serialPortFunctions);
+    for (var index = 0; index < keys.length; index++) {
+        var key = keys[index];
+        var bit = MSP.serialPortFunctions[key];
+        if (bit_check(functionMask, bit)) {
+            functions.push(key);
         }
     }
     return functions;
@@ -1627,8 +1644,10 @@ MSP.serialPortFunctionMaskToFunctions = function(functionMask) {
 
 MSP.serialPortFunctionsToMask = function(functions) {
     var mask = 0;
+    var keys = Object.keys(MSP.serialPortFunctions);
     for (var index = 0; index < functions.length; index++) {
-        var bitIndex = MSP.serialPortFunctions.indexOf(functions[index]);
+        var key = functions[index];
+        var bitIndex = MSP.serialPortFunctions[key];
         if (bitIndex >= 0) {
             mask = bit_set(mask, bitIndex);
         }

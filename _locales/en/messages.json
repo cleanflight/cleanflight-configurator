@@ -1378,6 +1378,12 @@
     "firmwareFlasherShowDevelopmentReleasesDescription":{
         "message": "Show Release-Candidates and Development Releases."
     },
+    "firmwareFlasherDetectBoardType":{
+        "message": "Auto-Detect board type"
+    },
+    "firmwareFlasherDetectBoardTypeDescription":{
+        "message": "Attempt to automatically detect which kind of board is plugged in."
+    },
     "firmwareFlasherOptionLabelSelectFirmware": {
         "message": "Choose a Firmware / Board"
     },

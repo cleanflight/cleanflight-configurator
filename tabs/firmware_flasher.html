@@ -3,7 +3,7 @@
         <div class="options gui_box">
             <div class="spacer">
                 <table class="cf_table" style="margin-top: 10px;">
-                    <tr>
+                    <tr class="noboarder">
                         <td><select name="release">
                                 <option value="0">Loading ...</option>
                         </select></td>
@@ -14,6 +14,12 @@
                                 i18n="firmwareFlasherNoReboot"></span>
                         </label></td>
                         <td><span class="description" i18n="firmwareFlasherNoRebootDescription"></span></td>
+                    </tr>
+                    <tr class="option detect_board_type_wrapper">
+                        <td><label> <input class="detect_board_type toggle" type="checkbox" /> <span
+                                i18n="firmwareFlasherDetectBoardType"></span>
+                        </label></td>
+                        <td><span class="description" i18n="firmwareFlasherDetectBoardTypeDescription"></span></td>
                     </tr>
                     <tr class="option flash_on_connect_wrapper">
                         <td><label> <input class="flash_on_connect toggle" type="checkbox" /> <span
@@ -50,6 +56,7 @@
                         </label></td>
                         <td><span class="description" i18n="firmwareFlasherShowDevelopmentReleasesDescription"></span></td>
                     </tr>
+
                 </table>
             </div>
         </div>

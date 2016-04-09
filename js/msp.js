@@ -489,7 +489,16 @@ var MSP = {
                 }
                 break;
             case MSP_codes.MSP_WP:
-                console.log(data);
+                WP_DATA = []; // empty the array as new data is coming in
+                if (data.byteLength > 0) {
+                  WP_DATA.wp_no = data.getUint8(0, 1);
+                  WP_DATA.lat = data.getInt32(1, 1);
+                  WP_DATA.lon = data.getInt32(5, 1);
+                  WP_DATA.AltHold = data.getInt32(9, 1);
+                  WP_DATA.heading	= data.getUint16(13, 1);
+                  WP_DATA.timeToStay = data.getUint16(15, 1);
+                  WP_DATA.navFlag = data.getUint8(17);
+                }
                 break;
             case MSP_codes.MSP_BOXIDS:
                 AUX_CONFIG_IDS = []; // empty the array as new data is coming in

@@ -1110,7 +1110,15 @@
     "servosEepromSave": {
         "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
     },
-
+    "gpsHomeHead": {
+        "message": "GPS Home"
+    },
+    "gpsHomeLat": {
+        "message": "Latitude:"
+    },
+    "gpsHomeLon": {
+        "message": "Longitude:"
+    },
     "gpsHead": {
         "message": "GPS"
     },

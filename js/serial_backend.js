@@ -143,13 +143,6 @@ $(document).ready(function () {
 
 
 
-function startLiveDataRefreshTimer() { 
-	// live data refresh
-	GUI.timeout_add('data_refresh', function () { update_live_status(); }, 100);
-}
-
-
-
 function onOpen(openInfo) {
     if (openInfo) {
         // update connected_to
@@ -174,9 +167,6 @@ function onOpen(openInfo) {
         });
 
         serial.onReceive.addListener(read_serial);
-        
-        // start refreshing live data
-        startLiveDataRefreshTimer();
         
         // disconnect after 10 seconds with error if we don't get IDENT data
         GUI.timeout_add('connecting', function () {
@@ -275,9 +265,7 @@ function onConnect() {
     var dataflash = $('#dataflash_wrapper_global');
     dataflash.show();
     
-    var battery = $('#battery_wrapper_global');
-    battery.show();    
-    
+    startLiveDataRefreshTimer();
 }
 
 function onClosed(result) {
@@ -299,9 +287,8 @@ function onClosed(result) {
     var dataflash = $('#dataflash_wrapper_global');
     dataflash.hide();
     
-    var battery = $('#battery_wrapper_global');
+    var battery = $('#quad-status_wrapper');
     battery.hide();
-    
 }
 
 function read_serial(info) {
@@ -431,38 +418,78 @@ function update_dataflash_global() {
     }      
 }
 
+function startLiveDataRefreshTimer() { 
+	// live data refresh
+	GUI.timeout_add('data_refresh', function () { update_live_status(); }, 100);
+}
+
 function update_live_status() {
+	
+	var statuswrapper = $('#quad-status_wrapper');
 
-    var nbCells = Math.floor(ANALOG.voltage / 3);
-    var min = MISC.vbatmincellvoltage * nbCells;
-    var max = MISC.vbatmaxcellvoltage * nbCells;
-    var warn = MISC.vbatwarningcellvoltage * nbCells;
-    
-    $(".battery-contents_global").css({
-       display: 'block'
-    }); 
-
-    $(".battery-free_global").css({
-       width: ((ANALOG.voltage - min) / (max - min) * 100) + "%",
+    $(".quad-status-contents").css({
        display: 'block'
     });
-    
 
-    if (ANALOG.voltage < warn) {
-        $(".battery-free_global").css('background-color', '#D42133');
-    } else {
-        $(".battery-free_global").css('background-color', '#59AA29');
+    if (GUI.active_tab != 'cli') {
+    	MSP.send_message(MSP_codes.MSP_BOXNAMES, false, false);      
+	    MSP.send_message(MSP_codes.MSP_STATUS, false, false);
+	    MSP.send_message(MSP_codes.MSP_ANALOG, false, false);
     }
-    $(".battery-free_global div").text("Battery: " + [ANALOG.voltage] + "V (" + nbCells + "S)") ;
+    
+    var active = ((Date.now() - MSP.analog_last_received_timestamp) < 300);
+
+    for (var i = 0; i < AUX_CONFIG.length; i++) {
+    	if (AUX_CONFIG[i] == 'ARM') {
+    		if (bit_check(CONFIG.mode, i))
+    			$(".armedicon").css({
+    				'background-image': 'url(images/icons/cf_icon_armed_green.svg)'
+			    });
+    		else
+    			$(".armedicon").css({
+    				'background-image': 'url(images/icons/cf_icon_armed_grey.svg)'
+			    });
+    	}
+    	if (AUX_CONFIG[i] == 'FAILSAFE') {
+    		if (bit_check(CONFIG.mode, i))
+    			$(".failsafeicon").css({
+    				'background-image': 'url(images/icons/cf_icon_failsafe_green.svg)'
+			    });
+    		else
+    			$(".failsafeicon").css({
+    				'background-image': 'url(images/icons/cf_icon_failsafe_grey.svg)'
+			    });
+    	}
+    }
+    
+	if (ANALOG != undefined) {
+    	var nbCells = Math.round(ANALOG.voltage / 4);
+    	
+    	if (ANALOG.voltage == 0)
+    		nbCells = 1;
+    	
+	    var min = MISC.vbatmincellvoltage * nbCells;
+	    var max = MISC.vbatmaxcellvoltage * nbCells;
+	    var warn = MISC.vbatwarningcellvoltage * nbCells;
+	    
+	    $(".battery-status").css({
+	       width: ((ANALOG.voltage - min) / (max - min) * 100) + "%",
+	       display: 'block'
+	    });
 	
-    var battery = $('#battery_wrapper_global');
-    if ([ANALOG.voltage] == 0)
-    	battery.hide();
-    else
-    	battery.show();
-    
-    
-    GUI.timeout_remove('data_refresh');
+	    if (!active) {
+	    	$(".battery-status").css('background-color', '#868686');
+	    } else if (ANALOG.voltage < warn) {
+	        $(".battery-status").css('background-color', '#D42133');
+	    } else  {
+	        $(".battery-status").css('background-color', '#59AA29');
+	    }
+	    
+	    $(".battery-status div").text("Battery: " + [ANALOG.voltage] + "V");
+	}
+
+	statuswrapper.show();
+	GUI.timeout_remove('data_refresh');
 	startLiveDataRefreshTimer();
 }
 

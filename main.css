@@ -124,7 +124,7 @@ input[type="number"]::-webkit-inner-spin-button {
     z-index: 0;
     background-image: url("images/light-wide-2.svg");
     background-repeat: no-repeat;
-    width: 300px;
+    width: 340px;
     background-position: left center;
     background-size: contain;
     margin-left: 15px;
@@ -1571,7 +1571,7 @@ dialog {
 
 /* Battery element styling*/
 
-#battery_wrapper_global {
+#quad-status_wrapper {
     color:white;
     font-size:10px;
     margin-top: 20px;
@@ -1590,7 +1590,7 @@ dialog {
     text-shadow: 0px 1px rgba(0, 0, 0, 1.0);
 }
 
-.battery-contents_global {
+.quad-status-contents {
     margin-top: 18px;
     border: 1px solid #4A4A4A;
     background-color: #4A4A4A;
@@ -1602,18 +1602,11 @@ dialog {
     margin-left: 5px;
     margin-right: 5px;
 }
-
-
-.battery-free_global {
-    background-color: #59AA29;
-    border-radius: 4px;
-}
-
-.battery-contents_global  {
+.quad-status-contents  {
     display: none;
 }
 
-.battery-contents_global li {
+.quad-status-contents li {
     height: 5px;
     position: relative;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.20);
@@ -1621,7 +1614,7 @@ dialog {
 
 }
 
-.battery-contents_global li div {
+.quad-status-contents li div {
     position: absolute;
     top: -18px;
     margin-top: 0px;
@@ -1632,16 +1625,50 @@ dialog {
     color:silver;
 }
 
-.battery-contents_global progress::-webkit-progress-bar {
+.quad-status-contents progress::-webkit-progress-bar {
     height: 8px;
     background-color: #eee;
 }
 
-.battery-contents progress::-webkit-progress-value {
+.quad-status-contents progress::-webkit-progress-value {
     background-color: #bcf;
 }
 
+.battery-status {
+    background-color: #59AA29;
+    border-radius: 4px;
+}
 
+
+/* armed-Icon  */
+.armedicon {
+    float: left;
+    margin-top: 14px;
+    margin-right: 7px;
+    display: block;
+    height: 21px;
+    width: 21px;
+    opacity: 0.8;
+    background-image: url(images/icons/cf_icon_armed_grey.svg);
+    background-size: contain;
+    background-position: center;
+    transition: none;  
+}
+
+/* failsafe-icon  */
+.failsafeicon {
+    float: left;
+    margin-top: 14px;
+    margin-right: 7px;
+    display: block;
+    height: 21px;
+    width: 21px;
+    opacity: 0.8;
+    background-image: url(images/icons/cf_icon_failsafe_grey.svg);
+    background-size: contain;
+    background-position: center;
+    transition: none;
+}
 
 
 
@@ -1761,4 +1788,4 @@ input {
     overflow-y: auto;
 }
     
-    }
+}

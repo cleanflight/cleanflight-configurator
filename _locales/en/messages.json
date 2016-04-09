@@ -1150,6 +1150,9 @@
     "gpsDistToHome": {
         "message": "Dist to Home:"
     },
+    "gpsDirectToHome": {
+        "message": "Direct to Home:"
+    },
     "gpsSignalStrHead": {
         "message": "GPS Signal Strength"
     },

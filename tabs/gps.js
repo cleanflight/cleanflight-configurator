@@ -55,6 +55,7 @@ TABS.gps.initialize = function (callback) {
             $('.GPS_info td.speed').text(GPS_DATA.speed + ' cm/s');
             $('.GPS_info td.sats').text(GPS_DATA.numSat);
             $('.GPS_info td.distToHome').text(GPS_DATA.distanceToHome + ' m');
+            $('.GPS_info td.directToHome').text(GPS_DATA.directionToHome + ' deg');
 
             // Update GPS Signal Strengths
             var e_ss_table = $('div.GPS_signal_strength table tr:not(.titles)');

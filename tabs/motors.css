@@ -307,6 +307,44 @@
     text-align: center;
 }
 
+
+
+.tab-motors .motor_testing .motor_switches {
+    margin-top: 5px;
+}
+
+.tab-motors .motor_testing .motor_switches li:first-child {
+    margin-left: 0px;
+}
+
+.tab-motors .motor_testing .motor_switches li {
+    float: left;
+    width: calc((100% / 9) - 10px);
+    margin-left: 10px;
+    text-align: center;
+}
+
+.tab-motors .motor_testing .motor_rms {
+	width: 100%;
+	display: block;
+    float: left;
+}
+
+.tab-motors .motor_testing .motor_rms dd {
+    margin-top: 5px;
+    margin-right: 4px;
+    width: calc((100% / 9) - 10px);
+    text-align: center;
+    float: left;
+    background-color: #00D800;
+    padding: 3px;
+    color: #fff;
+    height: 12px;
+    border-radius: 3px;
+    line-height: 12px;
+    margin-bottom: 2px;
+}
+
 .tab-motors .motor_testing .notice {
     float: right;
     width: calc(50% - 24px);

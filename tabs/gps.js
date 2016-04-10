@@ -61,6 +61,7 @@ TABS.gps.initialize = function (callback) {
             $('.GPS_info td.lon a').prop('href', url).text(lon.toFixed(4) + ' deg');
             $('.GPS_info td.speed').text(GPS_DATA.speed + ' cm/s');
             $('.GPS_info td.sats').text(GPS_DATA.numSat);
+            $('.GPS_info td.hdop').text(GPS_DATA.hdop);
             $('.GPS_info td.distToHome').text(GPS_DATA.distanceToHome + ' m');
             $('.GPS_info td.directToHome').text(GPS_DATA.directionToHome + ' deg');
 

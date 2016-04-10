@@ -312,6 +312,7 @@ var MSP = {
                 GPS_DATA.alt = data.getUint16(10, 1);
                 GPS_DATA.speed = data.getUint16(12, 1);
                 GPS_DATA.ground_course = data.getUint16(14, 1);
+                GPS_DATA.hdop = data.getUint16(16, 1);
                 break;
             case MSP_codes.MSP_COMP_GPS:
                 GPS_DATA.distanceToHome = data.getUint16(0, 1);

@@ -147,6 +147,7 @@ TABS.logging.initialize = function (callback) {
                     head += ',' + 'gpsAlt';
                     head += ',' + 'gpsSpeed';
                     head += ',' + 'gpsGroundCourse';
+                    head += ',' + 'gpsHdop';
                     break;
                 case 'MSP_ANALOG':
                     head += ',' + 'voltage';
@@ -201,6 +202,7 @@ TABS.logging.initialize = function (callback) {
                     sample += ',' + GPS_DATA.alt;
                     sample += ',' + GPS_DATA.speed;
                     sample += ',' + GPS_DATA.ground_course;
+                    sample += ',' + GPS_DATA.hdop;
                     break;
                 case 'MSP_ANALOG':
                     sample += ',' + ANALOG.voltage;

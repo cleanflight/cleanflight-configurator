@@ -1141,6 +1141,9 @@
   "gpsSats": {
     "message": "Sats:"
   },
+  "gpsHdop": {
+    "message": "HDOP:"
+  },
   "gpsDistToHome": {
     "message": "Dist Home:"
   },

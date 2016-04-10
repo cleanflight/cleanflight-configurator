@@ -1,0 +1,1621 @@
+{
+  "translation_version": {
+    "message": "0"
+  },
+
+  "options_title": {
+    "message": "Options de l'Application"
+  },
+  "options_receive_app_notifications": {
+    "message": "Recevoir des <strong>notifications</strong> sur le bureau lors des mises à jour"
+  },
+  "options_improve_configurator": {
+    "message": "Envoyer des données d'utilisation anonymes à l'équipe de développement"
+  },
+
+  "connect": {
+    "message": "Connecter"
+  },
+  "connecting": {
+    "message": "Connection"
+  },
+  "disconnect": {
+    "message": "Déconnecter"
+  },
+  "autoConnect": {
+    "message": "Auto-Connection"
+  },
+  "autoConnectEnabled": {
+    "message": "Auto-Connection: Activée - Configurator ouvre automatiquement une connection lorsqu'un nouveau port est détecté"
+  },
+  "autoConnectDisabled": {
+    "message": "Auto-Connection: Désactivée - L'Utilisateur doit sélectionner le bon port série et cliquer sur le bouton \"Connection\" lui-même"
+  },
+  "deviceRebooting": {
+    "message": "Périphérique - <span style=\"color: red\">Redémarrage</span>"
+  },
+  "deviceReady": {
+    "message": "Périphérique - <span style=\"color: #57a929\">Prêt</span>"
+  },
+
+  "backupFileIncompatible": {
+    "message": "Le fichier de sauvegarde fourni a été générée pour une version antérieure du configurateur et est incompatible avec cette version du configurateur. Désolé."
+  },
+
+  "backupFileUnmigratable": {
+    "message": "Le fichier de sauvegarde fourni a été générée par une version antérieure du configurateur et n'est pas migrable. Désolé."
+  },
+
+  "configMigrationFrom": {
+    "message": "Fichier de configuration de migration généré par le configurateur: $1"
+  },
+  "configMigratedTo": {
+    "message": "Configuration migrée dans le configurateur: $1"
+  },
+  "configMigrationSuccessful": {
+    "message": "Migration de la configuration terminée, migrations appliquées: $1"
+  },
+
+  "tabFirmwareFlasher": {
+    "message": "Flasher le Firmware"
+  },
+  "tabLanding": {
+    "message": "Bienvenue"
+  },
+  "tabHelp": {
+    "message": "Documentation & Support"
+  },
+
+  "tabSetup": {
+    "message": "Installation"
+  },
+  "tabConfiguration": {
+    "message": "Configuration"
+  },
+  "tabPorts": {
+    "message": "Ports"
+  },
+  "tabPidTuning": {
+    "message": "Réglages des PID"
+  },
+  "tabReceiver": {
+    "message": "Récepteur"
+  },
+  "tabModeSelection": {
+    "message": "Selection du Mode"
+  },
+  "tabServos": {
+    "message": "Servos"
+  },
+  "tabFailsafe": {
+    "message": "Mode de secours"
+  },
+  "tabTransponder": {
+    "message": "Transpondeur de course"
+  },
+  "tabGPS": {
+    "message": "GPS"
+  },
+  "tabMotorTesting": {
+    "message": "Moteurs"
+  },
+  "tabLedStrip": {
+    "message": "Bande de LEDs"
+  },
+  "tabRawSensorData": {
+    "message": "Capteurs"
+  },
+  "tabCLI": {
+    "message": "CLI"
+  },
+  "tabLogging": {
+    "message": "Tethered Logging"
+  },
+  "tabOnboardLogging": {
+    "message": "Blackbox"
+  },
+  "tabAdjustments": {
+    "message": "Ajustements"
+  },
+  "tabAuxiliary": {
+    "message": "Modes"
+  },
+
+  "serialPortOpened": {
+    "message": "Port série ouvert avec <span style=\"color: #57a929\">succès</span> avec l'ID: $1"
+  },
+  "serialPortOpenFail": {
+    "message": "<span style=\"color: red\">Echec</span> d'ouverture du port série !"
+  },
+  "serialPortClosedOk": {
+    "message": "Port série fermé avec <span style=\"color: #57a929\">succès</span>"
+  },
+  "serialPortClosedFail": {
+    "message": "<span style=\"color: red\">Echec</span> de fermeture du port série !"
+  },
+  "usbDeviceOpened": {
+    "message": "Périphérique USB ouvert avec <span style=\"color: #57a929\">succès</span> avec l'ID: $1"
+  },
+  "usbDeviceOpenFail": {
+    "message": "<span style=\"color: red\">Echec</span> d'ouverture du périphérique USB !"
+  },
+  "usbDeviceClosed": {
+    "message": "Périphérique USB fermé avec <span style=\"color: #57a929\">succès</span>"
+  },
+  "usbDeviceCloseFail": {
+    "message": "<span style=\"color: red\">Echec</span> de fermeture du périphérique USB !"
+  },
+  "usbDeviceUdevNotice": {
+    "message": "Vérifier l'installation de <strong>udev rules</strong>. Voir la documentation pour des instructions."
+  },
+  "noConfigurationReceived": {
+    "message": "Aucune configuration reçue dans les <span style=\"color: red\">10 secondes</span>, <span style=\"color: red\">échec</span> de communication"
+  },
+  "firmwareVersionNotSupported": {
+    "message": "Cette version de firmware est <span style=\"color: red\">non-supportée</span>. Veuillez mettre à jour avec un firmware qui supporte au minimum la version <strong>$1</strong> de l'api . Sauvegardez vos paramètres en mode CLI avec de flasher. La procédure de sauvegarde/restauration en mode CLI est détaillée dans la documention."
+  },
+  "tabSwitchConnectionRequired": {
+    "message": "Vous devez vous <strong>connecter</strong> pour afficher les onglets."
+  },
+  "tabSwitchWaitForOperation": {
+    "message": "Vous ne pouvez <span style=\"color: red\">pas</span> exécuter cette commande immédiatement, veuillez attendre la fin de l'opération en cours..."
+  },
+  "tabSwitchUpgradeRequired": {
+    "message": "Vous devez <strong>mettre à jour</strong> votre firmware avant de pouvoir utiliser l'onglet $1."
+  },
+  "firmwareVersion": {
+    "message": "Version de Firmware: <strong>$1</strong>"
+  },
+  "apiVersionReceived": {
+    "message": "Version d'API MultiWii <span style=\"color: #57a929\">reçue</span> - <strong>$1</strong>"
+  },
+  "uniqueDeviceIdReceived": {
+    "message": "ID unique de périphérique <span style=\"color: #57a929\">reçu</span> - <strong>0x$1</strong>"
+  },
+  "boardInfoReceived": {
+    "message": "Carte: <strong>$1</strong>, version: <strong>$2</strong>"
+  },
+  "buildInfoReceived": {
+    "message": "Execution du firmware publié le: <strong>$1</strong>"
+  },
+  "fcInfoReceived": {
+    "message": "Info contrôleur de vol, identifiant: <strong>$1</strong>, version: <strong>$2</strong>"
+  },
+
+  "notifications_app_just_updated_to_version": {
+    "message": "L'application a été mis à jour vers la version: $1"
+  },
+  "notifications_click_here_to_start_app": {
+    "message": "Cliquez ici pour démarrer l'application"
+  },
+  "statusbar_port_utilization": {
+    "message": "Charge du port:"
+  },
+  "statusbar_usage_download": {
+    "message": "D: $1%"
+  },
+  "statusbar_usage_upload": {
+    "message": "U: $1%"
+  },
+  "statusbar_packet_error": {
+    "message": "Erreurs de paquet:"
+  },
+  "statusbar_i2c_error": {
+    "message": "Erreurs I2C:"
+  },
+  "statusbar_cycle_time": {
+    "message": "Temps de cycle:"
+  },
+  "dfu_connect_message": {
+    "message": "Veuillez utiliser le flasheur de Firmware Flasher our accéder aux périphériques DFU"
+  },
+  "dfu_erased_kilobytes": {
+    "message": "$1 kB de flash effacés avec <span style=\"color: #57a929\">succès</span>"
+  },
+  "dfu_device_flash_info": {
+    "message": "Périphérique détecté, taille total de mémoire flash $1 kiB"
+  },
+  "dfu_error_image_size": {
+    "message": "<span style=\"color: red; font-weight: bold\">Erreur</span>: La quantité de mémoire flash disponible sur le périphérique est insuffisante pour stocker l'image fournie! Image: $1 kiB, limite = $2 kiB"
+  },
+  "eeprom_saved_ok": {
+    "message": "EEPROM <span style=\"color: #57a929\">sauvée</span>"
+  },
+  "defaultWelcomeIntro": {
+    "message": "Bienvenue dans <strong>Cleanflight - Configurator</strong>, un utilitaire conçu pour simplifier la mise à jour, la configuration et le paramétrage de votre contrôleur de vol."
+  },
+  "defaultWelcomeText": {
+    "message": "Cette application supporte toutes les cartes pouvant exécuter Cleanflight (<a href=\"http://seriouslypro.com/spracingf3\" target=\"_blank\">SPRacingF3</a>, <a href=\"http://www.immersionrc.com/fpv-products/vortex-racing-quad/\" target=\"_blank\">Vortex</a>, <a href=\"https://github.com/TauLabs/TauLabs/wiki/Sparky\" target=\"_blank\">Sparky</a>, <a href=\"http://www.readymaderc.com/store/index.php?main_page=product_info&cPath=76_156&products_id=4221\" target=\"_blank\">DoDo</a>, <a href=\"https://www.openpilot.org/product/coptercontrol/\" target=\"_blank\">CC3D/EVO</a>, <a href=\"http://www.multiwiicopter.com/products/paris-air-hero-32-naze\" target=\"_blank\">Air Hero 32</a>, <a href=\"http://www.readytoflyquads.com/flight-controllers/flip-series\" target=\"_blank\">Flip32/+/Deluxe</a>, <a href=\"http://multirotormania.com/129-dragonfly32\" target=\"_blank\">DragonFly32</a>, <a href=\"http://www.goodluckbuy.com/micro-quadcopter-flight-driver-controller-9dof-9-axis-altitude-sensor-stm32f103.html\" target=\"_blank\">CJMCU Microquad</a>, Chebuzz F3, <a href=\"http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/PF254044\" target=\"_blank\">STM32F3Discovery</a>, <a href=\"http://www.overskyrc.com/hermit-micro-fpv-brushless-quadcopter-145mm-98g-fully-assembled-p-621.html\" target=\"_blank\">Hermit</a>, <a href=\"http://rcexplorer.se/blog/2015/05/introducing-the-naze32-tricopter-frame/\" target=\"_blank\">Naze32 Tricopter Frame</a>, <a href=\"http://www.2dogrc.com/skyline-32-naze-32-bit-flight-controller-acro-version.html\" target=\"_blank\">Skyline32</a>, <a href=\"http://abusemark.com/store/index.php?main_page=index&cPath=1\" target=\"_blank\">Naze/32/Mini/Pro</a>/<a href=\"http://www.massiverc.com/Shop/en/574-massive-acro-blackbox-flight-control-board.html\" target=\"_blank\">Blackbox</a> etc.)<br /><br />Téléchargez le code source du firmware <a href=\"https://github.com/cleanflight/cleanflight\" title=\"www.github.com\" target=\"_blank\">ici</a><br />Téléchargez la dernière version stable du firmware <a href=\"https://github.com/cleanflight/cleanflight/releases\" title=\"www.github.com\" target=\"_blank\">ici</a>, ou les builds de développement <a href=\"http://cleanflight.memoryleaks.org/builds/\" target=\"_blank\">ici</a><br /><br />Téléchargez les derniers <strong>drivers CP210x</strong> <a href=\"http://www.silabs.com/products/mcu/pages/usbtouartbridgevcpdrivers.aspx\" title=\"http://www.silabs.com\" target=\"_blank\">ici</a><br />Téléchargez les derniers <strong>drivers STM USB VCP</strong> <a href=\"http://www.st.com/web/en/catalog/tools/PF257938\" title=\"http://www.st.com\" target=\"_blank\">ici</a><br />Téléchargez le dernier <strong>Zadig</strong> pour le flasher en mode DFU sous Windows <a href=\"http://zadig.akeo.ie/\" title=\"http://zadig.akeo.ie\" target=\"_blank\">ici</a><br />"
+  },
+  "defaultContributingHead": {
+    "message": "Contribuer"
+  },
+  "defaultContributingText": {
+    "message": "Si vous désirez apporter votre soutien à l'amélioration de Cleanflight, vous pouvez nous aider de plusieurs façons, incluant :<br /><ul><li>En répondant aux questions des utilisateurs sur les forums et sur IRC.</li><li>En contribuant du code pour le firmware et le configurateur: nouvelles fonctionnalités, résolution de bogues, améliorations.</li><li>En testant <a href=\"https://github.com/cleanflight/cleanflight/pulls\" target=\"_blank\">les nouvelles fonctionnalités ou résolutions de bogues</a> et en nous donnant votre retour.</li><li>En aidant à réoudre les <a href=\"https://github.com/cleanflight/cleanflight/issues\" target=\"_blank\">problèmes et en commentant sur les demandes de fonctionnalités</a>.</li><li>En <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TSQKVT6UYKGL6\" target=\"_blank\" title=\"Donate\">donnant</a>, en <a href=\"http://www.bcmultirotors.com/#!/Cleanflight/c/12311211/offset=0&sort=nameAsc\" title=\"www.bcmultirotors.com\" target=\"_blank\">achetant un T-Shirt</a> ou en <a href=\"http://seriouslypro.com/spracingf3\" title=\"seriouslypro.com\" target=\"_blank\">achetant une carte SPRacingF3</a>.</li></ul>"
+  },
+  "defaultChangelogHead": {
+    "message": "Configurateur - Nouveautés"
+  },
+  "defaultButtonFirmwareFlasher": {
+    "message": "Flasheur de Firmware"
+  },
+  "defaultDonateHead": {
+    "message": "Open Source / Note de Don"
+  },
+  "defaultDonateText": {
+    "message": "Cet utilitaire est totalement <strong>open source</strong> et est disponible gratuitement pour tous les utilisateurs de <strong>cleanflight</strong>.<br />Si vous trouvez que cleanflight ou le configurateur cleanflight vous sont utiles, veuillez considérer de <strong>supporter</strong> son dévelopement en réalisant un don."
+  },
+  "defaultSponsorsHead": {
+    "message": "Sponsors"
+  },
+  "defaultDocumentationHead": {
+    "message": "Documentation / Manuel"
+  },
+  "defaultDocumentation": {
+    "message": "La documentation Cleanflight est disponible aux formats Markdown et PDF.<br /><br />"
+  },
+  "defaultDocumentation1": {
+    "message": "Le manuel PDF approprié au firmware peut être téléchargé depuis les pages de publications sur github, <a href=\"https://github.com/cleanflight/cleanflight/releases\" target=\"_blank\">ici</a>."
+  },
+  "defaultDocumentation2": {
+    "message": "La dernière documentation Markdown en ligne is disponible <a href=\"https://github.com/cleanflight/cleanflight/tree/master/docs\" target=\"_blank\">ici</a> - vous pouvez basculer sur la version appropriée de la documentation en sélectionnant le tag."
+  },
+  "defaultSupportHead": {
+    "message": "Support"
+  },
+  "defaultSupportSubline1": {
+    "message": "Support Scources"
+  },
+  "defaultSupportSubline2": {
+    "message": "Développeur"
+  },
+  "defaultSupport": {
+    "message": "Avant de demander du support, assurez-vous de rechercher d'abord dans les forums ou de contacter votre revendeur.<br /><br />"
+  },
+  "defaultSupport1": {
+    "message": "<a href=\"http://www.rcgroups.com/forums/showthread.php?t=2249574&page=1\" target=\"_blank\">Fil sur RC Groups</a>"
+  },
+  "defaultSupport2": {
+    "message": "<a href=\"http://www.multiwii.com/forum/viewtopic.php?f=23&t=5149\" target=\"_blank\">Fil sur les forums MultiWii</a>"
+  },
+  "defaultSupport3": {
+    "message": "<a href=\"https://github.com/cleanflight\" target=\"_blank\">GitHub</a>"
+  },
+  "defaultSupport4": {
+    "message": "<a href=\"irc://irc.freenode.net/#cleanflight\" target=\"_blank\">Channel IRC sur freenode</a>"
+  },
+  "defaultSupport5": {
+    "message": "<a href=\"http://webchat.freenode.net/?channels=cleanflight\" target=\"_blank\">Rejoindre via WebClient</a>"
+  },
+  "initialSetupBackupAndRestoreApiVersion": {
+    "message": "<span style=\"color: red\">Les fonctions de sauvegarde et restauration sont désactivées.</span>  Votre firmware implémente la version d'API <span style=\"color: red\">$1</span>, la sauvegarde et restauration nécesssite <span style=\"color: #57a929\">$2</span>.  Veuillez sauvegarder vos réglages en mode CLI, voir la documentation Cleanflight pour la procédure à suivre."
+  },
+  "initialSetupButtonCalibrateAccel": {
+    "message": "Calibrer l'Accéléromètre"
+  },
+  "initialSetupCalibrateAccelText": {
+    "message": "Placer l'appareil sur une surface <strong>nivelée</strong>, procédez à la calibration, assurez-vous que la platforme reste immobile pendant toute l'opération"
+  },
+  "initialSetupButtonCalibrateMag": {
+    "message": "Calibrer le Magnétometre"
+  },
+  "initialSetupCalibrateMagText": {
+    "message": "Vous avez 30 secondes pour déplacer le multirotor d'au moins <strong>360</strong> degrés autour de chaque axe de rotation"
+  },
+  "initialSetupButtonReset": {
+    "message": "Réglages d'origine"
+  },
+  "initialSetupResetText": {
+    "message": "Restaurer les réglages aux valeurs par <strong>défaut</strong>"
+  },
+  "initialSetupButtonBackup": {
+    "message": "Sauvegarde"
+  },
+  "initialSetupButtonRestore": {
+    "message": "Restauration"
+  },
+  "initialSetupBackupRestoreText": {
+    "message": "<strong>Sauvegardez</strong> votre configuration en cas d'accident, les réglages <strong>CLI</strong> ne sont <span style=\"color: red\">pas</span> inclus - Voir la commande CLI 'dump'"
+  },
+  "initialSetupBackupSuccess": {
+    "message": "Sauvegarde enregistrée avec <span style=\"color: #57a929\">succès</span>"
+  },
+  "initialSetupRestoreSuccess": {
+    "message": "Configuration réstaurée avec <span style=\"color: #57a929\">succès</span>"
+  },
+  "initialSetupButtonResetZaxis": {
+    "message": "Centrer l'axe Z, offset: 0 deg"
+  },
+  "initialSetupButtonResetZaxisValue": {
+    "message": "Centrer l'axe Z , offset: $1 deg"
+  },
+  "initialSetupMixerHead": {
+    "message": "Type de Mixeur"
+  },
+  "initialSetupThrottleHead": {
+    "message": "Réglages Throttle"
+  },
+  "initialSetupMinimum": {
+    "message": "Minimum:"
+  },
+  "initialSetupMaximum": {
+    "message": "Maximum:"
+  },
+  "initialSetupFailsafe": {
+    "message": "Mode de secours:"
+  },
+  "initialSetupMinCommand": {
+    "message": "MinCommand:"
+  },
+  "initialSetupBatteryHead": {
+    "message": "Batterie"
+  },
+  "initialSetupMinCellV": {
+    "message": "Tension de cellule minimum:"
+  },
+  "initialSetupMaxCellV": {
+    "message": "Tension de cellule maximum:"
+  },
+  "initialSetupVoltageScale": {
+    "message": "Echelle de tension:"
+  },
+  "initialSetupAccelTrimsHead": {
+    "message": "Trims de l'accéléromètre"
+  },
+  "initialSetupPitch": {
+    "message": "Pitch:"
+  },
+  "initialSetupRoll": {
+    "message": "Roll:"
+  },
+  "initialSetupMagHead": {
+    "message": "Magnétomètre"
+  },
+  "initialSetupDeclination": {
+    "message": "Déclinaison:"
+  },
+  "initialSetupInfoHead": {
+    "message": "Info"
+  },
+  "initialSetupBattery": {
+    "message": "Tension batterie:"
+  },
+  "initialSetupBatteryValue": {
+    "message": "$1 V"
+  },
+  "initialSetupDrawn": {
+    "message": "Capacité consommée:"
+  },
+  "initialSetupDrawing": {
+    "message": "Courant consommé:"
+  },
+  "initialSetupBatteryMahValue": {
+    "message": "$1 mAh"
+  },
+  "initialSetupBatteryAValue": {
+    "message": "$1 A"
+  },
+  "initialSetupRSSI": {
+    "message": "RSSI:"
+  },
+  "initialSetupRSSIValue": {
+    "message": "$1 %"
+  },
+  "initialSetupGPSHead": {
+    "message": "GPS"
+  },
+  "initialSetupInstrumentsHead": {
+    "message": "Instruments"
+  },
+  "initialSetupButtonSave": {
+    "message": "Sauver"
+  },
+  "initialSetupModel": {
+    "message": "Modèle: $1"
+  },
+  "initialSetupAttitude": {
+    "message": "$1 deg"
+  },
+  "initialSetupAccelCalibStarted": {
+    "message": "Calibration de l'accéléromètre en cours"
+  },
+  "initialSetupAccelCalibEnded": {
+    "message": "Calibration de l'accéléromètre <span style=\"color: #57a929\">termiéne</span>"
+  },
+  "initialSetupMagCalibStarted": {
+    "message": "Calibration du magnétomètre en cours"
+  },
+  "initialSetupMagCalibEnded": {
+    "message": "Calibration du magnétomètre <span style=\"color: #57a929\">terminée</span>"
+  },
+  "initialSetupSettingsRestored": {
+    "message": "Réglages par <strong>défaut</strong> appliqués"
+  },
+  "initialSetupEepromSaved": {
+    "message": "EEPROM <span style=\"color: #57a929\">enregistrée</span>"
+  },
+  "featureRX_PPM": {
+    "message": "Entrée RX PPM"
+  },
+  "featureVBAT": {
+    "message": "Suivi de la tension de batterie"
+  },
+  "featureINFLIGHT_ACC_CAL": {
+    "message": "Calibration du niveau en cours de vol"
+  },
+  "featureRX_SERIAL": {
+    "message": "Récepteur série (SPEKSAT, SBUS, SUMD)"
+  },
+  "featureMOTOR_STOP": {
+    "message": "Désactiver la rotation des moteurs à l'armement"
+  },
+  "featureSERVO_TILT": {
+    "message": "Servo gimbal"
+  },
+  "featureSOFTSERIAL": {
+    "message": "Activer les ports série gérés par le CPU"
+  },
+  "featureSOFTSERIALTip": {
+    "message": "Configurer les ports dans l'onglet Ports après activation."
+  },
+  "featureGPS": {
+    "message": "GPS pour navigation and télémétrie"
+  },
+  "featureGPSTip": {
+    "message": "Configurez d'abord le scenario de port"
+  },
+  "featureFAILSAFE": {
+    "message": "Appliquer les réglages de secours en cas de perte du signal RX"
+  },
+  "featureSONAR": {
+    "message": "Sonar"
+  },
+  "featureTELEMETRY": {
+    "message": "Sortie Télémetrie"
+  },
+  "featureCURRENT_METER": {
+    "message": "Suivi du courant de batterie"
+  },
+  "feature3D": {
+    "message": "Mode 3D (pour ESC réversibles)"
+  },
+  "featureRX_PARALLEL_PWM": {
+    "message": "Entrée PWM RX (un fil par canal)"
+  },
+  "featureRX_MSP": {
+    "message": "Entrée MSP RX (contrôle par le port MSP)"
+  },
+  "featureRSSI_ADC": {
+    "message": "Entrée analogique RSSI"
+  },
+  "featureLED_STRIP": {
+    "message": "Support des bandes de LED multi-colores"
+  },
+  "featureDISPLAY": {
+    "message": "Afficheur OLED"
+  },
+  "featureONESHOT125": {
+    "message": "Support des ESC ONESHOT"
+  },
+  "featureONESHOT125Tip": {
+    "message": "Déconnectez la batterie de vol et démontez les hélices avant d'activer cette fonction."
+  },
+  "featureBLACKBOX": {
+    "message": "Enregistreur de données de vol Blackbox"
+  },
+  "featureBLACKBOXTip": {
+    "message": "Configurez via l'onglet BlackBox après activation."
+  },
+  "featureCHANNEL_FORWARDING": {
+    "message": "Trasnférer les canaux aux vers les sorties servo"
+  },
+  "featureTRANSPONDER": {
+    "message": "Race Transponder"
+  },
+  "featureTRANSPONDERTip": {
+    "message": "Configurez via l'onglet Race Transponder après activation."
+  },
+
+  "configurationFeatureEnabled": {
+    "message": "Activé"
+  },
+  "configurationFeatureName": {
+    "message": "Fonction"
+  },
+  "configurationFeatureDescription": {
+    "message": "Déscription"
+  },
+  "configurationMixer": {
+    "message": "Mixeur"
+  },
+  "configurationFeatures": {
+    "message": "Autre fonctions"
+  },
+  "configurationReceiver": {
+    "message": "Mode du récepteur"
+  },
+  "configurationRSSI": {
+    "message": "RSSI (Niveau de signal)"
+  },
+  "configurationRSSIHelp": {
+    "message": "Le RSSI est une mesure de la puissance du signal radio et permet de savoir quand votre appareil risque de se trouver hors de portée ou subit des interférences RF."
+  },
+  "configurationEscFeatures": {
+    "message": "Fonctions ESC/Moteur"
+  },
+  "configurationFeaturesHelp": {
+    "message": "<strong>Note:</strong> Certaines combinaisons sont invalides.  Lorsque firmware du contrôleur de vol détecte une combinaison de fonctions invalide, les fonctions conflictuelles sont désactivées.<br /><strong>Note:</strong> Configurez les portes série <span style=\"color: red\">avant</span> d'activer les fonctions qui les utiliseront."
+  },
+  "configurationSerialRXHelp": {
+    "message": "<strong>Note:</strong> Configurez un port série (via l'onglet Ports) et choisissez un Fournisseur de Récepteur Sérieavant d'utiliser la fonction RX_SERIAL."
+  },
+  "configurationBoardAlignment": {
+    "message": "Alignement de la Carte et des Capteurs"
+  },
+  "configurationBoardAlignmentRoll": {
+    "message": "Degrés Roll"
+  },
+  "configurationBoardAlignmentPitch": {
+    "message": "Degrés Pitch"
+  },
+  "configurationBoardAlignmentYaw": {
+    "message": "Degrés Yaw"
+  },
+  "configurationSensorAlignmentGyro": {
+    "message": "Alignement GYRO"
+  },
+  "configurationSensorAlignmentAcc": {
+    "message": "Alignement ACCEL"
+  },
+  "configurationSensorAlignmentMag": {
+    "message": "Alignement MAG"
+  },
+  "configurationAccelTrims": {
+    "message": "Trim Accéléromètre"
+  },
+  "configurationAccelTrimRoll": {
+    "message": "Trim Roll Accéléromètre"
+  },
+  "configurationAccelTrimPitch": {
+    "message": "Trim Pitch Accéléromètre"
+  },
+  "configurationMagDeclination": {
+    "message": "Déclinaison du magnétomètre [deg]"
+  },
+  "configurationAutoDisarmDelay": {
+    "message": "Désarmer les moteurs après (Secondes) (Nécessite la fonction MOTOR_STOP)"
+  },
+  "configurationDisarmKillSwitch": {
+    "message": "Désarmer les moteurs quelle que soit la valeur de throttle (Lors de l'armement via canal AUX)"
+  },
+  "configurationThrottleMinimum": {
+    "message": "Throttle Minimum"
+  },
+  "configurationThrottleMid": {
+    "message": "Throttle Median [valeur centrale de l'entrée RC]"
+  },
+  "configurationThrottleMaximum": {
+    "message": "Throttle Maximum"
+  },
+  "configurationThrottleMinimumCommand": {
+    "message": "Commande Minimum"
+  },
+  "configurationBatteryVoltage": {
+    "message": "Tensions de Batterie"
+  },
+  "configurationBatteryCurrent": {
+    "message": "Courant de Batterie"
+  },
+  "configurationBatteryMinimum": {
+    "message": "Tension de Cellule Minimum"
+  },
+  "configurationBatteryMaximum": {
+    "message": "Tension de Cellule Maximum"
+  },
+  "configurationBatteryWarning": {
+    "message": "Tension de Cellule d'Alerte"
+  },
+  "configurationBatteryScale": {
+    "message": "Echelle de Tensions"
+  },
+  "configurationCurrent": {
+    "message": "Sonde de Courant"
+  },
+  "configurationCurrentScale": {
+    "message": "Convertir la tension de sortie en milliampères [1/10ème de mV/A]"
+  },
+  "configurationCurrentOffset": {
+    "message": "Offset en millivolts"
+  },
+  "configurationBatteryMultiwiiCurrent": {
+    "message": "Activer le support de la sortie de courant MSP Multiwii héritée"
+  },
+  "configuration3d": {
+    "message": "3D"
+  },
+  "configuration3dDeadbandLow": {
+    "message": "Bande morte 3D Basse"
+  },
+  "configuration3dDeadbandHigh": {
+    "message": "Bande morte 3D Haute"
+  },
+  "configuration3dNeutral": {
+    "message": "Neutre 3D"
+  },
+  "configuration3dDeadbandThrottle": {
+    "message": "Bande morte 3D Throttle"
+  },
+  "configurationSystem": {
+    "message": "Configuration du système"
+  },
+  "configurationLoopTime": {
+    "message": "Temps de cycle du Contrôleur de Vol"
+  },
+  "configurationCalculatedCyclesSec": {
+    "message": "Cycles/Sec (Hz)"
+  },
+  "configurationLoopTimeHelp": {
+    "message": "<strong>Note:</strong> Changer cette valeur peut nécessiter un réglage des PID."
+  },
+  "configurationGPS": {
+    "message": "GPS"
+  },
+  "configurationGPSProtocol": {
+    "message": "Protocole"
+  },
+  "configurationGPSBaudrate": {
+    "message": "Baudrate"
+  },
+  "configurationGPSubxSbas": {
+    "message": "Type d'assistance au Sol"
+  },
+  "configurationGPSHelp": {
+    "message": "<strong>Note:</strong> Configurez un Port Série (via l'onglet Ports) pour pouvoir utiliser la fonction GPS."
+  },
+  "configurationSerialRX": {
+    "message": "Fournisseur de Récepteur Série"
+  },
+  "configurationEepromSaved": {
+    "message": "EEPROM <span style=\"color: #57a929\">sauvée</span>"
+  },
+  "configurationButtonSave": {
+    "message": "Sauver et redémarrer"
+  },
+  "portsHelp": {
+    "message": "<strong>Note:</strong> certaines combinaisons sont invalides.  Lorsque le firmware du contrôleur de vol détecte une configuration invalide, la configuration du port série est réinitialisée."
+  },
+  "portsMSPHelp": {
+    "message": "<strong>Note:</strong> Ne désactivez <span style=\"color: red\">PAS</span> le MSP sur le premier port série, sauf en toute connaissance de cause.  Vous pourriez être obligé de reflasher en perdant votre configuration."
+  },
+  "portsFirmwareUpgradeRequired": {
+    "message": "Mise à jour du Firmware <span style=\"color: red\">requise</span>.  La configuration des ports série du firmware &lt; 1.8.0 n'est pas supportée."
+  },
+  "portsButtonSave": {
+    "message": "Sauver and Redémarrer"
+  },
+  "portsTelemetryDisabled": {
+    "message": "Désactivé"
+  },
+  "portsFunction_MSP": {
+    "message": "MSP"
+  },
+  "portsFunction_GSP": {
+    "message": "GSP"
+  },
+  "portsFunction_TELEMETRY_FRSKY": {
+    "message": "FrSky"
+  },
+  "portsFunction_TELEMETRY_HOTT": {
+    "message": "HoTT"
+  },
+  "portsFunction_TELEMETRY_LTM": {
+    "message": "LTM"
+  },
+  "portsFunction_TELEMETRY_MSP": {
+    "message": "MSP"
+  },
+  "portsFunction_TELEMETRY_SMARTPORT": {
+    "message": "SmartPort"
+  },
+  "portsFunction_RX_SERIAL": {
+    "message": "Serial RX"
+  },
+  "portsFunction_BLACKBOX": {
+    "message": "Blackbox"
+  },
+  "pidTuningUpgradeFirmwareToChangePidController": {
+    "message": "<span style=\"color: red\">Modification du contrôleur de PID désactivée - vus pouvez le changer via la CLI.</span>  Votre firmware implémente l'API version <span style=\"color: red\">$1</span>, mais cette fonctionnalité nécessite <span style=\"color: #57a929\">$2</span>."
+  },
+  "pidTuningName": {
+    "message": "Nom"
+  },
+  "pidTuningProportional": {
+    "message": "Proportionnel"
+  },
+  "pidTuningIntegral": {
+    "message": "Intégral"
+  },
+  "pidTuningDerivative": {
+    "message": "Dérivé"
+  },
+  "pidTuningRollPitchRate": {
+    "message": "ROLL &amp; PITCH rate"
+  },
+  "pidTuningRollRate": {
+    "message": "ROLL rate"
+  },
+  "pidTuningPitchRate": {
+    "message": "PITCH rate"
+  },
+  "pidTuningYawRate": {
+    "message": "YAW rate"
+  },
+  "pidTuningTPA": {
+    "message": "TPA"
+  },
+  "pidTuningTPABreakPoint": {
+    "message": "TPA Breakpoint"
+  },
+  "pidTuningButtonSave": {
+    "message": "Sauver"
+  },
+  "pidTuningButtonRefresh": {
+    "message": "Rafraîchir"
+  },
+  "pidTuningProfileHead": {
+    "message": "Profil"
+  },
+  "pidTuningControllerHead": {
+    "message": "Contrôleur PID"
+  },
+  "pidTuningLoadedProfile": {
+    "message": "Profil: <strong style=\"color: #57a929\">$1</strong> chargé."
+  },
+  "pidTuningDataRefreshed": {
+    "message": "Données PID <strong>rafraîchies</strong>"
+  },
+  "pidTuningEepromSaved": {
+    "message": "EEPROM <span style=\"color: #57a929\">sauvée</span>"
+  },
+  "receiverHelp": {
+    "message": "Veuillez consulter le chapitre Récepteur de la documentation.  Configurez le port série (si nécessaire), le mode du récepteur (série/ppm/pwm), le fournisseur (pour les récepteurs série), bindez le récepteur, définissez l'attribution des canaux, configurez les endpoints et range des canaux sur le TX afin que la valeur de chaque canal varie entre ~1000 et ~2000.  Définissez le midpoint (par défaut 1500), trimmez les canaux sur 1500, configurez le deadband, verifiez le comportement lorsque le TX est éteint ou hors de portée.<br /><span style=\"color: red\">IMPORTANT:</span> Avant de voler, lisez le chapitre Mode de Secours (Failsafe) de la documentation et configurez le Mode de Secours."
+  },
+  "receiverThrottleMid": {
+    "message": "Throttle MID"
+  },
+  "receiverThrottleExpo": {
+    "message": "Throttle EXPO"
+  },
+  "receiverRcRate": {
+    "message": "RC Rate"
+  },
+  "receiverDeadband": {
+    "message": "RC Deadband"
+  },
+  "receiverHelpDeadband": {
+    "message": "Ces valeurs (en us) définissent le delta minimum pour qu'une entrée RC soit considérée valide. Pour les émetteurs comportant du jitter sur leurs sorties, cette valeur peut être augmentée si les entrées varient au repos."
+  },
+  "receiverHelpYawDeadband": {
+    "message": "Ces valeurs (en us) définissent le delta minimum pour qu'une entrée RC soit considérée valide. Pour les émetteurs comportant du jitter sur leurs sorties, cette valeur peut être augmentée si les entrées varient au repos. <strong>Ce réglage ne concerne que le Yaw.</strong>"
+  },
+  "receiverYawDeadband": {
+    "message": "Yaw Deadband"
+  },
+  "receiverRcExpo": {
+    "message": "RC Expo"
+  },
+  "receiverRcYawExpo": {
+    "message": "RC Yaw Expo"
+  },
+  "receiverChannelMap": {
+    "message": "Attribution des canaux"
+  },
+  "receiverChannelMapTitle": {
+    "message": "Vous pouvez définir votre propre attribution des canaux en cliquant dans le champ."
+  },
+  "receiverRssiChannel": {
+    "message": "Canal RSSI"
+  },
+  "receiverRefreshRateTitle": {
+    "message": "Taux de rafraîchissement du graphique"
+  },
+  "receiverButtonSave": {
+    "message": "Sauver"
+  },
+  "receiverButtonRefresh": {
+    "message": "Rafraîchir"
+  },
+  "receiverButtonSticks": {
+    "message": "Leviers de contrôle"
+  },
+  "receiverDataRefreshed": {
+    "message": "Données de tuning RC <strong>rafraîchies</strong>"
+  },
+  "receiverEepromSaved": {
+    "message": "EEPROM <span style=\"color: #57a929\">sauvée</span>"
+  },
+
+  "auxiliaryHelp": {
+    "message": "Utilisez des plages pour définir les interrupteurs sur votre transmetteur et les assignation de modes correspondantes.  Un canal de récepteur dont la valeur est comprise dans la plage min/max activera le mode.  N'oubliez pas de sauvegarder vos réglages en cliquant sur le bouton Sauver."
+  },
+  "auxiliaryMin": {
+    "message": "Min"
+  },
+  "auxiliaryMax": {
+    "message": "Max"
+  },
+  "auxiliaryAddRange": {
+    "message": "Ajouter Plage"
+  },
+  "auxiliaryButtonSave": {
+    "message": "Sauver"
+  },
+  "auxiliaryEepromSaved": {
+    "message": "EEPROM <span style=\"color: #57a929\">sauvée</span>"
+  },
+
+  "adjustmentsHelp": {
+    "message": "Configurer les interrupteurs d'ajustements.  Voir la section 'in-flight adjustments' du manuel pour plus de details.  Les changements qu'apportent les fonctions d'ajustements ne sont pas sauvées automatiquement.  Il y a 4 slots.  Chaque interrupteur utilisé pour réaliser simultanément des ajustements nécessite l'utilisation exclusive d'un slot."
+  },
+  "adjustmentsExamples": {
+    "message": "Exemples"
+  },
+  "adjustmentsExample1": {
+    "message": "Utiliser le Slot 1 et un switch 3POS sur AUX1 pour choisir entre Pitch/Roll P, I et D et un autre switch 3POS sur AUX2 pour incrémenter ou décrémenter la valeur selon la direction appuyée."
+  },
+  "adjustmentsExample2": {
+    "message": "Utiliser le Slot 2 et un switch 3POS sur AUX4 pour choisir d'activer la sélection de Rate Profile via le même switch 3POS sur le même canal."
+  },
+  "adjustmentsColumnEnable": {
+    "message": "Si actif"
+  },
+  "adjustmentsColumnUsingSlot": {
+    "message": "utilisant le slot"
+  },
+  "adjustmentsColumnWhenChannel": {
+    "message": "lorsque le canal"
+  },
+  "adjustmentsColumnIsInRange": {
+    "message": "est dans la plage"
+  },
+  "adjustmentsColumnThenApplyFunction": {
+    "message": "alors appliquer"
+  },
+  "adjustmentsColumnViaChannel": {
+    "message": "via le canal"
+  },
+  "adjustmentsSlot0": {
+    "message": "Slot 1"
+  },
+  "adjustmentsSlot1": {
+    "message": "Slot 2"
+  },
+  "adjustmentsSlot2": {
+    "message": "Slot 3"
+  },
+  "adjustmentsSlot3": {
+    "message": "Slot 4"
+  },
+  "adjustmentsMin": {
+    "message": "Min"
+  },
+  "adjustmentsMax": {
+    "message": "Max"
+  },
+  "adjustmentsFunction0": {
+    "message": "Aucun changement"
+  },
+  "adjustmentsFunction1": {
+    "message": "Ajuster le RC Rate"
+  },
+  "adjustmentsFunction2": {
+    "message": "Ajuster le RC Expo"
+  },
+  "adjustmentsFunction3": {
+    "message": "Ajuster le Throttle Expo"
+  },
+  "adjustmentsFunction4": {
+    "message": "Ajuster le Rate de Pitch & Roll"
+  },
+  "adjustmentsFunction5": {
+    "message": "Ajuster le Rate de Yaw"
+  },
+  "adjustmentsFunction6": {
+    "message": "Ajuster le Pitch & Roll P"
+  },
+  "adjustmentsFunction7": {
+    "message": "Ajuster le Pitch & Roll I"
+  },
+  "adjustmentsFunction8": {
+    "message": "Ajuster le Pitch & Roll D"
+  },
+  "adjustmentsFunction9": {
+    "message": "Ajuster le Yaw P"
+  },
+  "adjustmentsFunction10": {
+    "message": "Ajuster le Yaw I"
+  },
+  "adjustmentsFunction11": {
+    "message": "Ajuster le Yaw D"
+  },
+  "adjustmentsFunction12": {
+    "message": "Sélection du Profil de Rate"
+  },
+  "adjustmentsFunction13": {
+    "message": "Pitch Rate"
+  },
+  "adjustmentsFunction14": {
+    "message": "Roll Rate"
+  },
+  "adjustmentsFunction15": {
+    "message": "Ajuster le Pitch P"
+  },
+  "adjustmentsFunction16": {
+    "message": "Ajuster le Pitch I"
+  },
+  "adjustmentsFunction17": {
+    "message": "Ajuster le Pitch D"
+  },
+  "adjustmentsFunction18": {
+    "message": "Ajuster le Roll P"
+  },
+  "adjustmentsFunction19": {
+    "message": "Ajuster le Roll I"
+  },
+  "adjustmentsFunction20": {
+    "message": "Ajuster le Roll D"
+  },
+  "adjustmentsFunction21": {
+    "message": "Ajuster le Alt P"
+  },
+  "adjustmentsFunction22": {
+    "message": "Ajuster le Alt I"
+  },
+  "adjustmentsFunction23": {
+    "message": "Ajuster le Alt D"
+  },
+  "adjustmentsFunction24": {
+    "message": "Ajuster le Vel P"
+  },
+  "adjustmentsFunction25": {
+    "message": "Ajuster le Vel I"
+  },
+  "adjustmentsFunction26": {
+    "message": "Ajuster le Vel D"
+  },
+  "adjustmentsFunction27": {
+    "message": "Ajuster le MAG P"
+  },
+  "adjustmentsFunction28": {
+    "message": "Ajuster le Pos P"
+  },
+  "adjustmentsFunction29": {
+    "message": "Ajuster le Pos I"
+  },
+  "adjustmentsFunction30": {
+    "message": "Ajuster le PosR P"
+  },
+  "adjustmentsFunction31": {
+    "message": "Ajuster le PosR I"
+  },
+  "adjustmentsFunction32": {
+    "message": "Ajuster le PosR D"
+  },
+  "adjustmentsFunction33": {
+    "message": "Ajuster le NavR P"
+  },
+  "adjustmentsFunction34": {
+    "message": "Ajuster le NavR I"
+  },
+  "adjustmentsFunction35": {
+    "message": "Ajuster le NavR D"
+  },
+  "adjustmentsFunction36": {
+    "message": "Ajuster le Level P"
+  },
+  "adjustmentsFunction37": {
+    "message": "Ajuster le Level I"
+  },
+  "adjustmentsFunction38": {
+    "message": "Ajuster le Level D"
+  },
+  "adjustmentsSave": {
+    "message": "Sauver"
+  },
+  "adjustmentsEepromSaved": {
+    "message": "EEPROM <span style=\"color: #57a929\">sauvée</span>"
+  },
+
+  "transponderNotSupported": {
+    "message": "Le firmware de votre contrôleur de vol ne supporte par la fonctionnalité transpondeur."
+  },
+  "transponderHelp": {
+    "message": "Configurez votre code de transpondeur ici.  Note: Seuls les codes valides seront reconnus par les sysytèmes de chronométrage de courses.  Des codes de transpondeur valides peuvent être obtenus depuis <a href=\"http://seriouslypro.com/transponder-codes\" target=\"_blank\">Seriously Pro</a>."
+  },
+  "transponderInformation": {
+    "message": "Les systèmes de transpondeurs permettent aux organisateurs de courses de chronométrer vos tours.  Le transpondeur est monté sur votre aéronef et lorsque celui-ci passe la grille de chronométrage, le récepteur en bord de piste reconnait votre code et enregistre votre temps au tour.  Lors du montage un transpondeur IR, vous devez vous assurer qu'il pointe vers l'extérieur de votre appareil, en direction du récepteur bord de piste, et que le faisceau de lumière ne soit pas obstrué par le chassis, les sangles de batterie, les câbles, les hélices, etc."
+  },
+  "transponderConfiguration": {
+    "message": "Configuration"
+  },
+  "transponderData": {
+    "message": "Données"
+  },
+  "transponderDataHelp": {
+    "message": "Chiffres Hexadecimaux uniquement, 0-9, A-F"
+  },
+  "transponderButtonSave": {
+    "message": "Sauver"
+  },
+  "transponderDataInvalid": {
+    "message": "Transponder data is <span style=\"color: red\">invalid</span>"
+  },
+  "transponderEepromSaved": {
+    "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
+  },
+
+  "servosFirmwareUpgradeRequired": {
+    "message": "Servos requires firmware &gt;= 1.10.0. and target support."
+  },
+  "servosChangeDirection": {
+    "message": "Change Direction in TX To Match"
+  },
+  "servosName": {
+    "message": "Name"
+  },
+  "servosMid": {
+    "message": "MID"
+  },
+  "servosMin": {
+    "message": "MIN"
+  },
+  "servosMax": {
+    "message": "MAX"
+  },
+  "servosAngleAtMin": {
+    "message": "Angle at min"
+  },
+  "servosAngleAtMax": {
+    "message": "Angle at max"
+  },
+  "servosDirectionAndRate": {
+    "message": "Direction and rate"
+  },
+  "servosLiveMode": {
+    "message": "Enable Live mode"
+  },
+  "servosButtonSave": {
+    "message": "Sauver"
+  },
+  "servosNormal": {
+    "message": "Normal"
+  },
+  "servosReverse": {
+    "message": "Inversé"
+  },
+  "servosEepromSave": {
+    "message": "EEPROM <span style=\"color: #57a929\">sauvée</span>"
+  },
+  "gpsHomeHead": {
+    "message": "GPS Home"
+  },
+  "gpsHomeLat": {
+    "message": "Latitude:"
+  },
+  "gpsHomeLon": {
+    "message": "Longitude:"
+  },
+  "gpsHead": {
+    "message": "GPS"
+  },
+  "gpsMapHead": {
+    "message": "Position GPS courante"
+  },
+  "gpsMapMessage1": {
+    "message": "Veuillez vérifier votre connection internet"
+  },
+  "gpsMapMessage2": {
+    "message": "En attente du 3D fix GPS…"
+  },
+  "gps3dFix": {
+    "message": "3D Fix:"
+  },
+  "gpsFixTrue": {
+    "message": "<span class=\"fixtrue\">3D Fix</span>"
+  },
+  "gpsFixFalse": {
+    "message": "<span class=\"fixfalse\">Pas de fix</span>"
+  },
+  "gpsAltitude": {
+    "message": "Altitude:"
+  },
+  "gpsLat": {
+    "message": "Latitude:"
+  },
+  "gpsLon": {
+    "message": "Longitude:"
+  },
+  "gpsSpeed": {
+    "message": "Vitesse:"
+  },
+  "gpsSats": {
+    "message": "Sats:"
+  },
+  "gpsDistToHome": {
+    "message": "Dist Home:"
+  },
+  "gpsDirectToHome": {
+    "message": "Direct Home:"
+  },
+  "gpsSignalStrHead": {
+    "message": "Niveau du Signal GPS"
+  },
+  "gpsSignalStr": {
+    "message": "Niveau du Signal "
+  },
+
+  "motorsMaster": {
+    "message": "Maître"
+  },
+  "motorsNotice": {
+    "message": "<strong>Note concernant le Mode de Test des Moteurs:</strong><br />Le déplacement des sliders va causer la <strong>rotation</strong> des moteurs.<br />Afin d'éviter toute blessure <strong style=\"color: red\">démontez TOUTES les hélices</strong> avant d'utiliser cette fonction.<br />"
+  },
+  "motorsEnableControl": {
+    "message": "Je comprends les risques, les hélices sont démontées - Activer le contrôle des moteurs."
+  },
+
+  "sensorsInfo": {
+    "message": "Gardez à l'esprit que l'utilisation de périodes de rafraîchissement rapides et le rendu simultané de plusieurs graphiques sont gourmands en ressources et vont épquiser votre batterie plus rapidement si vous êtes sur un ordinateur portable.<br />Il est recommandé de n'afficher que les graphiques correspondants aux capteurs qui vous intéressent, tout en utilisant un taux de rafraîchissement résonnable."
+  },
+  "sensorsRefresh": {
+    "message": "Rafraîchir:"
+  },
+  "sensorsScale": {
+    "message": "Echelle:"
+  },
+
+  "cliInfo": {
+    "message": "<strong>Note</strong>: En quittant l'onglet CLI ou en cliquant sur Déconnection, \"<strong>exit</strong>\" sera <strong>automatiquement</strong> envoyé à la carte.  Avec les derniers firmwares, cela fera <span style=\"color: red\">redémarrer</span> le contrôleur et tout changement non-sauvé sera <span style=\"color: red\">perdu</span>."
+  },
+  "cliInputPlaceholder": {
+    "message": "Saisissez votre commande ici"
+  },
+  "cliEnter": {
+    "message": "Mode CLI détecté"
+  },
+  "cliReboot": {
+    "message": "Redémarrage CLI détecté"
+  },
+
+  "loggingNote": {
+    "message": "Les données seront enregistrées dans cet onglet <span style=\"color: red\">seulement</span>, quitter cet onglet va <span style=\"color: red\">annuler</span> l'enregistrement et l'application retournera à son été normal de <strong>\"configurateur\"</strong>.<br /> Vous pouvez sléectionner librement la période de raifraîchissement globale, les données seront écrites dans le fichier toutes les <strong>1</strong> secondes pour des raisons de performance."
+  },
+  "loggingSamplesSaved": {
+    "message": "Echantillons sauvés:"
+  },
+  "loggingLogSize": {
+    "message": "Taille du fichier:"
+  },
+  "loggingButtonLogFile": {
+    "message": "Selectionner le fichier"
+  },
+  "loggingStart": {
+    "message": "Démarrer l'enregistrement"
+  },
+  "loggingStop": {
+    "message": "Stopper l'enregistrement"
+  },
+  "loggingBack": {
+    "message": "Quitter l'enregistrement / Déconnecter"
+  },
+  "loggingErrorNotConnected": {
+    "message": "Vous devez vous <strong>connecter</strong> d'abord"
+  },
+  "loggingErrorLogFile": {
+    "message": "Veuillez sélectionner un fichier"
+  },
+  "loggingErrorOneProperty": {
+    "message": "Veuillez sélectionner au moins une propriété à enregistrer"
+  },
+  "loggingAutomaticallyRetained": {
+    "message": "Le dernier fichier d'enregistrement a été chargé automatiquement: <strong>$1</strong>"
+  },
+
+  "blackboxNotSupported": {
+    "message": "Le firmware de votre contrôleur de vol ne supporte pas l'enregistrement Blackbox."
+  },
+  "blackboxMaybeSupported": {
+    "message": "Le firmware de votre contrôleur de vol est trop ancien pour supporter cet onglet, ou la fonction Blackbox est désactivée dans l'onglet Configuration."
+  },
+  "blackboxConfiguration": {
+    "message": "Configuration Blackbox"
+  },
+  "blackboxButtonSave": {
+    "message": "Sauver et redémarrer"
+  },
+
+  "serialLoggingSupportedNote": {
+    "message": "Vous pouvez enregistrer les données dans un périphérique externe (tel qu'un OpenLog ou clône compatible) en utilisant un port série. Configurez le port dans l'onget Ports."
+  },
+  "sdcardNote": {
+    "message": "Les enregistrements de vol peuvent être sauvés dans le slot SD de votre contrôleur de vol."
+  },
+
+  "dataflashNote": {
+    "message": "Les enregistrements de vol peuvent être sauvés dans la mémoire Flash embarquée de votre contrôleur de vol."
+  },
+  "dataflashNotPresentNote": {
+    "message": "Votre contrôleur de vol ne dispose pas d'une mémoire Flash compatible."
+  },
+  "dataflashFirmwareUpgradeRequired": {
+    "message": "Le Dataflash nécessite un firmware &gt;= 1.8.0."
+  },
+  "dataflashButtonSaveFile": {
+    "message": "Sauver la flash dans un fichier..."
+  },
+  "dataflashButtonErase": {
+    "message": "Effacer la flash"
+  },
+  "dataflashConfirmEraseTitle": {
+    "message": "Confirmez l'effacement de la dataflash"
+  },
+  "dataflashConfirmEraseNote": {
+    "message": "Cela va effacer tout enregistrement Blackbox et toute autre donnée contenue dans la dataflash et prendra environ 20 secondes, êtes-vous certain?"
+  },
+  "dataflashSavingTitle": {
+    "message": "Sauvegarde de la dataflash dans un fichier"
+  },
+  "dataflashSavingNote": {
+    "message": "La sauvegarde peut prendre plusieurs minutes, merci de patienter."
+  },
+  "dataflashSavingNoteAfter": {
+    "message": "Sauvegarde terminée! Cliquez sur \"Ok\" pour continuer."
+  },
+  "dataflashButtonSaveCancel": {
+    "message": "Annuler"
+  },
+  "dataflashButtonSaveDismiss": {
+    "message": "Ok"
+  },
+  "dataflashButtonEraseConfirm": {
+    "message": "Oui, effacer la dataflash"
+  },
+  "dataflashButtonEraseCancel": {
+    "message": "Annuler"
+  },
+  "dataflashFileWriteFailed": {
+    "message": "L'écriture dans le fichier que vous avez sélectionné a échoué, veuillez vérifier les permissions du dossier."
+  },
+
+  "firmwareFlasherReleaseSummaryHead": {
+    "message": "Info de publication"
+  },
+  "firmwareFlasherReleaseName": {
+    "message": "Nom/Version:"
+  },
+  "firmwareFlasherReleaseVersionUrl": {
+    "message": "Visiter la page de publication."
+  },
+  "firmwareFlasherReleaseNotes": {
+    "message": "Notes de publication:"
+  },
+  "firmwareFlasherReleaseDate": {
+    "message": "Date:"
+  },
+  "firmwareFlasherReleaseStatus": {
+    "message": "Etat:"
+  },
+  "firmwareFlasherReleaseTarget": {
+    "message": "Cible:"
+  },
+  "firmwareFlasherReleaseFile": {
+    "message": "Binaire:"
+  },
+  "firmwareFlasherReleaseStatusReleaseCandidate": {
+    "message": "<span style=\"color: red\">IMPORTANT: Cette publication du firmware is actuellement marquée comme Release Candidate.  Veuillez immédiatement rapporter tout problème.</span>"
+  },
+  "firmwareFlasherReleaseFileUrl": {
+    "message": "Télécharger manuellement."
+  },
+  "firmwareFlasherTargetWarning": {
+    "message": "<span style=\"color: red\">IMPORTANT</span>: Assurez-vous que le fichier que vous flashez est approprié à votre cible.  Flasher le mauvais binaire peut vous causer de <span style=\"color: red\">gros soucis</span>."
+  },
+
+  "firmwareFlasherPath": {
+    "message": "Chemin:"
+  },
+  "firmwareFlasherSize": {
+    "message": "Taille:"
+  },
+  "firmwareFlasherStatus": {
+    "message": "Statut:"
+  },
+  "firmwareFlasherProgress": {
+    "message": "Progrès:"
+  },
+  "firmwareFlasherLoadFirmwareFile": {
+    "message": "Veuillez charger le fichier firmware"
+  },
+  "firmwareFlasherNoReboot": {
+    "message": "Pas de séquence de redémarrage"
+  },
+  "firmwareFlasherOnlineReleasesDescription": {
+    "message": "Publications de firmware disponibles en ligne  - Selectionnez le firmware correspondant à votre carte."
+  },
+  "firmwareFlasherNoRebootDescription": {
+    "message": "Activez si vous avez mis votre contrôleur de vol sous tension en ayant relié ensemble les pins du bootloader, ou si vous appuyez sur son bouton BOOT."
+  },
+  "firmwareFlasherFlashOnConnect": {
+    "message": "Flasher à la connection"
+  },
+  "firmwareFlasherFlashOnConnectDescription": {
+    "message": "Tenter de flasher la carte automatiquement (déclenché par la détection d'un nouveau port série)."
+  },
+  "firmwareFlasherFullChipErase": {
+    "message": "Effacement complet"
+  },
+  "firmwareFlasherFullChipEraseDescription": {
+    "message": "Supprime toutes les données de configuration actuellement stockées sur la carte."
+  },
+  "firmwareFlasherFlashDevelopmentFirmware": {
+    "message": "Utiliser le Firmware de Développement"
+  },
+  "firmwareFlasherFlashDevelopmentFirmwareDescription": {
+    "message": "Flasher le tout dernier Firmware de Développement (non-testé)."
+  },
+  "firmwareFlasherManualBaud": {
+    "message": "Baudrate Manuel"
+  },
+  "firmwareFlasherManualBaudDescription": {
+    "message": "Sélectionnez manuellement le baudrate pour les cartes qui ne supportent pas la vitesse par défaut ou pour flasher via bluetooth.<br /><span style=\"color: red\">Note:</span> Non-utilisé lors du flashing via DFU USB"
+  },
+  "firmwareFlasherShowDevelopmentReleases": {
+    "message": "Montrer les publications instables"
+  },
+  "firmwareFlasherShowDevelopmentReleasesDescription": {
+    "message": "Montrer les pulications Release-Candidate et les publications de Développement."
+  },
+  "firmwareFlasherOptionLabelSelectFirmware": {
+    "message": "Sélectionner le Firmware / Carte"
+  },
+  "firmwareFlasherButtonLoadLocal": {
+    "message": "Charger le Firmware [Local]"
+  },
+  "firmwareFlasherButtonLoadOnline": {
+    "message": "Charger le Firmware [En ligne]"
+  },
+  "firmwareFlasherFlashFirmware": {
+    "message": "Flasher le Firmware"
+  },
+  "firmwareFlasherGithubInfoHead": {
+    "message": "Info Firmware Github"
+  },
+  "firmwareFlasherCommiter": {
+    "message": "Committeur:"
+  },
+  "firmwareFlasherDate": {
+    "message": "Date:"
+  },
+  "firmwareFlasherHash": {
+    "message": "Hash:"
+  },
+  "firmwareFlasherUrl": {
+    "message": "Aller sur GitHub pour reviewer ce commit..."
+  },
+  "firmwareFlasherMessage": {
+    "message": "Message:"
+  },
+  "firmwareFlasherWarningHead": {
+    "message": "Avertissement"
+  },
+  "firmwareFlasherWarningText": {
+    "message": "Veuillez ne <span style=\"color: red\">pas</span> tenter de flasher sur un hardware <strong>non-cleanflight</strong> avec ce flasheur de firmware.<br />Ne <span style=\"color: red\">pas</span> <strong>déconnecter</strong> la carte ou <strong>éteindre</strong> votre ordinateur pendant le flash.<br /><br /><strong>Note: </strong>Le bootloader du STM32 is stocké en ROM, il ne peut pas être brické.<br /><strong>Note:</strong> L'<span style=\"color: red\">Auto-Connection</span> est toujours désactivée pendant que vous êtes dans le Flasheur Firmware.<br /><strong>Note: </strong>Assurez-vous d'avoir une sauvegarde car certains upgrades/downgrades vont effacer votre configuration.<br /><strong>Note:</strong> Si vous rencontrez des problèmes pour flasher, essayez d'abord de déconnecter tous les câbles de votre contrôleur de vol, essayez de rédemarrer, mettez chrome à jour, mettez les drivers à jour.<br /><strong>Note:</strong> Lorsque vous flashez une carte qui comporte un port USB relié directement (SPRacingF3Mini, Sparky, ColibriRace, etc.), assurez-vous d'avoir lu le chapitre USB Flashing du manuel de Cleanflight, et que vous avez installé les logiciels et drivers nécessaires."
+  },
+  "firmwareFlasherRecoveryHead": {
+    "message": "<strong>Récupération / Perte de communication<strong>"
+  },
+  "firmwareFlasherRecoveryText": {
+    "message": "Si vous avez perdu la communication avec votre carte, suivez ces instruction pour restaurer la communication: <ul><li>Coupez l'alimentation</li><li>Activez 'Pas de séquence de redémarrage', activez 'Effacement complet'.</li><li>Reliez les pins BOOT ou maintenez enfoncé le bouton BOOT.</li><li>Mettez sous tension (la LED d'activité ne doit PAS clignoter).</li><li>Installez les drivers STM32 et Zadig si nécessaire (voir la section <a href=\"https://github.com/cleanflight/cleanflight/blob/master/docs/USB%20Flashing.md\"target=\"_blank\">USB Flashing</a> du manuel de cleanflight).</li><li>Fermez le configurateur, fermez toutes les instances de chrome en cours d'exécution, fermez toutes les Chrome apps, Redémarrez le Configurateur.</li><li>Veuillez relâcher le bouton BOOT si votre FC en dispose.</li><li>Flashez le firmware approprié (en utilsiant le baudrate manuel si spécifié dans le manuel de votre FC).</li><li>Coupez l'alimentation.</li><li>Retirez le jumper des pins BOOT.</li><li>Mettez sous tension (la LED d'Activité devrait clignoter).</li><li>Connectez-vous normalement.</li></ul>"
+  },
+  "firmwareFlasherButtonLeave": {
+    "message": "Quitter le Flasheur de Firmware"
+  },
+  "firmwareFlasherFirmwareNotLoaded": {
+    "message": "Firmware non-chargé"
+  },
+  "firmwareFlasherHexCorrupted": {
+    "message": "Le fichier HEX est corrompu"
+  },
+  "firmwareFlasherRemoteFirmwareLoaded": {
+    "message": "<span style=\"color: #57a929\">Firmware distant chargé, prêt à flasher</span>"
+  },
+  "firmwareFlasherFailedToLoadOnlineFirmware": {
+    "message": "Echec de chargement du firmware distant"
+  },
+
+  "ledStripHelp": {
+    "message": "Le contrôleur de vol peut contrôler individuellement les couleurs et les effets de chaque LED présente sur une bande.<br />Configurez les LEDs sur la grille, configurez l'ordre du câblage, puis montez les LEDs sur votre aéronef selon les positions définies sur la grille."
+  },
+  "ledStripButtonSave": {
+    "message": "Sauver"
+  },
+  "ledStripEepromSaved": {
+    "message": "EEPROM <span style=\"color: #57a929\">sauvée</span>"
+  },
+
+  "controlAxisRoll": {
+    "message": "Roll"
+  },
+  "controlAxisPitch": {
+    "message": "Pitch"
+  },
+  "controlAxisYaw": {
+    "message": "Yaw"
+  },
+  "controlAxisThrottle": {
+    "message": "Throttle"
+  },
+  "controlAxisAux1": {
+    "message": "AUX 1"
+  },
+  "controlAxisAux2": {
+    "message": "AUX 2"
+  },
+  "controlAxisAux3": {
+    "message": "AUX 3"
+  },
+  "controlAxisAux4": {
+    "message": "AUX 4"
+  },
+  "controlAxisAux5": {
+    "message": "AUX 5"
+  },
+  "controlAxisAux6": {
+    "message": "AUX 6"
+  },
+  "controlAxisAux7": {
+    "message": "AUX 7"
+  },
+  "controlAxisAux8": {
+    "message": "AUX 8"
+  },
+  "controlAxisAux9": {
+    "message": "AUX 9"
+  },
+  "controlAxisAux10": {
+    "message": "AUX 10"
+  },
+  "controlAxisAux11": {
+    "message": "AUX 11"
+  },
+  "controlAxisAux12": {
+    "message": "AUX 12"
+  },
+  "controlAxisAux13": {
+    "message": "AUX 13"
+  },
+  "controlAxisAux14": {
+    "message": "AUX 14"
+  },
+  "controlAxisAux15": {
+    "message": "AUX 15"
+  },
+  "controlAxisAux16": {
+    "message": "AUX 16"
+  },
+
+  "pidTuningBasic": {
+    "message": "Basic/Acro"
+  },
+  "pidTuningLevel": {
+    "message": "Angle/Horizon"
+  },
+  "pidTuningAltitude": {
+    "message": "Baromètre & Sonar/Altitude"
+  },
+  "pidTuningMag": {
+    "message": "Magnétomètre/Direction"
+  },
+  "pidTuningGps": {
+    "message": "Navigation GPS"
+  },
+  "pidTuningLevelP": {
+    "message": "Force (Angle)"
+  },
+  "pidTuningLevelI": {
+    "message": "Force (Horizon)"
+  },
+  "pidTuningLevelD": {
+    "message": "Transition (Horizon)"
+  },
+  "pidTuningLevelHelp": {
+    "message": "Ces valeurs influent sur le comportement des modes de vol ANGLE et HORIZON. Chaque contrôleurs de PID utilise les valeurs LEVEL différemment. Reportez-vous à la documentation."
+  },
+  "configHelp2": {
+    "message": "Angle arbitraire de rotation de carte en degrés, pour permettre le montage de biais / à l'envers / avec rotation etc. En cas d'utilisation de capteurs externes, utilisez les alignements de capteur (Gyro, Acc, Mag) pour définir la position de chaque capteurs indépendemment de l'orientation de la carte. "
+  },
+  "failsafeFeaturesHelpOld": {
+    "message": "La configuration de secours a considérablement changé. Installez Cleanflight <strong>v1.12.0+</strong> pour activer le panneau de configuration amélioré."
+  },
+  "failsafePaneTitleOld": {
+    "message": "Mode de secours du récepteur"
+  },
+  "failsafeFeatureItemOld": {
+    "message": "Réglages du Mode de secours sur perte de signal RX"
+  },
+  "failsafeThrottleItemOld": {
+    "message": "Throttle de secours"
+  },
+  "failsafeFeaturesHelpNew": {
+    "message": "Le Mode de Secours (Failsafe) est à deux niveaux. Le <strong>Niveau 1</strong> est activé lorsqu'un canal émet une pulsation de longueur invalide, lorsque le récepteur rapporte un Mode de Secours, ou que le récepteur n'émet plus aucun signal. Les réglages de secours sont appliqués à <span style=\"color: red\">tous les canaux</span> et une courte période de temps est allouée pour permettre une éventuelle récupération. Le <strong>niveau 2</strong> est appliqué lorsque la condition d'erreur persiste plus longtemps que le temps de guarde configuré alors que l'aéronef est <span style=\"color: red\">armé</span>, tous les canaux resteront aux valeurs de secours fournies, sauf si la procédure choisie prévaut. <br /><strong>Note:</strong> Avant d'activer le niveau 1, les réglages de secours des canaux sont également appliqués aux canaux AUX qui présent des pulsations invalides."
+  },
+  "failsafePulsrangeTitle": {
+    "message": "Réglage de la plage valide de longueur de pulsation"
+  },
+  "failsafePulsrangeHelp": {
+    "message": "Les pulsations plus courtes que le minimum, ou plus longues que le maximum, sont invalides et vont activer l'application des réglages de secours pour chaque canal individuel pour les canaux AUX, or l'activation du niveau 1 pour les canaux de vol"
+  },
+  "failsafeRxMinUsecItem": {
+    "message": "Longeur minimum"
+  },
+  "failsafeRxMaxUsecItem": {
+    "message": "Longeur maximum"
+  },
+  "failsafeChannelFallbackSettingsTitle": {
+    "message": "Réglages de secours des canaux"
+  },
+  "failsafeChannelFallbackSettingsHelp": {
+    "message": "Ces réglages sont appliqués aux canaux AUX individuels, ou à tous les canaux lors de l'activation du niveau 1. <strong>Note:</strong> les valeurs sont enregistrées par incrément de 25usec, donc les petites variations disparaissent"
+  },
+  "failsafeChannelFallbackSettingsAuto": {
+    "message": "<strong>Auto</strong> signifie Roll, Pitch et Yaw centrés et Throttle bas. <strong>Hold</strong> signifie maintenir la dernière valeur valide reçue"
+  },
+  "failsafeChannelFallbackSettingsHold": {
+    "message": "<strong>Hold</strong> signifie maintenir la dernière valeur valide reçue. <strong>Set</strong> signifie que la valeur définie ici sera utilisée"
+  },
+  "failsafeStageTwoSettingsTitle": {
+    "message": "Niveau 2 - Paramètres"
+  },
+  "failsafeFeatureItem": {
+    "message": "Mode de Secours Niveau 2 activé"
+  },
+  "failsafeFeatureHelp": {
+    "message": "<strong>Note:</strong> Lorsque le Niveau 2 est DESACTIVE, le réglage de secours <strong>Auto</strong> est utilisé à la place du réglage utilisateur pour tous les canaux de vol (Roll, Pitch, Yaw et Throttle)."
+  },
+  "failsafeDelayItem": {
+    "message": "Temps de guarde pour l'activation du niveau 2 après perte de signal [1 = 0.1 sec.]"
+  },
+  "failsafeDelayHelp": {
+    "message": "Temps de récupération avant activation du niveau 1"
+  },
+  "failsafeThrottleLowItem": {
+    "message": "Délai Throttle Bas de Secours [1 = 0.1 sec.]"
+  },
+  "failsafeThrottleLowHelp": {
+    "message": "Seulement désarmer plutôt que d'exécuter la procédure de secours sélectionnée lorsque le throttle est bas pendant cette période de temps"
+  },
+  "failsafeThrottleItem": {
+    "message": "Valeur de Throttle pour l'attérissage"
+  },
+  "failsafeOffDelayItem": {
+    "message": "Délai de coupure des moteurs pendant le mode de secours [1 = 0.1 sec.]"
+  },
+  "failsafeOffDelayHelp": {
+    "message": "Délai de maintien du mode atterissage avant coupure et désarmement des moteurs"
+  },
+  "failsafeSubTitle1": {
+    "message": "Niveau 2 - Procédure de secours"
+  },
+  "failsafeProcedureItemSelect1": {
+    "message": "Attérir"
+  },
+  "failsafeProcedureItemSelect2": {
+    "message": "Tomber"
+  },
+  "failsafeKillSwitchItem": {
+    "message": "Failsafe Kill Switch (paramétrer le Failsafe dans l'onglet Modes)"
+  },
+  "failsafeKillSwitchHelp": {
+    "message": "Activez cette option pour que le switch failsafe, configuré dans l'onglet Modes, agisse comme un kill switch direct, en by-passant la procédure de secours sélectionnée. <strong>Note:</strong> L'armement est bloqué en position ON avec le failsafe kill switch"
+  }
+}

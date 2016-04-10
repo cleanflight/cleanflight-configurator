@@ -737,7 +737,7 @@
     },
 
     "pidTuningUpgradeFirmwareToChangePidController": {
-        "message": "<span style=\"color: red\">Changing PID controller disabled - you can change it via the CLI.</span>  You have firmware with API version <span style=\"color: red\">$1</span>, but this functionality requires requires <span style=\"color: #57a929\">$2</span>."
+        "message": "<span style=\"color: red\">Changing PID controller disabled - you can change it via the CLI.</span>  You have firmware with API version <span style=\"color: red\">$1</span>, but this functionality requires <span style=\"color: #57a929\">$2</span>."
     },
     "pidTuningName": {
         "message": "Name"

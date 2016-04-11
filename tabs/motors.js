@@ -285,11 +285,13 @@ TABS.motors.initialize = function (callback) {
                 for (var i = 0; i < 3; i++) {
                     if (Math.abs(accel_with_offset[i]) > Math.abs(accel_max_read[i])) accel_max_read[i] = accel_with_offset[i];
                 }
-
                 
                 for (i = 0; i < 8; i++) {
                     if ($('div.motor_switches li input').eq(i).is(':checked')) {
                    	   $('div.motor_rms dd').eq(i).text(rms.toFixed(4));
+                   	   $('div.motor_rms dd').eq(i).css({'background-color' : "#00D800"});
+                    } else {
+                       $('div.motor_rms dd').eq(i).css({'background-color' : "#828885"});
                     }
                 }
 

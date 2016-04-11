@@ -288,11 +288,13 @@
     margin-left: 10px;
 }
 
-.tab-motors .motor_testing .sliders input:first-child {
+.tab-motors .motor_testing .sliders input:first-child,
+.tab-motors .motor_testing .motor_switches li:first-child {
     margin-left: 0px;
 }
 
-.tab-motors .motor_testing .values {
+.tab-motors .motor_testing .values,
+.tab-motors .motor_testing .motor_switches {
     margin-top: 5px;
 }
 
@@ -300,23 +302,7 @@
     margin-left: 0px;
 }
 
-.tab-motors .motor_testing .values li {
-    float: left;
-    width: calc((100% / 9) - 10px);
-    margin-left: 10px;
-    text-align: center;
-}
-
-
-
-.tab-motors .motor_testing .motor_switches {
-    margin-top: 5px;
-}
-
-.tab-motors .motor_testing .motor_switches li:first-child {
-    margin-left: 0px;
-}
-
+.tab-motors .motor_testing .values li,
 .tab-motors .motor_testing .motor_switches li {
     float: left;
     width: calc((100% / 9) - 10px);

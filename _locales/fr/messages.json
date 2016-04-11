@@ -115,7 +115,7 @@
     "message": "Blackbox"
   },
   "tabAdjustments": {
-    "message": "Ajustements"
+    "message": "Réglages en vol"
   },
   "tabAuxiliary": {
     "message": "Modes"
@@ -529,7 +529,7 @@
     "message": "Mixeur"
   },
   "configurationFeatures": {
-    "message": "Autre fonctions"
+    "message": "Autres fonctions"
   },
   "configurationReceiver": {
     "message": "Mode du récepteur"
@@ -589,37 +589,37 @@
     "message": "Désarmer les moteurs quelle que soit la valeur de throttle (Lors de l'armement via canal AUX)"
   },
   "configurationThrottleMinimum": {
-    "message": "Throttle Minimum"
+    "message": "Throttle minimum"
   },
   "configurationThrottleMid": {
-    "message": "Throttle Median [valeur centrale de l'entrée RC]"
+    "message": "Throttle median [valeur centrale de l'entrée RC]"
   },
   "configurationThrottleMaximum": {
-    "message": "Throttle Maximum"
+    "message": "Throttle maximum"
   },
   "configurationThrottleMinimumCommand": {
-    "message": "Commande Minimum"
+    "message": "Commande minimum"
   },
   "configurationBatteryVoltage": {
-    "message": "Tensions de Batterie"
+    "message": "Tensions de batterie"
   },
   "configurationBatteryCurrent": {
-    "message": "Courant de Batterie"
+    "message": "Courant de batterie"
   },
   "configurationBatteryMinimum": {
-    "message": "Tension de Cellule Minimum"
+    "message": "Tension de cellule minimum"
   },
   "configurationBatteryMaximum": {
-    "message": "Tension de Cellule Maximum"
+    "message": "Tension de cellule maximum"
   },
   "configurationBatteryWarning": {
-    "message": "Tension de Cellule d'Alerte"
+    "message": "Tension de cellule d'alerte"
   },
   "configurationBatteryScale": {
-    "message": "Echelle de Tensions"
+    "message": "Echelle de tensions"
   },
   "configurationCurrent": {
-    "message": "Sonde de Courant"
+    "message": "Sonde de courant"
   },
   "configurationCurrentScale": {
     "message": "Convertir la tension de sortie en milliampères [1/10ème de mV/A]"
@@ -646,7 +646,7 @@
     "message": "Bande morte 3D Throttle"
   },
   "configurationSystem": {
-    "message": "Configuration du système"
+    "message": "Configuration Système"
   },
   "configurationLoopTime": {
     "message": "Temps de cycle du Contrôleur de Vol"
@@ -855,7 +855,7 @@
   },
 
   "adjustmentsHelp": {
-    "message": "Configurer les interrupteurs d'ajustements.  Voir la section 'in-flight adjustments' du manuel pour plus de details.  Les changements qu'apportent les fonctions d'ajustements ne sont pas sauvées automatiquement.  Il y a 4 slots.  Chaque interrupteur utilisé pour réaliser simultanément des ajustements nécessite l'utilisation exclusive d'un slot."
+    "message": "Configurer les interrupteurs de réglages en vol.  Voir la section 'in-flight adjustments' du manuel pour plus de details.  Les changements qu'apportent les fonctions de réglages en vol ne sont pas sauvées automatiquement.  Il y a 4 slots.  Chaque interrupteur utilisé pour réaliser simultanément des réglages nécessite l'utilisation exclusive d'un slot."
   },
   "adjustmentsExamples": {
     "message": "Exemples"

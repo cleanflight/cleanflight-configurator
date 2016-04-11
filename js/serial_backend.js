@@ -463,7 +463,7 @@ function update_live_status() {
     }
     
 	if (ANALOG != undefined) {
-    	var nbCells = Math.round(ANALOG.voltage / 4);
+    	var nbCells = Math.floor(ANALOG.voltage / MISC.vbatmaxcellvoltage) + 1;
     	
     	if (ANALOG.voltage == 0)
     		nbCells = 1;
@@ -485,7 +485,7 @@ function update_live_status() {
 	        $(".battery-status").css('background-color', '#59AA29');
 	    }
 	    
-	    $(".battery-status div").text("Battery: " + [ANALOG.voltage] + "V");
+	    $(".battery-status div").text("Battery: " + [ANALOG.voltage] + " V");
 	}
 
 	statuswrapper.show();

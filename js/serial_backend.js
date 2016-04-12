@@ -419,78 +419,78 @@ function update_dataflash_global() {
 }
 
 function startLiveDataRefreshTimer() { 
-	// live data refresh
-	GUI.timeout_add('data_refresh', function () { update_live_status(); }, 100);
+    // live data refresh
+    GUI.timeout_add('data_refresh', function () { update_live_status(); }, 100);
 }
 
 function update_live_status() {
-	
-	var statuswrapper = $('#quad-status_wrapper');
+    
+    var statuswrapper = $('#quad-status_wrapper');
 
     $(".quad-status-contents").css({
        display: 'block'
     });
 
     if (GUI.active_tab != 'cli') {
-    	MSP.send_message(MSP_codes.MSP_BOXNAMES, false, false);      
-	    MSP.send_message(MSP_codes.MSP_STATUS, false, false);
-	    MSP.send_message(MSP_codes.MSP_ANALOG, false, false);
+        MSP.send_message(MSP_codes.MSP_BOXNAMES, false, false);      
+        MSP.send_message(MSP_codes.MSP_STATUS, false, false);
+        MSP.send_message(MSP_codes.MSP_ANALOG, false, false);
     }
     
     var active = ((Date.now() - MSP.analog_last_received_timestamp) < 300);
 
     for (var i = 0; i < AUX_CONFIG.length; i++) {
-    	if (AUX_CONFIG[i] == 'ARM') {
-    		if (bit_check(CONFIG.mode, i))
-    			$(".armedicon").css({
-    				'background-image': 'url(images/icons/cf_icon_armed_green.svg)'
-			    });
-    		else
-    			$(".armedicon").css({
-    				'background-image': 'url(images/icons/cf_icon_armed_grey.svg)'
-			    });
-    	}
-    	if (AUX_CONFIG[i] == 'FAILSAFE') {
-    		if (bit_check(CONFIG.mode, i))
-    			$(".failsafeicon").css({
-    				'background-image': 'url(images/icons/cf_icon_failsafe_green.svg)'
-			    });
-    		else
-    			$(".failsafeicon").css({
-    				'background-image': 'url(images/icons/cf_icon_failsafe_grey.svg)'
-			    });
-    	}
+        if (AUX_CONFIG[i] == 'ARM') {
+            if (bit_check(CONFIG.mode, i))
+                $(".armedicon").css({
+                    'background-image': 'url(images/icons/cf_icon_armed_green.svg)'
+                });
+            else
+                $(".armedicon").css({
+                    'background-image': 'url(images/icons/cf_icon_armed_grey.svg)'
+                });
+        }
+        if (AUX_CONFIG[i] == 'FAILSAFE') {
+            if (bit_check(CONFIG.mode, i))
+                $(".failsafeicon").css({
+                    'background-image': 'url(images/icons/cf_icon_failsafe_green.svg)'
+                });
+            else
+                $(".failsafeicon").css({
+                    'background-image': 'url(images/icons/cf_icon_failsafe_grey.svg)'
+                });
+        }
     }
     
-	if (ANALOG != undefined) {
-    	var nbCells = Math.floor(ANALOG.voltage / MISC.vbatmaxcellvoltage) + 1;
-    	
-    	if (ANALOG.voltage == 0)
-    		nbCells = 1;
-    	
-	    var min = MISC.vbatmincellvoltage * nbCells;
-	    var max = MISC.vbatmaxcellvoltage * nbCells;
-	    var warn = MISC.vbatwarningcellvoltage * nbCells;
-	    
-	    $(".battery-status").css({
-	       width: ((ANALOG.voltage - min) / (max - min) * 100) + "%",
-	       display: 'block'
-	    });
-	
-	    if (!active) {
-	    	$(".battery-status").css('background-color', '#868686');
-	    } else if (ANALOG.voltage < warn) {
-	        $(".battery-status").css('background-color', '#D42133');
-	    } else  {
-	        $(".battery-status").css('background-color', '#59AA29');
-	    }
-	    
-	    $(".battery-status div").text("Battery: " + [ANALOG.voltage] + " V");
-	}
+    if (ANALOG != undefined) {
+        var nbCells = Math.floor(ANALOG.voltage / MISC.vbatmaxcellvoltage) + 1;
+        
+        if (ANALOG.voltage == 0)
+            nbCells = 1;
+        
+        var min = MISC.vbatmincellvoltage * nbCells;
+        var max = MISC.vbatmaxcellvoltage * nbCells;
+        var warn = MISC.vbatwarningcellvoltage * nbCells;
+        
+        $(".battery-status").css({
+           width: ((ANALOG.voltage - min) / (max - min) * 100) + "%",
+           display: 'block'
+        });
+    
+        if (!active) {
+            $(".battery-status").css('background-color', '#868686');
+        } else if (ANALOG.voltage < warn) {
+            $(".battery-status").css('background-color', '#D42133');
+        } else  {
+            $(".battery-status").css('background-color', '#59AA29');
+        }
+        
+        $(".battery-status div").text("Battery: " + [ANALOG.voltage] + " V");
+    }
 
-	statuswrapper.show();
-	GUI.timeout_remove('data_refresh');
-	startLiveDataRefreshTimer();
+    statuswrapper.show();
+    GUI.timeout_remove('data_refresh');
+    startLiveDataRefreshTimer();
 }
 
 function specificByte(num, pos) {
@@ -535,7 +535,7 @@ function update_dataflash_global() {
         $(".dataflash-contents_global").css({
            display: 'block'
         }); 
-	     
+         
         $(".dataflash-free_global").css({
            width: (100-(DATAFLASH.totalSize - DATAFLASH.usedSize) / DATAFLASH.totalSize * 100) + "%",
            display: 'block'

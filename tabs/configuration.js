@@ -73,8 +73,8 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     //Update Analog/Battery Data
     function load_analog() {
         MSP.send_message(MSP_codes.MSP_ANALOG, false, false, function () {
-	    $('input[name="batteryvoltage"]').val([ANALOG.voltage.toFixed(1)]);
-	    $('input[name="batterycurrent"]').val([ANALOG.amperage.toFixed(2)]);
+        $('input[name="batteryvoltage"]').val([ANALOG.voltage.toFixed(1)]);
+        $('input[name="batterycurrent"]').val([ANALOG.amperage.toFixed(2)]);
             });
     }
 

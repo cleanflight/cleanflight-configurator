@@ -288,8 +288,8 @@ TABS.motors.initialize = function (callback) {
                 
                 for (i = 0; i < 8; i++) {
                     if ($('div.motor_switches li input').eq(i).is(':checked')) {
-                   	   $('div.motor_rms dd').eq(i).text(rms.toFixed(4));
-                   	   $('div.motor_rms dd').eq(i).css({'background-color' : "#00D800"});
+                          $('div.motor_rms dd').eq(i).text(rms.toFixed(4));
+                          $('div.motor_rms dd').eq(i).css({'background-color' : "#00D800"});
                     } else {
                        $('div.motor_rms dd').eq(i).css({'background-color' : "#828885"});
                     }
@@ -364,11 +364,11 @@ TABS.motors.initialize = function (callback) {
                $('div.values li').eq(index).text($(this).val());
 
                for (i = 0; i < 8; i++) {
-            	   var val = 1000;
-            	   if ($('div.motor_switches li input').eq(i).is(':checked')) {
-	                   val = parseInt($('div.sliders input').eq(i).val());
-            	   }
-	
+                   var val = 1000;
+                   if ($('div.motor_switches li input').eq(i).is(':checked')) {
+                       val = parseInt($('div.sliders input').eq(i).val());
+                   }
+    
                    buffer.push(lowByte(val));
                    buffer.push(highByte(val));
                }

@@ -47,9 +47,9 @@ TABS.setup.initialize = function (callback) {
         // initialize 3D
         self.initialize3D();
 
-		// set roll in interactive block
+        // set roll in interactive block
         $('span.roll').text(chrome.i18n.getMessage('initialSetupAttitude', [0]));
-		// set pitch in interactive block
+        // set pitch in interactive block
         $('span.pitch').text(chrome.i18n.getMessage('initialSetupAttitude', [0]));
         // set heading in interactive block
         $('span.heading').text(chrome.i18n.getMessage('initialSetupAttitude', [0]));

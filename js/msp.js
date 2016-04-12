@@ -128,7 +128,7 @@ var MSP = {
     ledDirectionLetters:        ['n', 'e', 's', 'w', 'u', 'd'],      // in LSB bit order
     ledFunctionLetters:         ['i', 'w', 'f', 'a', 't', 'r', 'c'], // in LSB bit order
     
-    last_received_timestamp:	null,
+    last_received_timestamp:    null,
     analog_last_received_timestamp: null,
 
     supportedBaudRates: [ // 0 based index.
@@ -496,7 +496,7 @@ var MSP = {
                   WP_DATA.lat = data.getInt32(1, 1);
                   WP_DATA.lon = data.getInt32(5, 1);
                   WP_DATA.AltHold = data.getInt32(9, 1);
-                  WP_DATA.heading	= data.getUint16(13, 1);
+                  WP_DATA.heading    = data.getUint16(13, 1);
                   WP_DATA.timeToStay = data.getUint16(15, 1);
                   WP_DATA.navFlag = data.getUint8(17);
                 }

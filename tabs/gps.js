@@ -85,7 +85,7 @@ TABS.gps.initialize = function (callback) {
                 lat: lat,
                 lon: lon,
                 home_lat: gpsHome_lat,
-            	home_long: gpsHome_lon,
+                home_long: gpsHome_lon,
             };
 
             var frame = document.getElementById('map');

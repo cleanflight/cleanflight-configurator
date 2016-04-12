@@ -311,8 +311,8 @@
 }
 
 .tab-motors .motor_testing .motor_rms {
-	width: 100%;
-	display: block;
+    width: 100%;
+    display: block;
     float: left;
 }
 

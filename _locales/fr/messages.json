@@ -1620,5 +1620,11 @@
   },
   "failsafeKillSwitchHelp": {
     "message": "Activez cette option pour que le switch failsafe, configuré dans l'onglet Modes, agisse comme un kill switch direct, en by-passant la procédure de secours sélectionnée. <strong>Note:</strong> L'armement est bloqué en position ON avec le failsafe kill switch"
+  },
+  "mainHelpArmed": {
+    "message": "Statut de l'Armement des Moteurs"
+  },
+  "mainHelpFailsafe": {
+    "message": "Statut du Mode de Secours"
   }
 }

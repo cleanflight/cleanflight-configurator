@@ -278,7 +278,7 @@ TABS.pid_tuning.initialize = function (callback) {
 
         $('#resetPIDs').on('click', function(){
           MSP.send_message(MSP_codes.MSP_SET_RESET_CURR_PID, false, false, false);
-	  updateActivatedTab();
+          updateActivatedTab();
         });
 
         $('.pid_tuning tr').each(function(){

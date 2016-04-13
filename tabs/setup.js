@@ -199,11 +199,15 @@ TABS.setup.initialize = function (callback) {
 
         function get_fast_data() {
             MSP.send_message(MSP_codes.MSP_ATTITUDE, false, false, function () {
-	            roll_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[0]]));
-	            pitch_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[1]]));
+                roll_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[0]]));
+                pitch_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[1]]));
                 heading_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[2]]));
                 self.render3D();
                 self.updateInstruments();
+                
+                MSP.send_message(MSP_codes.MSP_COMP_GPS, false, false, function () {
+                    // GPS_DATA.directionToHome
+                } );
             });
         }
 
@@ -222,7 +226,7 @@ TABS.setup.initializeInstruments = function() {
     this.updateInstruments = function() {
         attitude.setRoll(SENSOR_DATA.kinematics[0]);
         attitude.setPitch(SENSOR_DATA.kinematics[1]);
-        heading.setHeading(SENSOR_DATA.kinematics[2]);
+        heading.setHeading(SENSOR_DATA.kinematics[2], GPS_DATA.directionToHome);
     };
 };
 

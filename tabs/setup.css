@@ -207,6 +207,14 @@
     }
 }
 
+.home_dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    margin-top: 2px;
+    margin-left: 40px;
+}
+
 #accel_calib_running {
     display: none;
     
@@ -226,8 +234,7 @@
     font-size: 12px;
     line-height: 13px;
     transition: all ease 0.2s;
-    text-decoration:none;
-    
+    text-decoration: none;
 }
 
 #mag_calib_running {
@@ -249,5 +256,5 @@
     font-size: 12px;
     line-height: 13px;
     transition: all ease 0.2s;
-    text-decoration:none;
+    text-decoration: none;
 }

@@ -485,7 +485,7 @@ function update_live_status() {
             $(".battery-status").css('background-color', '#59AA29');
         }
         
-        $(".battery-status div").text("Battery: " + [ANALOG.voltage] + " V");
+        $(".battery-status div").text(chrome.i18n.getMessage('initialSetupBatteryHead') + ": " + [ANALOG.voltage] + " V");
     }
 
     statuswrapper.show();

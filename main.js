@@ -329,7 +329,7 @@ $(document).ready(function () {
         $(".tab_container").removeClass('logopen');
         $("#scrollicon").removeClass('active');
         chrome.storage.local.set({'logopen': false});
-	
+        
         state = false;
     }else{
         $("#log").animate({height: 111}, 200);

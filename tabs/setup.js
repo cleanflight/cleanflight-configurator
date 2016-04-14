@@ -47,9 +47,9 @@ TABS.setup.initialize = function (callback) {
         // initialize 3D
         self.initialize3D();
 
-		// set roll in interactive block
+        // set roll in interactive block
         $('span.roll').text(chrome.i18n.getMessage('initialSetupAttitude', [0]));
-		// set pitch in interactive block
+        // set pitch in interactive block
         $('span.pitch').text(chrome.i18n.getMessage('initialSetupAttitude', [0]));
         // set heading in interactive block
         $('span.heading').text(chrome.i18n.getMessage('initialSetupAttitude', [0]));
@@ -74,12 +74,19 @@ TABS.setup.initialize = function (callback) {
                 GUI.interval_pause('setup_data_pull');
                 MSP.send_message(MSP_codes.MSP_ACC_CALIBRATION, false, false, function () {
                     GUI.log(chrome.i18n.getMessage('initialSetupAccelCalibStarted'));
+
+                    $('#accel_calib_running').show();
+                    $('#accel_calib_rest').hide();
+                    
                 });
 
                 GUI.timeout_add('button_reset', function () {
                     GUI.interval_resume('setup_data_pull');
 
                     GUI.log(chrome.i18n.getMessage('initialSetupAccelCalibEnded'));
+
+                    $('#accel_calib_running').hide();
+                    $('#accel_calib_rest').show();
 
                     self.removeClass('calibrating');
                 }, 2000);
@@ -94,11 +101,19 @@ TABS.setup.initialize = function (callback) {
 
                 MSP.send_message(MSP_codes.MSP_MAG_CALIBRATION, false, false, function () {
                     GUI.log(chrome.i18n.getMessage('initialSetupMagCalibStarted'));
+
+                    $('#mag_calib_running').show();
+                    $('#mag_calib_rest').hide();
+                    
                 });
 
                 GUI.timeout_add('button_reset', function () {
                     GUI.log(chrome.i18n.getMessage('initialSetupMagCalibEnded'));
                     self.removeClass('calibrating');
+                    
+                    $('#mag_calib_running').hide();
+                    $('#mag_calib_rest').show();
+                    
                 }, 30000);
             }
         });
@@ -154,6 +169,7 @@ TABS.setup.initialize = function (callback) {
             rssi_e = $('.rssi'),
             gpsFix_e = $('.gpsFix'),
             gpsSats_e = $('.gpsSats'),
+            gpsHdop_e = $('.gpsHdop'),
             gpsLat_e = $('.gpsLat'),
             gpsLon_e = $('.gpsLon'),
             roll_e = $('dd.roll'),
@@ -174,6 +190,7 @@ TABS.setup.initialize = function (callback) {
                 MSP.send_message(MSP_codes.MSP_RAW_GPS, false, false, function () {
                     gpsFix_e.html((GPS_DATA.fix) ? chrome.i18n.getMessage('gpsFixTrue') : chrome.i18n.getMessage('gpsFixFalse'));
                     gpsSats_e.text(GPS_DATA.numSat);
+                    gpsHdop_e.text(GPS_DATA.hdop);
                     gpsLat_e.text((GPS_DATA.lat / 10000000).toFixed(4) + ' deg');
                     gpsLon_e.text((GPS_DATA.lon / 10000000).toFixed(4) + ' deg');
                 });
@@ -182,11 +199,15 @@ TABS.setup.initialize = function (callback) {
 
         function get_fast_data() {
             MSP.send_message(MSP_codes.MSP_ATTITUDE, false, false, function () {
-	            roll_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[0]]));
-	            pitch_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[1]]));
+                roll_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[0]]));
+                pitch_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[1]]));
                 heading_e.text(chrome.i18n.getMessage('initialSetupAttitude', [SENSOR_DATA.kinematics[2]]));
                 self.render3D();
                 self.updateInstruments();
+                
+                MSP.send_message(MSP_codes.MSP_COMP_GPS, false, false, function () {
+                    // GPS_DATA.directionToHome
+                } );
             });
         }
 
@@ -205,7 +226,7 @@ TABS.setup.initializeInstruments = function() {
     this.updateInstruments = function() {
         attitude.setRoll(SENSOR_DATA.kinematics[0]);
         attitude.setPitch(SENSOR_DATA.kinematics[1]);
-        heading.setHeading(SENSOR_DATA.kinematics[2]);
+        heading.setHeading(SENSOR_DATA.kinematics[2], GPS_DATA.directionToHome);
     };
 };
 

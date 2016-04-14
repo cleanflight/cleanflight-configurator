@@ -127,6 +127,9 @@ var MSP = {
 
     ledDirectionLetters:        ['n', 'e', 's', 'w', 'u', 'd'],      // in LSB bit order
     ledFunctionLetters:         ['i', 'w', 'f', 'a', 't', 'r', 'c'], // in LSB bit order
+    
+    last_received_timestamp:    null,
+    analog_last_received_timestamp: null,
 
     supportedBaudRates: [ // 0 based index.
         'AUTO',
@@ -233,6 +236,7 @@ var MSP = {
                     console.log('Unknown state detected: ' + this.state);
             }
         }
+        this.last_received_timestamp = Date.now();
     },
     process_data: function (code, message_buffer, message_length) {
         var data = new DataView(message_buffer, 0); // DataView (allowing us to view arrayBuffer as struct/union)
@@ -308,6 +312,7 @@ var MSP = {
                 GPS_DATA.alt = data.getUint16(10, 1);
                 GPS_DATA.speed = data.getUint16(12, 1);
                 GPS_DATA.ground_course = data.getUint16(14, 1);
+                GPS_DATA.hdop = data.getUint16(16, 1);
                 break;
             case MSP_codes.MSP_COMP_GPS:
                 GPS_DATA.distanceToHome = data.getUint16(0, 1);
@@ -330,6 +335,7 @@ var MSP = {
                 ANALOG.mAhdrawn = data.getUint16(1, 1);
                 ANALOG.rssi = data.getUint16(3, 1); // 0-1023
                 ANALOG.amperage = data.getInt16(5, 1) / 100; // A
+                this.analog_last_received_timestamp = Date.now();
                 break;
             case MSP_codes.MSP_RC_TUNING:
                 var offset = 0;
@@ -430,7 +436,7 @@ var MSP = {
                 MISC.multiwiicurrentoutput = data.getUint8(offset++);
                 MISC.rssi_channel = data.getUint8(offset++);
                 MISC.placeholder2 = data.getUint8(offset++);
-                MISC.mag_declination = data.getInt16(offset, 1) / 10; // -18000-18000
+                MISC.mag_declination = data.getInt16(offset, 1) / 100; // -18000-18000
                 offset += 2;
                 MISC.vbatscale = data.getUint8(offset++, 1); // 10-200
                 MISC.vbatmincellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
@@ -484,7 +490,16 @@ var MSP = {
                 }
                 break;
             case MSP_codes.MSP_WP:
-                console.log(data);
+                WP_DATA = []; // empty the array as new data is coming in
+                if (data.byteLength > 0) {
+                  WP_DATA.wp_no = data.getUint8(0, 1);
+                  WP_DATA.lat = data.getInt32(1, 1);
+                  WP_DATA.lon = data.getInt32(5, 1);
+                  WP_DATA.AltHold = data.getInt32(9, 1);
+                  WP_DATA.heading    = data.getUint16(13, 1);
+                  WP_DATA.timeToStay = data.getUint16(15, 1);
+                  WP_DATA.navFlag = data.getUint8(17);
+                }
                 break;
             case MSP_codes.MSP_BOXIDS:
                 AUX_CONFIG_IDS = []; // empty the array as new data is coming in
@@ -1232,8 +1247,8 @@ MSP.crunch = function (code) {
             buffer.push(MISC.multiwiicurrentoutput);
             buffer.push(MISC.rssi_channel);
             buffer.push(MISC.placeholder2);
-            buffer.push(lowByte(Math.round(MISC.mag_declination * 10)));
-            buffer.push(highByte(Math.round(MISC.mag_declination * 10)));
+            buffer.push(lowByte(Math.round(MISC.mag_declination * 100)));
+            buffer.push(highByte(Math.round(MISC.mag_declination * 100)));
             buffer.push(MISC.vbatscale);
             buffer.push(Math.round(MISC.vbatmincellvoltage * 10));
             buffer.push(Math.round(MISC.vbatmaxcellvoltage * 10));

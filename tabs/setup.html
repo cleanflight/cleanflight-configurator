@@ -9,11 +9,31 @@
             <div class="cf_column fourth buttonarea">
                 <div class="spacer_right">
                     <div class="default_btn">
-                        <a class="calibrateAccel" id="default_btn green" href="#"
-                            i18n="initialSetupButtonCalibrateAccel"></a>
+                    
+                        <div id="accel_calib_rest">
+                            <a class="calibrateAccel" id="default_btn green" href="#"
+                                i18n="initialSetupButtonCalibrateAccel"></a>
+                        </div>
+                        
+                        <div id="accel_calib_running">
+                            <div class="data-loading">
+                                <p>Calibrating...</p>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="default_btn">
-                        <a class="calibrateMag" href="#" i18n="initialSetupButtonCalibrateMag"></a>
+                        
+                        <div id="mag_calib_rest">
+                            <a class="calibrateMag" href="#" i18n="initialSetupButtonCalibrateMag"></a>
+                        </div>
+                        
+                        <div id="mag_calib_running">
+                            <div class="data-loading">
+                                <p>Calibrating...</p>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="default_btn">
                         <a class="resetSettings" href="#" i18n="initialSetupButtonReset"></a>
@@ -96,6 +116,7 @@
                                     <td class="rssi">0 %</td>
                                 </tr>
                             </tbody>
+                            
                         </table>
                     </div>
                 </div>
@@ -117,6 +138,10 @@
                                     <td class="gpsSats"></td>
                                 </tr>
                                 <tr>
+                                    <td i18n="gpsHdop"></td>
+                                    <td class="gpsHdop"></td>
+                                </tr>
+                                <tr>
                                     <td i18n="gpsLat"></td>
                                     <td class="gpsLat"></td>
                                 </tr>
@@ -134,7 +159,10 @@
                     <div class="gui_box_titlebar" align="left">
                         <div class="spacer_box_title" i18n="initialSetupInstrumentsHead"></div>
                     </div>
-                    <span id="attitude"></span> <span id="heading"></span>
+                    <span id="attitude"></span>
+                    <span id="heading">
+                        <span id="home_heading"></span>
+                    </span>
                 </div>
             </div>
         </div>

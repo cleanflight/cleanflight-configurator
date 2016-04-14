@@ -285,6 +285,16 @@ TABS.motors.initialize = function (callback) {
                 for (var i = 0; i < 3; i++) {
                     if (Math.abs(accel_with_offset[i]) > Math.abs(accel_max_read[i])) accel_max_read[i] = accel_with_offset[i];
                 }
+                
+                for (i = 0; i < 8; i++) {
+                    if ($('div.motor_switches li input').eq(i).is(':checked')) {
+                          $('div.motor_rms dd').eq(i).text(rms.toFixed(4));
+                          $('div.motor_rms dd').eq(i).css({'background-color' : "#00D800"});
+                    } else {
+                       $('div.motor_rms dd').eq(i).css({'background-color' : "#828885"});
+                    }
+                }
+
             }
         });
 
@@ -341,7 +351,7 @@ TABS.motors.initialize = function (callback) {
             $('div.sliders input').val(MISC.mincommand); 
         }
 
-        if(self.allowTestMode){ 
+        if (self.allowTestMode) { 
            // UI hooks
            var buffering_set_motor = [],
            buffer_delay = false;
@@ -354,10 +364,13 @@ TABS.motors.initialize = function (callback) {
                $('div.values li').eq(index).text($(this).val());
 
                for (i = 0; i < 8; i++) {
-               var val = parseInt($('div.sliders input').eq(i).val());
-
-               buffer.push(lowByte(val));
-               buffer.push(highByte(val));
+                   var val = 1000;
+                   if ($('div.motor_switches li input').eq(i).is(':checked')) {
+                       val = parseInt($('div.sliders input').eq(i).val());
+                   }
+    
+                   buffer.push(lowByte(val));
+                   buffer.push(highByte(val));
                }
              
                buffering_set_motor.push(buffer);
@@ -402,6 +415,10 @@ TABS.motors.initialize = function (callback) {
 
                 $('div.sliders input').trigger('input');             
             }
+        });
+        
+        $('div.motor_switches li input').change(function () {
+            $('div.sliders input').trigger('input');
         });
 
         // check if motors are already spinning

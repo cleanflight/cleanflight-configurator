@@ -21,6 +21,7 @@ var SENSOR_DATA;
 var MOTOR_DATA;
 var SERVO_DATA;
 var GPS_DATA;
+var WP_DATA;
 var ANALOG;
 var ARMING_CONFIG;
 var FC_CONFIG;
@@ -99,7 +100,7 @@ var FC = {
             throttle_MID:    0,
             throttle_EXPO:   0,
             dynamic_THR_breakpoint: 0,
-        	RC_YAW_EXPO:         0
+            RC_YAW_EXPO:         0
         };
         
         AUX_CONFIG = [];
@@ -142,6 +143,7 @@ var FC = {
             alt:             0,
             speed:           0,
             ground_course:   0,
+            hdop:            0,    
             distanceToHome:  0,
             ditectionToHome: 0,
             update:          0,
@@ -151,6 +153,16 @@ var FC = {
             svid:    [],
             quality: [],
             cno:     []
+        };
+        
+        WP_DATA = {
+            wp_no:            0,
+            lat:            0,
+            lon:            0,
+            AltHold:        0,
+            heading:        0,
+            timeToStay:        0,
+            navFlag:        0
         };
         
         ANALOG = {

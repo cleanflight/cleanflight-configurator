@@ -73,8 +73,8 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     //Update Analog/Battery Data
     function load_analog() {
         MSP.send_message(MSP_codes.MSP_ANALOG, false, false, function () {
-	    $('input[name="batteryvoltage"]').val([ANALOG.voltage.toFixed(1)]);
-	    $('input[name="batterycurrent"]').val([ANALOG.amperage.toFixed(2)]);
+        $('input[name="batteryvoltage"]').val([ANALOG.voltage.toFixed(1)]);
+        $('input[name="batterycurrent"]').val([ANALOG.amperage.toFixed(2)]);
             });
     }
 
@@ -363,7 +363,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         $('input[name="pitch"]').val(CONFIG.accelerometerTrims[0]);
 
         // fill magnetometer
-        $('input[name="mag_declination"]').val(MISC.mag_declination);
+        $('input[name="mag_declination"]').val(MISC.mag_declination.toFixed(2));
 
         //fill motor disarm params and FC loop time        
         if(semver.gte(CONFIG.apiVersion, "1.8.0")) {

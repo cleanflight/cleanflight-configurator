@@ -21,6 +21,7 @@ var SENSOR_DATA;
 var MOTOR_DATA;
 var SERVO_DATA;
 var GPS_DATA;
+var WP_DATA;
 var ANALOG;
 var ARMING_CONFIG;
 var FC_CONFIG;
@@ -153,6 +154,16 @@ var FC = {
             cno:     []
         };
         
+        WP_DATA = {
+            wp_no:             0,
+            lat:               0,
+            lon:               0,
+            AltHold:           0,
+            heading:           0,
+            timeToStay:        0,
+            navFlag:           0
+        };
+
         ANALOG = {
             voltage:    0,
             mAhdrawn:   0,

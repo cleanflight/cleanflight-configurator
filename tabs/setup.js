@@ -154,6 +154,7 @@ TABS.setup.initialize = function (callback) {
             rssi_e = $('.rssi'),
             gpsFix_e = $('.gpsFix'),
             gpsSats_e = $('.gpsSats'),
+            gpsHdop_e = $('.gpsHdop'),
             gpsLat_e = $('.gpsLat'),
             gpsLon_e = $('.gpsLon'),
             roll_e = $('dd.roll'),
@@ -174,6 +175,7 @@ TABS.setup.initialize = function (callback) {
                 MSP.send_message(MSP_codes.MSP_RAW_GPS, false, false, function () {
                     gpsFix_e.html((GPS_DATA.fix) ? chrome.i18n.getMessage('gpsFixTrue') : chrome.i18n.getMessage('gpsFixFalse'));
                     gpsSats_e.text(GPS_DATA.numSat);
+                    gpsHdop_e.text(GPS_DATA.hdop);
                     gpsLat_e.text((GPS_DATA.lat / 10000000).toFixed(4) + ' deg');
                     gpsLon_e.text((GPS_DATA.lon / 10000000).toFixed(4) + ' deg');
                 });

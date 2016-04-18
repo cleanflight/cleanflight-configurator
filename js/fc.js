@@ -142,6 +142,7 @@ var FC = {
             alt:             0,
             speed:           0,
             ground_course:   0,
+            hdop:            0,
             distanceToHome:  0,
             ditectionToHome: 0,
             update:          0,

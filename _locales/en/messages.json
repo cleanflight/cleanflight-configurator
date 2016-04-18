@@ -1156,6 +1156,9 @@
     "gpsSignalStr": {
         "message": "Signal Strength"
     },
+    "gpsHdop": {
+        "message": "HDOP:"
+    },
 
     "motorsMaster": {
         "message": "Master"

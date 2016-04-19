@@ -1,3 +1,14 @@
 .DS_store
 nbproject/
 
+.settings/org.eclipse.wst.common.project.facet.core.xml
+.settings/com.google.gwt.eclipse.core.prefs
+.project
+.settings/org.eclipse.jdt.core.prefs
+.classpath
+.settings/org.eclipse.wst.jsdt.ui.superType.container
+.settings/.jsdtscope
+images/Thumbs.db
+images/icons/Thumbs.db
+.settings/org.eclipse.wst.jsdt.ui.superType.name
+.settings/org.eclipse.wst.jsdt.ui.prefs

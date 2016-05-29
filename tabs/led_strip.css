@@ -90,6 +90,12 @@
     border-color: rgb(52, 155, 255);
 }
 
+.tab-led-strip .gPoint.function-l { /* Battery */
+    background: magenta;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
+    border-color: rgb(52, 155, 255);
+}
+
 .tab-led-strip .gPoint.function-i.function-f {
     background: linear-gradient(to bottom, yellow 0%,yellow 50%,rgb(50, 205, 50) 50%, rgb(50, 205, 50) 100%);
 }
@@ -192,6 +198,7 @@
 .tab-led-strip .functions .function-g.btnOn {background: green;}
 .tab-led-strip .functions .function-s.btnOn {background: brown;}
 .tab-led-strip .functions .function-b.btnOn {background: white;}
+.tab-led-strip .functions .function-l.btnOn {background: magenta;}
 
 .tab-led-strip .color-1 {background: white;}
 .tab-led-strip .color-2 {background: red;}

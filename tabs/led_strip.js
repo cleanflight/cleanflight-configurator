@@ -2,7 +2,7 @@
 
 TABS.led_strip = {
     wireMode: false,
-    functions: ['w', 'f', 'i', 'a', 't', 'r', 'c', 'g', 's', 'b'],
+    functions: ['w', 'f', 'i', 'a', 't', 'r', 'c', 'g', 's', 'b', 'l'],
     directions: ['n', 'e', 's', 'w', 'u', 'd'],
 };
 
@@ -288,7 +288,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
 
         });
         
-        if (CONFIG.apiVersion < '1.18.0') {
+        if (semver.lt(CONFIG.apiVersion, "1.18.0")) {
             $(".extra_functions").hide();
         }
         

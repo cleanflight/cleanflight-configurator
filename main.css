@@ -1252,6 +1252,12 @@ dialog {
     text-decoration:none;
 }
 
+.default_btn a.disabled {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+
 .default_btn a:hover {
     background-color: #6ac435;
     color: #fff;

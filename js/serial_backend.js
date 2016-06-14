@@ -304,7 +304,7 @@ function read_serial(info) {
 function sensor_status(sensors_detected) {
     // initialize variable (if it wasn't)
     if (!sensor_status.previous_sensors_detected) {
-        sensor_status.previous_sensors_detected = 0;
+        sensor_status.previous_sensors_detected = -1; // Otherwise first iteration will not be run if sensors_detected == 0
     }
 
     // update UI (if necessary)
@@ -326,7 +326,7 @@ function sensor_status(sensors_detected) {
         $('.accicon', e_sensor_status).removeClass('active');
     }
 
-    if (have_sensor(sensors_detected, 'gyro')) {
+    if (true) { // Gyro status is not reported by FC
         $('.gyro', e_sensor_status).addClass('on');
         $('.gyroicon', e_sensor_status).addClass('active');
     } else {
@@ -352,7 +352,7 @@ function sensor_status(sensors_detected) {
 
     if (have_sensor(sensors_detected, 'gps')) {
         $('.gps', e_sensor_status).addClass('on');
-	$('.gpsicon', e_sensor_status).addClass('active');
+        $('.gpsicon', e_sensor_status).addClass('active');
     } else {
         $('.gps', e_sensor_status).removeClass('on');
         $('.gpsicon', e_sensor_status).removeClass('active');
@@ -370,7 +370,6 @@ function sensor_status(sensors_detected) {
 function have_sensor(sensors_detected, sensor_code) {
     switch(sensor_code) {
         case 'acc':
-        case 'gyro':
             return bit_check(sensors_detected, 0);
         case 'baro':
             return bit_check(sensors_detected, 1);

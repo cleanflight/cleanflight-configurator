@@ -9,37 +9,41 @@ var MSP_codes = {
     MSP_BUILD_INFO:             5,
     
     // MSP commands for Cleanflight original features
-    MSP_CHANNEL_FORWARDING:     32,
-    MSP_SET_CHANNEL_FORWARDING: 33,
-    MSP_MODE_RANGES:            34,
-    MSP_SET_MODE_RANGE:         35,
-    MSP_RX_CONFIG:              44,
-    MSP_SET_RX_CONFIG:          45,
-    MSP_LED_STRIP_CONFIG:       48,
-    MSP_SET_LED_STRIP_CONFIG:   49,
-    MSP_ADJUSTMENT_RANGES:      52,
-    MSP_SET_ADJUSTMENT_RANGE:   53,
-    MSP_CF_SERIAL_CONFIG:       54,
-    MSP_SET_CF_SERIAL_CONFIG:   55,
-    MSP_SONAR:                  58,
-    MSP_PID_CONTROLLER:         59,
-    MSP_SET_PID_CONTROLLER:     60,
-    MSP_ARMING_CONFIG:          61,
-    MSP_SET_ARMING_CONFIG:      62,
-    MSP_DATAFLASH_SUMMARY:      70,
-    MSP_DATAFLASH_READ:         71,
-    MSP_DATAFLASH_ERASE:        72,
-    MSP_LOOP_TIME:              73,
-    MSP_SET_LOOP_TIME:          74,
-    MSP_FAILSAFE_CONFIG:        75,
-    MSP_SET_FAILSAFE_CONFIG:    76,
-    MSP_RXFAIL_CONFIG:          77,
-    MSP_SET_RXFAIL_CONFIG:      78,
-    MSP_SDCARD_SUMMARY:         79,
-    MSP_BLACKBOX_CONFIG:        80,
-    MSP_SET_BLACKBOX_CONFIG:    81,
-    MSP_TRANSPONDER_CONFIG:     82,
-    MSP_SET_TRANSPONDER_CONFIG: 83,
+    MSP_CHANNEL_FORWARDING:      32,
+    MSP_SET_CHANNEL_FORWARDING:  33,
+    MSP_MODE_RANGES:             34,
+    MSP_SET_MODE_RANGE:          35,
+    MSP_RX_CONFIG:               44,
+    MSP_SET_RX_CONFIG:           45,
+    MSP_LED_COLORS:              46,
+    MSP_SET_LED_COLORS:          47,
+    MSP_LED_STRIP_CONFIG:        48,
+    MSP_SET_LED_STRIP_CONFIG:    49,
+    MSP_ADJUSTMENT_RANGES:       52,
+    MSP_SET_ADJUSTMENT_RANGE:    53,
+    MSP_CF_SERIAL_CONFIG:        54,
+    MSP_SET_CF_SERIAL_CONFIG:    55,
+    MSP_SONAR:                   58,
+    MSP_PID_CONTROLLER:          59,
+    MSP_SET_PID_CONTROLLER:      60,
+    MSP_ARMING_CONFIG:           61,
+    MSP_SET_ARMING_CONFIG:       62,
+    MSP_DATAFLASH_SUMMARY:       70,
+    MSP_DATAFLASH_READ:          71,
+    MSP_DATAFLASH_ERASE:         72,
+    MSP_LOOP_TIME:               73,
+    MSP_SET_LOOP_TIME:           74,
+    MSP_FAILSAFE_CONFIG:         75,
+    MSP_SET_FAILSAFE_CONFIG:     76,
+    MSP_RXFAIL_CONFIG:           77,
+    MSP_SET_RXFAIL_CONFIG:       78,
+    MSP_SDCARD_SUMMARY:          79,
+    MSP_BLACKBOX_CONFIG:         80,
+    MSP_SET_BLACKBOX_CONFIG:     81,
+    MSP_TRANSPONDER_CONFIG:      82,
+    MSP_SET_TRANSPONDER_CONFIG:  83,
+    MSP_LED_STRIP_MODECOLOR:     86,
+    MSP_SET_LED_STRIP_MODECOLOR: 87,
 
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -907,11 +911,67 @@ var MSP = {
                     
                     LED_STRIP.push(led);
                 }
-                
                 break;
             case MSP_codes.MSP_SET_LED_STRIP_CONFIG:
                 console.log('Led strip config saved');
                 break;
+            case MSP_codes.MSP_LED_COLORS:
+                
+                LED_COLORS = [];
+                
+                var colorCount = data.byteLength / 4;
+                
+                var offset = 0;
+                for (var i = 0; offset < data.byteLength && i < colorCount; i++) {
+
+                    var h = data.getUint16(offset, 1);
+                    var s = data.getUint8(offset + 2, 1);
+                    var v = data.getUint8(offset + 3, 1);
+                    offset += 4;
+
+                    var color = {
+                        h: h,
+                        s: s,
+                        v: v
+                    };
+                    
+                    LED_COLORS.push(color);
+                }
+                
+                break;
+            case MSP_codes.MSP_SET_LED_COLORS:
+                console.log('Led strip colors saved');
+                break;
+            case MSP_codes.MSP_LED_STRIP_MODECOLOR:
+                if (semver.gte(CONFIG.apiVersion, "1.19.0")) {
+
+                    LED_MODE_COLORS = [];
+                    
+                    var colorCount = data.byteLength / 3;
+                    
+                    var offset = 0;
+                    for (var i = 0; offset < data.byteLength && i < colorCount; i++) {
+
+                        var mode = data.getUint8(offset++, 1);
+                        var direction = data.getUint8(offset++, 1);
+                        var color = data.getUint8(offset++, 1);
+
+                        var mode_color = {
+                            mode: mode,
+                            direction: direction,
+                            color: color
+                        };
+                        
+                        LED_MODE_COLORS.push(mode_color);
+                    }
+                }
+                break;
+            case MSP_codes.MSP_SET_LED_STRIP_MODECOLOR:
+                console.log('Led strip mode colors saved');
+                break;
+                
+                
+                
             case MSP_codes.MSP_DATAFLASH_SUMMARY:
                 if (data.byteLength >= 13) {
                     var
@@ -1015,18 +1075,20 @@ var MSP = {
 
         // trigger callbacks, cleanup/remove callback after trigger
         for (var i = this.callbacks.length - 1; i >= 0; i--) { // itterating in reverse because we use .splice which modifies array length
-            if (this.callbacks[i].code == code) {
-                // save callback reference
-                var callback = this.callbacks[i].callback;
-
-                // remove timeout
-                clearInterval(this.callbacks[i].timer);
-
-                // remove object from array
-                this.callbacks.splice(i, 1);
-
-                // fire callback
-                if (callback) callback({'command': code, 'data': data, 'length': message_length});
+            if (i < this.callbacks.length) {
+                if (this.callbacks[i].code == code) {
+                    // save callback reference
+                    var callback = this.callbacks[i].callback;
+    
+                    // remove timeout
+                    clearInterval(this.callbacks[i].timer);
+    
+                    // remove object from array
+                    this.callbacks.splice(i, 1);
+    
+                    // fire callback
+                    if (callback) callback({'command': code, 'data': data, 'length': message_length});
+                }
             }
         }
     },
@@ -1076,10 +1138,14 @@ var MSP = {
 
         var requestExists = false;
         for (var i = 0; i < MSP.callbacks.length; i++) {
-            if (MSP.callbacks[i].code == code) {
-                // request already exist, we will just attach
-                requestExists = true;
-                break;
+            if (i < MSP.callbacks.length) {
+                if (MSP.callbacks[i].code == code) {
+                    // request already exist, we will just attach
+                    requestExists = true;
+                    break;
+                }
+            } else {
+                console.log("Callback index error: "+ i);
             }
         }
 
@@ -1101,7 +1167,6 @@ var MSP = {
                 }
             });
         }
-
         return true;
     },
     callbacks_cleanup: function () {
@@ -1639,6 +1704,54 @@ MSP.sendLedStripConfig = function(onCompleteCallback) {
         }
         
         MSP.send_message(MSP_codes.MSP_SET_LED_STRIP_CONFIG, buffer, false, nextFunction);
+    }
+}
+
+MSP.sendLedStripColors = function(onCompleteCallback) {
+    if (LED_COLORS.length == 0) {
+        onCompleteCallback();
+    } else {
+        var buffer = [];
+        
+        for (var colorIndex = 0; colorIndex < LED_COLORS.length; colorIndex++) {
+            var color = LED_COLORS[colorIndex];
+            
+            buffer.push(specificByte(color.h, 0));
+            buffer.push(specificByte(color.h, 1));
+            buffer.push(color.s);
+            buffer.push(color.v);
+        }
+        MSP.send_message(MSP_codes.MSP_SET_LED_COLORS, buffer, false, onCompleteCallback);
+    }
+}
+
+MSP.sendLedStripModeColors = function(onCompleteCallback) {
+    
+    var nextFunction = send_next_led_strip_mode_color; 
+    var index = 0;
+    
+    if (LED_MODE_COLORS.length == 0) {
+        onCompleteCallback();
+    } else {
+        send_next_led_strip_mode_color();
+    }
+    
+    function send_next_led_strip_mode_color() {
+        var buffer = [];
+        
+        var mode_color = LED_MODE_COLORS[index];
+        
+        buffer.push(mode_color.mode);
+        buffer.push(mode_color.direction);
+        buffer.push(mode_color.color);
+
+        // prepare for next iteration
+        index++;
+        if (index == LED_MODE_COLORS.length) {
+            nextFunction = onCompleteCallback;
+        }
+
+        MSP.send_message(MSP_codes.MSP_SET_LED_STRIP_MODECOLOR, buffer, false, nextFunction);
     }
 }
 

@@ -171,7 +171,11 @@
 
 /* Drop-down boxes */
 
-.tab-led-strip .select {    background: white;}
+.tab-led-strip .select {
+    background: white;
+    margin-bottom: 15px;
+}
+
 .tab-led-strip .select .function-c {
     background: linear-gradient( to bottom right, rgba(255, 0, 0, .5) 0%, rgba(255, 255, 0, 0.5) 15%, rgba(0, 255, 0, .5) 30%, rgba(0, 255, 255, .5) 50%, rgba(0, 0, 255, .5) 65%, rgba(255, 0, 255, .5) 80%, rgba(255, 0, 0, .5) 100%);
 }
@@ -187,6 +191,9 @@
     color: black;
 }
 
+.tab-led-strip .select select {
+    border: 1px solid silver;
+}
 
 .tab-led-strip .overlays,
 .tab-led-strip .modifiers {

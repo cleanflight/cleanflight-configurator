@@ -1635,5 +1635,8 @@
     },
     "configHelp3": {
         "message": "Configure port scenario first before selecting a serial-based receiver."
+    },
+        "featureSERVO_TILTTip": {
+        "message": "With this feature activated, you can connect a gimbal. Do not activate with motors and battery connected! Motor pins 1-2 are used for gimbal if active! Use pins 3-6 for motors. "
     }
 }

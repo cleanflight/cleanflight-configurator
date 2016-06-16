@@ -461,7 +461,7 @@
         "message": "Don't spin the motors when armed"
     },
     "featureSERVO_TILT": {
-        "message": "Servo gimbal"
+        "message": "Servo gimbal (uses motor pins 1-2)"
     },
     "featureSOFTSERIAL": {
         "message": "Enable CPU based serial ports"

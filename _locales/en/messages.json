@@ -1632,5 +1632,8 @@
     },
     "mainHelpLink": {
         "message": "Serial Link Status"
+    },
+    "configHelp3": {
+        "message": "Configure port scenario first before selecting a serial-based receiver."
     }
 }

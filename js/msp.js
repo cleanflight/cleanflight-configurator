@@ -627,6 +627,11 @@ var MSP = {
                 break;
             case MSP_codes.MSP_GPS_SV_INFO:
                 if (data.byteLength > 0) {
+                    GPS_DATA.chn = [];
+                    GPS_DATA.svid = [];
+                    GPS_DATA.quality = [];
+                    GPS_DATA.cno = [];
+                    
                     var numCh = data.getUint8(0);
 
                     var needle = 1;

@@ -1636,7 +1636,14 @@
     "configHelp3": {
         "message": "Configure port scenario first before selecting a serial-based receiver."
     },
-        "featureSERVO_TILTTip": {
+    "featureSERVO_TILTTip": {
         "message": "With this feature activated, you can connect a gimbal. Do not activate with motors and battery connected! Motor pins 1-2 are used for gimbal if active! Use pins 3-6 for motors. "
+    },
+    "tabOSD": {
+         "message": "OSD"
+    },
+    "tabOSDinfo": {
+    "message": "Your flight controller isn't responding to OSD commands. This probably means that it does not have an integrated OSD that is supported by Cleanflight. Note that some flight controllers have an onboard  that can be flashed and configured with MWOSD, however the MinimOSD cannot be configured through this interface."
     }
+    
 }

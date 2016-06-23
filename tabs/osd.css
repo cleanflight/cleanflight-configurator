@@ -1,0 +1,47 @@
+.tab-osd .info {
+    margin: 10px 0 0 0;
+    position: relative;
+}
+
+.darkgrey {
+    background-color: #575757;
+}
+
+.tab-osd .spacer_box_title {
+    float: none;
+}
+
+.tab-osd .info {
+    float: left;
+    width: 100%;
+}
+
+
+.tab-osd .cf_table td:last-child {
+    text-align: left;
+}
+
+.tab-osd .options .flash_on_connect_wrapper {
+    display: none;
+}
+
+
+.tab-osd .hide {
+  display: none;
+}
+
+.tab-osd .note {
+    padding: 1em;
+}
+
+.tab-osd .content_wrapper {
+    height: calc(100% - 41px);
+}
+	
+	
+@media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
+.tab-osd .content_wrapper {
+    height: calc(100% - 30px);
+}
+	
+}

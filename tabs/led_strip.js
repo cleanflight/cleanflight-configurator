@@ -2,9 +2,6 @@
 
 TABS.led_strip = {
         wireMode: false,
-        functions: ['i', 'w', 'f', 'a', 't', 'r', 'c', 'g', 's', 'b', 'l', 'o', 'n'],
-        baseFuncs: ['c', 'f', 'a', 'l', 's', 'g', 'r'],
-        overlays: ['t', 'o', 'b', 'n', 'i', 'w'],
         directions: ['n', 'e', 's', 'w', 'u', 'd'],
     };
 
@@ -17,6 +14,10 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
         TABS.led_strip.functions = ['i', 'w', 'f', 'a', 't', 'r', 'c', 'g', 's', 'b'];
         TABS.led_strip.baseFuncs = ['c', 'f', 'a', 'b', 'g', 'r'];
         TABS.led_strip.overlays = ['t', 's', 'i', 'w'];
+    } else {
+        TABS.led_strip.functions = ['i', 'w', 'f', 'a', 't', 'r', 'c', 'g', 's', 'b', 'l', 'o', 'n'];
+        TABS.led_strip.baseFuncs = ['c', 'f', 'a', 'l', 's', 'g', 'r'];
+        TABS.led_strip.overlays = ['t', 'o', 'b', 'n', 'i', 'w'];
     }
 
     TABS.led_strip.wireMode = false;

@@ -37,11 +37,68 @@
 .tab-osd .content_wrapper {
     height: calc(100% - 41px);
 }
+
+
+
+
+
+.tab-osd .checkbox {
+    border-bottom: 1px solid #ccc;
+    margin-top: 4px;
+    float: left;
+    width: 100%;
+	padding-bottom:5px;
+}
+
+.tab-osd .numberspacer {
+    width: 25px;
+    float: left;
+   }
 	
+.tab-osd label {
+    margin-top: -0px;
+    float: left;
+}
+
+.tab-osd input {
+	float:left;
+	margin-right:8px;
+}
+
+.tab-osd .checkbox:last-child {
+    border-bottom: 0px solid #ccc;
+	padding-bottom:10px;
+ }	
 	
+.tab-osd .preview {
+	width: 720px;
+}
+
+.tab-osd .osd_canvas {
+	width: 720px;
+	height: 480px;
+	background-image: url(/images/osdpreview.jpg);
+	background-repeat: no-repeat;
+	float:left;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.tab-osd .image {
+    margin-bottom: 0px;
+}
+
+
+.tab-osd .elements {
+    max-width: calc(100% - 720px);
+}
+
 @media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
 .tab-osd .content_wrapper {
     height: calc(100% - 30px);
 }
+
+
+
 	
 }

@@ -9,31 +9,34 @@ TABS.osd = {};
 TABS.osd.initialize = function (callback) {
     var self = this;
 
+
     if (GUI.active_tab != 'osd') {
         GUI.active_tab = 'osd';
+        googleAnalytics.sendAppView('OSD');
     }
-
+    
     $('#content').load("./tabs/osd.html", function () {
         // translate to user-selected language
         localize();
 
  
-        // UI Hooks
-        $('a.load_font_file').click((function($preview) {
-          return function() {
-            $fontPicker.removeClass('active');
-            FONT.openFontFile($preview);
-          }
-        })($preview));
+function on_tab_loaded_handler() {
 
+        localize();
         
-       
-        $(document).keypress(function (e) {
-            if (e.which == 13) { // enter
-                // Trigger regular Flashing sequence
-                $('a.flash_font').click();
-            }
-        });
+        update_ui();
+
+        $('a.save').click(on_save_handler);
+
+        // status data pulled via separate timer with static speed
+        GUI.interval_add('status_pull', function status_pull() {
+            MSP.send_message(MSP_codes.MSP_STATUS);
+        }, 250, true);
+
+        GUI.content_ready(callback);
+    }
+
+
 
         GUI.content_ready(callback);
     });

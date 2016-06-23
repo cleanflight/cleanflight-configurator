@@ -1,29 +1,46 @@
 <div class="tab-osd toolbar_fixed_bottom">
     <div class="content_wrapper">
-		<h1 class="tab_title" i18n="tabOSD"></h1>
-
-    <div class="unsupported xhide">
-        <p class="note" i18n="tabOSDinfo"></p>
-        
-    </div>
-    <div class="supported hide">
-        <div class="display-layout">
-            <div class="video-types">
+        <h1 class="tab_title" i18n="tabOSD"></h1>
+        <div class="unsupported hide">
+            <p class="note" i18n="tabOSDinfo"></p>
+        </div>
+        <div class="supported full XXXhide">
+            <div class="cf_column third_left elements">
+                <div class="spacer_right">
+                    <div class="gui_box grey">
+                        <div class="gui_box_titlebar">
+                            <div class="spacer_box_title" i18n="tabOSDelements"></div>
+                        </div>
+                        <div class="spacer_box">
+                            <div class="checkbox">
+                                <div class="numberspacer" >
+                                    <input type="checkbox" name="1" class="togglesmall" />
+                                </div>
+                                <label for="1"><span>Element A</span></label>
+                            </div>
+                            <div class="checkbox">
+                                <div class="numberspacer" >
+                                    <input type="checkbox" name="2" class="togglesmall" />
+                                </div>
+                                <label for="2"><span>Element B</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="display-fields">
-            </div>
-            </div>
-
-        
-        
-        
-        <div class="content_toolbar" style="left:0;">
-            <div class="btn">
-                <a class="active save" href="#" >Save</a>
+            <div class="cf_column twothird right">
+                <div class="gui_box grey preview">
+                    <div class="gui_box_titlebar image">
+                        <div class="spacer_box_title">OSD Preview</div>
+                    </div>
+                    <div class="osd_canvas"></div>
+                </div>
             </div>
         </div>
-
-        
     </div>
+    <div class="content_toolbar supported XXXhide" style="left:0;">
+        <div class="btn">
+            <a class="active save" href="#" >Save</a>
+        </div>
     </div>
 </div>

@@ -16,7 +16,6 @@
     width: 100%;
 }
 
-
 .tab-osd .options {
     position: relative;
     margin-bottom: 10px;
@@ -65,7 +64,7 @@
 }
 
 .tab-osd .elementselect {
- background-color: #fff;
+    background-color: #fff;
     float: left;
     border-bottom: 1px solid #ccc;
     width: calc(100% + 10px);
@@ -210,6 +209,6 @@
 
 @media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
   .tab-osd .content_wrapper {
-      height: calc(100% - 30px);
+    height: calc(100% - 30px);
   }
 }

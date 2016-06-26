@@ -42,8 +42,6 @@ var MSP_codes = {
     MSP_SET_BLACKBOX_CONFIG:     81,
     MSP_TRANSPONDER_CONFIG:      82,
     MSP_SET_TRANSPONDER_CONFIG:  83,
-    MSP_LED_STRIP_MODECOLOR:     86,
-    MSP_SET_LED_STRIP_MODECOLOR: 87,
 
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -70,6 +68,7 @@ var MSP_codes = {
     MSP_3D:                 124,
     MSP_RC_DEADBAND:        125,
     MSP_SENSOR_ALIGNMENT:   126,
+    MSP_LED_STRIP_MODECOLOR:127,
     
     MSP_SET_RAW_RC:         200,
     MSP_SET_RAW_GPS:        201,
@@ -89,6 +88,7 @@ var MSP_codes = {
     MSP_SET_RC_DEADBAND:    218,
     MSP_SET_RESET_CURR_PID: 219,
     MSP_SET_SENSOR_ALIGNMENT: 220,
+    MSP_SET_LED_STRIP_MODECOLOR: 221,
     
     // MSP_BIND:               240,
     

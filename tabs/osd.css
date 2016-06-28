@@ -150,6 +150,17 @@
 
 }
 
+.tab-osd .font_text_row {
+    margin-bottom: -3px;
+    display: inline-block;
+}
+
+.tab-osd .position {
+    width: 50px;
+    margin-left: 10px;
+    float: right;
+}
+ 
 .tab-osd .format .title {
     font-size: 13px;
     background-color: #8e8e8e;

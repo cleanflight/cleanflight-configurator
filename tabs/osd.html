@@ -7,6 +7,7 @@
         <div class="unsupported hide">
             <p class="note" i18n="tabOSDinfo"></p>
         </div>
+        <div class="font-preview"></div>
         <div class="supported full XXXhide">
             <div class="cf_column third_left elements">
                 <div class="spacer_right">
@@ -17,53 +18,7 @@
                             <div class="spacer_box_title">OSD Elements</div>
                         </div>
                         <div class="spacer_box">
-                            <div class="elementselect">
-                                <div class="checkbox">
-                                    <div class="numberspacer" >
-                                        <input type="checkbox" checked id="box1" class="togglesmall" />
-                                    </div>
-                                    <label for="box1"><span>Element A</span></label>
-                                </div>
-                            </div>
-                            <div class="elementselect active">
-                                <div class="checkbox">
-                                    <div class="numberspacer" >
-                                        <input type="checkbox" id="box2" class="togglesmall" />
-                                    </div>
-                                    <label for="box2"><span>Element B</span></label>
-                                </div>
-                            </div>
-                            <div class="elementselect">
-                                <div class="checkbox">
-                                    <div class="numberspacer" >
-                                        <input type="checkbox" id="box3" class="togglesmall" />
-                                    </div>
-                                    <label for="box3"><span>Element C</span></label>
-                                </div>
-                            </div>
-                            <div class="elementselect">
-                                <div class="checkbox">
-                                    <div class="numberspacer" >
-                                        <input type="checkbox" id="box4" class="togglesmall" />
-                                    </div>
-                                    <label for="box4"><span>Element D</span></label>
-                                </div>
-                            </div>
-                            <div class="elementselect">
-                                <div class="checkbox">
-                                    <div class="numberspacer" >
-                                        <input type="checkbox" id="box5" class="togglesmall" />
-                                    </div>
-                                    <label for="box5"><span>Element E</span></label>
-                                </div>
-                            </div>
-                            <div class="elementselect">
-                                <div class="checkbox">
-                                    <div class="numberspacer" >
-                                        <input type="checkbox" id="box6" class="togglesmall" />
-                                    </div>
-                                    <label for="box6"><span>Element F</span></label>
-                                </div>
+                            <div class="display-fields" >
                             </div>
                         </div>
                     </div>
@@ -86,11 +41,7 @@
                     <div class="spacer_left">
                         <div class="gui_box grey format">
                             <div class="title">Video Format:</div>
-                            <select>
-                                <option>Auto</option>
-                                <option>PAL</option>
-                                <option>NTSC</option>
-                            </select>
+                            <select class="video_format" />
                         </div>
                         <div class="gui_box grey">
                             <div class="gui_box_titlebar" style="margin-bottom:0px;">

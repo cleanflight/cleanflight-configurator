@@ -389,6 +389,54 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         $('input[name="maxthrottle"]').val(MISC.maxthrottle);
         $('input[name="mincommand"]').val(MISC.mincommand);
         
+        $('input[name="minthrottle"]').change(function() {
+          $('input[name="minthrottle"]').val(
+            validateInput(
+              parseInt($('input[name="minthrottle"]').val()),
+              1000,
+              2000,
+              MISC.minthrottle
+            )
+          );
+        });
+        $('input[name="midthrottle"]').change(function() {
+          $('input[name="midthrottle"]').val(
+            validateInput(
+              parseInt($('input[name="midthrottle"]').val()),
+              1000,
+              2000,
+              MISC.midrc
+            )
+          );
+        });
+        $('input[name="maxthrottle"]').change(function() {
+          $('input[name="maxthrottle"]').val(
+            validateInput(
+              parseInt($('input[name="maxthrottle"]').val()),
+              1000,
+              2000,
+              MISC.maxthrottle
+            )
+          );
+        });
+        $('input[name="mincommand"]').change(function() {
+          $('input[name="mincommand"]').val(
+            validateInput(
+              parseInt($('input[name="mincommand"]').val()),
+              1000,
+              2000,
+              MISC.mincommand
+            )
+          );
+        });
+        
+        function validateInput(value, min, max, _default) {
+          if(value > max || value < min) {
+            return _default;
+          }
+          return value;
+        }
+        
         // fill battery
         $('input[name="mincellvoltage"]').val(MISC.vbatmincellvoltage);
         $('input[name="maxcellvoltage"]').val(MISC.vbatmaxcellvoltage);

@@ -72,6 +72,10 @@
     padding-left: 10px;
 }
 
+.tab-osd .hide_block {
+    visibility: hidden;
+}
+
 .tab-osd .block_active,
 .tab-osd .elementselect:hover {
     background-color: #f3f3f3;

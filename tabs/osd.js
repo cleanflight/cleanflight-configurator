@@ -483,13 +483,17 @@ TABS.osd.initialize = function (callback) {
                 var $field2 = $('<div class="checkbox" />');
                 var $field = $('<div class="numberspacer" />');
                 $field.append(
-                        $('<input type="checkbox" class="togglesmall" name="' + field.name + '" ' + checked + '></input>')
-                        .data('field', field)
-                        .change(function(e) {
-                            var field = $(this).data('field');
-                            field.visible = !field.visible;
-                            UpdateAllBlocks();
-                        })
+                        $('<input type="checkbox" class="togglesmall" name="' + field.name + '" ' + 
+                                checked + '></input>')
+                                .data('field', field)
+                                .change(function(e) {
+                                    var field = $(this).data('field');
+                                    field.visible = !field.visible;
+                                    if (field.visible)
+                                        $('.osd_canvas').find('.block_' + field.name).removeClass('hide_block');
+                                    else
+                                        $('.osd_canvas').find('.block_' + field.name).addClass('hide_block');
+                                })
                 );
                 $field2.append($field);
                 $field2.append('<label for="' + field.name + '">' + field.name + '</label>');
@@ -499,12 +503,12 @@ TABS.osd.initialize = function (callback) {
 
                 $field1
                 .mouseenter(function(e) {
-                    var field = $(this).find('.checkbox').text();
-                    $('.osd_canvas').find('.block_' + field).addClass('block_active');
+                    var fieldName = $(this).find('.checkbox').text();
+                    $('.osd_canvas').find('.block_' + fieldName).addClass('block_active');
                 })
                 .mouseleave(function(e) {
-                    var field = $(this).find('.checkbox').text();
-                    $('.osd_canvas').find('.block_' + field).removeClass('block_active');
+                    var fieldName = $(this).find('.checkbox').text();
+                    $('.osd_canvas').find('.block_' + fieldName).removeClass('block_active');
                 });
 
                 $displayFields.append($field1);
@@ -523,7 +527,6 @@ TABS.osd.initialize = function (callback) {
         var $preview = $('.font-preview');
         $preview.empty();
 
-        // ' + $(this).data('font-file') + '
         FONT.initData();
         $.get('/resources/osd/cleanflight-font.mcm', function(data) {
             FONT.parseMCMFontFile(data);
@@ -561,26 +564,28 @@ TABS.osd.initialize = function (callback) {
     function UpdateBlock(field) 
     {
         var $canvas = $('.osd_canvas');
-        if (field.visible) {
-            var $block = $('<div class="font_text_row block_' + field.name + '" />');
-            $canvas.append($block);
-            if (field.default_value == "FONT.logo")
-                FONT.logo($block);
-            else
-                FONT.write($block, field.default_value);
 
-            $block.draggable();
-            $block.draggable("option", "grid", [ FONT.constants.SIZES.CHAR_WIDTH, FONT.constants.SIZES.CHAR_HEIGHT ]);
-            $block.draggable({containment: "parent"});
-            $block.offset({ 
-                top: $canvas.offset().top + field.position_y * FONT.constants.SIZES.CHAR_HEIGHT, 
-                left: $canvas.offset().left + field.position_x * FONT.constants.SIZES.CHAR_WIDTH
-            });
-            $block.bind('drag', function() {
-                field.position_y = ($block.offset().top - $canvas.offset().top) / FONT.constants.SIZES.CHAR_HEIGHT;
-                field.position_x = ($block.offset().left - $canvas.offset().left) / FONT.constants.SIZES.CHAR_WIDTH;
-            });
+        var $block = $('<div class="font_text_row block_' + field.name + '" />');
+        $canvas.append($block);
+        if (field.default_value == "FONT.logo")
+            FONT.logo($block);
+        else
+            FONT.write($block, field.default_value);
+
+        $block.draggable();
+        $block.draggable("option", "grid", [ FONT.constants.SIZES.CHAR_WIDTH, FONT.constants.SIZES.CHAR_HEIGHT ]);
+        $block.draggable({containment: "parent"});
+        $block.bind('drag', function() {
+            field.position_y = ($block.offset().top - $canvas.offset().top) / FONT.constants.SIZES.CHAR_HEIGHT;
+            field.position_x = ($block.offset().left - $canvas.offset().left) / FONT.constants.SIZES.CHAR_WIDTH;
+        });
+        if (!field.visible) {
+            $block.addClass('hide_block');
         }
+        $block.offset({ 
+            top: $canvas.offset().top + field.position_y * FONT.constants.SIZES.CHAR_HEIGHT, 
+            left: $canvas.offset().left + field.position_x * FONT.constants.SIZES.CHAR_WIDTH
+        });
     }
 };
 

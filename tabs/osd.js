@@ -217,7 +217,7 @@ FONT.preview2 = function($el) {
 FONT.logo = function($el) {
     var url = FONT.data.character_image_urls[FONT.blocks.logo];
     $el.append('<img src=' + url + '></img>');
-
+    $el.height(FONT.constants.SIZES.CHAR_HEIGHT * (FONT.blocks.logo.data.length / FONT.blocks.logo.width));
 }
 
 FONT.write = function($el, text) {
@@ -227,6 +227,7 @@ FONT.write = function($el, text) {
         var url = FONT.data.character_image_urls[text.charCodeAt(i)];
         $el.append('<img src=' + url + '></img>');
     }
+    $el.height(FONT.constants.SIZES.CHAR_HEIGHT);
 }
 
 
@@ -567,10 +568,11 @@ TABS.osd.initialize = function (callback) {
 
         var $block = $('<div class="font_text_row block_' + field.name + '" />');
         $canvas.append($block);
-        if (field.default_value == "FONT.logo")
+        if (field.default_value == "FONT.logo") {
             FONT.logo($block);
-        else
+        } else {
             FONT.write($block, field.default_value);
+        }
 
         $block.draggable();
         $block.draggable("option", "grid", [ FONT.constants.SIZES.CHAR_WIDTH, FONT.constants.SIZES.CHAR_HEIGHT ]);

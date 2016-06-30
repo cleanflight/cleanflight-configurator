@@ -126,6 +126,7 @@
 .tab-osd .osd_canvas {
     width: 360px;
     height: 234px;
+    background-size: 360px 234px; 
     background-image: url(/images/osdpreview.jpg);
     background-repeat: no-repeat;
     float: left;
@@ -151,6 +152,7 @@
     margin-bottom: -3px;
     display: inline-block;
     float: left;
+    border-radius: 3px;
 }
 
 .tab-osd .font_text_logo_row {

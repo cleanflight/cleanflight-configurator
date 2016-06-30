@@ -75,8 +75,10 @@
 .tab-osd .hide_block {
     visibility: hidden;
 }
+.tab-osd .block_active { 
+    background-color: rgba(0,0,0,0.3); 
+}
 
-.tab-osd .block_active,
 .tab-osd .elementselect:hover {
     background-color: #f3f3f3;
 }

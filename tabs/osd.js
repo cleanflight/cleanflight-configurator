@@ -145,7 +145,7 @@ var drawCanvas = function(charAddresses, block_width) {
             }
         }
     }
-    
+
     if (charAddresses.length != undefined) {
         charAddresses.forEach(function(charAddress) {
             process(charAddress);
@@ -495,6 +495,18 @@ TABS.osd.initialize = function (callback) {
                 $field2.append('<label for="' + field.name + '">' + field.name + '</label>');
 
                 $field1.append($field2);
+
+
+                $field1
+                .mouseenter(function(e) {
+                    var field = $(this).find('.checkbox').text();
+                    $('.osd_canvas').find('.block_' + field).addClass('block_active');
+                })
+                .mouseleave(function(e) {
+                    var field = $(this).find('.checkbox').text();
+                    $('.osd_canvas').find('.block_' + field).removeClass('block_active');
+                });
+
                 $displayFields.append($field1);
             }
 

@@ -1,5 +1,7 @@
 'use strict';
 
+var hex_filename = false;  // The hex filename being loaded
+
 TABS.firmware_flasher = {};
 TABS.firmware_flasher.initialize = function (callback) {
     var self = this;
@@ -34,6 +36,13 @@ TABS.firmware_flasher.initialize = function (callback) {
         $('input.show_development_releases').click(function(){
             buildFirmwareOptions();
         });
+
+        $('input.detect_board_type').click(function () {
+            buildFirmwareOptions();
+        });
+
+        var detectBoardType = function () {
+        }
 
         var buildFirmwareOptions = function(){
             var releases_e = $('select[name="release"]').empty();
@@ -172,6 +181,10 @@ TABS.firmware_flasher.initialize = function (callback) {
                 chrome.fileSystem.getDisplayPath(fileEntry, function (path) {
                     console.log('Loading file from: ' + path);
 
+                    // Remember the filename
+                    hex_filename = path;
+                    console.log('Loading file: ' + hex_filename);
+
                     fileEntry.file(function (file) {
                         var reader = new FileReader();
 
@@ -297,6 +310,11 @@ TABS.firmware_flasher.initialize = function (callback) {
 
             if (summary) { // undefined while list is loading or while running offline
                 $.get(summary.url, function (data) {
+
+                    // Remember the filename
+                    hex_filename = summary.url;
+                    console.log('Loading file: ' + hex_filename);
+
                     process_hex(data, summary);
                 }).fail(failed_to_load);
             } else {
@@ -332,8 +350,15 @@ TABS.firmware_flasher.initialize = function (callback) {
                                         baud = 115200;
                                 }
 
+                                if ($('input.detect_board_type').is(':checked')) {
+                                    options.detect_board_type = hex_filename;
+                                } else {
+                                    options.detect_board_type = false;
+                                }
+
                                 if ($('input.updating').is(':checked')) {
                                     options.no_reboot = true;
+                                    options.detect_board_type = false; // Can't do board detection in this mode
                                 } else {
                                     options.reboot_baud = parseInt($('div#port-picker #baud').val());
                                 }
@@ -407,6 +432,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             if (result.no_reboot_sequence) {
                 $('input.updating').prop('checked', true);
                 $('.flash_on_connect_wrapper').show();
+                $('.detect_board_type_wrapper').show();
             } else {
                 $('input.updating').prop('checked', false);
             }
@@ -417,9 +443,11 @@ TABS.firmware_flasher.initialize = function (callback) {
 
                 if (status) {
                     $('.flash_on_connect_wrapper').show();
+                    $('.detect_board_type_wrapper').hide();
                 } else {
                     $('input.flash_on_connect').prop('checked', false).change();
                     $('.flash_on_connect_wrapper').hide();
+                    $('.detect_board_type_wrapper').show();
                 }
 
                 chrome.storage.local.set({'no_reboot_sequence': status});
@@ -427,6 +455,23 @@ TABS.firmware_flasher.initialize = function (callback) {
 
             $('input.updating').change();
         });
+
+        chrome.storage.local.get('detect_board_type', function (result) {
+            if (result.detect_board_type) {
+                $('input.detect_board_type').prop('checked', true);
+            } else {
+                $('input.detect_board_type').prop('checked', false);
+            }
+
+            // bind UI hook so the status is saved on change
+            $('input.detect_board_type').change(function () {
+                var status = $(this).is(':checked');
+                chrome.storage.local.set({ 'detect_board_type': status });
+            });
+
+            $('input.detect_board_type').change();
+        });
+
 
         chrome.storage.local.get('flash_manual_baud', function (result) {
             if (result.flash_manual_baud) {

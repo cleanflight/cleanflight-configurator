@@ -60,7 +60,8 @@ STM32_protocol.prototype.connect = function (port, baud, hex, options, callback)
     self.options = {
         no_reboot:      false,
         reboot_baud:    false,
-        erase_chip:     false
+        erase_chip: false,
+        detect_board_type: false
     };
 
     if (options.no_reboot) {
@@ -68,6 +69,8 @@ STM32_protocol.prototype.connect = function (port, baud, hex, options, callback)
     } else {
         self.options.reboot_baud = options.reboot_baud;
     }
+
+    self.options.detect_board_type = options.detect_board_type;
 
     if (options.erase_chip) {
         self.options.erase_chip = true;
@@ -87,43 +90,84 @@ STM32_protocol.prototype.connect = function (port, baud, hex, options, callback)
     } else {
         serial.connect(port, {bitrate: self.options.reboot_baud}, function (openInfo) {
             if (openInfo) {
-                console.log('Sending ascii "R" to reboot');
-
                 // we are connected, disabling connect button in the UI
                 GUI.connect_lock = true;
 
-                var bufferOut = new ArrayBuffer(1);
-                var bufferView = new Uint8Array(bufferOut);
+                if (self.options.detect_board_type) {
+                    // Send board type identification message
+                    
+                    FC.resetState();
 
-                bufferView[0] = 0x52;
+                    serial.onReceive.addListener(read_serial);
+                    MSP.send_message(MSP_codes.MSP_BOARD_INFO, false, false, get_board_handler);
 
-                serial.send(bufferOut, function () {
-                    serial.disconnect(function (result) {
-                        if (result) {
-                            // delay to allow board to boot in bootloader mode
-                            // required to detect if a DFU device appears
-                            setTimeout(function() {
-                                // refresh device list
-                                PortHandler.check_usb_devices(function(dfu_available) {
-                                    if(dfu_available) {
-                                        STM32DFU.connect(usbDevices.STM32DFU, hex, options);
-                                    } else {
-                                        serial.connect(port, {bitrate: self.baud, parityBit: 'even', stopBits: 'one'}, function (openInfo) {
-                                            if (openInfo) {
-                                                self.initialize();
-                                            } else {
-                                                GUI.connect_lock = false;
-                                                GUI.log('<span style="color: red">Failed</span> to open serial port');
-                                            }
-                                        });
-                                    }
-                                });
-                            }, 1000);
-                        } else {
-                            GUI.connect_lock = false;
+                    function get_board_handler() {
+                        var board_definition = {};
+                        board_definition = BOARD.find_board_definition(CONFIG.boardIdentifier);
+                        console.log('Using board definition', board_definition.name);
+
+                        if (board_definition.filename && hex_filename)
+                        {
+                            var compare_string = "_" + board_definition.filename + ".hex";
+                            console.log('Expecting file suffix', compare_string);
+
+                            if (hex_filename.endsWith(compare_string))
+                            {
+                                // Do the work
+                                do_flashing();
+                            }
+                            else
+                            {
+                                GUI.log('<span style="color: red">Error:</span> the filename of the firmware does not end in "' + compare_string + '", are you sure this is the right firmware for your board?');
+                            }                            
                         }
+
+                    }
+                }
+                else
+                    do_flashing();
+
+                function do_flashing() { 
+                    // HACK TEST
+                    serial.disconnect(); // HACK TEST REMOVE THIS LINE
+                    GUI.connect_lock = true; // HACK TEST REMOVE THIS LINE
+                    return; // HACK TEST REMOVE THIS LINE
+
+                    console.log('Sending ascii "R" to reboot');
+
+                    var bufferOut = new ArrayBuffer(1);
+                    var bufferView = new Uint8Array(bufferOut);
+
+                    bufferView[0] = 0x52;
+
+                    serial.send(bufferOut, function () {
+                        serial.disconnect(function (result) {
+                            if (result) {
+                                // delay to allow board to boot in bootloader mode
+                                // required to detect if a DFU device appears
+                                setTimeout(function() {
+                                    // refresh device list
+                                    PortHandler.check_usb_devices(function(dfu_available) {
+                                        if(dfu_available) {
+                                            STM32DFU.connect(usbDevices.STM32DFU, hex, options);
+                                        } else {
+                                            serial.connect(port, {bitrate: self.baud, parityBit: 'even', stopBits: 'one'}, function (openInfo) {
+                                                if (openInfo) {
+                                                    self.initialize();
+                                                } else {
+                                                    GUI.connect_lock = false;
+                                                    GUI.log('<span style="color: red">Failed</span> to open serial port');
+                                                }
+                                            });
+                                        }
+                                    });
+                                }, 1000);
+                            } else {
+                                GUI.connect_lock = false;
+                            }
+                        });
                     });
-                });
+                }
             } else {
                 GUI.log('<span style="color: red">Failed</span> to open serial port');
             }

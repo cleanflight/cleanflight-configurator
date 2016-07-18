@@ -36,7 +36,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     }
 
     function load_led_mode_colors() {
-        if (semver.gte(CONFIG.apiVersion, "1.19.0"))
+        if (semver.gt(CONFIG.apiVersion, "1.19.0"))
             MSP.send_message(MSP_codes.MSP_LED_STRIP_MODECOLOR, false, false, load_html);
         else
             load_html();
@@ -690,7 +690,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             $(".extra_functions19").show();
             $(".extra_functions19_only").show();
             $(".extra_functions20").hide();
-            $(".mode_colors").show();
+            $(".mode_colors").hide();
 
         } else { 
             // >= 20
@@ -785,8 +785,10 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
         $('.mode_colors').hide();
         if (semver.gte(CONFIG.apiVersion, "1.19.0")) { 
             // set mode colors visibility
-            if (activeFunction == "function-f")
-                $('.mode_colors').show(); 
+
+            if (semver.gte(CONFIG.apiVersion, "1.20.0"))
+	            if (activeFunction == "function-f")
+	                $('.mode_colors').show(); 
             
             // set special colors visibility
             $('.special_colors').show();

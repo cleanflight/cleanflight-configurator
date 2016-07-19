@@ -425,8 +425,38 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
         {
             if ($(that).is(':checked')) {
                 $('.ui-selected').find('.wire').each(function() {
-                    if ($(this).text() != "")
-                        $(this).parent().addClass('function-' + letter);
+                    if ($(this).text() != "") {
+                        
+                        var p = $(this).parent();
+
+                        TABS.led_strip.functions.forEach(function(f) {
+                            if (p.is('.function-' + f)) {
+
+                                switch (letter) {
+                                case 't':
+                                case 'o':
+                                case 's':
+                                    if (areModifiersActive('function-' + f))
+                                        p.addClass('function-' + letter);
+                                    break;
+                                case 'b':
+                                case 'n':
+                                    if (areBlinkersActive('function-' + f))
+                                        p.addClass('function-' + letter);
+                                    break;
+                                case 'i':
+                                    if (areOverlaysActive('function-' + f))
+                                        p.addClass('function-' + letter);
+                                    break;
+                                case 'w':
+                                    if (areOverlaysActive('function-' + f))
+                                        if (isWarningActive('function-' + f))
+                                            p.addClass('function-' + letter);
+                                    break;
+                                }
+                            }
+                        });
+                    }
                 });
             } else {
                 $('.ui-selected').removeClass('function-' + letter);
@@ -434,7 +464,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             return $(that).is(':checked');
         }
         
-        // UI: checkbox toggle
+        // UI: check-box toggle
         $('.checkbox').change(function(e) { 
             if (e.originalEvent) {
                 // user-triggered event
@@ -444,17 +474,20 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                     TABS.led_strip.overlays.forEach(function(letter) {
                         if ($(that).is('.function-' + letter)) {
                             var ret = toggleSwitch(that, letter);
-                            var cbn = $('.checkbox .function-n');
-                            var cbb = $('.checkbox .function-b');
+
+                            var cbn = $('.checkbox .function-n'); // blink on landing
+                            var cbb = $('.checkbox .function-b'); // blink
                             
-                            if (ret && letter == 'b' && cbn.is(':checked')) {
-                                cbn.prop('checked', false);
-                                cbn.change();
-                                toggleSwitch(cbn, 'n');
-                            } else if (ret && letter == 'n' && cbb.is(':checked')) {
-                                cbb.prop('checked', false);
-                                cbb.change();
-                                toggleSwitch(cbb, 'b');
+                            if (ret) {
+                                if (letter == 'b' && cbn.is(':checked')) {
+                                    cbn.prop('checked', false);
+                                    cbn.change();
+                                    toggleSwitch(cbn, 'n');
+                                } else if (letter == 'n' && cbb.is(':checked')) {
+                                    cbb.prop('checked', false);
+                                    cbb.change();
+                                    toggleSwitch(cbb, 'b');
+                                }    
                             }
                         }
                     });
@@ -667,6 +700,76 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
         }
     }
     
+    function areModifiersActive(activeFunction) {
+        switch (activeFunction) {
+            case "function-c": 
+            case "function-a": 
+            case "function-f":
+                return true;
+            break;
+        }
+        return false;
+    }
+
+    function areOverlaysActive(activeFunction) {
+        if (semver.lt(CONFIG.apiVersion, "1.20.0")) {
+            switch (activeFunction) {
+                case "function-c": 
+                case "function-a": 
+                case "function-f":
+                case "function-g":
+                    return true;
+                break;
+            }
+        } else {
+            switch (activeFunction) {
+                case "": 
+                case "function-c": 
+                case "function-a": 
+                case "function-f":
+                case "function-s":
+                case "function-l":
+                case "function-r": 
+                case "function-o":
+                case "function-g":
+                    return true;
+                break;
+            }
+        }
+        return false;
+    }
+
+    function areBlinkersActive(activeFunction) {
+        if (semver.gte(CONFIG.apiVersion, "1.20.0")) {
+            switch (activeFunction) {
+                case "function-c": 
+                case "function-a": 
+                case "function-f":
+                    return true;
+                break;
+            }
+        }
+        return false;
+    }
+
+    function isWarningActive(activeFunction) {
+        switch (activeFunction) {
+            case "function-l": 
+            case "function-s":
+            case "function-g":
+                return false;
+                break;
+            case "function-r":
+            case "function-b":
+                if (semver.lt(CONFIG.apiVersion, "1.20.0"))
+                    return false;
+            break;
+            default: 
+                return true;
+            break; 
+        }
+    }  
+            
     function setOptionalGroupsVisibility() {
         
         var activeFunction = $('select.functionSelect').val();
@@ -704,71 +807,25 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
         }
         
         
-
-        // set color modifiers (checkboxes) visibility
+        // set color modifiers (check-boxes) visibility
         $('.overlays').hide();
         $('.modifiers').hide();
         $('.blinkers').hide();
+        $('.warningOverlay').hide();
 
-        if (semver.lt(CONFIG.apiVersion, "1.20.0")) {
-            switch (activeFunction) {
-                case "function-c": 
-                case "function-a": 
-                case "function-f":
-                    $('.modifiers').show();
-                    $('.overlays').show();
-                break;
-                case "function-g":
-                    $('.overlays').show();
-                    break;
-                default: 
-                break; 
-            }
-        } else {
-            switch (activeFunction) {
-                case "": 
-                    $('.overlays').show();
-                break;
-                case "function-c": 
-                case "function-a": 
-                case "function-f":
-                    $('.modifiers').show();
-                    $('.overlays').show();
-                    $('.blinkers').show();
-                break;
-                case "function-s":
-                case "function-l":
-                case "function-r": 
-                case "function-o":
-                case "function-g":
-                    $('.overlays').show();
-                break;
-                    break;
-                default: 
-                break; 
-            }
-        }
+        if (areOverlaysActive(activeFunction))
+            $('.overlays').show();
 
+        if (areModifiersActive(activeFunction))
+            $('.modifiers').show();
+
+        if (areBlinkersActive(activeFunction))
+            $('.blinkers').show();
+          
+        if (isWarningActive(activeFunction))
+            $('.warningOverlay').show();
         
         
-        // set overlays (checkboxes) visibility
-        switch (activeFunction) {
-            case "function-l": 
-            case "function-s":
-            case "function-g":
-                $('.warningOverlay').hide();
-                break;
-            case "function-r":
-            case "function-b":
-                if (semver.lt(CONFIG.apiVersion, "1.20.0"))
-                    $('.warningOverlay').hide();
-            break;
-            default: 
-                $('.warningOverlay').show();
-            break; 
-        }
-        
-        // set overlays (checkboxes) visibility
         // set directions visibility
         if (semver.lt(CONFIG.apiVersion, "1.20.0")) {
             switch (activeFunction) {
@@ -782,6 +839,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                 break; 
             }
         }
+        
         $('.mode_colors').hide();
         if (semver.gte(CONFIG.apiVersion, "1.19.0")) { 
             // set mode colors visibility
@@ -992,7 +1050,6 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     }
     
     function HsvToColor(input) {
-    	
     	if (input == undefined)
     		return "";
     	

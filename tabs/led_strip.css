@@ -1,4 +1,3 @@
-
 .tab-led-strip .help {
     padding: 10px;
     background-color: #ffcb18;
@@ -30,6 +29,18 @@
     cursor: pointer;
 }
 
+.tab-led-strip .gPoint.function-s { /* RSSI */
+    background: brown;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
+    border-color: rgb(52, 155, 255);
+}
+
+.tab-led-strip .gPoint.function-c { /* Color */
+    background: linear-gradient( to bottom right, rgba(255, 0, 0, .5) 0%, rgba(255, 255, 0, 0.5) 15%, rgba(0, 255, 0, .5) 30%, rgba(0, 255, 255, .5) 50%, rgba(0, 0, 255, .5) 65%, rgba(255, 0, 255, .5) 80%, rgba(255, 0, 0, .5) 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
+    border-color: grey;
+}
+
 .tab-led-strip .gPoint.function-f { /* Flight mode & orientation */
     background: rgb(50, 205, 50);
     box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
@@ -42,10 +53,10 @@
     border-color: rgb(52, 155, 255);
 }
 
-.tab-led-strip .gPoint.function-c { /* Color */
-    background: linear-gradient( to bottom right, rgba(255, 0, 0, .5) 0%, rgba(255, 255, 0, 0.5) 15%, rgba(0, 255, 0, .5) 30%, rgba(0, 255, 255, .5) 50%, rgba(0, 0, 255, .5) 65%, rgba(255, 0, 255, .5) 80%, rgba(255, 0, 0, .5) 100%);
+.tab-led-strip .gPoint.function-l { /* Battery */
+    background: magenta;
     box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
-    border-color: grey;
+    border-color: rgb(52, 155, 255);
 }
 
 .tab-led-strip .gPoint.function-r { /* Ring */
@@ -60,15 +71,8 @@
     border-color: rgb(52, 155, 255);
 }
 
-.tab-led-strip .gPoint.function-b { /* Blink */
-    background: white;
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, .7);
-    border-color: rgb(52, 155, 255);
-}
-
 .tab-led-strip .gPoint.function-c .overlay-color,
-.tab-led-strip .gPoint.function-r .overlay-color,
-.tab-led-strip .gPoint.function-b .overlay-color {
+.tab-led-strip .gPoint.function-r .overlay-color {
     float: left;
     height: 15px;
     width: 15px;
@@ -77,10 +81,13 @@
     border-radius: 4px;
 }
 
+.tab-led-strip .gPoint.function-s .overlay-s,
 .tab-led-strip .gPoint.function-w .overlay-w,
 .tab-led-strip .gPoint.function-i .overlay-i,
 .tab-led-strip .gPoint.function-t .overlay-t,
-.tab-led-strip .gPoint.function-s .overlay-s {
+.tab-led-strip .gPoint.function-o .overlay-o,
+.tab-led-strip .gPoint.function-b .overlay-b,
+.tab-led-strip .gPoint.function-n .overlay-n {
     float: left;
     height: 6px;
     width: 16px;
@@ -107,6 +114,24 @@
 .tab-led-strip .gPoint.function-s .overlay-s {
     background-image: radial-gradient(1px at 8px 50% , brown 0%, brown 2px, rgba(0, 0, 0, 0.3) 3px, rgba(0, 0, 0, 0) 4px);
     margin-top: -6px;
+    margin-left: 16px;
+}
+
+.tab-led-strip .gPoint.function-o .overlay-o {
+    background-image: radial-gradient(1px at 8px 50% , brown 0%, brown 2px, rgba(0, 0, 0, 0.3) 3px, rgba(0, 0, 0, 0) 4px);
+    margin-top: -6px;
+    margin-left: 16px;
+}
+
+.tab-led-strip .gPoint.function-b .overlay-b {
+    background-image: radial-gradient(1px at 8px 50% , rgb(52, 155, 255) 0%, rgb(52, 155, 255) 2px, rgba(0, 0, 0, 0.3) 3px, rgba(0, 0, 0, 0) 4px);
+    margin-top: -18px;
+    margin-left: -9px;
+}
+
+.tab-led-strip .gPoint.function-n .overlay-n {
+    background-image: radial-gradient(1px at 8px 50% , blue 0%, blue 2px, rgba(0, 0, 0, 0.3) 3px, rgba(0, 0, 0, 0) 4px);
+    margin-top: -18px;
     margin-left: 16px;
 }
 
@@ -171,19 +196,17 @@
 
 /* Drop-down boxes */
 
-.tab-led-strip .select {
-    background: white;
-    margin-bottom: 15px;
-}
-
+.tab-led-strip .select {    background: white;}
 .tab-led-strip .select .function-c {
     background: linear-gradient( to bottom right, rgba(255, 0, 0, .5) 0%, rgba(255, 255, 0, 0.5) 15%, rgba(0, 255, 0, .5) 30%, rgba(0, 255, 255, .5) 50%, rgba(0, 0, 255, .5) 65%, rgba(255, 0, 255, .5) 80%, rgba(255, 0, 0, .5) 100%);
 }
 
-.tab-led-strip .select .function-a {    background: rgb(52, 155, 255);}
 .tab-led-strip .select .function-f {    background: rgb(50, 205, 50);}
+.tab-led-strip .select .function-a {    background: rgb(52, 155, 255);}
+.tab-led-strip .select .function-l {    background: magenta;}
+.tab-led-strip .select .function-s {    background: brown;}
 .tab-led-strip .select .function-g {    background: green;}
-.tab-led-strip .select .function-b {    background: white;    color:black;}
+/* .tab-led-strip .select .function-b {    background: white;    color:black;} */
 .tab-led-strip .select .function-r {    background: #acacac;}
 
 .tab-led-strip .select .functionSelect option {
@@ -191,11 +214,9 @@
     color: black;
 }
 
-.tab-led-strip .select select {
-    border: 1px solid silver;
-}
 
 .tab-led-strip .overlays,
+.tab-led-strip .blinkers,
 .tab-led-strip .modifiers {
     display: inline-block;
 }

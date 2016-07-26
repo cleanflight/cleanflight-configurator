@@ -40,7 +40,7 @@
 }
 
 .tab-osd .hide {
-  display: none;
+    display: none;
 }
 
 .tab-osd .note {
@@ -48,15 +48,15 @@
 }
 
 .tab-osd .col {
-  display: inline-block;
+    display: inline-block;
 }
 
 .tab-osd .left {
-  float: left;
+    float: left;
 }
 
 .tab-osd .right {
-  float: right;
+    float: right;
 }
 
 .tab-osd .content_wrapper {
@@ -70,26 +70,30 @@
     width: calc(100% + 10px);
     margin-left: -10px;
     padding-left: 10px;
- } 
- 
- .tab-osd .elementselect:hover {
+}
+
+.tab-osd .hide_block {
+    visibility: hidden;
+}
+.tab-osd .block_active { 
+    background-color: rgba(0,0,0,0.3); 
+}
+
+.tab-osd .elementselect:hover {
     background-color: #f3f3f3;
- } 
- 
- 
+}
+
 .tab-osd .elementselect.active {
     background-color: #c3dab5;
- } 
-
+}
 
 .tab-osd .elementselect:last-child {
     border-bottom: 0px;
     padding-bottom: 0px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
- }
+}
 
- 
 .tab-osd .checkbox {
     margin-top: 2px;
     float: left;
@@ -97,7 +101,6 @@
     padding-bottom: 4px;
     padding-top: 1px;
     font-size: 11px;
-
 }
 
 .tab-osd .numberspacer {
@@ -105,7 +108,6 @@
     float: left;
     font-size: 11px;
 }
-   
 
 .tab-osd label {
     float: left;
@@ -113,11 +115,9 @@
 }
 
 .tab-osd input {
-    float:left;
-    margin-right:8px;
-
+    float: left;
+    margin-right: 8px;
 }
-
 
 .tab-osd .preview {
     width: 360px;
@@ -126,9 +126,10 @@
 .tab-osd .osd_canvas {
     width: 360px;
     height: 234px;
+    background-size: 360px 234px; 
     background-image: url(/images/osdpreview.jpg);
     background-repeat: no-repeat;
-    float:left;
+    float: left;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     background-size: 360px;
@@ -138,16 +139,32 @@
     margin-bottom: 0px;
 }
 
-
 .tab-osd .elements {
     max-width: calc(100% - 360px);
 }
 
-
 .tab-osd .format {
     width: calc(100% - 2px);
     float: left;
+}
 
+.tab-osd .font_text_row {
+    margin-bottom: -3px;
+    display: inline-block;
+    float: left;
+    border-radius: 3px;
+}
+
+.tab-osd .font_text_logo_row {
+    margin-bottom: -3px;
+    display: inline-block;
+    float: left;
+}
+
+.tab-osd .position {
+    width: 50px;
+    margin-left: 10px;
+    float: right;
 }
 
 .tab-osd .format .title {
@@ -171,7 +188,7 @@
     float: right;
     margin-top: 7px;
     margin-right: 8px;
- }
+}
 
 .tab-osd .osdlabel {
     float: left;
@@ -180,35 +197,34 @@
     padding-bottom: 5px;
     border-bottom: 1px solid silver;
     width: calc(100% - 20px);
- }
- 
- 
- .tab-osd .osdlabel:last-child {
+}
+
+.tab-osd .osdlabel:last-child {
     border-bottom: 0px;
     margin-bottom: 5px;
- }
- 
- 
- .tab-osd .callsign {
-     border: 1px solid silver;
-     border-radius: 3px;
-     height: 12px;
-     float: left;
-     margin-left: 8px;
-     margin-top: 5px;
-     padding:3px;
-     width: calc(100% - 128px);
- }
- 
- .tab-osd .osdlabel select {
-    float:right; 
-    margin-right:0px; 
-    width:50px;
+}
+
+.tab-osd .callsign {
+    border: 1px solid silver;
+    border-radius: 3px;
+    height: 12px;
+    float: left;
+    margin-left: 8px;
+    margin-top: 5px;
+    padding: 3px;
+    width: calc(100% - 128px);
+}
+
+.tab-osd .osdlabel select {
+    float: right;
+    margin-right: 0px;
+    width: 50px;
     border: 1px solid silver;
 }
 
-@media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
-  .tab-osd .content_wrapper {
-    height: calc(100% - 30px);
-  }
+@media only screen and (max-width: 1055px) , only screen and
+    (max-device-width: 1055px) {
+    .tab-osd .content_wrapper {
+        height: calc(100% - 30px);
+    }
 }

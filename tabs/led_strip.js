@@ -1,16 +1,24 @@
 'use strict';
 
 TABS.led_strip = {
-    wireMode: false,
-    baseFuncs: ['c', 'f', 'a', 'g', 'b', 'r'],
-    overlays: ['t', 's', 'w', 'i'],
-    directions: ['n', 'e', 's', 'w', 'u', 'd'],
-};
+        wireMode: false,
+        directions: ['n', 'e', 's', 'w', 'u', 'd'],
+    };
 
 TABS.led_strip.initialize = function (callback, scrollPosition) {
     var self = this;
     var selectedColorIndex = null;
     var selectedModeColor = null;
+
+    if (semver.lte(CONFIG.apiVersion, "1.19.0")) {
+        TABS.led_strip.functions = ['i', 'w', 'f', 'a', 't', 'r', 'c', 'g', 's', 'b'];
+        TABS.led_strip.baseFuncs = ['c', 'f', 'a', 'b', 'g', 'r'];
+        TABS.led_strip.overlays = ['t', 's', 'i', 'w'];
+    } else {
+        TABS.led_strip.functions = ['i', 'w', 'f', 'a', 't', 'r', 'c', 'g', 's', 'b', 'l', 'o', 'n'];
+        TABS.led_strip.baseFuncs = ['c', 'f', 'a', 'l', 's', 'g', 'r'];
+        TABS.led_strip.overlays = ['t', 'o', 'b', 'n', 'i', 'w'];
+    }
 
     TABS.led_strip.wireMode = false;
 
@@ -28,7 +36,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     }
 
     function load_led_mode_colors() {
-        if (semver.gte(CONFIG.apiVersion, "1.19.0"))
+        if (semver.gt(CONFIG.apiVersion, "1.19.0"))
             MSP.send_message(MSP_codes.MSP_LED_STRIP_MODECOLOR, false, false, load_html);
         else
             load_html();
@@ -65,7 +73,10 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
         var theHTML = [];
         var theHTMLlength = 0;
         for (var i = 0; i < 256; i++) {
-            theHTML[theHTMLlength++] = ('<div class="gPoint"><div class="indicators"><span class="north"></span><span class="south"></span><span class="west"></span><span class="east"></span><span class="up">U</span><span class="down">D</span></div><span class="wire"></span><span class="overlay-t"> </span><span class="overlay-s"> </span><span class="overlay-w"> </span><span class="overlay-i"> </span><span class="overlay-color"> </span></div>');
+            if (semver.lte(CONFIG.apiVersion, "1.19.0"))
+                theHTML[theHTMLlength++] = ('<div class="gPoint"><div class="indicators"><span class="north"></span><span class="south"></span><span class="west"></span><span class="east"></span><span class="up">U</span><span class="down">D</span></div><span class="wire"></span><span class="overlay-t"> </span><span class="overlay-s"> </span><span class="overlay-w"> </span><span class="overlay-i"> </span><span class="overlay-color"> </span></div>');
+            else
+                theHTML[theHTMLlength++] = ('<div class="gPoint"><div class="indicators"><span class="north"></span><span class="south"></span><span class="west"></span><span class="east"></span><span class="up">U</span><span class="down">D</span></div><span class="wire"></span><span class="overlay-t"> </span><span class="overlay-o"> </span><span class="overlay-b"> </span><span class="overlay-n"> </span><span class="overlay-w"> </span><span class="overlay-i"> </span><span class="overlay-color"> </span></div>');
         }
         $('.mainGrid').html(theHTML.join(''));
 
@@ -112,7 +123,6 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             });
             $(element).removeClass(classesToRemove.join(' '));
         }
-
 
         // Directional Buttons
         $('.directions').on('click', 'button', function() {
@@ -178,7 +188,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             
         });
         
-
+        // Color sliders
         var ip = $('div.colorDefineSliders input');
         ip.eq(0).on("input change", function() { updateColors($(this).val(), 0); });
         ip.eq(1).on("input change", function() { updateColors($(this).val(), 1); });
@@ -186,7 +196,6 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
         for (var i = 0; i < 3; i++) {
             updateColors(ip.eq(i).val(), i);
         }
-
 
         // Color Buttons
         $('.colors').on('click', 'button', function(e) {
@@ -216,7 +225,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
 
             drawColorBoxesInColorLedPoints();
 
-            // refresh color buttons
+            // refresh color buttons 
             $('.colors').children().each(function() { setBackgroundColor($(this)); });
             $('.overlay-color').each(function() { setBackgroundColor($(this)); });
             
@@ -297,7 +306,6 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                             $(this).find('.wire').html(nextWireNumber);
                         }
                     }
-                    
 
                     if ($(this).find('.wire').text() != '') {
 
@@ -327,22 +335,24 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                     }
                 });
 
+                var uiSelectedLast = that;
                 $('select.functionSelect').val("");
 
                 TABS.led_strip.baseFuncs.forEach(function(letter) {
                     var className = 'function-' + letter;
                     if ($('select.functionSelect').is("." + className)) {
-                        $('select').removeClass(className);
+                        $('select.functionSelect').removeClass(className);
                     }
                 });
+                
                 selectedColorIndex = 0;
                 
-                if (that) {
+                if (uiSelectedLast) {
                     
                     // set active color
                     for (var colorIndex = 0; colorIndex < 16; colorIndex++) {
                         var className = '.color-' + colorIndex;
-                        if ($(that).is(className)) {
+                        if ($(uiSelectedLast).is(className)) {
                             $(className).addClass('btnOn');
                             selectedColorIndex = colorIndex;
                             
@@ -355,7 +365,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                     TABS.led_strip.overlays.forEach(function(letter) {
                         var feature_o = $('.checkbox').find('input.function-' + letter);
     
-                        var newVal = ($(that).is('.function-' + letter));
+                        var newVal = ($(uiSelectedLast).is('.function-' + letter));
                         
                         if (feature_o.is(':checked') != newVal) {
                             feature_o.prop('checked', newVal);
@@ -365,8 +375,9 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                     
                     // Update active function in combobox
                     TABS.led_strip.baseFuncs.forEach(function(letter) {
-                        if ($(that).is('.function-' + letter)) {
+                        if ($(uiSelectedLast).is('.function-' + letter)) {
                             $('select.functionSelect').val("function-" + letter);
+                            $('select.functionSelect').addClass("function-" + letter);
                         }
                     });  
                 }
@@ -385,71 +396,11 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
 
         // UI: select LED function from drop-down
         $('.functionSelect').on('change', function() {
-
-            var that = this;
-            if ($('.ui-selected').length > 0) {
-                TABS.led_strip.baseFuncs.forEach(function(letter) {
-                    if ($(that).val() == 'function-' + letter) {
-                        $('select').addClass('function-' + letter);
-                        
-                        $('.ui-selected').find('.wire').each(function() {
-                            if ($(this).text() != "")
-                                $(this).parent().addClass('function-' + letter);
-                        });
-                        
-                        if (letter == 'b' || letter == 'r') {
-                            if ($('input.function-i').is(':checked')) {
-                                $('input.function-i').prop('checked', false);
-                                $('input.function-i').change();
-                                $('.ui-selected').each(function() {
-                                    if ($(this).is('.function-' + letter)) {
-                                        $(this).removeClass('function-i');
-                                    }
-                                });
-                            }
-                        }
-                        if (letter == 'b' || letter == 'r' || letter == 'l' || letter == 'g') {
-                            if ($('input.function-w').is(':checked')) {
-                                $('input.function-w').prop('checked', false);
-                                $('input.function-w').change();
-                                $('.ui-selected').each(function() {
-                                    if ($(this).is('.function-' + letter)) {
-                                        $(this).removeClass('function-w'); 
-                                    }
-                                });
-                            }
-                            if ($('input.function-t').is(':checked')) {
-                                $('input.function-t').prop('checked', false);
-                                $('input.function-t').change();
-                                $('.ui-selected').each(function() {
-                                    if ($(this).is('.function-' + letter)) {
-                                        $(this).removeClass('function-t'); 
-                                    }
-                                });
-                            }
-                            if ($('input.function-s').is(':checked')) { 
-                                $('input.function-s').prop('checked', false);
-                                $('input.function-s').change();
-                                $('.ui-selected').each(function() {
-                                    if ($(this).is('.function-' + letter)) {
-                                        $(this).removeClass('function-s'); 
-                                    }
-                                });
-                            }
-                        }
-                    } else {
-                        $('select').removeClass('function-' + letter);
-                        $('.ui-selected').removeClass('function-' + letter);
-                    }
-                });
-                $('select').addClass($('select.functionSelect').val());
-                
-                clearModeColorSelection();
-                updateBulkCmd();
-                drawColorBoxesInColorLedPoints();
-            }
-
+            clearModeColorSelection();
+            applyFunctionToSelectedLeds();
+            drawColorBoxesInColorLedPoints();
             setOptionalGroupsVisibility();
+            updateBulkCmd();
         });
 
         // UI: select mode from drop-down
@@ -465,38 +416,89 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
                             $(this).removeClass('mode_color-' + i + '-' + j);
                             $(this).addClass('mode_color-' + mode + '-' + j);
                         }
-                
             });
 
             $('.mode_colors').each(function() { setModeBackgroundColor($(this)); });
         });
         
-        // UI: checkbox toggle
+        function toggleSwitch(that, letter)
+        {
+            if ($(that).is(':checked')) {
+                $('.ui-selected').find('.wire').each(function() {
+                    if ($(this).text() != "") {
+                        
+                        var p = $(this).parent();
+
+                        TABS.led_strip.functions.forEach(function(f) {
+                            if (p.is('.function-' + f)) {
+
+                                switch (letter) {
+                                case 't':
+                                case 'o':
+                                case 's':
+                                    if (areModifiersActive('function-' + f))
+                                        p.addClass('function-' + letter);
+                                    break;
+                                case 'b':
+                                case 'n':
+                                    if (areBlinkersActive('function-' + f))
+                                        p.addClass('function-' + letter);
+                                    break;
+                                case 'i':
+                                    if (areOverlaysActive('function-' + f))
+                                        p.addClass('function-' + letter);
+                                    break;
+                                case 'w':
+                                    if (areOverlaysActive('function-' + f))
+                                        if (isWarningActive('function-' + f))
+                                            p.addClass('function-' + letter);
+                                    break;
+                                }
+                            }
+                        });
+                    }
+                });
+            } else {
+                $('.ui-selected').removeClass('function-' + letter);
+            }
+            return $(that).is(':checked');
+        }
+        
+        // UI: check-box toggle
         $('.checkbox').change(function(e) { 
             if (e.originalEvent) {
                 // user-triggered event
                 var that = $(this).find('input');
                 if ($('.ui-selected').length > 0) {
+                    
                     TABS.led_strip.overlays.forEach(function(letter) {
                         if ($(that).is('.function-' + letter)) {
-                            if ($(that).is(':checked')) {
-                                $('.ui-selected').find('.wire').each(function() {
-                                    if ($(this).text() != "")
-                                        $(this).parent().addClass('function-' + letter);
-                                });
-                            } else {
-                                $('.ui-selected').removeClass('function-' + letter);
+                            var ret = toggleSwitch(that, letter);
+
+                            var cbn = $('.checkbox .function-n'); // blink on landing
+                            var cbb = $('.checkbox .function-b'); // blink
+                            
+                            if (ret) {
+                                if (letter == 'b' && cbn.is(':checked')) {
+                                    cbn.prop('checked', false);
+                                    cbn.change();
+                                    toggleSwitch(cbn, 'n');
+                                } else if (letter == 'n' && cbb.is(':checked')) {
+                                    cbb.prop('checked', false);
+                                    cbb.change();
+                                    toggleSwitch(cbb, 'b');
+                                }    
                             }
                         }
                     });
-
+                    
                     clearModeColorSelection();
                     updateBulkCmd();
+                    setOptionalGroupsVisibility();
                 }
             } else {
                 // code-triggered event
             }
-            setOptionalGroupsVisibility();
         });
         
 
@@ -519,7 +521,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             var ledIndex = ledResult.index;
             var led = ledResult.led;
             
-            if (led.functions.length == 0 && led.directions.length == 0 && led.color == 0) {
+            if (led.functions[0] == 'c' && led.functions.length == 1 && led.directions.length == 0 && led.color == 0 && led.x == 0 && led.y == 0) {
                 return;
             }
             
@@ -536,14 +538,6 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             $(this).addClass('color-' + led.color);
 
         });
-        
-        updateBulkCmd();
-        
-        setOptionalGroupsVisibility();
-
-        drawColorBoxesInColorLedPoints();
-        
-        $('.colorDefineSliders').hide();
         
         $('a.save').click(function () {
 
@@ -567,11 +561,14 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             }
 
         });
+
+        $('.colorDefineSliders').hide();
         
-        if (semver.lt(CONFIG.apiVersion, "1.19.0")) {
-            $(".extra_functions19").hide();
-            $(".mode_colors").hide();
-        }
+        applyFunctionToSelectedLeds();
+        drawColorBoxesInColorLedPoints();
+        setOptionalGroupsVisibility();
+        
+        updateBulkCmd();
         
         GUI.content_ready(callback);
     }
@@ -703,114 +700,257 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
         }
     }
     
-    function setOptionalGroupsVisibility() {
-        
-        var activeFunction = $('select.functionSelect').val();
-        
-        $('select').addClass(activeFunction);
-
-        // set color modifiers (checkboxes) visibility
+    function areModifiersActive(activeFunction) {
         switch (activeFunction) {
             case "function-c": 
             case "function-a": 
             case "function-f":
-                $('.modifiers').show();
+                return true;
             break;
-            default: 
-                $('.modifiers').hide();
-            break; 
         }
+        return false;
+    }
 
-        // set overlays (checkboxes) visibility
-        switch (activeFunction) {
-            case "function-g":
-                $('.warningOverlay').hide();
-                $('.indicatorOverlay').show();
-                $('.overlays').show();
-            break;
-            case "function-b":
-            case "function-r": 
-                $('.warningOverlay').hide();
-                $('.indicatorOverlay').hide();
-                $('.overlays').hide();
-            break;
-            default: 
-                $('.indicatorOverlay').show();
-                $('.warningOverlay').show();
-                $('.overlays').show();
-            break; 
+    function areOverlaysActive(activeFunction) {
+        if (semver.lt(CONFIG.apiVersion, "1.20.0")) {
+            switch (activeFunction) {
+                case "function-c": 
+                case "function-a": 
+                case "function-f":
+                case "function-g":
+                    return true;
+                break;
+            }
+        } else {
+            switch (activeFunction) {
+                case "": 
+                case "function-c": 
+                case "function-a": 
+                case "function-f":
+                case "function-s":
+                case "function-l":
+                case "function-r": 
+                case "function-o":
+                case "function-g":
+                    return true;
+                break;
+            }
         }
-        
-        // set color palette visibility
-        /*
+        return false;
+    }
+
+    function areBlinkersActive(activeFunction) {
+        if (semver.gte(CONFIG.apiVersion, "1.20.0")) {
+            switch (activeFunction) {
+                case "function-c": 
+                case "function-a": 
+                case "function-f":
+                    return true;
+                break;
+            }
+        }
+        return false;
+    }
+
+    function isWarningActive(activeFunction) {
         switch (activeFunction) {
-            case "":
-            case "function-c":
-            case "function-b":
+            case "function-l": 
+            case "function-s":
+            case "function-g":
+                return false;
+                break;
             case "function-r":
-            case "function-a":
-            case "function-f":
-            case "function-g":
-                $('.colors').show();
-                $('.colorDefineSliders').show();
+            case "function-b":
+                if (semver.lt(CONFIG.apiVersion, "1.20.0"))
+                    return false;
             break;
-          
             default: 
-                $('.colors').hide();
-                $('.colorDefineSliders').hide();
+                return true;
             break; 
         }
-        */
+    }  
+            
+    function setOptionalGroupsVisibility() {
         
-        // set mode colors visibility
-        if (activeFunction == "function-f" && semver.gte(CONFIG.apiVersion, "1.19.0"))
-            $('.mode_colors').show();
-        else
-            $('.mode_colors').hide(); 
+        var activeFunction = $('select.functionSelect').val();
+        $('select.functionSelect').addClass(activeFunction);
 
+
+        if (semver.lte(CONFIG.apiVersion, "1.18.0")) { 
+            // <= 18
+            // Hide GPS (Func)
+            // Hide RSSI (O/L), Blink (Func)
+            // Hide Battery, RSSI (Func), Larson (O/L), Blink (O/L), Landing (O/L)
+            $(".extra_functions19").hide();
+            $(".extra_functions19_only").hide();
+            $(".extra_functions20").hide();
+            $(".mode_colors").hide();
+        } else if (semver.lte(CONFIG.apiVersion, "1.19.0")) { 
+            // 19
+            // Show GPS (Func)
+            // Show RSSI (O/L), Blink (Func)
+            // Hide Battery, RSSI (Func), Larson (O/L), Blink (O/L), Landing (O/L)
+            $(".extra_functions19").show();
+            $(".extra_functions19_only").show();
+            $(".extra_functions20").hide();
+            $(".mode_colors").hide();
+
+        } else { 
+            // >= 20
+            // Show GPS (Func)
+            // Hide RSSI (O/L), Blink (Func)
+            // Show Battery, RSSI (Func), Larson (O/L), Blink (O/L), Landing (O/L)
+            $(".extra_functions19").show();
+            $(".extra_functions19_only").hide();
+            $(".extra_functions20").show();
+            $(".mode_colors").show();
+        }
+        
+        
+        // set color modifiers (check-boxes) visibility
+        $('.overlays').hide();
+        $('.modifiers').hide();
+        $('.blinkers').hide();
+        $('.warningOverlay').hide();
+
+        if (areOverlaysActive(activeFunction))
+            $('.overlays').show();
+
+        if (areModifiersActive(activeFunction))
+            $('.modifiers').show();
+
+        if (areBlinkersActive(activeFunction))
+            $('.blinkers').show();
+          
+        if (isWarningActive(activeFunction))
+            $('.warningOverlay').show();
+        
+        
         // set directions visibility
-        if (activeFunction == "function-f" || activeFunction == "" || $('input.function-i').is(':checked'))
-            $('.directions').show();
-        else
-            $('.directions').hide(); 
+        if (semver.lt(CONFIG.apiVersion, "1.20.0")) {
+            switch (activeFunction) {
+                case "function-r":
+                    $('.indicatorOverlay').hide();
+                    $('.directions').hide();
+                break;
+                default: 
+                    $('.indicatorOverlay').show();
+                    $('.directions').show();
+                break; 
+            }
+        }
         
-        // set special colors visibility
-        $('.special_colors').show();
-        $('.mode_color-6-0').hide();
-        $('.mode_color-6-1').hide();
-        $('.mode_color-6-2').hide();
-        $('.mode_color-6-3').hide();
-        $('.mode_color-6-4').hide();
-        $('.mode_color-6-5').hide();
-        $('.mode_color-6-6').hide();
-        $('.mode_color-6-7').hide();
-        
-        switch (activeFunction) {
-            case "":           // none
-            case "function-f": // Modes & Orientation
-                // $('.mode_color-6-3').show(); // background
-                $('.special_colors').hide();
-                break;
-            case "function-g": // GPS
-                $('.mode_color-6-5').show(); // no sats
-                $('.mode_color-6-6').show(); // no lock
-                $('.mode_color-6-7').show(); // locked
-                // $('.mode_color-6-3').show(); // background
-                break;
-            case "function-b": // Blink
-                $('.mode_color-6-4').show(); // blink background 
-                break;
-            case "function-a": // Arm state
-                $('.mode_color-6-0').show(); // disarmed 
-                $('.mode_color-6-1').show(); // armed 
-                break;
-                
-            case "function-r": // Ring
-            default:
-                $('.special_colors').hide();
-            break; 
+        $('.mode_colors').hide();
+        if (semver.gte(CONFIG.apiVersion, "1.19.0")) { 
+            // set mode colors visibility
+
+            if (semver.gte(CONFIG.apiVersion, "1.20.0"))
+	            if (activeFunction == "function-f")
+	                $('.mode_colors').show(); 
+            
+            // set special colors visibility
+            $('.special_colors').show();
+            $('.mode_color-6-0').hide();
+            $('.mode_color-6-1').hide();
+            $('.mode_color-6-2').hide();
+            $('.mode_color-6-3').hide();
+            $('.mode_color-6-4').hide();
+            $('.mode_color-6-5').hide();
+            $('.mode_color-6-6').hide();
+            $('.mode_color-6-7').hide();
+            
+            switch (activeFunction) {
+                case "":           // none
+                case "function-f": // Modes & Orientation
+                case "function-l": // Battery 
+                    // $('.mode_color-6-3').show(); // background
+                    $('.special_colors').hide();
+                    break;
+                case "function-g": // GPS
+                    $('.mode_color-6-5').show(); // no sats
+                    $('.mode_color-6-6').show(); // no lock
+                    $('.mode_color-6-7').show(); // locked
+                    // $('.mode_color-6-3').show(); // background
+                    break;
+                case "function-b": // Blink
+                    $('.mode_color-6-4').show(); // blink background 
+                    break;
+                case "function-a": // Arm state
+                    $('.mode_color-6-0').show(); // disarmed 
+                    $('.mode_color-6-1').show(); // armed 
+                    break;
+                    
+                case "function-r": // Ring
+                default:
+                    $('.special_colors').hide();
+                break; 
+            }
         }
     }
+    
+    function applyFunctionToSelectedLeds() {
+        var activeFunction = $('select.functionSelect').val();
+        TABS.led_strip.baseFuncs.forEach(function(letter) {
+            
+            if (activeFunction == 'function-' + letter) {
+                $('select.functionSelect').addClass('function-' + letter);
+                
+                $('.ui-selected').find('.wire').each(function() {
+                    if ($(this).text() != "")
+                        $(this).parent().addClass('function-' + letter);
+                });
+                
+                unselectOverlays(letter);
+
+            } else {
+                $('select.functionSelect').removeClass('function-' + letter);
+                $('.ui-selected').removeClass('function-' + letter);
+            }
+            
+            if (activeFunction == '') {
+                unselectOverlays(activeFunction);
+            }
+
+        });
+    }
+    
+    function unselectOverlays(letter) {
+        if (semver.lt(CONFIG.apiVersion, "1.20.0")) {
+            if (letter == 'b' || letter == 'r') {
+                unselectOverlay(letter, 'i');
+            }
+            if (letter == 'b' || letter == 'r' || letter == 'l' || letter == 'g') {
+                unselectOverlay(letter, 'w');
+                unselectOverlay(letter, 't');
+                unselectOverlay(letter, 's');
+            }
+        } else {
+            // MSP 1.20
+            if (letter == 'r' || letter == '') {
+                unselectOverlay(letter, 'o');
+                unselectOverlay(letter, 'b');
+                unselectOverlay(letter, 'n');
+                unselectOverlay(letter, 't');
+            }
+            if (letter == 'l' || letter == 'g' || letter == 's') {
+                unselectOverlay(letter, 'w');
+                unselectOverlay(letter, 't');
+                unselectOverlay(letter, 'o');
+                unselectOverlay(letter, 'b');
+                unselectOverlay(letter, 'n');
+            }
+        }
+    }
+    
+    function unselectOverlay(func, overlay) {
+        $('input.function-' + overlay).prop('checked', false);
+        $('input.function-' + overlay).change();
+        $('.ui-selected').each(function() {
+            if (func == '' || $(this).is('.function-' + func)) {
+                $(this).removeClass('function-' + overlay);
+            }
+        });
+    }                
     
     function updateColors(value, hsvIndex) {
         var change = false;
@@ -857,7 +997,6 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     }
     
     function drawColorBoxesInColorLedPoints() {
-
         $('.gPoint').each(function() {
             if ($(this).is('.function-c') || $(this).is('.function-r') || $(this).is('.function-b')) {
                 $(this).find('.overlay-color').show();
@@ -911,6 +1050,9 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     }
     
     function HsvToColor(input) {
+    	if (input == undefined)
+    		return "";
+    	
         var HSV = { h:Number(input.h), s:Number(input.s), v:Number(input.v) };
         
         if (HSV.s == 0 && HSV.v == 0)

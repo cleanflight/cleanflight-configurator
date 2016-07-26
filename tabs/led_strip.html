@@ -64,8 +64,10 @@
                     <option value="function-c" class="">Color</option>
                     <option value="function-f" class="">Modes &amp; Orientation</option>
                     <option value="function-a" class="">Arm State</option>
+                    <option value="function-l" class="extra_functions20">Battery</option>
+                    <option value="function-s" class="extra_functions20">RSSI</option>
                     <option value="function-g" class="extra_functions19">GPS</option>
-                    <option value="function-b" class="extra_functions19">Blink</option>
+                    <option value="function-b" class="extra_functions19_only">Blink</option>
                     <option value="function-r" class="">Ring</option>
                 </select>
             </div>
@@ -77,12 +79,28 @@
                     <input type="checkbox" name="ThrottleHue" class="toggle function-t" />
                     <label> <span>Throttle</span></label>
                 </div>
-                <div class="checkbox extra_functions19">
+                <div class="checkbox extra_functions19_only">
                     <input type="checkbox" name="RssiHue" class="toggle function-s" />
                     <label> <span>RSSI</span></label>
                 </div>
+                <div class="checkbox extra_functions20">
+                    <input type="checkbox" name="LarsonScanner" class="toggle function-o" />
+                    <label> <span>Larson scanner</span></label>
+                </div>
             </div>
             
+            <div class="blinkers extra_functions20">
+                <span class="color_section">Blink</span>
+                <div class="checkbox blinkOverlay">
+                    <input type="checkbox" name="blink" class="toggle function-b" />
+                    <label> <span>Blink always</span></label>
+                </div>
+                <div class="checkbox landingBlinkOverlay">
+                    <input type="checkbox" name="landingBlink" class="toggle function-n" />
+                    <label> <span>Blink on landing</span></label>
+                </div>
+            </div>
+                        
             <div class="overlays">
                 <span class="color_section">Overlay</span>
                 <div class="checkbox warningOverlay">
@@ -144,18 +162,16 @@
                 <button class="color-15" title="black">15</button>
             </div>
 
-            <div class="checkbox extra_functions19">
-                <div class="special_colors mode_colors">
-                    <div class="section">Special colors</div>
-                    <button class="mode_color-6-0" title="green">Disarmed</button>
-                    <button class="mode_color-6-1" title="blue">Armed</button>
-                    <button class="mode_color-6-2" title="white">Animation</button>
-                    <!-- button class="mode_color-6-3" title="black">Background</button -->
-                    <button class="mode_color-6-4" title="black">Blink background</button>
-                    <button class="mode_color-6-5" title="red">GPS: no sats</button>
-                    <button class="mode_color-6-6" title="orange">GPS: no lock</button>
-                    <button class="mode_color-6-7" title="green">GPS: locked</button>
-                </div>
+            <div class="special_colors mode_colors">
+                <div class="section">Special colors</div>
+                <button class="mode_color-6-0" title="green">Disarmed</button>
+                <button class="mode_color-6-1" title="blue">Armed</button>
+                <button class="mode_color-6-2" title="white">Animation</button>
+                <!-- button class="mode_color-6-3" title="black">Background</button -->
+                <button class="mode_color-6-4" title="black">Blink background</button>
+                <button class="mode_color-6-5" title="red">GPS: no sats</button>
+                <button class="mode_color-6-6" title="orange">GPS: no lock</button>
+                <button class="mode_color-6-7" title="green">GPS: locked</button>
             </div>
             
             <div class="section">LED Strip Wiring</div>

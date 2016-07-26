@@ -328,7 +328,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             'SBUS',
             'SUMD',
             'SUMH',
-            'XBUS_MODE_B',
+            'SRXL (XBUS_MODE_B)',
             'XBUS_MODE_B_RJ01'
         ];
 

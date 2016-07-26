@@ -42,7 +42,7 @@ $(document).ready(function () {
         console.log('Application version expired');
         GUI.log('You are using an old version of ' + chrome.runtime.getManifest().name + '. There may be a more recent version with improvements and fixes.');
     }
-     
+
     chrome.storage.local.get('logopen', function (result) {
         if (result.logopen) {
             $("#showlog").trigger('click');
@@ -71,20 +71,20 @@ $(document).ready(function () {
                 tabClass = $(self).parent().prop('class');
 
             var tabRequiresConnection = $(self).parent().hasClass('mode-connected');
-            
+
             var tab = tabClass.substring(4);
             var tabName = $(self).text();
-            
+
             if (tabRequiresConnection && !CONFIGURATOR.connectionValid) {
                 GUI.log(chrome.i18n.getMessage('tabSwitchConnectionRequired'));
                 return;
             }
-            
+
             if (GUI.connect_lock) { // tab switching disabled while operation is in progress
                 GUI.log(chrome.i18n.getMessage('tabSwitchWaitForOperation'));
                 return;
             }
-            
+
             if (GUI.allowedTabs.indexOf(tab) < 0) {
                 GUI.log(chrome.i18n.getMessage('tabSwitchUpgradeRequired', [tabName]));
                 return;
@@ -206,6 +206,10 @@ $(document).ready(function () {
                     }
                 });
 
+                chrome.storage.local.get('github_api_token', function (result) {
+                    $('div.apitoken input').val(result.github_api_token);
+                });
+
                 $('div.notifications input').change(function () {
                     var check = $(this).is(':checked');
                     googleAnalytics.sendEvent('Settings', 'Notifications', check);
@@ -222,6 +226,10 @@ $(document).ready(function () {
                     var check = $(this).is(':checked');
                     googleAnalytics.sendEvent('Settings', 'GoogleAnalytics', check);
                     googleAnalyticsConfig.setTrackingPermitted(check);
+                });
+
+                $('div.apitoken input').change(function () {
+                    chrome.storage.local.set({'github_api_token': $(this).val().trim()});
                 });
 
                 function close_and_cleanup(e) {
@@ -316,7 +324,7 @@ $(document).ready(function () {
             }
         }
     });
-    
+
     $("#showlog").on('click', function() {
     var state = $(this).data('state');
     if ( state ) {
@@ -329,7 +337,7 @@ $(document).ready(function () {
         $(".tab_container").removeClass('logopen');
         $("#scrollicon").removeClass('active');
         chrome.storage.local.set({'logopen': false});
-	
+
         state = false;
     }else{
         $("#log").animate({height: 111}, 200);
@@ -343,11 +351,11 @@ $(document).ready(function () {
     }
     $(this).text(state ? 'Hide Log' : 'Show Log');
     $(this).data('state', state);
-    
+
     });
-    
+
     var profile_e = $('select[name="profilechange"]');
-    
+
     profile_e.change(function () {
         var profile = parseInt($(this).val());
         MSP.send_message(MSP_codes.MSP_SELECT_SETTING, [profile], false, function () {

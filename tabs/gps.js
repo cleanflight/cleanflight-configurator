@@ -1,6 +1,7 @@
 'use strict';
 
 TABS.gps = {};
+
 TABS.gps.initialize = function (callback) {
     var self = this;
 
@@ -13,6 +14,7 @@ TABS.gps.initialize = function (callback) {
         $('#content').load("./tabs/gps.html", process_html);
     }
 
+    
     MSP.send_message(MSP_codes.MSP_STATUS, false, false, load_html);
     
     function set_online(){
@@ -59,15 +61,22 @@ TABS.gps.initialize = function (callback) {
             // Update GPS Signal Strengths
             var e_ss_table = $('div.GPS_signal_strength table tr:not(.titles)');
 
-            for (var i = 0; i < GPS_DATA.chn.length; i++) {
+
+            for (var i = 0; i < 16; i++) {
                 var row = e_ss_table.eq(i);
 
-                $('td', row).eq(0).text(GPS_DATA.svid[i]);
-                $('td', row).eq(1).text(GPS_DATA.quality[i]);
-                $('td', row).eq(2).find('progress').val(GPS_DATA.cno[i]);
+                if (GPS_DATA.numSat > 0 && i < GPS_DATA.chn.length) {
+                    $('td', row).eq(0).text(GPS_DATA.svid[i]);
+                    $('td', row).eq(1).text(GPS_DATA.quality[i]);
+                    $('td', row).eq(2).find('progress').val(GPS_DATA.cno[i]);
+                } else {
+                    $('td', row).eq(0).text(0);
+                    $('td', row).eq(1).text(0);
+                    $('td', row).eq(2).find('progress').val(0);
+                }
             }
             
-
+            
             var message = {
                 action: 'center',
                 lat: lat,

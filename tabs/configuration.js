@@ -120,7 +120,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             {bit: 2, group: 'other', name: 'INFLIGHT_ACC_CAL'},
             {bit: 3, group: 'rxMode', mode: 'group', name: 'RX_SERIAL'},
             {bit: 4, group: 'esc', name: 'MOTOR_STOP'},
-            {bit: 5, group: 'other', name: 'SERVO_TILT'},
+            {bit: 5, group: 'other', name: 'SERVO_TILT', haveTip: true},
             {bit: 6, group: 'other', name: 'SOFTSERIAL', haveTip: true},
             {bit: 7, group: 'gps', name: 'GPS', haveTip: true},
             {bit: 8, group: 'rxFailsafe', name: 'FAILSAFE'},
@@ -328,7 +328,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             'SBUS',
             'SUMD',
             'SUMH',
-            'XBUS_MODE_B',
+            'SRXL (XBUS_MODE_B)',
             'XBUS_MODE_B_RJ01'
         ];
 
@@ -363,7 +363,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         $('input[name="pitch"]').val(CONFIG.accelerometerTrims[0]);
 
         // fill magnetometer
-        $('input[name="mag_declination"]').val(MISC.mag_declination);
+        $('input[name="mag_declination"]').val(MISC.mag_declination.toFixed(2));
 
         //fill motor disarm params and FC loop time        
         if(semver.gte(CONFIG.apiVersion, "1.8.0")) {
@@ -407,7 +407,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             $('input[name="3ddeadbandlow"]').val(_3D.deadband3d_low);
             $('input[name="3ddeadbandhigh"]').val(_3D.deadband3d_high);
             $('input[name="3dneutral"]').val(_3D.neutral3d);
-            $('input[name="3ddeadbandthrottle"]').val(_3D.deadband3d_throttle);
+            if (semver.lt(CONFIG.apiVersion, "1.17.0")) {
+                $('input[name="3ddeadbandthrottle"]').val(_3D.deadband3d_throttle);
+            } else {
+                $('.3ddeadbandthrottle').hide();
+            }
         }
 
         // UI hooks
@@ -487,7 +491,9 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             _3D.deadband3d_low = parseInt($('input[name="3ddeadbandlow"]').val());
             _3D.deadband3d_high = parseInt($('input[name="3ddeadbandhigh"]').val());
             _3D.neutral3d = parseInt($('input[name="3dneutral"]').val());
-            _3D.deadband3d_throttle = ($('input[name="3ddeadbandthrottle"]').val());
+            if (semver.lt(CONFIG.apiVersion, "1.17.0")) {
+                _3D.deadband3d_throttle = ($('input[name="3ddeadbandthrottle"]').val());
+            }
 
 
             SENSOR_ALIGNMENT.align_gyro = parseInt(orientation_gyro_e.val());

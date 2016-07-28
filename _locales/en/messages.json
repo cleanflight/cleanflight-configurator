@@ -273,7 +273,7 @@
         "message": "Support"
     },
     "defaultSupportSubline1": {
-        "message": "Support Scources"
+        "message": "Support Sources"
     },
     "defaultSupportSubline2": {
         "message": "Developer"
@@ -458,10 +458,10 @@
         "message": "Serial-based receiver (SPEKSAT, SBUS, SUMD)"
     },
     "featureMOTOR_STOP": {
-        "message": "Don't spin the motors when armed"
+        "message": "Do not spin motors when armed"
     },
     "featureSERVO_TILT": {
-        "message": "Servo gimbal"
+        "message": "Servo gimbal (changes motor pin mapping)"
     },
     "featureSOFTSERIAL": {
         "message": "Enable CPU based serial ports"
@@ -722,6 +722,9 @@
     },
     "portsFunction_TELEMETRY_LTM": {
         "message": "LTM"
+    },
+    "portsFunction_TELEMETRY_MAVLINK": {
+        "message": "MAVLink"
     },
     "portsFunction_TELEMETRY_MSP": {
         "message": "MSP"
@@ -1342,8 +1345,11 @@
     "firmwareFlasherNoReboot": {
         "message": "No reboot sequence"
     },
-    "firmwareFlasherOnlineReleasesDescription": {
-        "message": "Available online firmware releases - Select the correct firmware appropriate for your board."
+    "firmwareFlasherOnlineSelectBoardDescription": {
+        "message": "Select your board to see available online firmware releases - Select the correct firmware appropriate for your board."
+    },
+    "firmwareFlasherOnlineSelectFirmwareVersionDescription": {
+        "message": "Select firmware version for your board."
     },
     "firmwareFlasherNoRebootDescription": {
         "message": "Enable if you powered your FC while the bootloader pins are jumpered or have your FC's BOOT button pressed."
@@ -1380,6 +1386,15 @@
     },
     "firmwareFlasherOptionLabelSelectFirmware": {
         "message": "Choose a Firmware / Board"
+    },
+    "firmwareFlasherOptionLabelSelectBoard": {
+        "message": "Choose a Board"
+    },
+    "firmwareFlasherOptionLabelSelectFirmwareVersion": {
+        "message": "Choose a Firmware version"
+    },
+    "firmwareFlasherOptionLabelSelectFirmwareVersionFor": {
+        "message": "Choose a Firmware version for"
     },
     "firmwareFlasherButtonLoadLocal": {
         "message": "Load Firmware [Local]"
@@ -1437,7 +1452,7 @@
     },
 
     "ledStripHelp": {
-        "message": "The flight controller can control colors and effects of individual LEDs on a strip.<br />Configure LEDs on the grid, configure wiring order then attach LEDs on your aircraft according to grid positions."
+        "message": "The flight controller can control colors and effects of individual LEDs on a strip.<br />Configure LEDs on the grid, configure wiring order then attach LEDs on your aircraft according to grid positions.<br />Double-click on a color to edit the HSV values."
     },
     "ledStripButtonSave": {
         "message": "Save"
@@ -1620,5 +1635,20 @@
     },
     "failsafeKillSwitchHelp": {
         "message": "Set this option to make the failsafe switch, configured in the modes tab, act as a direct kill switch, bypassing the selected failsafe procedure. <strong>Note:</strong> Arming is blocked with the failsafe kill switch in the ON position"
+    },
+    "mainHelpArmed": {
+        "message": "Motor Arming"
+    },
+    "mainHelpFailsafe": {
+        "message": "Failsafe Mode"
+    },
+    "mainHelpLink": {
+        "message": "Serial Link Status"
+    },
+    "configHelp3": {
+        "message": "Configure port scenario first before selecting a serial-based receiver."
+    },
+        "featureSERVO_TILTTip": {
+        "message": "With this feature activated, you can connect a gimbal. Do not activate with motors and battery connected! Ths changes the motor pin mapping. "
     }
 }

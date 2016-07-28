@@ -54,10 +54,15 @@ TABS.setup.initialize = function (callback) {
         // set heading in interactive block
         $('span.heading').text(chrome.i18n.getMessage('initialSetupAttitude', [0]));
 
+        // check if we have accelerometer and magnetometer
+        if (!have_sensor(CONFIG.activeSensors, 'acc')) {
+            $('a.calibrateAccel').addClass('disabled');
+            $('default_btn').addClass('disabled');
+        }
 
-        // check if we have magnetometer
-        if (!bit_check(CONFIG.activeSensors, 2)) {
+        if (!have_sensor(CONFIG.activeSensors, 'mag')) {
             $('a.calibrateMag').addClass('disabled');
+            $('default_btn').addClass('disabled');
         }
 
         self.initializeInstruments();
@@ -74,14 +79,17 @@ TABS.setup.initialize = function (callback) {
                 GUI.interval_pause('setup_data_pull');
                 MSP.send_message(MSP_codes.MSP_ACC_CALIBRATION, false, false, function () {
                     GUI.log(chrome.i18n.getMessage('initialSetupAccelCalibStarted'));
+                    $('#accel_calib_running').show();
+                    $('#accel_calib_rest').hide();
                 });
 
                 GUI.timeout_add('button_reset', function () {
                     GUI.interval_resume('setup_data_pull');
 
                     GUI.log(chrome.i18n.getMessage('initialSetupAccelCalibEnded'));
-
                     self.removeClass('calibrating');
+                    $('#accel_calib_running').hide();
+                    $('#accel_calib_rest').show();
                 }, 2000);
             }
         });
@@ -94,11 +102,15 @@ TABS.setup.initialize = function (callback) {
 
                 MSP.send_message(MSP_codes.MSP_MAG_CALIBRATION, false, false, function () {
                     GUI.log(chrome.i18n.getMessage('initialSetupMagCalibStarted'));
+                    $('#mag_calib_running').show();
+                    $('#mag_calib_rest').hide();
                 });
 
                 GUI.timeout_add('button_reset', function () {
                     GUI.log(chrome.i18n.getMessage('initialSetupMagCalibEnded'));
                     self.removeClass('calibrating');
+                    $('#mag_calib_running').hide();
+                    $('#mag_calib_rest').show();
                 }, 30000);
             }
         });
@@ -244,7 +256,8 @@ TABS.setup.initialize3D = function (compatibility) {
     // Temporary workaround for 'custom' model until akfreak's custom model is merged.
     var useLegacyCustomModel = false;
     if (model_file == 'custom') {
-        model_file = 'fallback';
+    //  model_file = 'fallback';
+        model_file = 'quad_x';
         useLegacyCustomModel = true;
     }
 

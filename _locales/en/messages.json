@@ -458,7 +458,7 @@
         "message": "Serial-based receiver (SPEKSAT, SBUS, SUMD)"
     },
     "featureMOTOR_STOP": {
-        "message": "Don't spin the motors when armed"
+        "message": "Do not spin motors when armed"
     },
     "featureSERVO_TILT": {
         "message": "Servo gimbal (changes motor pin mapping)"

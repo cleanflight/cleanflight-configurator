@@ -43,8 +43,8 @@ var MSP_codes = {
     MSP_TRANSPONDER_CONFIG:      82,
     MSP_SET_TRANSPONDER_CONFIG:  83,
 
-    MSP_LED_STRIP_MODECOLOR:     86,
-    MSP_SET_LED_STRIP_MODECOLOR: 87,
+    MSP_LED_STRIP_MODECOLOR:     127,
+    MSP_SET_LED_STRIP_MODECOLOR: 221,
 
     // Multiwii MSP commands
     MSP_IDENT:              100,

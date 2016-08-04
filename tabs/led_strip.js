@@ -36,7 +36,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     }
 
     function load_led_mode_colors() {
-        if (semver.gt(CONFIG.apiVersion, "1.19.0"))
+        if (semver.gte(CONFIG.apiVersion, "1.21.0"))
             MSP.send_message(MSP_codes.MSP_LED_STRIP_MODECOLOR, false, false, load_html);
         else
             load_html();

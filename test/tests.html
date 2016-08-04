@@ -1,0 +1,24 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="mocha.css" />
+</head>
+<body>
+  <div id="mocha"></div>
+  <script src="should.js"></script>
+  <script src="mocha.js"></script>
+  <script>mocha.setup('bdd')</script>
+  <script src="../js/data_storage.js"></script>
+  <script src="../js/msp.js"></script>
+  <script src="../js/boards.js"></script>
+  <script src="../js/libraries/jquery-2.1.3.min.js"></script>
+  <script src="../js/serial_backend.js"></script>
+  <script src="test.msp.js"></script>
+  <script src="test.boards.js"></script>
+  <script>
+    mocha.checkLeaks();
+    mocha.run();
+  </script>
+</body>
+</html>

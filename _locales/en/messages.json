@@ -641,8 +641,8 @@
     "configurationBatteryMultiwiiCurrent": {
         "message": "Enable support for legacy Multiwii MSP current output"
     },
-    "configuration3d": {
-        "message": "3D"
+    "configuration3dEsc": {
+        "message": "3D ESC"
     },
     "configuration3dDeadbandLow": {
         "message": "3D Deadband Low"
@@ -652,9 +652,6 @@
     },
     "configuration3dNeutral": {
         "message": "3D Neutral"
-    },
-    "configuration3dDeadbandThrottle": {
-        "message": "3D Deadband Throttle"
     },
     "configurationSystem": {
         "message": "System configuration"
@@ -818,6 +815,12 @@
     "receiverYawDeadband": {
         "message": "Yaw Deadband"
     },
+    "recevier3dDeadbandThrottle": {
+        "message": "3D Throttle Deadband"
+    },
+    "receiverHelp3dDeadbandThrottle": {
+        "message": "These are values (in us).  To widen the neutral zone increased the value. <strong>This setting is for 3D throttle only.</strong>"
+    },    
     "receiverRcExpo": {
         "message": "RC Expo"
     },

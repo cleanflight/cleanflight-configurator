@@ -26,8 +26,18 @@ TABS.receiver.initialize = function (callback) {
 
     // Fetch features so we can check if RX_MSP is enabled:
     function load_config() {
-        MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, load_rc_configs);
+        MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, load_3d);
     }
+    
+    function load_3d() {
+        var next_callback = load_rc_configs;
+        if (semver.gte(CONFIG.apiVersion, "1.14.0")) {
+            MSP.send_message(MSP_codes.MSP_3D, false, false, next_callback);
+        } else {
+            next_callback();
+        }
+    }
+    
     
     function load_rc_configs() {
         var next_callback = load_html;
@@ -73,6 +83,7 @@ TABS.receiver.initialize = function (callback) {
         } else {
             $('.deadband input[name="yaw_deadband"]').val(RC_deadband.yaw_deadband);
             $('.deadband input[name="deadband"]').val(RC_deadband.deadband);
+            $('.deadband input[name="3ddeadbandthrottle"]').val(_3D.deadband3d_throttle);
         }
 
         // generate bars
@@ -311,6 +322,7 @@ TABS.receiver.initialize = function (callback) {
             if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
                RC_deadband.yaw_deadband = parseInt($('.deadband input[name="yaw_deadband"]').val());
                RC_deadband.deadband = parseInt($('.deadband input[name="deadband"]').val());
+               _3D.deadband3d_throttle = ($('.deadband input[name="3ddeadbandthrottle"]').val());
             }
    
             // catch rc map
@@ -329,7 +341,16 @@ TABS.receiver.initialize = function (callback) {
             }
 
             function save_misc() {
-                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_rc_configs);
+                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_3d);
+            }
+            
+            function save_3d() {
+                var next_callback = save_rc_configs;
+                if(semver.gte(CONFIG.apiVersion, "1.14.0")) {
+                   MSP.send_message(MSP_codes.MSP_SET_3D, MSP.crunch(MSP_codes.MSP_SET_3D), false, next_callback);
+                } else {
+                   next_callback();
+                }     
             }
             
             function save_rc_configs() {

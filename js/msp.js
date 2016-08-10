@@ -563,6 +563,10 @@ var MSP = {
                 RC_deadband.deadband = data.getUint8(offset++, 1);
                 RC_deadband.yaw_deadband = data.getUint8(offset++, 1);
                 RC_deadband.alt_hold_deadband = data.getUint8(offset++, 1);
+                if (semver.gte(CONFIG.apiVersion, "1.17.0")) {
+                    buffer.push(lowByte(_3D.deadband3d_throttle));
+                    buffer.push(highByte(_3D.deadband3d_throttle));
+                }
                 break;
             case MSP_codes.MSP_SENSOR_ALIGNMENT:
                 var offset = 0;
@@ -1471,6 +1475,10 @@ MSP.crunch = function (code) {
             buffer.push(RC_deadband.deadband);
             buffer.push(RC_deadband.yaw_deadband); 
             buffer.push(RC_deadband.alt_hold_deadband);
+            if (semver.gte(CONFIG.apiVersion, "1.17.0")) {
+                buffer.push(lowByte(_3D.deadband3d_throttle));
+                buffer.push(highByte(_3D.deadband3d_throttle));
+            }
             break;
 
         case MSP_codes.MSP_SET_SENSOR_ALIGNMENT:

@@ -13,6 +13,14 @@ TABS.firmware_flasher.initialize = function (callback) {
     var intel_hex = false, // standard intel hex in string format
         parsed_hex = false; // parsed raw hex in array format
 
+    chrome.storage.local.get('github_api_token', function (result) {
+        if (result.github_api_token !== "") {
+          self.auth = '?access_token=' + result.github_api_token;
+        } else {
+          self.auth = "";
+        }
+    });
+
     $('#content').load("./tabs/firmware_flasher.html", function () {
         // translate to user-selected language
         localize();
@@ -129,16 +137,15 @@ TABS.firmware_flasher.initialize = function (callback) {
             TABS.firmware_flasher.releases = releases;
         };
 
-        $.get('https://api.github.com/repos/cleanflight/cleanflight/releases', function (releasesData){
+        $.get('https://api.github.com/repos/cleanflight/cleanflight/releases' + self.auth, function (releasesData){
             TABS.firmware_flasher.releasesData = releasesData;
             buildBoardOptions();
-
             // bind events
             $('select[name="board"]').change(function() {
 
                 $("a.load_remote_file").addClass('disabled');
                 var target = $(this).val();
-                
+
                 if (!GUI.connect_lock) {
                     $('.progress').val(0).removeClass('valid invalid');
                     $('span.progressLabel').text(chrome.i18n.getMessage('firmwareFlasherLoadFirmwareFile'));
@@ -173,7 +180,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             }
             $('select[name="release"]').empty().append('<option value="0">Offline</option>');
         });
-                        
+
         // UI Hooks
         $('a.load_file').click(function () {
             chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['hex']}]}, function (fileEntry) {
@@ -263,7 +270,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                         $('a.flash_firmware').removeClass('disabled');
 
                         if (summary.commit) {
-                            $.get('https://api.github.com/repos/cleanflight/cleanflight/commits/' + summary.commit, function (data) {
+                            $.get('https://api.github.com/repos/cleanflight/cleanflight/commits/' + summary.commit + self.auth, function (data) {
                                 var data = data,
                                     d = new Date(data.commit.author.date),
                                     offset = d.getTimezoneOffset() / 60,
@@ -315,7 +322,7 @@ TABS.firmware_flasher.initialize = function (callback) {
 
             var summary = $('select[name="firmware_version"] option:selected').data('summary');
             if (summary) { // undefined while list is loading or while running offline
-                $.get(summary.url, function (data) {
+                $.get(summary.url + self.auth, function (data) {
                     process_hex(data, summary);
                 }).fail(failed_to_load);
             } else {

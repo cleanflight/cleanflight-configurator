@@ -38,6 +38,7 @@ var GUI_control = function () {
         'servos',
     ];
     this.defaultAllowedOSDTabsWhenConnected = [
+        'setup_osd',
         'osd',
         'sensors'
     ];

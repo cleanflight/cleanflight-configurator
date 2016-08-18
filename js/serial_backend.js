@@ -264,8 +264,8 @@ function onConnect() {
     GUI.timeout_remove('connecting'); // kill connecting timer
     $('div#connectbutton a.connect_state').text(chrome.i18n.getMessage('disconnect')).addClass('active');
     $('div#connectbutton a.connect').addClass('active');
-    $('#tabs ul.mode-disconnected').hide();
-    $('#tabs ul.mode-connected').show(); 
+    
+    GUI.updateTabsConnected()
      
     MSP.send_message(MSP_codes.MSP_STATUS, false, false);      
     
@@ -293,8 +293,7 @@ function onClosed(result) {
         GUI.log(chrome.i18n.getMessage('serialPortClosedFail'));
     }
 
-    $('#tabs ul.mode-connected').hide();
-    $('#tabs ul.mode-disconnected').show();
+    GUI.updateTabsDisconnected()
 
     var sensor_state = $('#sensor-status');
     sensor_state.hide();

@@ -178,7 +178,8 @@ TABS.cli.read = function (readInfo) {
                         MSP.send_message(MSP_codes.MSP_IDENT, false, false, function () {
                             GUI.log(chrome.i18n.getMessage('deviceReady'));
                             if (!GUI.tab_switch_in_progress) {
-                                $('#tabs ul.mode-connected .tab_setup a').click();
+                                var firstTabName = "tab_" + GUI.allowedTabs[0];
+                                $('#tabs ul.mode-connected .' + firstTabName + ' a').click();
                             }
                         });
                     },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts

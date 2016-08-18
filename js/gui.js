@@ -235,6 +235,35 @@ GUI_control.prototype.tab_switch_cleanup = function (callback) {
     }
 };
 
+GUI_control.prototype.updateTabsConnected = function() {
+
+    // toggle between connected/disconnected elements
+    $('#tabs ul.mode-disconnected').hide();
+    $('#tabs ul.mode-connected').show();
+
+    // show only appropriate tabs
+    $('#tabs ul.mode-connected li').hide();
+    $('#tabs ul.mode-connected li').filter(function (index) { 
+        var classes = $(this).attr("class").split(/\s+/); 
+        var found = false;
+        $.each(GUI.allowedTabs, function (index, value) {
+            var tabName = "tab_" + value;
+            if ($.inArray(tabName, classes) >= 0) {
+                found = true;
+            }
+        });
+        
+        return found;
+    }).show();
+};
+
+GUI_control.prototype.updateTabsDisconnected = function() {
+
+    // toggle between connected/disconnected elements
+    $('#tabs ul.mode-connected').hide();
+    $('#tabs ul.mode-disconnected').show();
+};
+
 GUI_control.prototype.content_ready = function (callback) {
 
     $('.togglesmall').each(function(index, elem) {

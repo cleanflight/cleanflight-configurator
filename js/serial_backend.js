@@ -341,7 +341,7 @@ function sensor_status(sensors_detected) {
         $('.accicon', e_sensor_status).removeClass('active');
     }
 
-    if (true) { // Gyro status is not reported by FC
+    if (CONFIG.boardType == 0) { // Gyro status is not reported by FC 
         $('.gyro', e_sensor_status).addClass('on');
         $('.gyroicon', e_sensor_status).addClass('active');
     } else {

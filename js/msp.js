@@ -46,9 +46,9 @@ var MSP_codes = {
     MSP_LED_STRIP_MODECOLOR:     127,
     MSP_SET_LED_STRIP_MODECOLOR: 221,
     
-    MSP_VOLTAGE_METERS:          92,
-    MSP_CURRENT_METERS:          93,
-    MSP_BATTERY_STATES:          94,
+    MSP_VOLTAGE_METERS:          128,
+    MSP_CURRENT_METERS:          129,
+    MSP_BATTERY_STATES:          130,
 
     // OSD commands
     
@@ -368,7 +368,7 @@ var MSP = {
                 CURRENT_METERS = [];
                 for (var i = 0; i < (message_length / 2); i++) {
                     var currentMeter = {};
-                    currentMeter.amperage = data.getInt16(offset, 1) / 100; // A
+                    currentMeter.amperage = data.getInt16(offset, 1) / 1000; // A
                     offset += 2;
                     
                     CURRENT_METERS.push(currentMeter)

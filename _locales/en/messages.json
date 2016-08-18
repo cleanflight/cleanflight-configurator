@@ -1687,7 +1687,7 @@
         "message": "Current 1"
     },
     "osdBatteryConnected": {
-        "message": "Connected"
+        "message": "Battery Connected"
     },
     "osdBatteryConnectedValueYes": {
         "message": "Yes"

@@ -30,6 +30,7 @@ var GUI_control = function () {
         'logging',
         'onboard_logging',
         'modes',
+        'power',
         'motors',
         'pid_tuning',
         'ports',
@@ -40,6 +41,7 @@ var GUI_control = function () {
     this.defaultAllowedOSDTabsWhenConnected = [
         'setup_osd',
         'osd',
+        'power',
         'sensors'
     ];
     this.allowedTabs = this.defaultAllowedTabsWhenDisconnected;

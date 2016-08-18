@@ -75,6 +75,9 @@
     "tabOSD": {
         "message": "OSD"
     },
+    "tabPower": {
+        "message": "Power & Battery"
+    },
     "tabConfiguration": {
         "message": "Configuration"
     },
@@ -1661,45 +1664,58 @@
     "featureSERVO_TILTTip": {
         "message": "With this feature activated, you can connect a gimbal. Do not activate with motors and battery connected! Ths changes the motor pin mapping. "
     },
+
+    "powerVoltageHead": {
+        "message": "Voltage"
+    },
+    "powerVoltageValue": {
+        "message": "$1 V"
+    },
+    "powerAmperageValue": {
+        "message": "$1 A"
+    },    
+    "powerVoltage1": {
+        "message": "Voltage 1"
+    },
+    "powerVoltage2": {
+        "message": "Voltage 2"
+    },
+    "powerVoltage3": {
+        "message": "Voltage 3"
+    },
+
+    "powerCurrentHead": {
+        "message": "Current"
+    },
+    "powerCurrent1": {
+        "message": "Current 1"
+    },
+    "powerMahValue": {
+        "message": "$1 mAh"
+    },
+    
+    "powerBatteryHead": {
+        "message": "Battery"
+    },
+    "powerBatteryConnected": {
+        "message": "Connected"
+    },
+    "powerBatteryConnectedValueYes": {
+        "message": "Yes"
+    },
+    "powerBatteryConnectedValueNo": {
+        "message": "No"
+    },
+    "powerBatteryVoltage": {
+        "message": "Voltage"
+    },
+    "powerBatteryCurrentDrawn": {
+        "message": "mAh used"
+    },
+    
     
     "osdInfoHead": {
         "message": "Info"
-    },
-    "osdBatteryVoltageValue": {
-        "message": "$1 V"
-    },
-    "osdBatteryMahValue": {
-        "message": "$1 mAh"
-    },
-    "osdBatteryAmperageValue": {
-        "message": "$1 A"
-    },    
-    "osdVoltage1": {
-        "message": "Voltage 1"
-    },
-    "osdVoltage2": {
-        "message": "Voltage 2"
-    },
-    "osdVoltage3": {
-        "message": "Voltage 3"
-    },
-    "osdCurrent1": {
-        "message": "Current 1"
-    },
-    "osdBatteryConnected": {
-        "message": "Battery Connected"
-    },
-    "osdBatteryConnectedValueYes": {
-        "message": "Yes"
-    },
-    "osdBatteryConnectedValueNo": {
-        "message": "No"
-    },
-    "osdBatteryVoltage": {
-        "message": "Voltage"
-    },
-    "osdBatteryCurrentDrawn": {
-        "message": "mAh used"
     },
     "osdResetText": {
         "message": "Reset OSD to default"

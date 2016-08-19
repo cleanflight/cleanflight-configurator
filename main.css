@@ -1356,8 +1356,8 @@ dialog {
     border-style: dotted;
 }
 
-.noboarder td {
-    border: none;
+.cf_table tr:last-child td {
+    border-bottom: 0px;
 }
 
 .cf_table td:last-child {

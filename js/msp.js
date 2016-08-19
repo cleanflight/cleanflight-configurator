@@ -54,6 +54,7 @@ var MSP_codes = {
     
     MSP_OSD_VIDEO_CONFIG:       180,
     MSP_SET_OSD_VIDEO_CONFIG:   181,
+    MSP_OSD_VIDEO_STATUS:       182,
     
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -1182,6 +1183,11 @@ var MSP = {
                 break;
             case MSP_codes.MSP_SET_OSD_VIDEO_CONFIG:
                 console.log('Video config saved');
+                break;
+            case MSP_codes.MSP_OSD_VIDEO_STATUS:
+                var offset = 0;
+                OSD_VIDEO_STATE.video_mode = data.getUint8(offset++, 1);
+                OSD_VIDEO_STATE.camera_connected = data.getUint8(offset++, 1);
                 break;
 
             default:

@@ -23,6 +23,12 @@ TABS.setup_osd.initialize = function (callback) {
 
     function process_html() {
 
+        var osdVideoModes = [
+            'AUTO',
+            'NTSC',
+            'PAL'
+        ];
+
         // translate to user-selected language
         localize();
 
@@ -38,6 +44,17 @@ TABS.setup_osd.initialize = function (callback) {
         
         function get_slow_data() {
             MSP.send_message(MSP_codes.MSP_STATUS);
+            
+            MSP.send_message(MSP_codes.MSP_OSD_VIDEO_STATUS, false, false, function () {
+                var element;
+                
+                element = $('.video-mode');
+                var osdVideoMode = osdVideoModes[OSD_VIDEO_STATE.video_mode];
+                element.text(osdVideoMode);
+                
+                element = $('.camera-connected');
+                element.text(OSD_VIDEO_STATE.camera_connected ? chrome.i18n.getMessage('osdInfoCameraConnectedValueYes') : chrome.i18n.getMessage('osdInfoCameraConnectedValueNo'));
+            });
         }
 
         GUI.interval_add('setup_data_pull_slow', get_slow_data, 250, true); // 4 fps

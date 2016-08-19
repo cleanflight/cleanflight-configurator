@@ -28,6 +28,7 @@ TABS.osd.initialize = function (callback) {
     function process_html() {
         
         var osdVideoModes = [
+            'AUTO',
             'NTSC',
             'PAL'
         ];

@@ -1717,6 +1717,22 @@
     "osdInfoHead": {
         "message": "Info"
     },
+    "osdInfoVideoMode": {
+        "message": "Video Mode"
+    },
+    "osdInfoCameraConnected": {
+        "message": "Camera Connected"
+    },
+    "osdInfoCameraConnectedValueYes": {
+        "message": "Yes"
+    },
+    "osdInfoCameraConnectedValueNo": {
+        "message": "No"
+    },
+    
+    "osdInfoHead": {
+        "message": "Info"
+    },
     "osdResetText": {
         "message": "Reset OSD to default"
     },

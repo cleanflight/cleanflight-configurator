@@ -38,7 +38,11 @@ TABS.gps.initialize = function (callback) {
         }
 
         function get_comp_gps_data() {
-            MSP.send_message(MSP_codes.MSP_COMP_GPS, false, false, get_gpsvinfo_data);
+            MSP.send_message(MSP_codes.MSP_COMP_GPS, false, false, get_wp_data);
+        }
+
+        function get_wp_data() {
+            MSP.send_message(MSP_codes.MSP_WP, 0, false, get_gpsvinfo_data);
         }
 
         function get_gpsvinfo_data() {
@@ -48,7 +52,10 @@ TABS.gps.initialize = function (callback) {
         function update_ui() {
             var lat = GPS_DATA.lat / 10000000;
             var lon = GPS_DATA.lon / 10000000;
+            var gpsHome_lat = WP_DATA.lat / 10000000;
+            var gpsHome_lon = WP_DATA.lon / 10000000;
             var url = 'https://maps.google.com/?q=' + lat + ',' + lon;
+            var gpsHome_url = 'https://maps.google.com/?q=' + gpsHome_lat + ',' + gpsHome_lon;
 
             $('.GPS_info td.fix').html((GPS_DATA.fix) ? chrome.i18n.getMessage('gpsFixTrue') : chrome.i18n.getMessage('gpsFixFalse'));
             $('.GPS_info td.alt').text(GPS_DATA.alt + ' m');
@@ -57,7 +64,11 @@ TABS.gps.initialize = function (callback) {
             $('.GPS_info td.speed').text(GPS_DATA.speed + ' cm/s');
             $('.GPS_info td.sats').text(GPS_DATA.numSat);
             $('.GPS_info td.distToHome').text(GPS_DATA.distanceToHome + ' m');
-
+            $('.GPS_info td.directToHome').text(GPS_DATA.directionToHome + ' deg');
+            
+            $('.HOME_info td.lat a').prop('href', gpsHome_url).text(gpsHome_lat.toFixed(4) + ' deg');
+            $('.HOME_info td.lon a').prop('href', gpsHome_url).text(gpsHome_lon.toFixed(4) + ' deg');
+            
             // Update GPS Signal Strengths
             var e_ss_table = $('div.GPS_signal_strength table tr:not(.titles)');
 
@@ -81,6 +92,8 @@ TABS.gps.initialize = function (callback) {
                 action: 'center',
                 lat: lat,
                 lon: lon,
+                home_lat: gpsHome_lat,
+                home_long: gpsHome_lon,
             };
 
             var frame = document.getElementById('map');

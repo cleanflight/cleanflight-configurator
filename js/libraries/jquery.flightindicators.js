@@ -15,6 +15,7 @@
 			pitch : 0,
 			turn : 0,
 			heading: 0,
+			home_heading: 0,
 			vario: 0,
 			airspeed: 0,
 			altitude: 0,
@@ -24,7 +25,7 @@
 		}, options );
 
 		var constants = {
-			pitch_bound:30,
+			pitch_bound : 30,
 			vario_bound : 1.95,
 			airspeed_bound_l : 0,
 			airspeed_bound_h : 160
@@ -33,10 +34,25 @@
 		// Creation of the instrument
 		placeholder.each(function(){
 			switch(type){
-				case 'heading':
-					$(this).html('<div class="instrument heading"><img src="' + settings.img_directory + 'fi_box.svg" class="background box" alt="" /><div class="heading box"><img src="' + settings.img_directory + 'heading_yaw.svg" class="box" alt="" /></div><div class="mechanics box"><img src="' + settings.img_directory + 'heading_mechanics.svg" class="box" alt="" /><img src="' + settings.img_directory + 'fi_circle.svg" class="box" alt="" /></div></div>');
-					_setHeading(settings.heading);
-				break;
+                        case 'heading':
+                                $(this).html('' +
+                                    '<div class="instrument heading"> ' +
+                                    '  <img src="' + settings.img_directory + 'fi_box.svg" class="background box" alt="" />' +
+                                    '  <div class="heading box">' +
+                                    '    <img src="' + settings.img_directory + 'heading_yaw.svg" class="box" alt="" />' +
+                                    '  </div>' +
+                                    '  <div class="mechanics box">' +
+                                    '    <img src="' + settings.img_directory + 'heading_mechanics.svg" class="box" alt="" />' +
+                                    '    <img src="' + settings.img_directory + 'fi_circle.svg" class="box" alt="" />' +
+                                    '  </div>' +
+                                    '  <div class="home_heading box">' +
+                                    '    <div class="home_dot">' +
+                                    '      <img src="' + settings.img_directory + 'red_dot.svg" class="" alt="" />' +
+                                    '    </div>' +
+                                    '  </div>' +
+                                    '</div>');
+                                _setHeading(settings.heading, settings.home_heading);
+                                break;
 				case 'variometer':
 					$(this).html('<div class="instrument vario"><img src="' + settings.img_directory + 'fi_box.svg" class="background box" alt="" /><img src="' + settings.img_directory + 'vertical_mechanics.svg" class="box" alt="" /><div class="vario box"><img src="' + settings.img_directory + 'fi_needle.svg" class="box" alt="" /></div><div class="mechanics box"><img src="' + settings.img_directory + 'fi_circle.svg" class="box" alt="" /></div></div>');
 					_setVario(settings.vario);
@@ -80,15 +96,18 @@
 			});
 		}
 
-		function _setHeading(heading){
+		function _setHeading(heading, home_heading){
 			placeholder.each(function(){
-				$(this).find('div.instrument.heading div.heading').css('transform', 'rotate(' + -heading + 'deg)');
-			});
+                                $(this).find('div.instrument.heading div.heading').css('transform', 'rotate(' + -heading + 'deg)');                             
+                        });
+                        placeholder.each(function(){
+                            $(this).find('div.instrument.heading div.home_heading').css('transform', 'rotate(' + (home_heading - heading) + 'deg)');
+                        });
 		}
 
 		function _setTurn(turn){
 			placeholder.each(function(){
-				$(this).find('div.instrument.turn_coordinator div.turn').css('transform', 'rotate('+turn+'deg)');
+				$(this).find('div.instrument.turn_coordinator div.turn').css('transform', 'rotate(' + turn + 'deg)');
 			});
 		}
 
@@ -147,7 +166,7 @@
 		// Public methods
 		this.setRoll = function(roll){_setRoll(roll);}
 		this.setPitch = function(pitch){_setPitch(pitch);}
-		this.setHeading = function(heading){_setHeading(heading);}
+		this.setHeading = function(heading, home_heading){_setHeading(heading, home_heading);}
 		this.setTurn = function(turn){_setTurn(turn);}
 		this.setVario = function(vario){_setVario(vario);}
 		this.setAirSpeed = function(speed){_setAirSpeed(speed);}

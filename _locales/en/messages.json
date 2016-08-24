@@ -72,8 +72,8 @@
     "tabSetupOSD": {
         "message": "OSD Setup"
     },
-    "tabOSD": {
-        "message": "OSD"
+    "tabOSDConfiguration": {
+        "message": "OSD Configuration"
     },
     "tabPower": {
         "message": "Power & Battery"

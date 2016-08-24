@@ -40,7 +40,7 @@ var GUI_control = function () {
     ];
     this.defaultAllowedOSDTabsWhenConnected = [
         'setup_osd',
-        'osd',
+        'osd_configuration',
         'power',
         'sensors'
     ];

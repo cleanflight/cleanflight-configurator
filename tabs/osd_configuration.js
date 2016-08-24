@@ -1,13 +1,13 @@
 'use strict';
 
-TABS.osd = {
+TABS.osd_configuration = {
 };
 
-TABS.osd.initialize = function (callback) {
+TABS.osd_configuration.initialize = function (callback) {
     var self = this;
 
-    if (GUI.active_tab != 'osd') {
-        GUI.active_tab = 'osd';
+    if (GUI.active_tab != 'osd_configuration') {
+        GUI.active_tab = 'osd_configuration';
         googleAnalytics.sendAppView('OSD');
     }
 
@@ -20,7 +20,7 @@ TABS.osd.initialize = function (callback) {
     }
 
     function load_html() {
-        $('#content').load("./tabs/osd.html", process_html);
+        $('#content').load("./tabs/osd_configuration.html", process_html);
     }
 
     load_status();
@@ -54,7 +54,7 @@ TABS.osd.initialize = function (callback) {
                 GUI.log(chrome.i18n.getMessage('initialSetupSettingsRestored'));
 
                 GUI.tab_switch_cleanup(function () {
-                    TABS.osd.initialize();
+                    TABS.osd_configuration.initialize();
                 });
             });
         });
@@ -123,6 +123,6 @@ TABS.osd.initialize = function (callback) {
     }
 };
 
-TABS.osd.cleanup = function (callback) {
+TABS.osd_configuration.cleanup = function (callback) {
     if (callback) callback();
 };

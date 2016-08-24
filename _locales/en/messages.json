@@ -75,6 +75,9 @@
     "tabOSDConfiguration": {
         "message": "OSD Configuration"
     },
+    "tabOSDLayout": {
+        "message": "OSD Layout"
+    },
     "tabPower": {
         "message": "Power & Battery"
     },
@@ -1751,6 +1754,10 @@
     },
     "osdEepromSaved": {
         "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
+    },
+    
+    "osdLayoutElements": {
+        "message": "OSD Elements"
     }
     
 }

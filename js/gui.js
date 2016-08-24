@@ -21,6 +21,8 @@ var GUI_control = function () {
         'setup',
         'failsafe',
         'transponder',
+        'osd_configuraton',
+        'osd_layout',
         'adjustments',
         'auxiliary',
         'cli',
@@ -41,6 +43,7 @@ var GUI_control = function () {
     this.defaultAllowedOSDTabsWhenConnected = [
         'setup_osd',
         'osd_configuration',
+        'osd_layout',
         'power',
         'sensors'
     ];

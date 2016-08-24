@@ -3,6 +3,7 @@
 // define all the global variables that are uses to hold FC state
 var OSD_VIDEO_CONFIG;
 var OSD_VIDEO_STATE;
+var OSD_LAYOUT;
 
 var OSD = {
     resetState: function() {
@@ -13,6 +14,9 @@ var OSD = {
         OSD_VIDEO_STATE = {
             video_mode: 0,
             camera_connected: 0,
-        };        
+        };
+        OSD_LAYOUT = {
+            display_items: []
+        };
     }
 };

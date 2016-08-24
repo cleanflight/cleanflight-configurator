@@ -131,6 +131,9 @@ $(document).ready(function () {
                     case 'transponder':
                         TABS.transponder.initialize(content_ready);
                         break;
+                    case 'osd_layout':
+                        TABS.osd_layout.initialize(content_ready);
+                        break;
                     case 'setup':
                         TABS.setup.initialize(content_ready);
                         break;

@@ -1755,9 +1755,46 @@
     "osdEepromSaved": {
         "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
     },
-    
     "osdLayoutElements": {
         "message": "OSD Elements"
+    },
+    "osdElement_onDuration": {
+        "message": "'ON' Duration"
+    },
+    "osdElement_armedDuration": {
+        "message": "'ARMED' Duration"
+    },
+    "osdElement_amperage": {
+        "message": "Amperage"
+    },
+    "osdElement_mahDrawn": {
+        "message": "mAh Drawn"
+    },
+    "osdElement_voltage5V": {
+        "message": "5V"
+    },
+    "osdElement_voltage12V": {
+        "message": "12V"
+    },
+    "osdElement_voltageBattery": {
+        "message": "Battery"
+    },
+    "osdElement_voltageBatteryFC": {
+        "message": "Battery (FC)"
+    },
+    "osdElement_flightMode": {
+        "message": "Flight Mode"
+    },
+    "osdElement_indicatorMag": {
+        "message": "Indicator - MAG"
+    },
+    "osdElement_indicatorBaro": {
+        "message": "Indicator - BARO"
+    },
+    "osdElement_rssiFC": {
+        "message": "RSSI (FC)"
+    },
+    "osdLayoutEepromSaved": {
+        "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
     }
-    
 }

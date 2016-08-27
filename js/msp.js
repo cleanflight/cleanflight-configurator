@@ -55,6 +55,9 @@ var MSP_codes = {
     MSP_OSD_VIDEO_CONFIG:       180,
     MSP_SET_OSD_VIDEO_CONFIG:   181,
     MSP_OSD_VIDEO_STATUS:       182,
+    MSP_OSD_ELEMENT_SUMMARY:    183,
+    MSP_OSD_LAYOUT_CONFIG:      184,
+    MSP_SET_OSD_LAYOUT_CONFIG:  185,
     
     // Multiwii MSP commands
     MSP_IDENT:              100,
@@ -1188,8 +1191,48 @@ var MSP = {
                 var offset = 0;
                 OSD_VIDEO_STATE.video_mode = data.getUint8(offset++, 1);
                 OSD_VIDEO_STATE.camera_connected = data.getUint8(offset++, 1);
+                OSD_VIDEO_STATE.text_width = data.getUint8(offset++, 1);
+                OSD_VIDEO_STATE.text_height = data.getUint8(offset++, 1);
                 break;
 
+            case MSP_codes.MSP_OSD_ELEMENT_SUMMARY:
+                OSD_ELEMENT_SUMMARY.supported_element_ids = [];
+                var offset = 0;
+                for (var i = 0; i < data.byteLength / 2; i++) {
+                    var element_id = data.getUint16(offset, 1);
+                    offset += 2;
+                    OSD_ELEMENT_SUMMARY.supported_element_ids.push(element_id);
+                }
+                break;
+
+
+            case MSP_codes.MSP_OSD_LAYOUT_CONFIG:
+                OSD_LAYOUT.elements = [];
+                var offset = 0;
+                var element_count = data.getUint8(offset++, 1);
+                
+                for (var i = 0; i < element_count; i++) {
+                    var element_id = data.getUint16(offset, 1);
+                    offset += 2;
+                    var flag_mask = data.getUint16(offset, 1);
+                    offset += 2;
+                    var x = data.getInt8(offset, 1);
+                    offset += 1;
+                    var y = data.getInt8(offset, 1);
+                    offset += 1;
+                    
+                    var element = {
+                        id: element_id,
+                        initial_flag_mask: flag_mask,
+                        enabled: bit_check(flag_mask, 0),
+                        positionable: bit_check(flag_mask, 1),
+                        x: x,
+                        y: y,
+                    };
+                    OSD_LAYOUT.elements.push(element);
+                }
+                break;
+                
             default:
                 console.log('Unknown code detected: ' + code);
         } else {
@@ -1291,6 +1334,14 @@ var MSP = {
             });
         }
         return true;
+    },
+    promise: function(code, data) {
+      var self = this;
+      return new Promise(function(resolve) {
+        self.send_message(code, data, false, function(data) {
+          resolve(data);
+        });
+      });
     },
     callbacks_cleanup: function () {
         for (var i = 0; i < this.callbacks.length; i++) {
@@ -1935,6 +1986,39 @@ MSP.sendLedStripModeColors = function(onCompleteCallback) {
         }
 
         MSP.send_message(MSP_codes.MSP_SET_LED_STRIP_MODECOLOR, buffer, false, nextFunction);
+    }
+}
+
+MSP.sendOsdLayout = function(elements, onCompleteCallback) {
+    var nextFunction = send_next; 
+    var index = 0;
+    
+    if (elements.length == 0) {
+        onCompleteCallback();
+    } else {
+        send_next();
+    }
+    
+    function send_next() {
+        var buffer = [];
+        
+        var element = elements[index];
+        
+        buffer.push(index);
+        buffer.push(specificByte(element.id, 0));
+        buffer.push(specificByte(element.id, 1));
+        buffer.push(specificByte(element.flag_mask, 0));
+        buffer.push(specificByte(element.flag_mask, 1));
+        buffer.push(element.x);
+        buffer.push(element.y);
+
+        // prepare for next iteration
+        index++;
+        if (index == elements.length) {
+            nextFunction = onCompleteCallback;
+        }
+
+        MSP.send_message(MSP_codes.MSP_SET_OSD_LAYOUT_CONFIG, buffer, false, nextFunction);
     }
 }
 

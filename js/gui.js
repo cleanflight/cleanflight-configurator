@@ -270,8 +270,7 @@ GUI_control.prototype.updateTabsDisconnected = function() {
     $('#tabs ul.mode-disconnected').show();
 };
 
-GUI_control.prototype.content_ready = function (callback) {
-
+GUI_control.prototype.apply_toggles = function() {
     $('.togglesmall').each(function(index, elem) {
         var switchery = new Switchery(elem, {
           size: 'small',
@@ -306,6 +305,11 @@ GUI_control.prototype.content_ready = function (callback) {
          });
          $(elem).removeClass('togglemedium');
     });
+};
+
+GUI_control.prototype.content_ready = function (callback) {
+
+    this.apply_toggles();
 
     if (CONFIGURATOR.connectionValid) {
         // Build link to in-use CF version documentation

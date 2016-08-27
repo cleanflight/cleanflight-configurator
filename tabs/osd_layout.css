@@ -126,7 +126,7 @@
 .tab-osd-layout .osd_canvas {
     width: 360px;
     height: 234px;
-    background-size: 360px 234px; 
+    background-size: cover; 
     background-image: url(/images/osdpreview.jpg);
     background-repeat: no-repeat;
     float: left;

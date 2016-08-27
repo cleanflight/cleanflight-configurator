@@ -4,6 +4,7 @@
 var OSD_VIDEO_CONFIG;
 var OSD_VIDEO_STATE;
 var OSD_LAYOUT;
+var OSD_ELEMENT_SUMMARY;
 
 var OSD = {
     resetState: function() {
@@ -14,9 +15,14 @@ var OSD = {
         OSD_VIDEO_STATE = {
             video_mode: 0,
             camera_connected: 0,
+            text_width: 0,
+            text_height: 0,
         };
         OSD_LAYOUT = {
-            display_items: []
+            elements: []
+        };
+        OSD_ELEMENT_SUMMARY = {
+            supported_element_ids: []
         };
     }
 };

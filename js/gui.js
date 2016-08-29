@@ -19,9 +19,10 @@ var GUI_control = function () {
     ];
     this.defaultAllowedFCTabsWhenConnected = [
         'setup',
+        'setup_osd',
         'failsafe',
         'transponder',
-        'osd_configuraton',
+        'osd_configuration',
         'osd_layout',
         'adjustments',
         'auxiliary',

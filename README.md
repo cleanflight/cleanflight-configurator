@@ -2,7 +2,7 @@
 
 Cleanflight Configurator is a crossplatform configuration tool for the [Cleanflight](http://cleanflight.com/) flight control system.
 
-It runs as an app within Google Chrome and allows you to configure the Cleanflight software running on any [supported Cleanflight target](https://github.com/cleanflight/cleanflight/blob/master/docs/Boards.md).
+It runs as an app within Google Chrome, or as a standalone app, and allows you to configure the Cleanflight software running on any [supported Cleanflight target](https://github.com/cleanflight/cleanflight/blob/master/docs/Boards.md).
 
 Various types of aircraft are supported by the tool and by cleanflight, e.g. quadcopters, hexacopters, octocopters and fixed-wing aircraft.
 
@@ -19,19 +19,33 @@ If you are experiencing any problems please make sure you are running the [lates
 
 ## Installation
 
-### Via chrome webstore
+### As chrome app
 
 1. Visit [Chrome web store](https://chrome.google.com/webstore/detail/cleanflight-configurator/enacoimjcgeinfnnnpajinjgmkahmfgb)
 2. Click **+ Free**
 
 Please note - the application will automatically update itself when new versions are released.  Please ensure you maintain configuration backups as described in the Cleanflight documentation.
 
-### Alternative way
+#### Alternative way
 
 1. Clone the repo to any local directory or download it as zip
 2. Start Chromium or Google Chrome and go to tools -> extension
 3. Check the "Developer mode" checkbox
 4. Click on load unpacked extension and point it to the Cleanflight Configurator directory (for example D:/cleanflight-configurator)
+
+### As native app
+
+Builds of Cleanflight Configurator as a native app are not yet available. If you are adventerous, build it yourself.
+
+#### Building instructions
+
+The current build scripts only support full building on OSX. Linux would produce unpatched Info.plist files for the OSX output. No Windows build scripts yet, someone can write one and do a PR. 
+
+1. Clone the repo.
+2. Install Node.js
+3. Run `sudo npm install -g nwjs-builder`
+4. `cd` into the repo and run `./build.sh`
+5. Build output available in parent directory. 
 
 ## How to use
 

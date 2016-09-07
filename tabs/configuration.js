@@ -336,6 +336,10 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             serialRXtypes.push('IBUS');
         }
 
+        if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
+            serialRXtypes.push('JETIEXBUS');
+        }
+        
         var serialRX_e = $('select.serialRX');
         for (var i = 0; i < serialRXtypes.length; i++) {
             serialRX_e.append('<option value="' + i + '">' + serialRXtypes[i] + '</option>');

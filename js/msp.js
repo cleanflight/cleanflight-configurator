@@ -50,6 +50,9 @@ var MSP_codes = {
     MSP_CURRENT_METERS:          129,
     MSP_BATTERY_STATES:          130,
 
+    MSP_PILOT:                   131,
+    MSP_SET_PILOT:               222,
+
     // OSD commands
     
     MSP_OSD_VIDEO_CONFIG:       180,
@@ -1175,6 +1178,16 @@ var MSP = {
                 break;
             case MSP_codes.MSP_SET_FAILSAFE_CONFIG:
                 console.log('Failsafe config saved');
+                break;
+            case MSP_codes.MSP_PILOT:
+                var offset = 0;
+                var length = data.getUint8(offset++);
+                var callsign = "";
+                for (var i = 0; i < (length); i++) {
+                    var c = data.getUint8(offset++);
+                    callsign += String.fromCharCode(c);
+                }
+                PILOT_CONFIG.callsign = callsign;
                 break;
                 
             //

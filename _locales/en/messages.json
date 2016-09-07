@@ -1755,6 +1755,11 @@
     "osdEepromSaved": {
         "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
     },
+    
+    "osdCallsign": {
+        "message": "Callsign"
+    },
+    
     "osdLayoutElements": {
         "message": "OSD Elements"
     },
@@ -1793,6 +1798,9 @@
     },
     "osdElement_rssiFC": {
         "message": "RSSI (FC)"
+    },
+    "osdElement_callsign": {
+        "message": "Callsign"
     },
     "osdLayoutEepromSaved": {
         "message": "EEPROM <span style=\"color: #57a929\">saved</span>"

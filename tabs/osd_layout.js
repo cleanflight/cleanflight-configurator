@@ -301,6 +301,14 @@ OSD.constants = {
             name: 'rssiFC',
             example_value: 'RSSI:100' 
         },
+        
+        // pilot
+        {
+            id: 14,
+            name: 'callsign',
+            example_value: ' CLEANFLIGHT! ' 
+        },
+        
     ],
 };
 
@@ -310,12 +318,23 @@ TABS.osd_layout.initialize = function (callback) {
     var ui_fields = [];
     var video_mode = 0;
 
+    var callsign_supported = semver.gte(CONFIG.apiVersion, "1.22.0");
+    
     if (GUI.active_tab != 'osd_layout') {
         GUI.active_tab = 'osd_layout';
         googleAnalytics.sendAppView('OSD');
     }
 
-    MSP.send_message(MSP_codes.MSP_OSD_VIDEO_STATUS, false, false, load_element_summary);
+    MSP.send_message(MSP_codes.MSP_OSD_VIDEO_STATUS, false, false, load_pilot);
+    
+    function load_pilot() {
+        var next_callback = load_element_summary;
+        if (callsign_supported) {
+            MSP.send_message(MSP_codes.MSP_PILOT, false, false, next_callback);
+        } else {
+            next_callback();
+        }
+    }
     
     function load_element_summary() {
         MSP.send_message(MSP_codes.MSP_OSD_ELEMENT_SUMMARY, false, false, load_html);
@@ -329,6 +348,12 @@ TABS.osd_layout.initialize = function (callback) {
 
         // translate to user-selected language
         localize();
+        
+        if (!callsign_supported) {
+            $('.callsign_wrapper').hide();
+        } else {
+            $(".callsign").val(PILOT_CONFIG.callsign);
+        }
 
         function on_save_handler() {
             var elements = [];
@@ -357,8 +382,26 @@ TABS.osd_layout.initialize = function (callback) {
                 elements.push(element);
             });
             
-            MSP.sendOsdLayout(elements, save_to_eeprom);
-                         
+            MSP.sendOsdLayout(elements, save_pilot);
+
+            function save_pilot() {
+                var next_callback = save_to_eeprom;
+                if (callsign_supported) {
+                    var callsign = $(".callsign").val();
+                    
+                    var buffer = [];
+                    buffer.push(callsign.length);
+                    
+                    for (let i = 0; i < 14; i++) {
+                        buffer.push(callsign.charCodeAt(i));
+                    }
+                    
+                    MSP.send_message(MSP_codes.MSP_SET_PILOT, buffer, false, next_callback);
+                } else {
+                    next_callback();
+                } 
+            }
+            
             function save_to_eeprom() {
                 MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function() {
                     GUI.log(chrome.i18n.getMessage('osdLayoutEepromSaved'));

@@ -40,6 +40,7 @@ var SENSOR_ALIGNMENT;
 var RX_CONFIG;
 var FAILSAFE_CONFIG;
 var RXFAIL_CONFIG;
+var PILOT_CONFIG;
 
 var FC = {
     resetState: function() {
@@ -266,5 +267,9 @@ var FC = {
         };
         
         RXFAIL_CONFIG = [];
+        
+        PILOT_CONFIG = {
+            callsign: " CLEANFLIGHT! ",
+        };
     }
 };

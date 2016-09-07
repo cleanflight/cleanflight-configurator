@@ -69,6 +69,18 @@
     "tabSetup": {
         "message": "Setup"
     },
+    "tabSetupOSD": {
+        "message": "OSD Setup"
+    },
+    "tabOSDConfiguration": {
+        "message": "OSD Configuration"
+    },
+    "tabOSDLayout": {
+        "message": "OSD Layout"
+    },
+    "tabPower": {
+        "message": "Power & Battery"
+    },
     "tabConfiguration": {
         "message": "Configuration"
     },
@@ -1639,6 +1651,7 @@
     "failsafeKillSwitchHelp": {
         "message": "Set this option to make the failsafe switch, configured in the modes tab, act as a direct kill switch, bypassing the selected failsafe procedure. <strong>Note:</strong> Arming is blocked with the failsafe kill switch in the ON position"
     },
+
     "mainHelpArmed": {
         "message": "Motor Arming"
     },
@@ -1651,7 +1664,145 @@
     "configHelp3": {
         "message": "Configure port scenario first before selecting a serial-based receiver."
     },
-        "featureSERVO_TILTTip": {
+    "featureSERVO_TILTTip": {
         "message": "With this feature activated, you can connect a gimbal. Do not activate with motors and battery connected! Ths changes the motor pin mapping. "
+    },
+
+    "powerVoltageHead": {
+        "message": "Voltage"
+    },
+    "powerVoltageValue": {
+        "message": "$1 V"
+    },
+    "powerAmperageValue": {
+        "message": "$1 A"
+    },    
+    "powerVoltage1": {
+        "message": "Voltage 1"
+    },
+    "powerVoltage2": {
+        "message": "Voltage 2"
+    },
+    "powerVoltage3": {
+        "message": "Voltage 3"
+    },
+
+    "powerCurrentHead": {
+        "message": "Current"
+    },
+    "powerCurrent1": {
+        "message": "Current 1"
+    },
+    "powerMahValue": {
+        "message": "$1 mAh"
+    },
+    
+    "powerBatteryHead": {
+        "message": "Battery"
+    },
+    "powerBatteryConnected": {
+        "message": "Connected"
+    },
+    "powerBatteryConnectedValueYes": {
+        "message": "Yes"
+    },
+    "powerBatteryConnectedValueNo": {
+        "message": "No"
+    },
+    "powerBatteryVoltage": {
+        "message": "Voltage"
+    },
+    "powerBatteryCurrentDrawn": {
+        "message": "mAh used"
+    },
+    
+    
+    "osdInfoHead": {
+        "message": "Info"
+    },
+    "osdInfoVideoMode": {
+        "message": "Video Mode"
+    },
+    "osdInfoCameraConnected": {
+        "message": "Camera Connected"
+    },
+    "osdInfoCameraConnectedValueYes": {
+        "message": "Yes"
+    },
+    "osdInfoCameraConnectedValueNo": {
+        "message": "No"
+    },
+    
+    "osdInfoHead": {
+        "message": "Info"
+    },
+    "osdResetText": {
+        "message": "Reset OSD to default"
+    },
+    "osdButtonReset": {
+        "message": "Reset Settings"
+    },
+    
+    "osdConfigurationVideo": {
+        "message": "Video"
+    },
+    "osdConfigurationVideoMode": {
+        "message": "Mode"
+    },
+    "osdButtonSave": {
+        "message": "Save"
+    },
+    "osdEepromSaved": {
+        "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
+    },
+    
+    "osdCallsign": {
+        "message": "Callsign"
+    },
+    
+    "osdLayoutElements": {
+        "message": "OSD Elements"
+    },
+    "osdElement_onDuration": {
+        "message": "'ON' Duration"
+    },
+    "osdElement_armedDuration": {
+        "message": "'ARMED' Duration"
+    },
+    "osdElement_amperage": {
+        "message": "Amperage"
+    },
+    "osdElement_mahDrawn": {
+        "message": "mAh Drawn"
+    },
+    "osdElement_voltage5V": {
+        "message": "5V"
+    },
+    "osdElement_voltage12V": {
+        "message": "12V"
+    },
+    "osdElement_voltageBattery": {
+        "message": "Battery"
+    },
+    "osdElement_voltageBatteryFC": {
+        "message": "Battery (FC)"
+    },
+    "osdElement_flightMode": {
+        "message": "Flight Mode"
+    },
+    "osdElement_indicatorMag": {
+        "message": "Indicator - MAG"
+    },
+    "osdElement_indicatorBaro": {
+        "message": "Indicator - BARO"
+    },
+    "osdElement_rssiFC": {
+        "message": "RSSI (FC)"
+    },
+    "osdElement_callsign": {
+        "message": "Callsign"
+    },
+    "osdLayoutEepromSaved": {
+        "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
     }
 }

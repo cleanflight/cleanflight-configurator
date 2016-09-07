@@ -1,0 +1,229 @@
+.tab-osd-layout .info {
+    margin: 10px 0 0 0;
+    position: relative;
+}
+
+.darkgrey {
+    background-color: #575757;
+}
+
+.tab-osd-layout .spacer_box_title {
+    float: none;
+}
+
+.tab-osd-layout .info {
+    float: left;
+    width: 100%;
+}
+
+.tab-osd-layout .options {
+    position: relative;
+    margin-bottom: 10px;
+    line-height: 18px;
+    text-align: left;
+}
+
+.tab-osd-layout .options label input {
+    float: left;
+    margin-top: 2px;
+}
+
+.tab-osd-layout .options label span {
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.tab-osd-layout .options select {
+    width: 300px;
+    height: 20px;
+    border: 1px solid silver;
+}
+
+.tab-osd-layout .hide {
+    display: none;
+}
+
+.tab-osd-layout .note {
+    padding: 1em;
+}
+
+.tab-osd-layout .col {
+    display: inline-block;
+}
+
+.tab-osd-layout .left {
+    float: left;
+}
+
+.tab-osd-layout .right {
+    float: right;
+}
+
+.tab-osd-layout .content_wrapper {
+    height: calc(100% - 41px);
+}
+
+.tab-osd-layout .elementselect {
+    background-color: #fff;
+    float: left;
+    border-bottom: 1px solid #ccc;
+    width: calc(100% + 10px);
+    margin-left: -10px;
+    padding-left: 10px;
+}
+
+.tab-osd-layout .hide_block {
+    visibility: hidden;
+}
+.tab-osd-layout .block_active { 
+    background-color: rgba(0,0,0,0.3); 
+}
+
+.tab-osd-layout .elementselect:hover {
+    background-color: #f3f3f3;
+}
+
+.tab-osd-layout .elementselect.active {
+    background-color: #c3dab5;
+}
+
+.tab-osd-layout .elementselect:last-child {
+    border-bottom: 0px;
+    padding-bottom: 0px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.tab-osd-layout .checkbox {
+    margin-top: 2px;
+    float: left;
+    width: 100%;
+    padding-bottom: 4px;
+    padding-top: 1px;
+    font-size: 11px;
+}
+
+.tab-osd-layout .numberspacer {
+    width: 25px;
+    float: left;
+    font-size: 11px;
+}
+
+.tab-osd-layout label {
+    float: left;
+    width: calc(100% -50px);
+}
+
+.tab-osd-layout input {
+    float: left;
+    margin-right: 8px;
+}
+
+.tab-osd-layout .preview {
+    width: 360px;
+}
+
+.tab-osd-layout .osd_canvas {
+    width: 360px;
+    height: 234px;
+    background-size: cover; 
+    background-image: url(/images/osdpreview.jpg);
+    background-repeat: no-repeat;
+    float: left;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.tab-osd-layout .image {
+    margin-bottom: 0px;
+}
+
+.tab-osd-layout .elements {
+    max-width: calc(100% - 360px);
+}
+
+.tab-osd-layout .format {
+    width: calc(100% - 2px);
+    float: left;
+}
+
+.tab-osd-layout .font_text_row {
+    margin-bottom: -3px;
+    display: inline-block;
+    float: left;
+    border-radius: 3px;
+}
+
+.tab-osd-layout .font_text_logo_row {
+    margin-bottom: -3px;
+    display: inline-block;
+    float: left;
+}
+
+.tab-osd-layout .position {
+    width: 50px;
+    margin-left: 10px;
+    float: right;
+}
+
+.tab-osd-layout .format .title {
+    font-size: 13px;
+    background-color: #8e8e8e;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 10px;
+    float: left;
+    font-weight: bold;
+    color: white;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    min-width: 85px;
+}
+
+.tab-osd-layout .format select {
+    border: 1px solid silver;
+    width: 50px;
+    float: right;
+    margin-top: 7px;
+    margin-right: 8px;
+}
+
+.tab-osd-layout .osdlabel {
+    float: left;
+    margin-top: 7px;
+    margin-left: 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid silver;
+    width: calc(100% - 20px);
+}
+
+.tab-osd-layout .osdlabel:last-child {
+    border-bottom: 0px;
+    margin-bottom: 5px;
+}
+
+.tab-osd-layout .callsign {
+    border: 1px solid silver;
+    border-radius: 3px;
+    height: 12px;
+    float: left;
+    margin-left: 8px;
+    margin-top: 5px;
+    padding: 3px;
+    width: calc(100% - 128px);
+}
+
+.tab-osd-layout .osdlabel select {
+    float: right;
+    margin-right: 0px;
+    width: 50px;
+    border: 1px solid silver;
+}
+
+@media only screen and (max-width: 1055px) , only screen and
+    (max-device-width: 1055px) {
+    .tab-osd-layout .content_wrapper {
+        height: calc(100% - 30px);
+    }
+}

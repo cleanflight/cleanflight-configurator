@@ -17,9 +17,13 @@ var GUI_control = function () {
         'firmware_flasher',
         'help'
     ];
-    this.defaultAllowedTabsWhenConnected = [
+    this.defaultAllowedFCTabsWhenConnected = [
+        'setup',
+        'setup_osd',
         'failsafe',
         'transponder',
+        'osd_configuration',
+        'osd_layout',
         'adjustments',
         'auxiliary',
         'cli',
@@ -29,13 +33,20 @@ var GUI_control = function () {
         'logging',
         'onboard_logging',
         'modes',
+        'power',
         'motors',
         'pid_tuning',
         'ports',
         'receiver',
         'sensors',
         'servos',
-        'setup'
+    ];
+    this.defaultAllowedOSDTabsWhenConnected = [
+        'setup_osd',
+        'osd_configuration',
+        'osd_layout',
+        'power',
+        'sensors'
     ];
     this.allowedTabs = this.defaultAllowedTabsWhenDisconnected;
 
@@ -231,8 +242,36 @@ GUI_control.prototype.tab_switch_cleanup = function (callback) {
     }
 };
 
-GUI_control.prototype.content_ready = function (callback) {
+GUI_control.prototype.updateTabsConnected = function() {
 
+    // toggle between connected/disconnected elements
+    $('#tabs ul.mode-disconnected').hide();
+    $('#tabs ul.mode-connected').show();
+
+    // show only appropriate tabs
+    $('#tabs ul.mode-connected li').hide();
+    $('#tabs ul.mode-connected li').filter(function (index) { 
+        var classes = $(this).attr("class").split(/\s+/); 
+        var found = false;
+        $.each(GUI.allowedTabs, function (index, value) {
+            var tabName = "tab_" + value;
+            if ($.inArray(tabName, classes) >= 0) {
+                found = true;
+            }
+        });
+        
+        return found;
+    }).show();
+};
+
+GUI_control.prototype.updateTabsDisconnected = function() {
+
+    // toggle between connected/disconnected elements
+    $('#tabs ul.mode-connected').hide();
+    $('#tabs ul.mode-disconnected').show();
+};
+
+GUI_control.prototype.apply_toggles = function() {
     $('.togglesmall').each(function(index, elem) {
         var switchery = new Switchery(elem, {
           size: 'small',
@@ -267,6 +306,11 @@ GUI_control.prototype.content_ready = function (callback) {
          });
          $(elem).removeClass('togglemedium');
     });
+};
+
+GUI_control.prototype.content_ready = function (callback) {
+
+    this.apply_toggles();
 
     if (CONFIGURATOR.connectionValid) {
         // Build link to in-use CF version documentation

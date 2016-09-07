@@ -131,8 +131,20 @@ $(document).ready(function () {
                     case 'transponder':
                         TABS.transponder.initialize(content_ready);
                         break;
+                    case 'osd_layout':
+                        TABS.osd_layout.initialize(content_ready);
+                        break;
                     case 'setup':
                         TABS.setup.initialize(content_ready);
+                        break;
+                    case 'setup_osd':
+                        TABS.setup_osd.initialize(content_ready);
+                        break;
+                    case 'osd_configuration':
+                        TABS.osd_configuration.initialize(content_ready);
+                        break;
+                    case 'power':
+                        TABS.power.initialize(content_ready);
                         break;
                     case 'configuration':
                         TABS.configuration.initialize(content_ready);

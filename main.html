@@ -9,6 +9,10 @@
 <link type="text/css" rel="stylesheet" href="./js/libraries/flightindicators.css" />
 <link type="text/css" rel="stylesheet" href="./tabs/landing.css" media="all" />
 <link type="text/css" rel="stylesheet" href="./tabs/setup.css" media="all" />
+<link type="text/css" rel="stylesheet" href="./tabs/setup_osd.css" media="all" />
+<link type="text/css" rel="stylesheet" href="./tabs/osd_configuration.css" media="all" />
+<link type="text/css" rel="stylesheet" href="./tabs/osd_layout.css" media="all" />
+<link type="text/css" rel="stylesheet" href="./tabs/power.css" media="all" />
 <link type="text/css" rel="stylesheet" href="./tabs/help.css" media="all" />
 <link type="text/css" rel="stylesheet" href="./tabs/ports.css" media="all" />
 <link type="text/css" rel="stylesheet" href="./tabs/configuration.css" media="all" />
@@ -35,6 +39,7 @@
 <script type="text/javascript" src="./js/libraries/google-analytics-bundle.js"></script>
 <script type="text/javascript" src="./js/libraries/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="./js/libraries/jquery-ui-1.11.4.min.js"></script>
+<script type="text/javascript" src="./js/libraries/jquery.ba-throttle-debounce.min.js"></script>
 <script type="text/javascript" src="./js/libraries/d3.min.js"></script>
 <script type="text/javascript" src="./js/libraries/jquery.nouislider.all.min.js"></script>
 <script type="text/javascript" src="./js/libraries/three/three.min.js"></script>
@@ -44,6 +49,7 @@
 <script type="text/javascript" src="./js/libraries/semver.js"></script>
 <script type="text/javascript" src="./js/libraries/jbox/jBox.min.js"></script>
 <script type="text/javascript" src="./js/libraries/switchery/switchery.js"></script>
+<script type="text/javascript" src="./js/libraries/bluebird.min.js"></script>
 <script type="text/javascript" src="./js/port_handler.js"></script>
 <script type="text/javascript" src="./js/port_usage.js"></script>
 <script type="text/javascript" src="./js/serial.js"></script>
@@ -53,6 +59,7 @@
 <script type="text/javascript" src="./js/serial_backend.js"></script>
 <script type="text/javascript" src="./js/data_storage.js"></script>
 <script type="text/javascript" src="./js/fc.js"></script>
+<script type="text/javascript" src="./js/osd.js"></script>
 <script type="text/javascript" src="./js/msp.js"></script>
 <script type="text/javascript" src="./js/backup_restore.js"></script>
 <script type="text/javascript" src="./js/protocols/stm32.js"></script>
@@ -62,6 +69,10 @@
 <script type="text/javascript" src="./main.js"></script>
 <script type="text/javascript" src="./tabs/landing.js"></script>
 <script type="text/javascript" src="./tabs/setup.js"></script>
+<script type="text/javascript" src="./tabs/setup_osd.js"></script>
+<script type="text/javascript" src="./tabs/osd_configuration.js"></script>
+<script type="text/javascript" src="./tabs/osd_layout.js"></script>
+<script type="text/javascript" src="./tabs/power.js"></script>
 <script type="text/javascript" src="./tabs/help.js"></script>
 <script type="text/javascript" src="./tabs/ports.js"></script>
 <script type="text/javascript" src="./tabs/configuration.js"></script>
@@ -204,8 +215,11 @@
                 </ul>
                 <ul class="mode-connected">
                     <li class="tab_setup"><a href="#" i18n="tabSetup" class="tabicon ic_setup" title="Setup"></a></li>
+                    <li class="tab_setup_osd"><a href="#" i18n="tabSetupOSD" class="tabicon ic_setup" title="OSD Setup"></a></li>
+                    <li class="tab_osd_configuration"><a href="#" i18n="tabOSDConfiguration" class="tabicon ic_setup" title="OSD Configuration"></a></li>
                     <li class="tab_ports"><a href="#" i18n="tabPorts" class="tabicon ic_ports" title="Ports"></a></li>
                     <li class="tab_configuration"><a href="#" i18n="tabConfiguration" class="tabicon ic_config" title="Configuration"></a></li>
+                    <li class="tab_osd_layout"><a href="#" i18n="tabOSDLayout" class="tabicon ic_osd" title="OSD Layout"></a></li>
                     <li class="tab_failsafe"><a href="#" i18n="tabFailsafe" class="tabicon ic_failsafe" title="Failsafe"></a></li>
                     <li class="tab_pid_tuning"><a href="#" i18n="tabPidTuning" class="tabicon ic_pid" title="PID Tuning"></a></li>
                     <li class="tab_receiver"><a href="#" i18n="tabReceiver" class="tabicon ic_rx" title="Receiver"></a></li>
@@ -213,6 +227,7 @@
                     <li class="tab_adjustments"><a href="#" i18n="tabAdjustments" class="tabicon ic_adjust" title="Adjustments"></a></li>
                     <li class="tab_servos"><a href="#" i18n="tabServos" class="tabicon ic_servo" title="Servos"></a></li>
                     <li class="tab_gps"><a href="#" i18n="tabGPS" class="tabicon ic_gps" title="GPS"></a></li>
+                    <li class="tab_power"><a href="#" i18n="tabPower" class="tabicon ic_power" title="Power &amp; Battery"></a></li>
                     <li class="tab_motors"><a href="#" i18n="tabMotorTesting" class="tabicon ic_motor" title="Motors"></a></li>
                     <li class="tab_transponder"><a href="#" i18n="tabTransponder" class="tabicon ic_transponder" title="Transponder"></a></li>
                     <li class="tab_led_strip"><a href="#" i18n="tabLedStrip" class="tabicon ic_led" title="LED Strip"></a></li>

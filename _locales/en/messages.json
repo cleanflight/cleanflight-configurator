@@ -1802,6 +1802,9 @@
     "osdElement_callsign": {
         "message": "Callsign"
     },
+    "osdElement_motors": {
+        "message": "Motors"
+    },
     "osdLayoutEepromSaved": {
         "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
     }

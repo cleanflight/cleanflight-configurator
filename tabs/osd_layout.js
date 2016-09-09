@@ -41,8 +41,14 @@ FONT.constants = {
 
 FONT.blocks = {
         logo: {
+            key: 'logo',
             data: [1,2,3,17,18,19],
             width: 3
+        },
+        motors: {
+            key: 'motors',
+            data: [0,0,0,0,5,0,0,6,0,0,0,0,7,0,0,8],
+            width: 4
         }
 };
 
@@ -85,6 +91,7 @@ FONT.parseMCMFontFile = function(data) {
         character_bytes.push(parseInt(line, 2));
     }
     FONT.drawBlock(FONT.blocks.logo);
+    FONT.drawBlock(FONT.blocks.motors);
     return FONT.data.characters;
 };
 
@@ -172,9 +179,9 @@ FONT.draw = function(charAddress) {
 FONT.drawBlock = function(block) {
     var charAddresses = block.data;
     var width = block.width;
-    var cached = FONT.data.character_image_urls[block];
+    var cached = FONT.data.character_image_urls[block.key];
     if (!cached) {
-        cached = FONT.data.character_image_urls[block] = drawCanvas(charAddresses, width).toDataURL('image/png');
+        cached = FONT.data.character_image_urls[block.key] = drawCanvas(charAddresses, width).toDataURL('image/png');
     }
     return cached;
 };
@@ -214,10 +221,10 @@ FONT.preview2 = function($el) {
     $el.append('</div>');
 }
 
-FONT.logo = function($el) {
-    var url = FONT.data.character_image_urls[FONT.blocks.logo];
+FONT.block = function($el, block) {
+    var url = FONT.data.character_image_urls[block.key];
     $el.append('<img src=' + url + '></img>');
-    $el.height(FONT.constants.SIZES.CHAR_HEIGHT * (FONT.blocks.logo.data.length / FONT.blocks.logo.width));
+    $el.height(FONT.constants.SIZES.CHAR_HEIGHT * (block.data.length / block.width));
 }
 
 FONT.write = function($el, text) {
@@ -306,7 +313,14 @@ OSD.constants = {
         {
             id: 14,
             name: 'callsign',
-            example_value: ' CLEANFLIGHT! ' 
+            example_value: ':::CALLSIGN:::' 
+        },
+        
+        // motors
+        {
+            id: 15,
+            name: 'motors',
+            example_block: FONT.blocks.motors 
         },
         
     ],
@@ -472,6 +486,7 @@ TABS.osd_layout.initialize = function (callback) {
                 position_y: y,
                 positionable: element.positionable,
                 example_value: element_defaults.example_value,
+                example_block: element_defaults.example_block,
                 enabled: element.enabled,
                 element: element,
                 vertical_alignment: vertical_alignment,
@@ -548,8 +563,8 @@ TABS.osd_layout.initialize = function (callback) {
 
         var $block = $('<div class="font_text_row block_' + ui_field.name + '" />');
         $canvas.append($block);
-        if (ui_field.example_value == "FONT.logo") {
-            FONT.logo($block);
+        if (ui_field.example_block) {
+            FONT.block($block, ui_field.example_block);
         } else {
             FONT.write($block, ui_field.example_value);
         }

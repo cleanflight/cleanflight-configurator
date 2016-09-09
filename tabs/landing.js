@@ -13,6 +13,18 @@ TABS.landing.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
+        document.getElementById("online-content").addEventListener('loadabort', function(e) {
+            if (e.reason == "ERR_INTERNET_DISCONNECTED") {
+                $("#online-content").hide();
+                $("#offline-content").show();
+            }
+        });
+
+        document.getElementById("online-content").addEventListener('loadstart', function(e) {
+            $("#online-content").show();
+            $("#offline-content").hide();
+        });
+
         // load changelog content
         $('#changelog .log').load('./changelog.html');
 
@@ -38,6 +50,8 @@ TABS.landing.initialize = function (callback) {
         });
 
         GUI.content_ready(callback);
+        $("#online-content").hide();
+        $("#offline-content").hide();
     });
 
 };

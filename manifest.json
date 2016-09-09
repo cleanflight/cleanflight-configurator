@@ -30,6 +30,7 @@
         "http://*.baseflight.net/",
         "http://*.cleanflight.com/",
         "https://*.amazonaws.com/",
+        "http://configurator.cleanflight.com/main.php",
         "serial",
         "usb",
         "storage",
@@ -38,6 +39,7 @@
         "fileSystem.retainEntries",
         "notifications",
         "alwaysOnTopWindows",
+        "webview",
         {"usbDevices": [
             {"vendorId": 1155, "productId": 57105}
         ]}

@@ -787,7 +787,7 @@ var MSP = {
                 CONFIG.boardIdentifier = identifier;
                 CONFIG.boardVersion = data.getUint16(offset, 1);
                 offset+=2;
-                if (data.byteLength > offset) {
+                if (semver.gte(CONFIG.apiVersion, "1.22.0")) {
                     CONFIG.boardType = data.getUint8(offset, 1);
                     offset++;
                 } else {

@@ -59,8 +59,9 @@ $(document).ready(function () {
     var ui_tabs = $('#tabs > ul');
     $('a', ui_tabs).click(function () {
         if ($(this).parent().hasClass('active') == false && !GUI.tab_switch_in_progress) { // only initialize when the tab isn't already active
-            var self = this,
-                tabClass = $(self).parent().prop('class');
+            var self = this;
+            var tabClasses = $(self).parent().prop('class');
+            var tabClass = tabClasses.split(" ")[0];
 
             var tabRequiresConnection = $(self).parent().hasClass('mode-connected');
             

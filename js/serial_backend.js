@@ -214,6 +214,7 @@ function onOpen(openInfo) {
                                     
                                     switch (CONFIG.boardType) {
                                         case 0:
+                                        case 2:
                                             GUI.allowedTabs = GUI.defaultAllowedFCTabsWhenConnected.slice();
                                             if (semver.lt(CONFIG.apiVersion, "1.4.0")) {
                                                 GUI.allowedTabs.splice(GUI.allowedTabs.indexOf('led_strip'), 1);

@@ -259,6 +259,12 @@ GUI_control.prototype.updateTabsConnected = function() {
                 found = true;
             }
         });
+
+        if (CONFIG.boardType == 0) {
+            if (classes.indexOf("osd-required") >= 0) {
+                found = false;
+            }
+        }
         
         return found;
     }).show();

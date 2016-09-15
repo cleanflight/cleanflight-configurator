@@ -46,7 +46,8 @@ var GUI_control = function () {
         'osd_configuration',
         'osd_layout',
         'power',
-        'sensors'
+        'sensors',
+        'transponder',
     ];
     this.allowedTabs = this.defaultAllowedTabsWhenDisconnected;
 

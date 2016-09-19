@@ -43,8 +43,6 @@ TABS.setup_osd.initialize = function (callback) {
         });
         
         function get_slow_data() {
-            MSP.send_message(MSP_codes.MSP_STATUS);
-            
             MSP.send_message(MSP_codes.MSP_OSD_VIDEO_STATUS, false, false, function () {
                 var element;
                 

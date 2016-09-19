@@ -585,10 +585,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_serial_config);
         });
 
-        // status data pulled via separate timer with static speed
-        GUI.interval_add('status_pull', function status_pull() {
-            MSP.send_message(MSP_codes.MSP_STATUS);
-        }, 250, true);
         GUI.interval_add('config_load_analog', load_analog, 250, true); // 4 fps
         GUI.content_ready(callback);
     }

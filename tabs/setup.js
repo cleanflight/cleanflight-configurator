@@ -173,8 +173,6 @@ TABS.setup.initialize = function (callback) {
             heading_e = $('dd.heading');
 
         function get_slow_data() {
-            MSP.send_message(MSP_codes.MSP_STATUS);
-
             MSP.send_message(MSP_codes.MSP_ANALOG, false, false, function () {
                 bat_voltage_e.text(chrome.i18n.getMessage('initialSetupBatteryValue', [ANALOG.voltage]));
                 bat_mah_drawn_e.text(chrome.i18n.getMessage('initialSetupBatteryMahValue', [ANALOG.mAhdrawn]));

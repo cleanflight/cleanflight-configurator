@@ -113,12 +113,6 @@ TABS.gps.initialize = function (callback) {
             get_raw_gps_data();
         }, 75, true);
 
-        // status data pulled via separate timer with static speed
-        GUI.interval_add('status_pull', function status_pull() {
-            MSP.send_message(MSP_codes.MSP_STATUS);
-        }, 250, true);
-
-
         //check for internet connection on load
         if (navigator.onLine) {
             console.log('Online');

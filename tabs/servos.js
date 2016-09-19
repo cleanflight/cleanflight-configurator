@@ -187,11 +187,6 @@ TABS.servos.initialize = function (callback) {
         // translate to user-selected language
         localize();
         
-        // status data pulled via separate timer with static speed
-        GUI.interval_add('status_pull', function () {
-            MSP.send_message(MSP_codes.MSP_STATUS);
-        }, 250, true);
-
         GUI.content_ready(callback);
     }
 };

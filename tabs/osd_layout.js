@@ -439,7 +439,6 @@ TABS.osd_layout.initialize = function (callback) {
 
         // status data pulled via separate timer with static speed
         GUI.interval_add('status_pull', function status_pull() {
-            MSP.send_message(MSP_codes.MSP_STATUS);
             MSP.send_message(MSP_codes.MSP_OSD_VIDEO_STATUS, false, false, check_video_mode);
         }, 250, true);
 

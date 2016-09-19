@@ -399,11 +399,6 @@ TABS.pid_tuning.initialize = function (callback) {
             }
         });
 
-        // status data pulled via separate timer with static speed
-        GUI.interval_add('status_pull', function status_pull() {
-            MSP.send_message(MSP_codes.MSP_STATUS);
-        }, 250, true);
-
         GUI.content_ready(callback);
     }
 };

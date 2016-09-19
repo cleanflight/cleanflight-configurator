@@ -454,11 +454,6 @@ TABS.motors.initialize = function (callback) {
         
         // data pulling functions used inside interval timer
         
-        function get_status() {
-            // status needed for arming flag
-            MSP.send_message(MSP_codes.MSP_STATUS, false, false, get_motor_data);
-        }
-
         function get_motor_data() {
             MSP.send_message(MSP_codes.MSP_MOTOR, false, false, get_servo_data);
         }
@@ -513,7 +508,7 @@ TABS.motors.initialize = function (callback) {
         }
 
         // enable Status and Motor data pulling
-        GUI.interval_add('motor_and_status_pull', get_status, 50, true);
+        GUI.interval_add('motor_and_status_pull', get_motor_data, 50, true);
 
         GUI.content_ready(callback);
     }

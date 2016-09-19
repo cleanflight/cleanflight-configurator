@@ -268,7 +268,7 @@ function onConnect() {
     
     GUI.updateTabsConnected()
      
-    MSP.send_message(MSP_codes.MSP_STATUS, false, false);      
+    MSP.send_message(MSP_codes.MSP_STATUS, false, false);
     
     MSP.send_message(MSP_codes.MSP_DATAFLASH_SUMMARY, false, false);
     
@@ -438,7 +438,7 @@ function update_dataflash_global() {
 
 function startLiveDataRefreshTimer() {
     // live data refresh
-    GUI.timeout_add('data_refresh', function () { update_live_status(); }, 100);
+    GUI.timeout_add('data_refresh', function () { update_live_status(); }, 250);
 }
     
 function update_live_status() {

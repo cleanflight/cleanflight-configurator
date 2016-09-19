@@ -74,8 +74,6 @@ TABS.osd_configuration.initialize = function (callback) {
         });
 
         function get_slow_data() {
-            MSP.send_message(MSP_codes.MSP_STATUS);
-
             MSP.send_message(MSP_codes.MSP_VOLTAGE_METERS, false, false, function () {
                 for (var i = 0; i < VOLTAGE_METERS.length; i++) {
                     var elementName = '.voltage-meter-' + (i + 1);

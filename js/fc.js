@@ -54,6 +54,7 @@ var FC = {
             msp_version:   0, // not specified using semantic versioning
             capability:    0,
             cycleTime:     0,
+            cpuload:       0,
             i2cError:      0,
             activeSensors: 0,
             mode:          0,

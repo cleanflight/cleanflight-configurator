@@ -280,11 +280,17 @@ var MSP = {
                 CONFIG.activeSensors = data.getUint16(4, 1);
                 CONFIG.mode = data.getUint32(6, 1);
                 CONFIG.profile = data.getUint8(10);
+                if (semver.gte(CONFIG.apiVersion, "1.22.0")) {
+                    CONFIG.cpuload = data.getUint16(11, 1);
+                }
                 $('select[name="profilechange"]').val(CONFIG.profile);
 
                 sensor_status(CONFIG.activeSensors);
                 $('span.i2c-error').text(CONFIG.i2cError);
                 $('span.cycle-time').text(CONFIG.cycleTime);
+                $('span.cpu-load').text(chrome.i18n.getMessage('statusbar_cpu_load', [CONFIG.cpuload]));
+                
+                
                 break;
             case MSP_codes.MSP_RAW_IMU:
                 // 512 for mpu6050, 256 for mma

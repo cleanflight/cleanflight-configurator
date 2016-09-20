@@ -708,6 +708,9 @@
     "portsFunction_TELEMETRY_SMARTPORT": {
         "message": "SmartPort"
     },
+    "portsFunction_TELEMETRY_IBUS": {
+        "message": "IBus"
+    },
     "portsFunction_RX_SERIAL": {
         "message": "Serial RX"
     },

@@ -30,6 +30,11 @@ TABS.ports.initialize = function (callback, scrollPosition) {
         functionRules.push(mavlinkFunctionRule);
     }
 
+    if (semver.gte(CONFIG.apiVersion, "1.22.0")) {
+        var iBusFunctionRule = {name: 'TELEMETRY_IBUS',    groups: ['telemetry'], sharableWith: ['msp'], notSharableWith: ['blackbox'], maxPorts: 1};
+        functionRules.push(iBusFunctionRule);
+    }
+
     for (var i = 0; i < functionRules.length; i++) {
         functionRules[i].displayName = chrome.i18n.getMessage('portsFunction_' + functionRules[i].name);
     }

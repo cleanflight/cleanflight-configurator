@@ -1807,6 +1807,14 @@
     },
     "osdElement_motors": {
         "message": "Motors"
+    "osdElement_vtxChannel": {
+        "message": "VTX Channel"
+    },
+    "osdElement_vtxBand": {
+        "message": "VTX Band"
+    },
+    "osdElement_vtxRfPower": {
+        "message": "VTX RF Power"
     },
     "osdLayoutEepromSaved": {
         "message": "EEPROM <span style=\"color: #57a929\">saved</span>"

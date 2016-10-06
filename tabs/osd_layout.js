@@ -322,7 +322,22 @@ OSD.constants = {
             name: 'motors',
             example_block: FONT.blocks.motors 
         },
-        
+        // vtx
+        {
+            id: 16,
+            name: 'vtxChannel',
+            example_value: '1' 
+        },
+        {
+            id: 17,
+            name: 'vtxBand',
+            example_value: 'A' 
+        },
+        {
+            id: 18,
+            name: 'vtxRfPower',
+            example_value: '0' 
+        },
     ],
 };
 

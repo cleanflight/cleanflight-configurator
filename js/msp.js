@@ -498,10 +498,12 @@ var MSP = {
                 else
                     MISC.mag_declination = data.getInt16(offset, 1) / 100; // -18000-18000                
                 offset += 2;
-                MISC.vbatscale = data.getUint8(offset++, 1); // 10-200
-                MISC.vbatmincellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
-                MISC.vbatmaxcellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
-                MISC.vbatwarningcellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
+                if (semver.lt(CONFIG.apiVersion, "1.18.0")) {
+                    MISC.vbatscale = data.getUint8(offset++, 1); // 10-200
+                    MISC.vbatmincellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
+                    MISC.vbatmaxcellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
+                    MISC.vbatwarningcellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
+                }
                 break;
             case MSP_codes.MSP_3D:
                 var offset = 0;
@@ -720,8 +722,10 @@ var MSP = {
                 BF_CONFIG.board_align_roll = data.getInt16(6, 1); // -180 - 360
                 BF_CONFIG.board_align_pitch = data.getInt16(8, 1); // -180 - 360
                 BF_CONFIG.board_align_yaw = data.getInt16(10, 1); // -180 - 360
-                BF_CONFIG.currentscale = data.getInt16(12, 1);
-                BF_CONFIG.currentoffset = data.getUint16(14, 1);
+                if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
+                    BF_CONFIG.currentscale = data.getInt16(12, 1);
+                    BF_CONFIG.currentoffset = data.getUint16(14, 1);
+                }
                 break;
             case MSP_codes.MSP_SET_BF_CONFIG:
                 break;
@@ -1378,10 +1382,12 @@ MSP.crunch = function (code) {
             buffer.push(specificByte(BF_CONFIG.board_align_pitch, 1));
             buffer.push(specificByte(BF_CONFIG.board_align_yaw, 0));
             buffer.push(specificByte(BF_CONFIG.board_align_yaw, 1));
-            buffer.push(lowByte(BF_CONFIG.currentscale));
-            buffer.push(highByte(BF_CONFIG.currentscale));
-            buffer.push(lowByte(BF_CONFIG.currentoffset));
-            buffer.push(highByte(BF_CONFIG.currentoffset));
+            if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
+                buffer.push(lowByte(BF_CONFIG.currentscale));
+                buffer.push(highByte(BF_CONFIG.currentscale));
+                buffer.push(lowByte(BF_CONFIG.currentoffset));
+                buffer.push(highByte(BF_CONFIG.currentoffset));
+            }
             break;
         case MSP_codes.MSP_SET_PID_CONTROLLER:
             buffer.push(PID.controller);
@@ -1487,10 +1493,12 @@ MSP.crunch = function (code) {
                 buffer.push(lowByte(Math.round(MISC.mag_declination * 100)));
                 buffer.push(highByte(Math.round(MISC.mag_declination * 100)));
             }
-            buffer.push(MISC.vbatscale);
-            buffer.push(Math.round(MISC.vbatmincellvoltage * 10));
-            buffer.push(Math.round(MISC.vbatmaxcellvoltage * 10));
-            buffer.push(Math.round(MISC.vbatwarningcellvoltage * 10));
+            if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
+                buffer.push(MISC.vbatscale);
+                buffer.push(Math.round(MISC.vbatmincellvoltage * 10));
+                buffer.push(Math.round(MISC.vbatmaxcellvoltage * 10));
+                buffer.push(Math.round(MISC.vbatwarningcellvoltage * 10));
+            }
             break;
 
         case MSP_codes.MSP_SET_RX_CONFIG:

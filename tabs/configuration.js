@@ -73,9 +73,9 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     //Update Analog/Battery Data
     function load_analog() {
         MSP.send_message(MSP_codes.MSP_ANALOG, false, false, function () {
-	    $('input[name="batteryvoltage"]').val([ANALOG.voltage.toFixed(1)]);
-	    $('input[name="batterycurrent"]').val([ANALOG.amperage.toFixed(2)]);
-            });
+            $('input[name="batteryvoltage"]').val([ANALOG.voltage.toFixed(1)]);
+            $('input[name="batterycurrent"]').val([ANALOG.amperage.toFixed(2)]);
+        });
     }
 
     function load_html() {
@@ -390,11 +390,15 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         $('input[name="mincommand"]').val(MISC.mincommand);
         
         // fill battery
-        $('input[name="mincellvoltage"]').val(MISC.vbatmincellvoltage);
-        $('input[name="maxcellvoltage"]').val(MISC.vbatmaxcellvoltage);
-        $('input[name="warningcellvoltage"]').val(MISC.vbatwarningcellvoltage);
-        $('input[name="voltagescale"]').val(MISC.vbatscale);
-
+        if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
+            $('input[name="mincellvoltage"]').val(MISC.vbatmincellvoltage);
+            $('input[name="maxcellvoltage"]').val(MISC.vbatmaxcellvoltage);
+            $('input[name="warningcellvoltage"]').val(MISC.vbatwarningcellvoltage);
+            $('input[name="voltagescale"]').val(MISC.vbatscale);
+        } else {
+            $('.battery-configuration-legacy').hide();
+        }
+        
         // fill current
         $('input[name="currentscale"]').val(BF_CONFIG.currentscale);
         $('input[name="currentoffset"]').val(BF_CONFIG.currentoffset);
@@ -474,10 +478,12 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             MISC.maxthrottle = parseInt($('input[name="maxthrottle"]').val());
             MISC.mincommand = parseInt($('input[name="mincommand"]').val());
 
-            MISC.vbatmincellvoltage = parseFloat($('input[name="mincellvoltage"]').val());
-            MISC.vbatmaxcellvoltage = parseFloat($('input[name="maxcellvoltage"]').val());
-            MISC.vbatwarningcellvoltage = parseFloat($('input[name="warningcellvoltage"]').val());
-            MISC.vbatscale = parseInt($('input[name="voltagescale"]').val());
+            if(semver.lt(CONFIG.apiVersion, "1.22.0")) {
+                MISC.vbatmincellvoltage = parseFloat($('input[name="mincellvoltage"]').val());
+                MISC.vbatmaxcellvoltage = parseFloat($('input[name="maxcellvoltage"]').val());
+                MISC.vbatwarningcellvoltage = parseFloat($('input[name="warningcellvoltage"]').val());
+                MISC.vbatscale = parseInt($('input[name="voltagescale"]').val());
+            }
 
             BF_CONFIG.currentscale = parseInt($('input[name="currentscale"]').val());
             BF_CONFIG.currentoffset = parseInt($('input[name="currentoffset"]').val());

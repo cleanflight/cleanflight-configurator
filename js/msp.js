@@ -501,7 +501,7 @@ var MSP = {
                 else
                     MISC.mag_declination = data.getInt16(offset, 1) / 100; // -18000-18000                
                 offset += 2;
-                if (semver.lt(CONFIG.apiVersion, "1.18.0")) {
+                if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
                     MISC.vbatscale = data.getUint8(offset++, 1); // 10-200
                     MISC.vbatmincellvoltage = data.getUint8(offset++, 1) / 10; // 10-50
                     MISC.vbatmaxcellvoltage = data.getUint8(offset++, 1) / 10; // 10-50

@@ -227,7 +227,7 @@
         "message": "PID delta:"
     },
     "statusbar_cpu_load": {
-        "message": "CPU Load: $1%"
+        "message": "CPU Load:"
     },
 
     "dfu_connect_message": {

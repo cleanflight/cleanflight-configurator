@@ -281,8 +281,8 @@ var MSP = {
                 CONFIG.mode = data.getUint32(6, 1);
                 CONFIG.profile = data.getUint8(10);
                 if (semver.gte(CONFIG.apiVersion, "1.22.0")) {
-                    CONFIG.cpuload = data.getUint16(11, 1);
-                    CONFIG.gyroDeltaUs = data.getUint16(13, 1);
+                    CONFIG.gyroDeltaUs = data.getUint16(11, 1);
+                    CONFIG.cpuload = data.getUint16(13, 1);
                 }
                 $('select[name="profilechange"]').val(CONFIG.profile);
 
@@ -290,7 +290,7 @@ var MSP = {
                 $('span.i2c-error').text(CONFIG.i2cError);
                 $('span.pid-delta').text(CONFIG.pidDeltaUs);
                 $('span.gyro-delta').text(CONFIG.gyroDeltaUs);
-                $('span.cpu-load').text(chrome.i18n.getMessage('statusbar_cpu_load', [CONFIG.cpuload]));
+                $('span.cpu-load').text(CONFIG.cpuload + '%');
                 
                 
                 break;

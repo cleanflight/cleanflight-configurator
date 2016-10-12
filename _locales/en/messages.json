@@ -1810,6 +1810,7 @@
     },
     "osdElement_motors": {
         "message": "Motors"
+    },
     "osdElement_vtxChannel": {
         "message": "VTX Channel"
     },

@@ -220,8 +220,11 @@
     "statusbar_i2c_error": {
         "message": "I2C error:"
     },
-    "statusbar_cycle_time": {
-        "message": "Cycle Time:"
+    "statusbar_gyro_delta": {
+        "message": "GYRO delta:"
+    },
+    "statusbar_pid_delta": {
+        "message": "PID delta:"
     },
     "statusbar_cpu_load": {
         "message": "CPU Load: $1%"

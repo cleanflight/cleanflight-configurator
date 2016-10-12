@@ -72,7 +72,9 @@ $(document).ready(function () {
 
                     // Reset various UI elements
                     $('span.i2c-error').text(0);
-                    $('span.cycle-time').text(0);
+                    $('span.gyro-delta').text(0);
+                    $('span.pid-delta').text(0);
+                    $('span.cpu-load').text(0);
 
                     // unlock port select & baud
                     $('div#port-picker #port').prop('disabled', false);

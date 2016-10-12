@@ -53,7 +53,8 @@ var FC = {
             multiType:     0,
             msp_version:   0, // not specified using semantic versioning
             capability:    0,
-            cycleTime:     0,
+            pidDeltaUs:    0,
+            gyroDeltaUs:   0,
             cpuload:       0,
             i2cError:      0,
             activeSensors: 0,

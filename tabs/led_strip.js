@@ -9,8 +9,11 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     var self = this;
     var selectedColorIndex = null;
     var selectedModeColor = null;
-
+    
     if (semver.lte(CONFIG.apiVersion, "1.19.0")) {
+        MSP_codes.MSP_LED_STRIP_MODECOLOR = 86;
+        MSP_codes.MSP_SET_LED_STRIP_MODECOLOR = 87;
+
         TABS.led_strip.functions = ['i', 'w', 'f', 'a', 't', 'r', 'c', 'g', 's', 'b'];
         TABS.led_strip.baseFuncs = ['c', 'f', 'a', 'b', 'g', 'r'];
         TABS.led_strip.overlays = ['t', 's', 'i', 'w'];
@@ -36,7 +39,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
     }
 
     function load_led_mode_colors() {
-        if (semver.gte(CONFIG.apiVersion, "1.21.0"))
+        if (semver.gte(CONFIG.apiVersion, "1.19.0"))
             MSP.send_message(MSP_codes.MSP_LED_STRIP_MODECOLOR, false, false, load_html);
         else
             load_html();

@@ -283,7 +283,7 @@ function onConnect() {
     var dataflash = $('#dataflash_wrapper_global');
     dataflash.show();
     
-    if (CONFIG.boardType == 0) {
+    if (CONFIG.boardType == 0 || CONFIG.boardType == 2) {
         startLiveDataRefreshTimer();
     }
     
@@ -344,7 +344,7 @@ function sensor_status(sensors_detected) {
         $('.accicon', e_sensor_status).removeClass('active');
     }
 
-    if (CONFIG.boardType == 0) { // Gyro status is not reported by FC 
+    if (CONFIG.boardType == 0 || CONFIG.boardType == 2) { // Gyro status is not reported by FC 
         $('.gyro', e_sensor_status).addClass('on');
         $('.gyroicon', e_sensor_status).addClass('active');
     } else {

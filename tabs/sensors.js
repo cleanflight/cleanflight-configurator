@@ -187,7 +187,7 @@ TABS.sensors.initialize = function (callback) {
         // disable graphs for sensors that are missing
         var checkboxes = $('.tab-sensors .info .checkboxes input');
        
-        if (CONFIG.boardType == 0) { 
+        if (CONFIG.boardType == 0 || CONFIG.boardType == 2) { 
             if (!have_sensor(CONFIG.activeSensors, 'acc')) {
                 checkboxes.eq(1).prop('disabled', true);
             }

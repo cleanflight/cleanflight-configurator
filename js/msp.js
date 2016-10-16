@@ -13,6 +13,12 @@ var MSP_codes = {
     MSP_SET_BATTERY_CONFIG:      33,
     MSP_MODE_RANGES:             34,
     MSP_SET_MODE_RANGE:          35,
+    MSP_FEATURE:                 36,
+    MSP_SET_FEATURE:             37,
+    MSP_BOARD_ALIGNMENT:         38,
+    MSP_SET_BOARD_ALIGNMENT:     39,
+    MSP_AMPERAGE_METER_CONFIG:   40,
+    MSP_SET_AMPERAGE_METER_CONFIG:41,
     MSP_RX_CONFIG:               44,
     MSP_SET_RX_CONFIG:           45,
     MSP_LED_COLORS:              46,
@@ -49,8 +55,8 @@ var MSP_codes = {
     MSP_SET_LED_STRIP_MODECOLOR: 221,
     
     MSP_VOLTAGE_METERS:          128,
-    MSP_CURRENT_METERS:          129,
-    MSP_BATTERY_STATES:          130,
+    MSP_AMPERAGE_METERS:         129,
+    MSP_BATTERY_STATE:           130,
 
     MSP_PILOT:                   131,
     MSP_SET_PILOT:               222,
@@ -390,7 +396,21 @@ var MSP = {
                     voltageMeterConfig.vbatresdivval = data.getUint8(offset++);
                     voltageMeterConfig.vbatresdivmultiplier = data.getUint8(offset++);
                     
-                    VOLTAGE_METER_CONFIGS.push(voltageMeterConfig)
+                    VOLTAGE_METER_CONFIGS.push(voltageMeterConfig);
+                }
+                break;
+            case MSP_codes.MSP_AMPERAGE_METER_CONFIG:
+                var offset = 0;
+                AMPERAGE_METER_CONFIGS = [];
+                var amperage_meter_count = message_length / 4;
+                for (var i = 0; i < amperage_meter_count; i++) {
+                    var amperageMeterConfig = {};
+                    amperageMeterConfig.scale = data.getInt16(offset, 1);
+                    offset+=2;
+                    amperageMeterConfig.offset = data.getUint16(offset, 1);
+                    offset+=2;
+                    
+                    AMPERAGE_METER_CONFIGS.push(amperageMeterConfig);
                 }
                 break;
             case MSP_codes.MSP_BATTERY_CONFIG:
@@ -398,35 +418,31 @@ var MSP = {
                 BATTERY_CONFIG.vbatmincellvoltage = data.getUint8(offset++) / 10;
                 BATTERY_CONFIG.vbatmaxcellvoltage = data.getUint8(offset++) / 10;
                 BATTERY_CONFIG.vbatwarningcellvoltage = data.getUint8(offset++) / 10;
-                BATTERY_CONFIG.batteryCapacity = data.getUint16(offset);
+                BATTERY_CONFIG.capacity = data.getUint16(offset, 1);
                 offset+=2;
                 BATTERY_CONFIG.amperageMeterSource = data.getUint8(offset++);
                 break;
-            case MSP_codes.MSP_CURRENT_METERS:
+            case MSP_codes.MSP_AMPERAGE_METERS:
                 var offset = 0;
-                CURRENT_METERS = [];
-                for (var i = 0; i < (message_length / 2); i++) {
-                    var currentMeter = {};
-                    currentMeter.amperage = data.getInt16(offset, 1) / 1000; // A
+                AMPERAGE_METERS = [];
+                for (var i = 0; i < (message_length / 6); i++) {
+                    var amperageMeter = {};
+                    amperageMeter.amperage = data.getInt16(offset, 1) / 1000; // A
                     offset += 2;
+                    amperageMeter.mAhDrawn = data.getUint32(offset, 1); // A
+                    offset += 4;
                     
-                    CURRENT_METERS.push(currentMeter)
+                    AMPERAGE_METERS.push(amperageMeter);
                 }
                 break;
-            case MSP_codes.MSP_BATTERY_STATES:
+            case MSP_codes.MSP_BATTERY_STATE:
                 var offset = 0;
-                BATTERY_STATES = [];
-                for (var i = 0; i < (message_length / 4); i++) {
-                    var batteryState = {};
-                    batteryState.connected = data.getUint8(offset, 1); // A
-                    offset += 1;
-                    batteryState.voltage = data.getUint8(offset) / 10.0;
-                    offset += 1;
-                    batteryState.mah_drawn = data.getUint16(offset, 1);
-                    offset += 2;
-                    
-                    BATTERY_STATES.push(batteryState)
-                }
+                BATTERY_STATE.connected = data.getUint8(offset, 1); // A
+                offset += 1;
+                BATTERY_STATE.voltage = data.getUint8(offset) / 10.0;
+                offset += 1;
+                BATTERY_STATE.mah_drawn = data.getUint16(offset, 1);
+                offset += 2;
                 break;
 
             case MSP_codes.MSP_RC_TUNING:
@@ -683,7 +699,16 @@ var MSP = {
                 console.log('Mag calibration executed');
                 break;
             case MSP_codes.MSP_SET_MISC:
-                console.log('MISC Configuration saved');
+                console.log('MISC configuration saved');
+                break;
+            case MSP_codes.MSP_SET_BATTERY_CONFIG:
+                console.log('Battery configuration saved');
+                break;
+            case MSP_codes.MSP_SET_VOLTAGE_METER_CONFIG:
+                console.log('Voltage meter configuration saved');
+                break;
+            case MSP_codes.MSP_SET_AMPERAGE_METER_CONFIG:
+                console.log('Amperage meter configuration saved');
                 break;
             case MSP_codes.MSP_RESET_CONF:
                 console.log('Settings Reset');
@@ -749,6 +774,11 @@ var MSP = {
                 break;
             case MSP_codes.MSP_SET_RX_MAP:
                 console.log('RCMAP saved');
+                break;
+            case MSP_codes.MSP_FEATURE:
+                FEATURE.enabled = data.getUint32(0, 1);
+                break;
+            case MSP_codes.MSP_SET_FEATURE:
                 break;
             case MSP_codes.MSP_BF_CONFIG:
                 BF_CONFIG.mixerConfiguration = data.getUint8(0);
@@ -1414,6 +1444,12 @@ MSP.crunch = function (code) {
     var buffer = [];
 
     switch (code) {
+        case MSP_codes.MSP_SET_FEATURE:
+            buffer.push(specificByte(FEATURE.enabled, 0));
+            buffer.push(specificByte(FEATURE.enabled, 1));
+            buffer.push(specificByte(FEATURE.enabled, 2));
+            buffer.push(specificByte(FEATURE.enabled, 3));
+            break;
         case MSP_codes.MSP_SET_BF_CONFIG:
             buffer.push(BF_CONFIG.mixerConfiguration);
             buffer.push(specificByte(BF_CONFIG.features, 0));
@@ -1544,6 +1580,14 @@ MSP.crunch = function (code) {
                 buffer.push(Math.round(MISC.vbatmaxcellvoltage * 10));
                 buffer.push(Math.round(MISC.vbatwarningcellvoltage * 10));
             }
+            break;
+        case MSP_codes.MSP_SET_BATTERY_CONFIG:
+            buffer.push(Math.round(BATTERY_CONFIG.vbatmincellvoltage * 10));
+            buffer.push(Math.round(BATTERY_CONFIG.vbatmaxcellvoltage * 10));
+            buffer.push(Math.round(BATTERY_CONFIG.vbatwarningcellvoltage * 10));
+            buffer.push(lowByte(BATTERY_CONFIG.capacity));
+            buffer.push(highByte(BATTERY_CONFIG.capacity));
+            buffer.push(BATTERY_CONFIG.amperageMeterSource);
             break;
 
         case MSP_codes.MSP_SET_RX_CONFIG:
@@ -2132,6 +2176,68 @@ MSP.sendRxFailConfig = function(onCompleteCallback) {
         MSP.send_message(MSP_codes.MSP_SET_RXFAIL_CONFIG, buffer, false, nextFunction);
     }
 };
+
+MSP.sendVoltageMeterConfigs = function(onCompleteCallback) {
+    var nextFunction = send_next; 
+    var index = 0;
+    
+    if (VOLTAGE_METER_CONFIGS.length == 0) {
+        onCompleteCallback();
+    } else {
+        send_next();
+    }
+    
+    function send_next() {
+        var buffer = [];
+        
+        var voltageConfig = VOLTAGE_METER_CONFIGS[index];
+        
+        buffer.push(index);
+        buffer.push(voltageConfig.vbatscale);
+        buffer.push(voltageConfig.vbatresdivval);
+        buffer.push(voltageConfig.vbatresdivmultiplier);
+
+        // prepare for next iteration
+        index++;
+        if (index == VOLTAGE_METER_CONFIGS.length) {
+            nextFunction = onCompleteCallback;
+        }
+
+        MSP.send_message(MSP_codes.MSP_SET_VOLTAGE_METER_CONFIG, buffer, false, nextFunction);
+    }
+}
+
+
+MSP.sendAmperageMeterConfigs = function(onCompleteCallback) {
+    var nextFunction = send_next; 
+    var index = 0;
+    
+    if (AMPERAGE_METER_CONFIGS.length == 0) {
+        onCompleteCallback();
+    } else {
+        send_next();
+    }
+    
+    function send_next() {
+        var buffer = [];
+        
+        var amperageConfig = AMPERAGE_METER_CONFIGS[index];
+        
+        buffer.push(index);
+        buffer.push(specificByte(amperageConfig.scale, 0));
+        buffer.push(specificByte(amperageConfig.scale, 1));
+        buffer.push(specificByte(amperageConfig.offset, 0));
+        buffer.push(specificByte(amperageConfig.offset, 1));
+
+        // prepare for next iteration
+        index++;
+        if (index == AMPERAGE_METER_CONFIGS.length) {
+            nextFunction = onCompleteCallback;
+        }
+
+        MSP.send_message(MSP_codes.MSP_SET_AMPERAGE_METER_CONFIG, buffer, false, nextFunction);
+    }
+}
 
 MSP.SDCARD_STATE_NOT_PRESENT = 0;
 MSP.SDCARD_STATE_FATAL       = 1;

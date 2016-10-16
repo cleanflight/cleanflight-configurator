@@ -629,6 +629,9 @@
     "configurationThrottleMinimumCommand": {
         "message": "Minimum Command"
     },
+    "configurationBatteryCapacity": {
+        "message": "Battery Capacity"
+    },
     "configurationBatteryVoltage": {
         "message": "Battery Voltage"
     },
@@ -644,17 +647,8 @@
     "configurationBatteryWarning": {
         "message": "Warning Cell Voltage"
     },
-    "configurationBatteryScale": {
-        "message": "Voltage Scale"
-    },
     "configurationCurrent": {
         "message": "Current Sensor"
-    },
-    "configurationCurrentScale": {
-        "message": "Scale the output voltage to milliamps [1/10th mV/A]"
-    },
-    "configurationCurrentOffset": {
-        "message": "Offset in millivolt steps"
     },
     "configurationBatteryMultiwiiCurrent": {
         "message": "Enable support for legacy Multiwii MSP current output"
@@ -1683,24 +1677,38 @@
     "powerAmperageValue": {
         "message": "$1 A"
     },    
-    "powerVoltage1": {
-        "message": "Voltage 1"
-    },
-    "powerVoltage2": {
-        "message": "Voltage 2"
-    },
-    "powerVoltage3": {
-        "message": "Voltage 3"
+    "powerVoltage": {
+        "message": "Voltage $1"
     },
 
-    "powerCurrentHead": {
-        "message": "Current"
+    "powerVoltageScale": {
+        "message": "Scale"
     },
-    "powerCurrent1": {
-        "message": "Current 1"
+    "powerVoltageDivider": {
+        "message": "Divider Value"
+    },
+    "powerVoltageMultiplier": {
+        "message": "Multiplier Value"
+    },
+
+    "powerAmperageHead": {
+        "message": "Amperage"
+    },
+    "powerAmperage0": {
+        "message": "Amperage (Virtual)"
+    },
+    "powerAmperage1": {
+        "message": "Amperage (ADC)"
     },
     "powerMahValue": {
         "message": "$1 mAh"
+    },
+    
+    "powerAmperageScale": {
+        "message": "Scale the output voltage to milliamps [1/10th mV/A]"
+    },
+    "powerAmperageOffset": {
+        "message": "Offset in millivolt steps"
     },
     
     "powerBatteryHead": {
@@ -1721,8 +1729,7 @@
     "powerBatteryCurrentDrawn": {
         "message": "mAh used"
     },
-    
-    
+        
     "osdInfoHead": {
         "message": "Info"
     },

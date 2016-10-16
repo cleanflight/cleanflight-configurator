@@ -2,6 +2,7 @@
 
 // define all the global variables that are uses to hold FC state
 var CONFIG;
+var FEATURE;
 var BF_CONFIG;
 var LED_STRIP;
 var LED_COLORS;
@@ -26,8 +27,9 @@ var GPS_DATA;
 var ANALOG;
 var VOLTAGE_METERS;
 var VOLTAGE_METER_CONFIGS;
-var CURRENT_METERS;
-var BATTERY_STATES;
+var AMPERAGE_METERS;
+var AMPERAGE_METER_CONFIGS;
+var BATTERY_STATE;
 var BATTERY_CONFIG;
 var ARMING_CONFIG;
 var FC_CONFIG;
@@ -64,6 +66,10 @@ var FC = {
             profile:       0,
             uid:           [0, 0, 0],
             accelerometerTrims: [0, 0]
+        };
+        
+        FEATURE = {
+            enabled: 0,
         };
         
         BF_CONFIG = {
@@ -174,15 +180,11 @@ var FC = {
         
         VOLTAGE_METERS = [];
         VOLTAGE_METER_CONFIGS = [];
-        CURRENT_METERS = [];
-        BATTERY_STATES = [];
-        BATTERY_CONFIG = {
-            vbatmincellvoltage:     0,
-            vbatmaxcellvoltage:     0,
-            vbatwarningcellvoltage: 0,
-            batteryCapacity:        0,
-            amperageMeterSource:    0
-        };
+        AMPERAGE_METERS = [];
+        AMPERAGE_METER_CONFIGS = [];
+        
+        BATTERY_STATE = {};
+        BATTERY_CONFIG = {};
         
         ARMING_CONFIG = {
             auto_disarm_delay:      0,

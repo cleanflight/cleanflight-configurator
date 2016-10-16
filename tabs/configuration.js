@@ -70,14 +70,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             next_callback();
         }
     }
-    //Update Analog/Battery Data
-    function load_analog() {
-        MSP.send_message(MSP_codes.MSP_ANALOG, false, false, function () {
-            $('input[name="batteryvoltage"]').val([ANALOG.voltage.toFixed(1)]);
-            $('input[name="batterycurrent"]').val([ANALOG.amperage.toFixed(2)]);
-        });
-    }
-
+    
     function load_html() {
         $('#content').load("./tabs/configuration.html", process_html);
     }
@@ -393,21 +386,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         $('input[name="maxthrottle"]').val(MISC.maxthrottle);
         $('input[name="mincommand"]').val(MISC.mincommand);
         
-        // fill battery
-        if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
-            $('input[name="mincellvoltage"]').val(MISC.vbatmincellvoltage);
-            $('input[name="maxcellvoltage"]').val(MISC.vbatmaxcellvoltage);
-            $('input[name="warningcellvoltage"]').val(MISC.vbatwarningcellvoltage);
-            $('input[name="voltagescale"]').val(MISC.vbatscale);
-        } else {
-            $('.battery-configuration-legacy').hide();
-        }
-        
-        // fill current
-        $('input[name="currentscale"]').val(BF_CONFIG.currentscale);
-        $('input[name="currentoffset"]').val(BF_CONFIG.currentoffset);
-        $('input[name="multiwiicurrentoutput"]').prop('checked', MISC.multiwiicurrentoutput);
-
         //fill 3D
         if (semver.lt(CONFIG.apiVersion, "1.14.0")) {
             $('.tab-configuration .3d').hide();
@@ -482,15 +460,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             MISC.maxthrottle = parseInt($('input[name="maxthrottle"]').val());
             MISC.mincommand = parseInt($('input[name="mincommand"]').val());
 
-            if(semver.lt(CONFIG.apiVersion, "1.22.0")) {
-                MISC.vbatmincellvoltage = parseFloat($('input[name="mincellvoltage"]').val());
-                MISC.vbatmaxcellvoltage = parseFloat($('input[name="maxcellvoltage"]').val());
-                MISC.vbatwarningcellvoltage = parseFloat($('input[name="warningcellvoltage"]').val());
-                MISC.vbatscale = parseInt($('input[name="voltagescale"]').val());
-            }
-
-            BF_CONFIG.currentscale = parseInt($('input[name="currentscale"]').val());
-            BF_CONFIG.currentoffset = parseInt($('input[name="currentoffset"]').val());
             MISC.multiwiicurrentoutput = ~~$('input[name="multiwiicurrentoutput"]').is(':checked'); // ~~ boolean to decimal conversion
 
             _3D.deadband3d_low = parseInt($('input[name="3ddeadbandlow"]').val());
@@ -591,7 +560,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_serial_config);
         });
 
-        GUI.interval_add('config_load_analog', load_analog, 250, true); // 4 fps
         GUI.content_ready(callback);
     }
 };

@@ -94,18 +94,17 @@ TABS.osd_configuration.initialize = function (callback) {
                 }
             });
             
-            MSP.send_message(MSP_codes.MSP_BATTERY_STATES, false, false, function () {
-                for (var i = 0; i < BATTERY_STATES.length; i++) {
-                    var elementPrefix = '.battery-' + (i + 1);
-                    var element;
-                    
-                    element = $(elementPrefix + '-connected');
-                    element.text(BATTERY_STATES[i].connected ? chrome.i18n.getMessage('osdBatteryConnectedValueYes') : chrome.i18n.getMessage('osdBatteryConnectedValueNo'));
-                    element = $(elementPrefix + '-mah-drawn');
-                    element.text(chrome.i18n.getMessage('osdBatteryMahValue', [BATTERY_STATES[i].mah_drawn]));
-                    element = $(elementPrefix + '-voltage');
-                    element.text(chrome.i18n.getMessage('osdBatteryVoltageValue', [BATTERY_STATES[i].voltage]));
-                }
+            MSP.send_message(MSP_codes.MSP_BATTERY_STATE, false, false, function () {
+                var i = 0;
+                var elementPrefix = '.battery-' + (i + 1);
+                var element;
+                
+                element = $(elementPrefix + '-connected');
+                element.text(BATTERY_STATE.connected ? chrome.i18n.getMessage('osdBatteryConnectedValueYes') : chrome.i18n.getMessage('osdBatteryConnectedValueNo'));
+                element = $(elementPrefix + '-mah-drawn');
+                element.text(chrome.i18n.getMessage('osdBatteryMahValue', [BATTERY_STATE.mah_drawn]));
+                element = $(elementPrefix + '-voltage');
+                element.text(chrome.i18n.getMessage('osdBatteryVoltageValue', [BATTERY_STATE.voltage]));
             });
 
         }

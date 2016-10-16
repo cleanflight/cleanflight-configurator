@@ -1668,6 +1668,10 @@
         "message": "With this feature activated, you can connect a gimbal. Do not activate with motors and battery connected! Ths changes the motor pin mapping. "
     },
 
+    "powerFirmwareUpgradeRequired": {
+        "message": "Firmware upgrade <span style=\"color: red\">required</span>.  Battery/Amperage/Voltage configurations using API &lt; 1.22.0 is not supported."
+    },
+
     "powerVoltageHead": {
         "message": "Voltage"
     },

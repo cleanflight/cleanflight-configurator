@@ -1,6 +1,7 @@
 'use strict';
 
 TABS.power = {
+    supported: false,
 };
 
 TABS.power.initialize = function (callback) {
@@ -42,10 +43,21 @@ TABS.power.initialize = function (callback) {
     function load_html() {
         $('#content').load("./tabs/power.html", process_html);
     }
+    
+    this.supported = semver.gte(CONFIG.apiVersion, "1.22.0");
 
-    load_status();
+    if (!this.supported) {
+        load_html();
+    } else {
+        load_status();
+    }
 
-    function process_html() {
+    function update_ui() {
+        if (!TABS.power.supported) {
+            $(".tab-power").removeClass("supported");
+            return;
+        }
+        $(".tab-power").addClass("supported");
 
         // voltage meters
         
@@ -127,9 +139,6 @@ TABS.power.initialize = function (callback) {
         $('input[name="maxcellvoltage"]').val(BATTERY_CONFIG.vbatmaxcellvoltage);
         $('input[name="warningcellvoltage"]').val(BATTERY_CONFIG.vbatwarningcellvoltage);
         $('input[name="capacity"]').val(BATTERY_CONFIG.capacity);
-
-        // translate to user-selected language
-        localize();
 
         function get_slow_data() {
             MSP.send_message(MSP_codes.MSP_VOLTAGE_METERS, false, false, function () {
@@ -231,7 +240,14 @@ TABS.power.initialize = function (callback) {
         });
 
         GUI.interval_add('setup_data_pull_slow', get_slow_data, 200, true); // 5hz
-
+    }
+    
+    function process_html() {
+        update_ui();
+        
+        // translate to user-selected language
+        localize();
+        
         GUI.content_ready(callback);
     }
 };

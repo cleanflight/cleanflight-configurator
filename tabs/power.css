@@ -55,3 +55,19 @@
     padding-bottom: 0px;
     margin-bottom: 0px;
 }
+
+.tab-power .require-support {
+    display: none;
+}
+
+.tab-power.supported .require-support {
+    display: block;
+}
+
+.tab-power .require-upgrade {
+    display: block;
+}
+
+.tab-power.supported .require-upgrade {
+    display: none;
+}

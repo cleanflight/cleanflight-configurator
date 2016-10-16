@@ -206,34 +206,13 @@ TABS.power.initialize = function (callback) {
             }
             
             function save_to_eeprom() {
-                MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, reboot);
+                MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, save_completed);
             }
 
-            function reboot() {
+            function save_completed() {
                 GUI.log(chrome.i18n.getMessage('configurationEepromSaved'));
 
-                GUI.tab_switch_cleanup(function() {
-                    MSP.send_message(MSP_codes.MSP_SET_REBOOT, false, false, reinitialize);
-                });
-            }
-
-            function reinitialize() {
-                GUI.log(chrome.i18n.getMessage('deviceRebooting'));
-
-                if (BOARD.find_board_definition(CONFIG.boardIdentifier).vcp) { // VCP-based flight controls may crash old drivers, we catch and reconnect
-                    $('a.connect').click();
-                    GUI.timeout_add('start_connection',function start_connection() {
-                        $('a.connect').click();
-                    },2500);
-                } else {
-
-                    GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
-                        MSP.send_message(MSP_codes.MSP_IDENT, false, false, function () {
-                            GUI.log(chrome.i18n.getMessage('deviceReady'));
-                            TABS.configuration.initialize(false, $('#content').scrollTop());
-                        });
-                    },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
-                }
+                TABS.power.initialize();
             }
 
             save_features();

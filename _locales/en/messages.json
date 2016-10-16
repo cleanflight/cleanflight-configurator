@@ -1672,6 +1672,10 @@
         "message": "Firmware upgrade <span style=\"color: red\">required</span>.  Battery/Amperage/Voltage configurations using API &lt; 1.22.0 is not supported."
     },
 
+    "powerButtonSave": {
+        "message": "Save"
+    },
+
     "powerVoltageHead": {
         "message": "Voltage"
     },

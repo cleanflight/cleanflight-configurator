@@ -25,8 +25,10 @@ var SERVO_DATA;
 var GPS_DATA;
 var ANALOG;
 var VOLTAGE_METERS;
+var VOLTAGE_METER_CONFIGS;
 var CURRENT_METERS;
 var BATTERY_STATES;
+var BATTERY_CONFIG;
 var ARMING_CONFIG;
 var FC_CONFIG;
 var MISC;
@@ -171,8 +173,16 @@ var FC = {
         };
         
         VOLTAGE_METERS = [];
+        VOLTAGE_METER_CONFIGS = [];
         CURRENT_METERS = [];
         BATTERY_STATES = [];
+        BATTERY_CONFIG = {
+            vbatmincellvoltage:     0,
+            vbatmaxcellvoltage:     0,
+            vbatwarningcellvoltage: 0,
+            batteryCapacity:        0,
+            amperageMeterSource:    0
+        };
         
         ARMING_CONFIG = {
             auto_disarm_delay:      0,

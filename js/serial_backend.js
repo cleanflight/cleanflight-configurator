@@ -462,14 +462,14 @@ function fetch_data_for_live_status() {
 }
 
 function fetch_status() {
-    MSP.send_message(MSP_codes.MSP_STATUS, false, false, fetch_voltage_configuration);
+    MSP.send_message(MSP_codes.MSP_STATUS, false, false, fetch_battery_configuration);
 }
 
-function fetch_voltage_configuration() {
+function fetch_battery_configuration() {
     if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
         MSP.send_message(MSP_codes.MSP_MISC, false, fetch_battery_voltage);
     } else {
-        fetch_battery_voltage();
+        MSP.send_message(MSP_codes.MSP_BATTERY_CONFIG, false, false, fetch_battery_voltage);
     }
 }
 
@@ -477,7 +477,7 @@ function fetch_battery_voltage() {
     if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
         MSP.send_message(MSP_codes.MSP_ANALOG, false, false, update_live_status);
     } else {
-        update_live_status();
+        MSP.send_message(MSP_codes.MSP_VOLTAGE_METERS, false, false, update_live_status);
     }
 }
 
@@ -523,6 +523,12 @@ function update_live_status() {
         min = MISC.vbatmincellvoltage * nbCells;
         max = MISC.vbatmaxcellvoltage * nbCells;
         warn = MISC.vbatwarningcellvoltage * nbCells;
+    } else {
+        voltage = VOLTAGE_METERS[0].voltage;
+        nbCells = Math.floor(voltage / BATTERY_CONFIG.vbatmaxcellvoltage) + 1;
+        min = BATTERY_CONFIG.vbatmincellvoltage * nbCells;
+        max = BATTERY_CONFIG.vbatmaxcellvoltage * nbCells;
+        warn = BATTERY_CONFIG.vbatwarningcellvoltage * nbCells;
     }
        
     $(".battery-status").css({

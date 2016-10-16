@@ -9,8 +9,8 @@ var MSP_codes = {
     MSP_BUILD_INFO:             5,
     
     // MSP commands for Cleanflight original features
-    MSP_CHANNEL_FORWARDING:      32,
-    MSP_SET_CHANNEL_FORWARDING:  33,
+    MSP_BATTERY_CONFIG:          32,
+    MSP_SET_BATTERY_CONFIG:      33,
     MSP_MODE_RANGES:             34,
     MSP_SET_MODE_RANGE:          35,
     MSP_RX_CONFIG:               44,
@@ -23,6 +23,8 @@ var MSP_codes = {
     MSP_SET_ADJUSTMENT_RANGE:    53,
     MSP_CF_SERIAL_CONFIG:        54,
     MSP_SET_CF_SERIAL_CONFIG:    55,
+    MSP_VOLTAGE_METER_CONFIG:    56,
+    MSP_SET_VOLTAGE_METER_CONFIG:57,
     MSP_SONAR:                   58,
     MSP_PID_CONTROLLER:          59,
     MSP_SET_PID_CONTROLLER:      60,
@@ -377,6 +379,28 @@ var MSP = {
                     
                     VOLTAGE_METERS.push(voltageMeter)
                 }
+                break;
+            case MSP_codes.MSP_VOLTAGE_METER_CONFIG:
+                var offset = 0;
+                VOLTAGE_METER_CONFIGS = [];
+                var voltage_meter_count = message_length / 3;
+                for (var i = 0; i < voltage_meter_count; i++) {
+                    var voltageMeterConfig = {};
+                    voltageMeterConfig.vbatscale = data.getUint8(offset++);
+                    voltageMeterConfig.vbatresdivval = data.getUint8(offset++);
+                    voltageMeterConfig.vbatresdivmultiplier = data.getUint8(offset++);
+                    
+                    VOLTAGE_METER_CONFIGS.push(voltageMeterConfig)
+                }
+                break;
+            case MSP_codes.MSP_BATTERY_CONFIG:
+                var offset = 0;
+                BATTERY_CONFIG.vbatmincellvoltage = data.getUint8(offset++) / 10;
+                BATTERY_CONFIG.vbatmaxcellvoltage = data.getUint8(offset++) / 10;
+                BATTERY_CONFIG.vbatwarningcellvoltage = data.getUint8(offset++) / 10;
+                BATTERY_CONFIG.batteryCapacity = data.getUint16(offset);
+                offset+=2;
+                BATTERY_CONFIG.amperageMeterSource = data.getUint8(offset++);
                 break;
             case MSP_codes.MSP_CURRENT_METERS:
                 var offset = 0;

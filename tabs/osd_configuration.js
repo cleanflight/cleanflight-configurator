@@ -73,49 +73,6 @@ TABS.osd_configuration.initialize = function (callback) {
             save_video_config();
         });
 
-        function get_slow_data() {
-            MSP.send_message(MSP_codes.MSP_VOLTAGE_METERS, false, false, function () {
-                for (var i = 0; i < VOLTAGE_METERS.length; i++) {
-                    var elementName = '.voltage-meter-' + (i + 1);
-                    var element;
-                    
-                    element = $(elementName);
-                    element.text(chrome.i18n.getMessage('osdBatteryVoltageValue', [VOLTAGE_METERS[i].voltage]));
-                }
-            });
-
-            MSP.send_message(MSP_codes.MSP_CURRENT_METERS, false, false, function () {
-                for (var i = 0; i < CURRENT_METERS.length; i++) {
-                    var elementName = '.current-meter-' + (i + 1);
-                    var element;
-                    
-                    element = $(elementName);
-                    element.text(chrome.i18n.getMessage('osdBatteryAmperageValue', [CURRENT_METERS[i].amperage.toFixed(2)]));
-                }
-            });
-            
-            MSP.send_message(MSP_codes.MSP_BATTERY_STATE, false, false, function () {
-                var i = 0;
-                var elementPrefix = '.battery-' + (i + 1);
-                var element;
-                
-                element = $(elementPrefix + '-connected');
-                element.text(BATTERY_STATE.connected ? chrome.i18n.getMessage('osdBatteryConnectedValueYes') : chrome.i18n.getMessage('osdBatteryConnectedValueNo'));
-                element = $(elementPrefix + '-mah-drawn');
-                element.text(chrome.i18n.getMessage('osdBatteryMahValue', [BATTERY_STATE.mah_drawn]));
-                element = $(elementPrefix + '-voltage');
-                element.text(chrome.i18n.getMessage('osdBatteryVoltageValue', [BATTERY_STATE.voltage]));
-            });
-
-        }
-
-        function get_fast_data() {
-            // nothing to do
-        }
-
-        GUI.interval_add('setup_data_pull_fast', get_fast_data, 33, true); // 30 fps
-        GUI.interval_add('setup_data_pull_slow', get_slow_data, 250, true); // 4 fps
-
         GUI.content_ready(callback);
     }
 };

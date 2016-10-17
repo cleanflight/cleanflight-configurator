@@ -289,8 +289,10 @@ var MSP = {
                 CONFIG.mode = data.getUint32(6, 1);
                 CONFIG.profile = data.getUint8(10);
                 if (semver.gte(CONFIG.apiVersion, "1.22.0")) {
-                    CONFIG.gyroDeltaUs = data.getUint16(11, 1);
-                    CONFIG.cpuload = data.getUint16(13, 1);
+                    CONFIG.cpuload = data.getUint16(11, 1);
+                }
+                if (semver.gte(CONFIG.apiVersion, "1.23.0")) {
+                    CONFIG.gyroDeltaUs = data.getUint16(13, 1);
                 }
                 $('select[name="profilechange"]').val(CONFIG.profile);
 

@@ -442,8 +442,16 @@ function startLiveDataRefreshTimer() {
     // live data refresh
     GUI.timeout_add('data_refresh', function () { refresh_live_status(); }, 250);
 }
+
+function stopLiveDataRefreshTimer() {
+    GUI.timeout_remove('data_refresh');
+}
+
     
 function refresh_live_status() {
+
+    stopLiveDataRefreshTimer();
+    startLiveDataRefreshTimer();
 
     var statuswrapper = $('#quad-status_wrapper');
     if (GUI.active_tab == 'cli') {
@@ -452,7 +460,6 @@ function refresh_live_status() {
     }
     
     statuswrapper.show();
-    GUI.timeout_remove('data_refresh');
     
     fetch_data_for_live_status();
 }
@@ -553,8 +560,6 @@ function update_live_status() {
     }
    
     $(".battery-legend").text(voltage + " V");
-
-    startLiveDataRefreshTimer();
 }
 
 function specificByte(num, pos) {

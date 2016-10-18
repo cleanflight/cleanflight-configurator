@@ -131,13 +131,16 @@ var MSP_codes = {
     MSP_SET_ACC_TRIM:       239, // set acc angle trim values
     MSP_GPS_SV_INFO:        164, // get Signal Strength
     
-    // Additional private MSP for baseflight configurator (yes thats us \o/)
-    MSP_RX_MAP:              64, // get channel map (also returns number of channels total)
-    MSP_SET_RX_MAP:          65, // set rc map, numchannels to set comes from MSP_RX_MAP
-    MSP_BF_CONFIG:             66, // baseflight-specific settings that aren't covered elsewhere
-    MSP_SET_BF_CONFIG:         67, // baseflight-specific settings save
-    MSP_SET_REBOOT:         68, // reboot settings
-    MSP_BF_BUILD_INFO:          69  // build date as well as some space for future expansion
+    // Additional private MSP for baseflight configurator
+    MSP_RX_MAP:                64, // get channel map (also returns number of channels total)
+    MSP_SET_RX_MAP:            65, // set rc map, numchannels to set comes from MSP_RX_MAP
+    
+    
+    MSP_BF_CONFIG:             66, // baseflight-specific settings that aren't covered elsewhere // DEPRECATED
+    MSP_SET_BF_CONFIG:         67, // baseflight-specific settings save                          // DEPRECATED
+    
+    MSP_SET_REBOOT:            68, // reboot settings
+    MSP_BF_BUILD_INFO:         69  // build date as well as some space for future expansion
 };
 
 var MSP = {

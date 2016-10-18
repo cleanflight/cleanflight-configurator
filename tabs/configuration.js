@@ -46,7 +46,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     
     function load_loop_time() {
         var next_callback = load_3d;
-        if (semver.gte(CONFIG.apiVersion, "1.8.0")) {
+        if (semver.gte(CONFIG.apiVersion, "1.8.0") && semver.lt(CONFIG.apiVersion, "1.22.0")) {
             MSP.send_message(MSP_codes.MSP_LOOP_TIME, false, false, next_callback);
         } else {
             next_callback();
@@ -362,7 +362,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         // fill magnetometer
         $('input[name="mag_declination"]').val(MISC.mag_declination.toFixed(2));
 
-        //fill motor disarm params and FC loop time        
+        // fill motor disarm params        
         if(semver.gte(CONFIG.apiVersion, "1.8.0")) {
             $('input[name="autodisarmdelay"]').val(ARMING_CONFIG.auto_disarm_delay);
             $('input[name="disarmkillswitch"]').prop('checked', ARMING_CONFIG.disarm_kill_switch);
@@ -371,13 +371,21 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 $('div.disarmdelay').show();
             else
                 $('div.disarmdelay').hide();
-            
+        }
+        
+        // fill FC loop time
+        if(semver.gte(CONFIG.apiVersion, "1.8.0") && semver.lt(CONFIG.apiVersion, "1.22.0")) {
             // fill FC loop time
             $('input[name="looptime"]').val(FC_CONFIG.loopTime);
 
             recalculate_cycles_sec();
-            
-            $('div.cycles').show();
+
+            // UI hooks
+            $('input[name="looptime"]').change(function() {
+                recalculate_cycles_sec();
+            });
+        } else {
+            $('.tab-configuration .system').hide();
         }
         
         // fill throttle
@@ -395,10 +403,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             $('input[name="3dneutral"]').val(_3D.neutral3d);
         }
 
-        // UI hooks
-        $('input[name="looptime"]').change(function() {
-            recalculate_cycles_sec();
-        });
 
         $('input[type="checkbox"].feature', features_e).change(function () {
             var element = $(this),
@@ -452,6 +456,9 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             if(semver.gte(CONFIG.apiVersion, "1.8.0")) {
                 ARMING_CONFIG.auto_disarm_delay = parseInt($('input[name="autodisarmdelay"]').val());
                 ARMING_CONFIG.disarm_kill_switch = ~~$('input[name="disarmkillswitch"]').is(':checked'); // ~~ boolean to decimal conversion
+            }
+            
+            if(semver.gte(CONFIG.apiVersion, "1.8.0") && semver.lt(CONFIG.apiVersion, "1.22.0")) {
                 FC_CONFIG.loopTime = parseInt($('input[name="looptime"]').val());
             }
             
@@ -523,7 +530,12 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
 
             function save_looptime_config() {
-                MSP.send_message(MSP_codes.MSP_SET_LOOP_TIME, MSP.crunch(MSP_codes.MSP_SET_LOOP_TIME), false, save_to_eeprom);
+                var next_callback = save_to_eeprom;
+                if(semver.gte(CONFIG.apiVersion, "1.8.0") && semver.lt(CONFIG.apiVersion, "1.22.0")) {
+                    MSP.send_message(MSP_codes.MSP_SET_LOOP_TIME, MSP.crunch(MSP_codes.MSP_SET_LOOP_TIME), false, next_callback);
+                } else {
+                   next_callback();
+                }
             }
 
             function save_to_eeprom() {

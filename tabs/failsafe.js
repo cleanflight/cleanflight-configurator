@@ -35,12 +35,12 @@ TABS.failsafe.initialize = function (callback, scrollPosition) {
     }
 
     function get_rc_data() {
-        MSP.send_message(MSP_codes.MSP_RC, false, false, load_config);
+        MSP.send_message(MSP_codes.MSP_RC, false, false, load_features);
     }
 
     // BEGIN Support for pre API version 1.15.0
-    function load_config() {
-        MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, load_misc);
+    function load_features() {
+        MSP.send_message(MSP_codes.MSP_FEATURE, false, false, load_misc);
     }
 
     function load_misc() {
@@ -215,7 +215,7 @@ TABS.failsafe.initialize = function (callback, scrollPosition) {
                 }
             });
 
-            failsafeFeature.prop('checked', bit_check(BF_CONFIG.features, 8));
+            failsafeFeature.prop('checked', bit_check(FEATURE.enabled, 8));
             failsafeFeature.change();
 
             $('input[name="failsafe_throttle"]').val(FAILSAFE_CONFIG.failsafe_throttle);
@@ -266,7 +266,7 @@ TABS.failsafe.initialize = function (callback, scrollPosition) {
 
             // set FAILSAFE feature option (pre API 1.15.0)
             failsafeFeature = $('input[name="failsafe_feature"]');
-            failsafeFeature.prop('checked', bit_check(BF_CONFIG.features, 8));
+            failsafeFeature.prop('checked', bit_check(FEATURE.enabled, 8));
 
             // fill failsafe_throttle field (pre API 1.15.0)
             $('input[name="failsafe_throttle_old"]').val(MISC.failsafe_throttle);
@@ -280,9 +280,9 @@ TABS.failsafe.initialize = function (callback, scrollPosition) {
 
                 // get FAILSAFE feature option (>= API 1.15.0)
                 if ($('input[name="failsafe_feature_new"]').is(':checked')) {
-                    BF_CONFIG.features = bit_set(BF_CONFIG.features, 8);
+                    FEATURE.enabled = bit_set(FEATURE.enabled, 8);
                 } else {
-                    BF_CONFIG.features = bit_clear(BF_CONFIG.features, 8);
+                    FEATURE.enabled = bit_clear(FEATURE.enabled, 8);
                 }
 
                 FAILSAFE_CONFIG.failsafe_throttle = parseInt($('input[name="failsafe_throttle"]').val());
@@ -300,9 +300,9 @@ TABS.failsafe.initialize = function (callback, scrollPosition) {
             } else {
                 // get FAILSAFE feature option (pre API 1.15.0)
                 if ($('input[name="failsafe_feature"]').is(':checked')) {
-                    BF_CONFIG.features = bit_set(BF_CONFIG.features, 8);
+                    FEATURE.enabled = bit_set(FEATURE.enabled, 8);
                 } else {
-                    BF_CONFIG.features = bit_clear(BF_CONFIG.features, 8);
+                    FEATURE.enabled = bit_clear(FEATURE.enabled, 8);
                 }
 
                 // get failsafe_throttle field value (pre API 1.15.0)
@@ -314,11 +314,11 @@ TABS.failsafe.initialize = function (callback, scrollPosition) {
             }
 
             function save_rxfail_config() {
-                MSP.sendRxFailConfig(save_bf_config);
+                MSP.sendRxFailConfig(save_features);
             }
 
-            function save_bf_config() {
-                MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_to_eeprom);
+            function save_features() {
+                MSP.send_message(MSP_codes.MSP_SET_FEATURE, MSP.crunch(MSP_codes.MSP_SET_FEATURE), false, save_to_eeprom);
             }
 
             // BEGIN pre API 1.15.0 save functions
@@ -361,7 +361,7 @@ TABS.failsafe.initialize = function (callback, scrollPosition) {
             if(apiVersionGte1_15_0) {
                 MSP.send_message(MSP_codes.MSP_SET_RX_CONFIG, MSP.crunch(MSP_codes.MSP_SET_RX_CONFIG), false, save_failssafe_config);
             } else {
-                MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_misc);
+                MSP.send_message(MSP_codes.MSP_SET_FEATURE, MSP.crunch(MSP_codes.MSP_SET_FEATURE), false, save_misc);
             }
         });
 

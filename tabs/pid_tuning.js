@@ -12,7 +12,11 @@ TABS.pid_tuning.initialize = function (callback) {
         googleAnalytics.sendAppView('PID Tuning');
     }
 
-    function get_pid_controller() {
+    function load_features() {
+        MSP.send_message(MSP_codes.MSP_FEATURE, false, false, load_pid_controller);
+    }
+
+    function load_pid_controller() {
         if (GUI.canChangePidController) {
             MSP.send_message(MSP_codes.MSP_PID_CONTROLLER, false, false, get_pid_names);
         } else {
@@ -37,7 +41,7 @@ TABS.pid_tuning.initialize = function (callback) {
     }
 
     // requesting MSP_STATUS manually because it contains CONFIG.profile
-    MSP.send_message(MSP_codes.MSP_STATUS, false, false, get_pid_controller);
+    MSP.send_message(MSP_codes.MSP_STATUS, false, false, load_features);
 
     function pid_and_rc_to_form() {
         // Fill in the data from PIDs array
@@ -253,7 +257,7 @@ TABS.pid_tuning.initialize = function (callback) {
       if (have_sensor(sensors_detected, 'mag')) {
         $('#pid_mag').show();
       }
-      if (bit_check(BF_CONFIG.features, 7)) {   //This will need to be reworked to remove BF_CONFIG reference eventually
+      if (bit_check(FEATURE.enabled, 7)) {
         $('#pid_gps').show();
       }
       if (have_sensor(sensors_detected, 'sonar')) {

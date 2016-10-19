@@ -10,7 +10,19 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         googleAnalytics.sendAppView('Configuration');
     }
 
-    function load_config() {
+    function load_ident() {
+        MSP.send_message(MSP_codes.MSP_IDENT, false, false, load_features);
+    }
+
+    function load_features() {
+        MSP.send_message(MSP_codes.MSP_FEATURE, false, false, load_mixer);
+    }
+
+    function load_mixer() {
+        MSP.send_message(MSP_codes.MSP_MIXER, false, false, load_baseflight_config);
+    }
+
+    function load_baseflight_config() {
         MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, load_serial_config);
     }
 
@@ -74,8 +86,9 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     function load_html() {
         $('#content').load("./tabs/configuration.html", process_html);
     }
-
-    MSP.send_message(MSP_codes.MSP_IDENT, false, false, load_config);
+    
+    load_ident();
+        
 
     function recalculate_cycles_sec() {
         var looptime = $('input[name="looptime"]').val();
@@ -98,13 +111,13 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         mixer_list_e.change(function () {
             var val = parseInt($(this).val());
 
-            BF_CONFIG.mixerConfiguration = val;
+            MIXER.mode = val;
 
             $('.mixerPreview img').attr('src', './resources/motor_order/' + mixerList[val - 1].image + '.svg');
         });
 
         // select current mixer configuration
-        mixer_list_e.val(BF_CONFIG.mixerConfiguration).change();
+        mixer_list_e.val(MIXER.mode).change();
 
         // generate features
         var features = [
@@ -145,7 +158,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
         function isFeatureEnabled(featureName) {
             for (var i = 0; i < features.length; i++) {
-                if (features[i].name == featureName && bit_check(BF_CONFIG.features, features[i].bit)) {
+                if (features[i].name == featureName && bit_check(FEATURE.enabled, features[i].bit)) {
                     return true;
                 }
             }
@@ -195,7 +208,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 
                 var feature_e = row_e.find('input.feature');
 
-                feature_e.prop('checked', bit_check(BF_CONFIG.features, features[i].bit));
+                feature_e.prop('checked', bit_check(FEATURE.enabled, features[i].bit));
                 feature_e.data('bit', features[i].bit);
             }
 
@@ -216,7 +229,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             
             controls_e.each(function() {
                 var bit = parseInt($(this).attr('value'));
-                var state = bit_check(BF_CONFIG.features, bit);
+                var state = bit_check(FEATURE.enabled, bit);
                 
                 $(this).prop('checked', state);
             });
@@ -368,7 +381,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             $('input[name="autodisarmdelay"]').val(ARMING_CONFIG.auto_disarm_delay);
             $('input[name="disarmkillswitch"]').prop('checked', ARMING_CONFIG.disarm_kill_switch);
             $('div.disarm').show();            
-            if(bit_check(BF_CONFIG.features, 4))//MOTOR_STOP
+            if(bit_check(FEATURE.enabled, 4))//MOTOR_STOP
                 $('div.disarmdelay').show();
             else
                 $('div.disarmdelay').hide();
@@ -411,11 +424,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 state = element.is(':checked');
 
             if (state) {
-                BF_CONFIG.features = bit_set(BF_CONFIG.features, index);
+                FEATURE.enabled = bit_set(FEATURE.enabled, index);
                 if(element.attr('name') === 'MOTOR_STOP')                    
                     $('div.disarmdelay').show();
             } else {
-                BF_CONFIG.features = bit_clear(BF_CONFIG.features, index);
+                FEATURE.enabled = bit_clear(FEATURE.enabled, index);
                 if(element.attr('name') === 'MOTOR_STOP')
                     $('div.disarmdelay').hide();
             }
@@ -434,9 +447,9 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 
                 var selected = (selected_bit == bit);
                 if (selected) {
-                    BF_CONFIG.features = bit_set(BF_CONFIG.features, bit);
+                    FEATURE.enabled = bit_set(FEATURE.enabled, bit);
                 } else {
-                    BF_CONFIG.features = bit_clear(BF_CONFIG.features, bit);
+                    FEATURE.enabled = bit_clear(FEATURE.enabled, bit);
                 }
 
             });
@@ -490,6 +503,13 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 }
             }
 
+            function save_features() {
+                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_mixer);
+            }
+
+            function save_mixer() {
+                MSP.send_message(MSP_codes.MSP_SET_MIXER, MSP.crunch(MSP_codes.MSP_SET_MIXER), false, save_serial_config);
+            }
 
             function save_serial_config() {
                 if (semver.lt(CONFIG.apiVersion, "1.6.0")) {
@@ -570,7 +590,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 }
             }
 
-            MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_serial_config);
+            MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_features);
         });
 
         GUI.content_ready(callback);

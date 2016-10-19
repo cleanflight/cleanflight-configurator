@@ -19,6 +19,8 @@ var MSP_codes = {
     MSP_SET_BOARD_ALIGNMENT:     39,
     MSP_AMPERAGE_METER_CONFIG:   40,
     MSP_SET_AMPERAGE_METER_CONFIG:41,
+    MSP_MIXER:                   42,
+    MSP_SET_MIXER:               43,
     MSP_RX_CONFIG:               44,
     MSP_SET_RX_CONFIG:           45,
     MSP_LED_COLORS:              46,
@@ -785,9 +787,12 @@ var MSP = {
                 break;
             case MSP_codes.MSP_SET_FEATURE:
                 break;
+            case MSP_codes.MSP_MIXER:
+                MIXER.mode = data.getUint8(0);
+                break;
             case MSP_codes.MSP_BF_CONFIG:
-                BF_CONFIG.mixerConfiguration = data.getUint8(0);
-                BF_CONFIG.features = data.getUint32(1, 1);
+                var unused = data.getUint8(0); // mixer mode
+                FEATURE.enabled = data.getUint32(1, 1);
                 BF_CONFIG.serialrx_type = data.getUint8(5);
                 BF_CONFIG.board_align_roll = data.getInt16(6, 1); // -180 - 360
                 BF_CONFIG.board_align_pitch = data.getInt16(8, 1); // -180 - 360
@@ -797,7 +802,11 @@ var MSP = {
                     BF_CONFIG.currentoffset = data.getUint16(14, 1);
                 }
                 break;
+            case MSP_codes.MSP_SET_MIXER:
+                console.log('Mixer config saved');
+                break;
             case MSP_codes.MSP_SET_BF_CONFIG:
+                console.log('WARNING: deprecated MSP_SET_BF_CONFIG used');
                 break;
             case MSP_codes.MSP_SET_REBOOT:
                 console.log('Reboot request accepted');
@@ -1346,6 +1355,10 @@ var MSP = {
         var bufferOut,
             bufView;
 
+        if (code == undefined) {
+            debugger;
+        }
+        
         // always reserve 6 bytes for protocol overhead !
         if (data) {
             var size = data.length + 6,
@@ -1455,20 +1468,31 @@ MSP.crunch = function (code) {
             buffer.push(specificByte(FEATURE.enabled, 2));
             buffer.push(specificByte(FEATURE.enabled, 3));
             break;
+        case MSP_codes.MSP_SET_MIXER:
+            buffer.push(MIXER.mode);
+            break;
         case MSP_codes.MSP_SET_BF_CONFIG:
-            buffer.push(BF_CONFIG.mixerConfiguration);
-            buffer.push(specificByte(BF_CONFIG.features, 0));
-            buffer.push(specificByte(BF_CONFIG.features, 1));
-            buffer.push(specificByte(BF_CONFIG.features, 2));
-            buffer.push(specificByte(BF_CONFIG.features, 3));
+            // Use MSP_SET_MIXER instead
+            buffer.push(MIXER.mode);
+            // Use MSP_SET_FEATURE instead
+            buffer.push(specificByte(FEATURE.enabled, 0));
+            buffer.push(specificByte(FEATURE.enabled, 1));
+            buffer.push(specificByte(FEATURE.enabled, 2));
+            buffer.push(specificByte(FEATURE.enabled, 3));
+            
+            // Use MSP_SET_RX_CONFIG instead
             buffer.push(BF_CONFIG.serialrx_type);
+            
+            // Use MSP_SET_BOARD_ALIGNMENT instead
             buffer.push(specificByte(BF_CONFIG.board_align_roll, 0));
             buffer.push(specificByte(BF_CONFIG.board_align_roll, 1));
             buffer.push(specificByte(BF_CONFIG.board_align_pitch, 0));
             buffer.push(specificByte(BF_CONFIG.board_align_pitch, 1));
             buffer.push(specificByte(BF_CONFIG.board_align_yaw, 0));
             buffer.push(specificByte(BF_CONFIG.board_align_yaw, 1));
+            
             if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
+                // Use MSP_SET_AMPERAGE_METER_CONFIG instead
                 buffer.push(lowByte(BF_CONFIG.currentscale));
                 buffer.push(highByte(BF_CONFIG.currentscale));
                 buffer.push(lowByte(BF_CONFIG.currentoffset));

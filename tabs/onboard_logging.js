@@ -25,7 +25,7 @@ TABS.onboard_logging.initialize = function (callback) {
             return;
         }
         
-        MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, function() {
+        MSP.send_message(MSP_codes.MSP_FEATURE, false, false, function() {
             if (semver.gte(CONFIG.flightControllerVersion, "1.8.0")) {
                 MSP.send_message(MSP_codes.MSP_DATAFLASH_SUMMARY, false, false, function() {
                     if (semver.gte(CONFIG.flightControllerVersion, "1.11.0")) {
@@ -95,7 +95,7 @@ TABS.onboard_logging.initialize = function (callback) {
              * The best we can do on those targets is check the BLACKBOX feature bit to identify support for Blackbox instead.
              */
             if (BLACKBOX.supported || DATAFLASH.supported 
-                    || semver.gte(CONFIG.flightControllerVersion, "1.5.0") && semver.lte(CONFIG.flightControllerVersion, "1.10.0") && bit_check(BF_CONFIG.features, 19)) {
+                    || semver.gte(CONFIG.flightControllerVersion, "1.5.0") && semver.lte(CONFIG.flightControllerVersion, "1.10.0") && bit_check(FEATURE.enabled, 19)) {
                 blackboxSupport = 'yes';
             } else if (semver.gte(CONFIG.flightControllerVersion, "1.5.0") && semver.lte(CONFIG.flightControllerVersion, "1.10.0")) {
                 blackboxSupport = 'maybe';

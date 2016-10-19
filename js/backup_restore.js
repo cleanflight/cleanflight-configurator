@@ -92,7 +92,7 @@ function configuration_backup(callback) {
     var uniqueData = [
         MSP_codes.MSP_MISC,
         MSP_codes.MSP_RX_MAP,
-        MSP_codes.MSP_BF_CONFIG,
+        MSP_codes.MSP_FEATURE,
         MSP_codes.MSP_CF_SERIAL_CONFIG,
         MSP_codes.MSP_LED_STRIP_CONFIG,
         MSP_codes.MSP_LED_COLORS
@@ -131,7 +131,7 @@ function configuration_backup(callback) {
             } else {
                 configuration.MISC = jQuery.extend(true, {}, MISC);
                 configuration.RCMAP = jQuery.extend(true, [], RC_MAP);
-                configuration.BF_CONFIG = jQuery.extend(true, {}, BF_CONFIG);
+                configuration.FEATURE = jQuery.extend(true, {}, FEATURE);
                 configuration.SERIAL_CONFIG = jQuery.extend(true, {}, SERIAL_CONFIG);
                 configuration.LED_STRIP = jQuery.extend(true, [], LED_STRIP);
                 configuration.LED_COLORS = jQuery.extend(true, [], LED_COLORS);
@@ -732,7 +732,7 @@ function configuration_restore(callback) {
                 var uniqueData = [
                     MSP_codes.MSP_SET_MISC,
                     MSP_codes.MSP_SET_RX_MAP,
-                    MSP_codes.MSP_SET_BF_CONFIG,
+                    MSP_codes.MSP_SET_FEATURE,
                     MSP_codes.MSP_SET_CF_SERIAL_CONFIG
                 ];
                 
@@ -754,7 +754,7 @@ function configuration_restore(callback) {
                 function load_objects() {
                     MISC = configuration.MISC;
                     RC_MAP = configuration.RCMAP;
-                    BF_CONFIG = configuration.BF_CONFIG;
+                    FEATURE = configuration.FEATURE;
                     SERIAL_CONFIG = configuration.SERIAL_CONFIG;
                     LED_STRIP = configuration.LED_STRIP;
                     LED_COLORS = configuration.LED_COLORS;

@@ -21,12 +21,12 @@ TABS.receiver.initialize = function (callback) {
     }
 
     function get_rc_map() {
-        MSP.send_message(MSP_codes.MSP_RX_MAP, false, false, load_config);
+        MSP.send_message(MSP_codes.MSP_RX_MAP, false, false, load_features);
     }
 
     // Fetch features so we can check if RX_MSP is enabled:
-    function load_config() {
-        MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, load_3d);
+    function load_features() {
+        MSP.send_message(MSP_codes.MSP_FEATURE, false, false, load_3d);
     }
     
     function load_3d() {
@@ -398,7 +398,7 @@ TABS.receiver.initialize = function (callback) {
         });
 
         // Only show the MSP control sticks if the MSP Rx feature is enabled
-        $(".sticks_btn").toggle(bit_check(BF_CONFIG.features, 14 /* RX_MSP */));
+        $(".sticks_btn").toggle(bit_check(FEATURE.enabled, 14 /* RX_MSP */));
 
         $('select[name="rx_refresh_rate"]').change(function () {
             var plot_update_rate = parseInt($(this).val(), 10);

@@ -4,6 +4,7 @@
 var CONFIG;
 var FEATURE;
 var BF_CONFIG;
+var MIXER;
 var LED_STRIP;
 var LED_COLORS;
 var LED_MODE_COLORS;
@@ -70,6 +71,10 @@ var FC = {
         
         FEATURE = {
             enabled: 0,
+        };
+
+        MIXER = {
+            mode:     0,
         };
         
         BF_CONFIG = {

@@ -18,11 +18,11 @@ TABS.motors.initialize = function (callback) {
     }
 
     function get_arm_status() {
-        MSP.send_message(MSP_codes.MSP_STATUS, false, false, load_config);
+        MSP.send_message(MSP_codes.MSP_STATUS, false, false, load_features);
     }
     
-    function load_config() {
-        MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, load_3d);
+    function load_features() {
+        MSP.send_message(MSP_codes.MSP_FEATURE, false, false, load_3d);
     }
     
     function load_3d() {
@@ -177,7 +177,7 @@ TABS.motors.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
-        self.feature3DEnabled = bit_check(BF_CONFIG.features, 12);
+        self.feature3DEnabled = bit_check(FEATURE.enabled, 12);
 
         if (self.feature3DEnabled && !self.feature3DSupported) {
             self.allowTestMode = false;

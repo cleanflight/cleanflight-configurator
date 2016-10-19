@@ -341,24 +341,49 @@ OSD.constants = {
     ],
 };
 
-TABS.osd_layout = {};
+TABS.osd_layout = {
+    osd_supported: false,
+    osd_enabled: false,
+    callsign_supported: false,
+};
+
 TABS.osd_layout.initialize = function (callback) {
     var self = this;
     var ui_fields = [];
     var video_mode = 0;
 
-    var callsign_supported = semver.gte(CONFIG.apiVersion, "1.22.0");
+    self.callsign_supported = semver.gte(CONFIG.apiVersion, "1.22.0");
+    self.osd_supported = semver.gte(CONFIG.apiVersion, "1.22.0") && (CONFIG.boardType == 1 || CONFIG.boardType == 2);
+    
+    var is_dedicated_osd = CONFIG.boardType == 1; // always enabled on an OSD board. 
     
     if (GUI.active_tab != 'osd_layout') {
         GUI.active_tab = 'osd_layout';
         googleAnalytics.sendAppView('OSD');
     }
 
-    MSP.send_message(MSP_codes.MSP_OSD_VIDEO_STATUS, false, false, load_pilot);
+    if (!self.osd_supported) {
+        load_html();
+    } else {
+        load_features();
+    }
+
+    function load_features() {
+        var next_callback = load_video_status;
+        if (!is_dedicated_osd) {
+            MSP.send_message(MSP_codes.MSP_FEATURE, false, false, next_callback);
+        } else {
+            next_callback();
+        }
+    }
+    
+    function load_video_status() {
+        MSP.send_message(MSP_codes.MSP_OSD_VIDEO_STATUS, false, false, load_pilot);
+    }
     
     function load_pilot() {
         var next_callback = load_element_summary;
-        if (callsign_supported) {
+        if (self.callsign_supported) {
             MSP.send_message(MSP_codes.MSP_PILOT, false, false, next_callback);
         } else {
             next_callback();
@@ -373,49 +398,72 @@ TABS.osd_layout.initialize = function (callback) {
         $('#content').load("./tabs/osd_layout.html", process_html);
     }
     
-    function process_html() {
-
+    function update_ui() {
         // translate to user-selected language
         localize();
+
+        if (is_dedicated_osd) {
+            self.osd_enabled = true;
+        } else {
+            self.osd_enabled = bit_check(FEATURE.enabled, 22);
+        }
+
+        if (!self.osd_supported) {
+            $(".tab-osd-layout").removeClass("supported");
+        } else {
+            $(".tab-osd-layout").addClass("supported");
+        }
+
+        if (!self.osd_enabled) {
+            $(".tab-osd-layout").removeClass("enabled");
+        } else {
+            $(".tab-osd-layout").addClass("enabled");
+        }
+
+        if (!self.osd_supported || !self.osd_enabled) {
+            return;
+        }
         
-        if (!callsign_supported) {
+        if (!self.callsign_supported) {
             $('.callsign_wrapper').hide();
         } else {
             $(".callsign").val(PILOT_CONFIG.callsign);
         }
 
         function on_save_handler() {
-            var elements = [];
-            
-            var $ui_fields = $('.tab-osd-layout .display-fields .checkbox input');
-            
-            $ui_fields.each( function(index, $ui_field) {
-                var ui_field = $($ui_field).data('field');
+            function save_elements() {
+                var elements = [];
                 
-                var yy = ui_field.vertical_alignment == 'top' ? ui_field.position_y : 0 - (OSD_VIDEO_STATE.text_height - ui_field.position_y);
-                var flag_mask = ui_field.element.initial_flag_mask;
-                // unset the bits we might allow changes to.
-                flag_mask = bit_clear(flag_mask, 0); // clear enabled;
+                var $ui_fields = $('.tab-osd-layout .display-fields .checkbox input');
                 
-                // update the bits as the user requires.
-                if (ui_field.enabled) {
-                    flag_mask = bit_set(flag_mask, 0);
-                }
+                $ui_fields.each( function(index, $ui_field) {
+                    var ui_field = $($ui_field).data('field');
+                    
+                    var yy = ui_field.vertical_alignment == 'top' ? ui_field.position_y : 0 - (OSD_VIDEO_STATE.text_height - ui_field.position_y);
+                    var flag_mask = ui_field.element.initial_flag_mask;
+                    // unset the bits we might allow changes to.
+                    flag_mask = bit_clear(flag_mask, 0); // clear enabled;
+                    
+                    // update the bits as the user requires.
+                    if (ui_field.enabled) {
+                        flag_mask = bit_set(flag_mask, 0);
+                    }
+                    
+                    var element = {
+                        id: ui_field.element.id,
+                        flag_mask: flag_mask,
+                        x: ui_field.position_x,
+                        y: yy,
+                    };
+                    elements.push(element);
+                });
                 
-                var element = {
-                    id: ui_field.element.id,
-                    flag_mask: flag_mask,
-                    x: ui_field.position_x,
-                    y: yy,
-                };
-                elements.push(element);
-            });
-            
-            MSP.sendOsdLayout(elements, save_pilot);
+                MSP.sendOsdLayout(elements, save_pilot);
+            }
 
             function save_pilot() {
                 var next_callback = save_to_eeprom;
-                if (callsign_supported) {
+                if (self.callsign_supported) {
                     var callsign = $(".callsign").val();
                     
                     var buffer = [];
@@ -435,6 +483,12 @@ TABS.osd_layout.initialize = function (callback) {
                 MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function() {
                     GUI.log(chrome.i18n.getMessage('osdLayoutEepromSaved'));
                 });
+            }
+            
+            if (self.osd_enabled) {
+                save_elements();
+            } else {
+                save_pilot();
             }
         }
 
@@ -458,7 +512,10 @@ TABS.osd_layout.initialize = function (callback) {
         }, 250, true);
 
         load_elements();
-        
+    }
+    
+    function process_html() {
+        update_ui();
         GUI.content_ready(callback);
     }
 

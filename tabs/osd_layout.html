@@ -9,13 +9,20 @@
                 href="https://github.com/cleanflight/cleanflight/releases"
                 target="_blank"></a>
         </div>
-        <div class="unsupported hide">
+        <div class="require-not-supported">
             <p
                 class="note"
-                i18n="tabOSDinfo"></p>
+                i18n="osdLayoutOSDNotSupported"></p>
         </div>
-        <div class="font-preview"></div>
-        <div class="supported full">
+        <div class="require-supported">
+            <div class="require-not-enabled">
+                <p
+                    class="note"
+                    i18n="osdLayoutOSDNotEnabled"></p>
+            </div>
+        </div>
+        <div class="font-preview require-enabled"></div>
+        <div class="require-enabled">
             <div class="cf_column third_left elements">
                 <div class="spacer_right"></div>
                 <div class="spacer_right">
@@ -55,7 +62,7 @@
         </div>
     </div>
     <div
-        class="content_toolbar supported XXXhide"
+        class="content_toolbar require-supported"
         style="left: 0;">
         <div class="btn">
             <a

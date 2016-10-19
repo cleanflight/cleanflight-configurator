@@ -127,7 +127,8 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             {bit: 16, group: 'other', name: 'LED_STRIP'},
             {bit: 17, group: 'other', name: 'DISPLAY'},
             {bit: 18, group: 'esc', name: 'ONESHOT125', haveTip: true},
-            {bit: 19, group: 'other', name: 'BLACKBOX', haveTip: true}
+            {bit: 19, group: 'other', name: 'BLACKBOX', haveTip: true},
+            {bit: 22, group: 'other', name: 'OSD', haveTip: true}
         ];
         
         if (semver.gte(CONFIG.apiVersion, "1.12.0")) {

@@ -227,3 +227,35 @@
         height: calc(100% - 30px);
     }
 }
+
+.tab-osd-layout .require-supported {
+    display: none;
+}
+
+.tab-osd-layout.supported .require-supported {
+    display: block;
+}
+
+.tab-osd-layout .require-not-supported {
+    display: block;
+}
+
+.tab-osd-layout.supported .require-not-supported {
+    display: none;
+}
+
+.tab-osd-layout .require-enabled {
+    display: none;
+}
+
+.tab-osd-layout.enabled .require-enabled {
+    display: block;
+}
+
+.tab-osd-layout .require-not-enabled {
+    display: block;
+}
+
+.tab-osd-layout.enabled .require-not-enabled {
+    display: none;
+}

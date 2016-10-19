@@ -544,6 +544,12 @@
     "featureTRANSPONDERTip": {
         "message": "Configure via the Race Transponder tab after enabling."
     },
+    "featureOSD": {
+        "message": "On-Screen Display"
+    },
+    "featureOSDTip": {
+        "message": "Only for devices with onboard OSD."
+    },
     
     "configurationFeatureEnabled": {
         "message": "Enabled"
@@ -1754,9 +1760,6 @@
         "message": "No"
     },
     
-    "osdInfoHead": {
-        "message": "Info"
-    },
     "osdResetText": {
         "message": "Reset OSD to default"
     },
@@ -1779,6 +1782,13 @@
     
     "osdCallsign": {
         "message": "Callsign"
+    },
+    
+    "osdLayoutOSDNotSupported": {
+        "message": "OSD is not supported on this device."
+    },
+    "osdLayoutOSDNotEnabled": {
+        "message": "OSD is not enabled, enable OSD to configure OSD layout."
     },
     
     "osdLayoutElements": {

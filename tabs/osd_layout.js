@@ -430,6 +430,9 @@ TABS.osd_layout.initialize = function (callback) {
             $(".callsign").val(PILOT_CONFIG.callsign);
         }
 
+        // store the initial video mode used so that changes can be detected.
+        video_mode = OSD_VIDEO_STATE.video_mode;
+
         function on_save_handler() {
             function save_elements() {
                 var elements = [];
@@ -525,9 +528,6 @@ TABS.osd_layout.initialize = function (callback) {
 
     function refresh_element_display() {
 
-        // store the initial video mode used to render the preview so that changes can be detected.
-        video_mode = OSD_VIDEO_STATE.video_mode;
-        
         var $canvas = $('.tab-osd-layout .osd_canvas');
         $($canvas).height(FONT.constants.SIZES.CHAR_HEIGHT * OSD_VIDEO_STATE.text_height);
 
@@ -538,7 +538,6 @@ TABS.osd_layout.initialize = function (callback) {
         FONT.initData();
 
         for (let element of OSD_LAYOUT.elements) {
-        
             var element_defaults = find_element_defaults(element.id);
             if (!element_defaults) {
                 continue;
@@ -658,6 +657,7 @@ TABS.osd_layout.initialize = function (callback) {
     
     function check_video_mode() {
         if (video_mode != OSD_VIDEO_STATE.video_mode) {
+            console.log('Refreshing due to video mode change');
             refresh_element_display();
         }
     }

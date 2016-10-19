@@ -3,6 +3,7 @@
 // define all the global variables that are uses to hold FC state
 var CONFIG;
 var FEATURE;
+var BOARD_ALIGNMENT;
 var BF_CONFIG;
 var MIXER;
 var LED_STRIP;
@@ -74,16 +75,17 @@ var FC = {
         };
 
         MIXER = {
-            mode:     0,
+            mode:     0
+        };
+        
+        BOARD_ALIGNMENT = {
+            board_align_roll:       0,
+            board_align_pitch:      0,
+            board_align_yaw:        0
         };
         
         BF_CONFIG = {
-            mixerConfiguration:     0,
-            features:               0,
             serialrx_type:          0,
-            board_align_roll:       0,
-            board_align_pitch:      0,
-            board_align_yaw:        0,
             currentscale:           0,
             currentoffset:          0
         };

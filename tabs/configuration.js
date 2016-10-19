@@ -11,7 +11,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     }
 
     function load_ident() {
-        MSP.send_message(MSP_codes.MSP_IDENT, false, false, load_features);
+        MSP.send_message(MSP_codes.MSP_IDENT, false, false, load_board_alignment);
+    }
+    
+    function load_board_alignment() {
+        MSP.send_message(MSP_codes.MSP_BOARD_ALIGNMENT, false, false, load_features);
     }
 
     function load_features() {
@@ -365,9 +369,9 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         $('#content').scrollTop((scrollPosition) ? scrollPosition : 0);
 
         // fill board alignment
-        $('input[name="board_align_roll"]').val(BF_CONFIG.board_align_roll);
-        $('input[name="board_align_pitch"]').val(BF_CONFIG.board_align_pitch);
-        $('input[name="board_align_yaw"]').val(BF_CONFIG.board_align_yaw);
+        $('input[name="board_align_roll"]').val(BOARD_ALIGNMENT.board_align_roll);
+        $('input[name="board_align_pitch"]').val(BOARD_ALIGNMENT.board_align_pitch);
+        $('input[name="board_align_yaw"]').val(BOARD_ALIGNMENT.board_align_yaw);
 
         // fill accel trims
         $('input[name="roll"]').val(CONFIG.accelerometerTrims[1]);
@@ -458,9 +462,9 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
         $('a.save').click(function () {
             // gather data that doesn't have automatic change event bound
-            BF_CONFIG.board_align_roll = parseInt($('input[name="board_align_roll"]').val());
-            BF_CONFIG.board_align_pitch = parseInt($('input[name="board_align_pitch"]').val());
-            BF_CONFIG.board_align_yaw = parseInt($('input[name="board_align_yaw"]').val());
+            BOARD_ALIGNMENT.board_align_roll = parseInt($('input[name="board_align_roll"]').val());
+            BOARD_ALIGNMENT.board_align_pitch = parseInt($('input[name="board_align_pitch"]').val());
+            BOARD_ALIGNMENT.board_align_yaw = parseInt($('input[name="board_align_yaw"]').val());
 
             CONFIG.accelerometerTrims[1] = parseInt($('input[name="roll"]').val());
             CONFIG.accelerometerTrims[0] = parseInt($('input[name="pitch"]').val());
@@ -504,7 +508,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
 
             function save_features() {
-                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_mixer);
+                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_board_alignment);
+            }
+
+            function save_board_alignment() {
+                MSP.send_message(MSP_codes.MSP_SET_BOARD_ALIGNMENT, MSP.crunch(MSP_codes.MSP_SET_BOARD_ALIGNMENT), false, save_mixer);
             }
 
             function save_mixer() {

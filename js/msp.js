@@ -790,13 +790,18 @@ var MSP = {
             case MSP_codes.MSP_MIXER:
                 MIXER.mode = data.getUint8(0);
                 break;
+            case MSP_codes.MSP_BOARD_ALIGNMENT:
+                BOARD_ALIGNMENT.board_align_roll = data.getInt16(0, 1); // -180 - 360
+                BOARD_ALIGNMENT.board_align_pitch = data.getInt16(2, 1); // -180 - 360
+                BOARD_ALIGNMENT.board_align_yaw = data.getInt16(4, 1); // -180 - 360
+                break;
             case MSP_codes.MSP_BF_CONFIG:
                 var unused = data.getUint8(0); // mixer mode
                 FEATURE.enabled = data.getUint32(1, 1);
                 BF_CONFIG.serialrx_type = data.getUint8(5);
-                BF_CONFIG.board_align_roll = data.getInt16(6, 1); // -180 - 360
-                BF_CONFIG.board_align_pitch = data.getInt16(8, 1); // -180 - 360
-                BF_CONFIG.board_align_yaw = data.getInt16(10, 1); // -180 - 360
+                unused = data.getInt16(6, 1); // -180 - 360
+                unused = data.getInt16(8, 1); // -180 - 360
+                unused = data.getInt16(10, 1); // -180 - 360
                 if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
                     BF_CONFIG.currentscale = data.getInt16(12, 1);
                     BF_CONFIG.currentoffset = data.getUint16(14, 1);
@@ -804,6 +809,9 @@ var MSP = {
                 break;
             case MSP_codes.MSP_SET_MIXER:
                 console.log('Mixer config saved');
+                break;
+            case MSP_codes.MSP_SET_BOARD_ALIGNMENT:
+                console.log('Board alignment saved');
                 break;
             case MSP_codes.MSP_SET_BF_CONFIG:
                 console.log('WARNING: deprecated MSP_SET_BF_CONFIG used');
@@ -1471,6 +1479,14 @@ MSP.crunch = function (code) {
         case MSP_codes.MSP_SET_MIXER:
             buffer.push(MIXER.mode);
             break;
+        case MSP_codes.MSP_SET_BOARD_ALIGNMENT:
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_roll, 0));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_roll, 1));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_pitch, 0));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_pitch, 1));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_yaw, 0));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_yaw, 1));
+            break;
         case MSP_codes.MSP_SET_BF_CONFIG:
             // Use MSP_SET_MIXER instead
             buffer.push(MIXER.mode);
@@ -1484,12 +1500,12 @@ MSP.crunch = function (code) {
             buffer.push(BF_CONFIG.serialrx_type);
             
             // Use MSP_SET_BOARD_ALIGNMENT instead
-            buffer.push(specificByte(BF_CONFIG.board_align_roll, 0));
-            buffer.push(specificByte(BF_CONFIG.board_align_roll, 1));
-            buffer.push(specificByte(BF_CONFIG.board_align_pitch, 0));
-            buffer.push(specificByte(BF_CONFIG.board_align_pitch, 1));
-            buffer.push(specificByte(BF_CONFIG.board_align_yaw, 0));
-            buffer.push(specificByte(BF_CONFIG.board_align_yaw, 1));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_roll, 0));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_roll, 1));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_pitch, 0));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_pitch, 1));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_yaw, 0));
+            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_yaw, 1));
             
             if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
                 // Use MSP_SET_AMPERAGE_METER_CONFIG instead

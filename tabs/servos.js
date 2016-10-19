@@ -14,17 +14,7 @@ TABS.servos.initialize = function (callback) {
     }
 
     function get_servo_mix_rules() {
-        MSP.send_message(MSP_codes.MSP_SERVO_MIX_RULES, false, false, get_channel_forwarding);
-    }
-
-    function get_channel_forwarding() {
-        var nextFunction = get_rc_data;
-        
-        if (semver.lt(CONFIG.apiVersion, "1.12.0")) {
-            MSP.send_message(MSP_codes.MSP_CHANNEL_FORWARDING, false, false, nextFunction);
-        } else { 
-            nextFunction();
-        }
+        MSP.send_message(MSP_codes.MSP_SERVO_MIX_RULES, false, false, get_rc_data);
     }
 
     function get_rc_data() {
@@ -43,7 +33,7 @@ TABS.servos.initialize = function (callback) {
     
     function update_ui() {
             
-        if (semver.lt(CONFIG.apiVersion, "1.12.0") || SERVO_CONFIG.length == 0) {
+        if (semver.lt(CONFIG.apiVersion, "1.24.0") || SERVO_CONFIG.length == 0) {
             
             $(".tab-servos").removeClass("supported");
             return;
@@ -78,8 +68,6 @@ TABS.servos.initialize = function (callback) {
                     <td class="middle"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].middle + '" /></td>\
                     <td class="min"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].min +'" /></td>\
                     <td class="max"><input type="number" min="500" max="2500" value="' + SERVO_CONFIG[obj].max +'" /></td>\
-                    <td class="angleAtMin"><input type="number" min="-90" max="0" value="' + (-SERVO_CONFIG[obj].angleAtMin) +'" /></td>\
-                    <td class="angleAtMax"><input type="number" min="0" max="90" value="' + SERVO_CONFIG[obj].angleAtMax +'" /></td>\
                     ' + servoCheckbox + '\
                     <td class="direction">\
                     </td>\
@@ -133,8 +121,6 @@ TABS.servos.initialize = function (callback) {
                 SERVO_CONFIG[info.obj].middle = parseInt($('.middle input', this).val());
                 SERVO_CONFIG[info.obj].min = parseInt($('.min input', this).val());
                 SERVO_CONFIG[info.obj].max = parseInt($('.max input', this).val());
-                SERVO_CONFIG[info.obj].angleAtMin = -parseInt($('.angleAtMin input', this).val());
-                SERVO_CONFIG[info.obj].angleAtMax = parseInt($('.angleAtMax input', this).val());
 
                 var val = parseInt($('.direction select', this).val());
                 SERVO_CONFIG[info.obj].rate = val;

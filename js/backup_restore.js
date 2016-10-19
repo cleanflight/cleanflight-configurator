@@ -23,11 +23,7 @@ function configuration_backup(callback) {
     ];
 
     function update_profile_specific_data_list() {
-        if (semver.lt(CONFIG.apiVersion, "1.12.0")) {
-            profileSpecificData.push(MSP_codes.MSP_CHANNEL_FORWARDING);
-         } else {            
-            profileSpecificData.push(MSP_codes.MSP_SERVO_MIX_RULES);
-        }
+        profileSpecificData.push(MSP_codes.MSP_SERVO_MIX_RULES);
         if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
             profileSpecificData.push(MSP_codes.MSP_RC_DEADBAND);
         }
@@ -489,8 +485,6 @@ function configuration_restore(callback) {
                 for (var i = 0; i < configuration.profiles[profileIndex].ServoConfig.length; i++) {
                     var servoConfig = profiles[profileIndex].ServoConfig;
                     
-                    servoConfig[i].angleAtMin = 45;
-                    servoConfig[i].angleAtMax = 45;
                     servoConfig[i].reversedInputSources = 0;
                     
                     // set the rate to 0 if an invalid value is detected.

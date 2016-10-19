@@ -1093,7 +1093,7 @@
     },
 
     "servosFirmwareUpgradeRequired": {
-        "message": "Servos requires firmware &gt;= 1.10.0. and target support."
+        "message": "Servos requires firmware &gt;= 1.14.0 and target support."
     },
     "servosChangeDirection": {
         "message": "Change Direction in TX To Match"
@@ -1109,12 +1109,6 @@
     },
     "servosMax": {
         "message": "MAX"
-    },
-    "servosAngleAtMin": {
-        "message": "Angle at min"
-    },
-    "servosAngleAtMax": {
-        "message": "Angle at max"
     },
     "servosDirectionAndRate": {
         "message": "Direction and rate"

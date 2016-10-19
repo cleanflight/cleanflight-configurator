@@ -621,63 +621,18 @@ var MSP = {
             case MSP_codes.MSP_SERVO_CONFIGURATIONS:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
-                if (semver.gte(CONFIG.apiVersion, "1.24.0")) {
-                    if (data.byteLength % 14 == 0) {
-                        for (var i = 0; i < data.byteLength; i += 14) {
-                            var arr = {
-                                'min':                      data.getInt16(i + 0, 1),
-                                'max':                      data.getInt16(i + 2, 1),
-                                'middle':                   data.getInt16(i + 4, 1),
-                                'rate':                     data.getInt8(i + 6),
-                                'angleAtMin':               45,
-                                'angleAtMax':               45,
-                                'indexOfChannelToForward':  data.getInt8(i + 9),
-                                'reversedInputSources':     data.getUint32(i + 10)
-                            };
+                if (data.byteLength % 12 == 0) {
+                    for (var i = 0; i < data.byteLength; i += 12) {
+                        var arr = {
+                            'min':                      data.getInt16(i + 0, 1),
+                            'max':                      data.getInt16(i + 2, 1),
+                            'middle':                   data.getInt16(i + 4, 1),
+                            'rate':                     data.getInt8(i + 6),
+                            'indexOfChannelToForward':  data.getInt8(i + 7),
+                            'reversedInputSources':     data.getUint32(i + 8)
+                        };
 
-                            SERVO_CONFIG.push(arr);
-                        }
-                    }
-                } else if (semver.gte(CONFIG.apiVersion, "1.12.0")) {
-                    if (data.byteLength % 14 == 0) {
-                        for (var i = 0; i < data.byteLength; i += 14) {
-                            var arr = {
-                                'min':                      data.getInt16(i + 0, 1),
-                                'max':                      data.getInt16(i + 2, 1),
-                                'middle':                   data.getInt16(i + 4, 1),
-                                'rate':                     data.getInt8(i + 6),
-                                'angleAtMin':               data.getInt8(i + 7),
-                                'angleAtMax':               data.getInt8(i + 8),
-                                'indexOfChannelToForward':  data.getInt8(i + 9),
-                                'reversedInputSources':     data.getUint32(i + 10)
-                            };
-
-                            SERVO_CONFIG.push(arr);
-                        }
-                    }
-                } else {
-                    if (data.byteLength % 7 == 0) {
-                        for (var i = 0; i < data.byteLength; i += 7) {
-                            var arr = {
-                                'min':                      data.getInt16(i + 0, 1),
-                                'max':                      data.getInt16(i + 2, 1),
-                                'middle':                   data.getInt16(i + 4, 1),
-                                'rate':                     data.getInt8(i + 6),
-                                'angleAtMin':               45,
-                                'angleAtMax':               45,
-                                'indexOfChannelToForward':  undefined,
-                                'reversedInputSources':     0
-                            };
-
-                            SERVO_CONFIG.push(arr);
-                        }
-                    }
-                    
-                    if (semver.eq(CONFIG.apiVersion, '1.10.0')) {
-                        // drop two unused servo configurations due to MSP rx buffer to small)
-                        while (SERVO_CONFIG.length > 8) {
-                            SERVO_CONFIG.pop();
-                        } 
+                        SERVO_CONFIG.push(arr);
                     }
                 }
                 break;
@@ -964,17 +919,6 @@ var MSP = {
                         auxSwitchChannelIndex: data.getUint8(offset++, 1)
                     };
                     ADJUSTMENT_RANGES.push(adjustmentRange);
-                }
-                break;
-
-            case MSP_codes.MSP_CHANNEL_FORWARDING:
-                for (var i = 0; i < data.byteLength && i < SERVO_CONFIG.length; i ++) {
-                    var channelIndex = data.getUint8(i);
-                    if (channelIndex < 255) {
-                        SERVO_CONFIG[i].indexOfChannelToForward = channelIndex;
-                    } else {
-                        SERVO_CONFIG[i].indexOfChannelToForward = undefined;
-                    }
                 }
                 break;
 
@@ -1803,79 +1747,42 @@ MSP.sendServoConfigurations = function(onCompleteCallback) {
         
         var buffer = [];
 
-        if (semver.lt(CONFIG.apiVersion, "1.12.0")) {
-            // send all in one go
-            // 1.9.0 had a bug where the MSP input buffer was too small, limit to 8.
-            for (var i = 0; i < SERVO_CONFIG.length && i < 8; i++) {
-                buffer.push(lowByte(SERVO_CONFIG[i].min));
-                buffer.push(highByte(SERVO_CONFIG[i].min));
+        // send one at a time, with index
+        
+        var servoConfiguration = SERVO_CONFIG[servoIndex];
+        
+        buffer.push(servoIndex);
+        
+        buffer.push(lowByte(servoConfiguration.min));
+        buffer.push(highByte(servoConfiguration.min));
 
-                buffer.push(lowByte(SERVO_CONFIG[i].max));
-                buffer.push(highByte(SERVO_CONFIG[i].max));
+        buffer.push(lowByte(servoConfiguration.max));
+        buffer.push(highByte(servoConfiguration.max));
 
-                buffer.push(lowByte(SERVO_CONFIG[i].middle));
-                buffer.push(highByte(SERVO_CONFIG[i].middle));
+        buffer.push(lowByte(servoConfiguration.middle));
+        buffer.push(highByte(servoConfiguration.middle));
 
-                buffer.push(lowByte(SERVO_CONFIG[i].rate));
-            }
-            
-            nextFunction = send_channel_forwarding;
-        } else {
-            // send one at a time, with index
-            
-            var servoConfiguration = SERVO_CONFIG[servoIndex];
-            
-            buffer.push(servoIndex);
-            
-            buffer.push(lowByte(servoConfiguration.min));
-            buffer.push(highByte(servoConfiguration.min));
+        buffer.push(lowByte(servoConfiguration.rate));
+        
+        var out = servoConfiguration.indexOfChannelToForward;
+        if (out == undefined) {
+            out = 255; // Cleanflight defines "CHANNEL_FORWARDING_DISABLED" as "(uint8_t)0xFF"
+        }
+        buffer.push(out);
 
-            buffer.push(lowByte(servoConfiguration.max));
-            buffer.push(highByte(servoConfiguration.max));
-
-            buffer.push(lowByte(servoConfiguration.middle));
-            buffer.push(highByte(servoConfiguration.middle));
-
-            buffer.push(lowByte(servoConfiguration.rate));
-            
-            buffer.push(servoConfiguration.angleAtMin);
-            buffer.push(servoConfiguration.angleAtMax);
-
-            var out = servoConfiguration.indexOfChannelToForward;
-            if (out == undefined) {
-                out = 255; // Cleanflight defines "CHANNEL_FORWARDING_DISABLED" as "(uint8_t)0xFF"
-            }
-            buffer.push(out);
-
-            buffer.push(specificByte(servoConfiguration.reversedInputSources, 0));
-            buffer.push(specificByte(servoConfiguration.reversedInputSources, 1));
-            buffer.push(specificByte(servoConfiguration.reversedInputSources, 2));
-            buffer.push(specificByte(servoConfiguration.reversedInputSources, 3));
-            
-            // prepare for next iteration
-            servoIndex++;
-            if (servoIndex == SERVO_CONFIG.length) {
-                nextFunction = onCompleteCallback;
-            }
+        buffer.push(specificByte(servoConfiguration.reversedInputSources, 0));
+        buffer.push(specificByte(servoConfiguration.reversedInputSources, 1));
+        buffer.push(specificByte(servoConfiguration.reversedInputSources, 2));
+        buffer.push(specificByte(servoConfiguration.reversedInputSources, 3));
+        
+        // prepare for next iteration
+        servoIndex++;
+        if (servoIndex == SERVO_CONFIG.length) {
+            nextFunction = onCompleteCallback;
         }
         MSP.send_message(MSP_codes.MSP_SET_SERVO_CONFIGURATION, buffer, false, nextFunction);
     }
     
-    function send_channel_forwarding() {
-        var buffer = [];
-
-        for (var i = 0; i < SERVO_CONFIG.length; i++) {
-            var out = SERVO_CONFIG[i].indexOfChannelToForward;
-            if (out == undefined) {
-                out = 255; // Cleanflight defines "CHANNEL_FORWARDING_DISABLED" as "(uint8_t)0xFF"
-            }
-            buffer.push(out);
-        }
-
-        nextFunction = onCompleteCallback;
-
-        MSP.send_message(MSP_codes.MSP_SET_CHANNEL_FORWARDING, buffer, false, nextFunction);
-    }
 };
 
 MSP.sendModeRanges = function(onCompleteCallback) {

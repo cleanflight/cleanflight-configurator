@@ -4,7 +4,6 @@
 var CONFIG;
 var FEATURE;
 var BOARD_ALIGNMENT;
-var BF_CONFIG;
 var MIXER;
 var LED_STRIP;
 var LED_COLORS;
@@ -82,12 +81,6 @@ var FC = {
             board_align_roll:       0,
             board_align_pitch:      0,
             board_align_yaw:        0
-        };
-        
-        BF_CONFIG = {
-            serialrx_type:          0,
-            currentscale:           0,
-            currentoffset:          0
         };
         
         LED_STRIP = [];

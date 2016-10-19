@@ -23,11 +23,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
     }
 
     function load_mixer() {
-        MSP.send_message(MSP_codes.MSP_MIXER, false, false, load_baseflight_config);
+        MSP.send_message(MSP_codes.MSP_MIXER, false, false, load_rx_config);
     }
 
-    function load_baseflight_config() {
-        MSP.send_message(MSP_codes.MSP_BF_CONFIG, false, false, load_serial_config);
+    function load_rx_config() {
+        MSP.send_message(MSP_codes.MSP_RX_CONFIG, false, false, load_serial_config);
     }
 
     function load_serial_config() {
@@ -357,11 +357,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         }
 
         serialRX_e.change(function () {
-            BF_CONFIG.serialrx_type = parseInt($(this).val());
+            RX_CONFIG.serialrx_provider = parseInt($(this).val());
         });
 
         // select current serial RX type
-        serialRX_e.val(BF_CONFIG.serialrx_type);
+        serialRX_e.val(RX_CONFIG.serialrx_provider);
 
         // for some odd reason chrome 38+ changes scroll according to the touched select element
         // i am guessing this is a bug, since this wasn't happening on 37
@@ -497,7 +497,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
             // track feature usage
             if (isFeatureEnabled('RX_SERIAL')) {
-                googleAnalytics.sendEvent('Setting', 'SerialRxProvider', serialRXtypes[BF_CONFIG.serialrx_type]);
+                googleAnalytics.sendEvent('Setting', 'SerialRxProvider', serialRXtypes[RX_CONFIG.serialrx_provider]);
             }
             
             for (var i = 0; i < features.length; i++) {
@@ -516,7 +516,11 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
 
             function save_mixer() {
-                MSP.send_message(MSP_codes.MSP_SET_MIXER, MSP.crunch(MSP_codes.MSP_SET_MIXER), false, save_serial_config);
+                MSP.send_message(MSP_codes.MSP_SET_MIXER, MSP.crunch(MSP_codes.MSP_SET_MIXER), false, save_rx_config);
+            }
+
+            function save_rx_config() {
+                MSP.send_message(MSP_codes.MSP_SET_RX_CONFIG, MSP.crunch(MSP_codes.MSP_SET_RX_CONFIG), false, save_serial_config);
             }
 
             function save_serial_config() {
@@ -598,7 +602,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 }
             }
 
-            MSP.send_message(MSP_codes.MSP_SET_BF_CONFIG, MSP.crunch(MSP_codes.MSP_SET_BF_CONFIG), false, save_features);
+            save_features();
         });
 
         GUI.content_ready(callback);

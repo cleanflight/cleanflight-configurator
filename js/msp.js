@@ -136,11 +136,7 @@ var MSP_codes = {
     // Additional private MSP for baseflight configurator
     MSP_RX_MAP:                64, // get channel map (also returns number of channels total)
     MSP_SET_RX_MAP:            65, // set rc map, numchannels to set comes from MSP_RX_MAP
-    
-    
-    MSP_BF_CONFIG:             66, // baseflight-specific settings that aren't covered elsewhere // DEPRECATED
-    MSP_SET_BF_CONFIG:         67, // baseflight-specific settings save                          // DEPRECATED
-    
+        
     MSP_SET_REBOOT:            68, // reboot settings
     MSP_BF_BUILD_INFO:         69  // build date as well as some space for future expansion
 };
@@ -625,7 +621,24 @@ var MSP = {
             case MSP_codes.MSP_SERVO_CONFIGURATIONS:
                 SERVO_CONFIG = []; // empty the array as new data is coming in
 
-                if (semver.gte(CONFIG.apiVersion, "1.12.0")) {
+                if (semver.gte(CONFIG.apiVersion, "1.24.0")) {
+                    if (data.byteLength % 14 == 0) {
+                        for (var i = 0; i < data.byteLength; i += 14) {
+                            var arr = {
+                                'min':                      data.getInt16(i + 0, 1),
+                                'max':                      data.getInt16(i + 2, 1),
+                                'middle':                   data.getInt16(i + 4, 1),
+                                'rate':                     data.getInt8(i + 6),
+                                'angleAtMin':               45,
+                                'angleAtMax':               45,
+                                'indexOfChannelToForward':  data.getInt8(i + 9),
+                                'reversedInputSources':     data.getUint32(i + 10)
+                            };
+
+                            SERVO_CONFIG.push(arr);
+                        }
+                    }
+                } else if (semver.gte(CONFIG.apiVersion, "1.12.0")) {
                     if (data.byteLength % 14 == 0) {
                         for (var i = 0; i < data.byteLength; i += 14) {
                             var arr = {
@@ -795,26 +808,11 @@ var MSP = {
                 BOARD_ALIGNMENT.board_align_pitch = data.getInt16(2, 1); // -180 - 360
                 BOARD_ALIGNMENT.board_align_yaw = data.getInt16(4, 1); // -180 - 360
                 break;
-            case MSP_codes.MSP_BF_CONFIG:
-                var unused = data.getUint8(0); // mixer mode
-                FEATURE.enabled = data.getUint32(1, 1);
-                BF_CONFIG.serialrx_type = data.getUint8(5);
-                unused = data.getInt16(6, 1); // -180 - 360
-                unused = data.getInt16(8, 1); // -180 - 360
-                unused = data.getInt16(10, 1); // -180 - 360
-                if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
-                    BF_CONFIG.currentscale = data.getInt16(12, 1);
-                    BF_CONFIG.currentoffset = data.getUint16(14, 1);
-                }
-                break;
             case MSP_codes.MSP_SET_MIXER:
                 console.log('Mixer config saved');
                 break;
             case MSP_codes.MSP_SET_BOARD_ALIGNMENT:
                 console.log('Board alignment saved');
-                break;
-            case MSP_codes.MSP_SET_BF_CONFIG:
-                console.log('WARNING: deprecated MSP_SET_BF_CONFIG used');
                 break;
             case MSP_codes.MSP_SET_REBOOT:
                 console.log('Reboot request accepted');
@@ -1253,16 +1251,16 @@ var MSP = {
                 console.log('3D settings saved');
                 break;
             case MSP_codes.MSP_SET_RC_DEADBAND:
-                console.log('Rc controls settings saved');
+                console.log('RC controls settings saved');
                 break;
             case MSP_codes.MSP_SET_SENSOR_ALIGNMENT:
                 console.log('Sensor alignment saved');
                 break; 
             case MSP_codes.MSP_SET_RX_CONFIG:
-                console.log('Rx config saved');
+                console.log('RX config saved');
                 break;
             case MSP_codes.MSP_SET_RXFAIL_CONFIG:
-                console.log('Rxfail config saved');
+                console.log('RX Fail config saved');
                 break;
             case MSP_codes.MSP_SET_FAILSAFE_CONFIG:
                 console.log('Failsafe config saved');
@@ -1486,34 +1484,6 @@ MSP.crunch = function (code) {
             buffer.push(specificByte(BOARD_ALIGNMENT.board_align_pitch, 1));
             buffer.push(specificByte(BOARD_ALIGNMENT.board_align_yaw, 0));
             buffer.push(specificByte(BOARD_ALIGNMENT.board_align_yaw, 1));
-            break;
-        case MSP_codes.MSP_SET_BF_CONFIG:
-            // Use MSP_SET_MIXER instead
-            buffer.push(MIXER.mode);
-            // Use MSP_SET_FEATURE instead
-            buffer.push(specificByte(FEATURE.enabled, 0));
-            buffer.push(specificByte(FEATURE.enabled, 1));
-            buffer.push(specificByte(FEATURE.enabled, 2));
-            buffer.push(specificByte(FEATURE.enabled, 3));
-            
-            // Use MSP_SET_RX_CONFIG instead
-            buffer.push(BF_CONFIG.serialrx_type);
-            
-            // Use MSP_SET_BOARD_ALIGNMENT instead
-            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_roll, 0));
-            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_roll, 1));
-            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_pitch, 0));
-            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_pitch, 1));
-            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_yaw, 0));
-            buffer.push(specificByte(BOARD_ALIGNMENT.board_align_yaw, 1));
-            
-            if (semver.lt(CONFIG.apiVersion, "1.22.0")) {
-                // Use MSP_SET_AMPERAGE_METER_CONFIG instead
-                buffer.push(lowByte(BF_CONFIG.currentscale));
-                buffer.push(highByte(BF_CONFIG.currentscale));
-                buffer.push(lowByte(BF_CONFIG.currentoffset));
-                buffer.push(highByte(BF_CONFIG.currentoffset));
-            }
             break;
         case MSP_codes.MSP_SET_PID_CONTROLLER:
             buffer.push(PID.controller);

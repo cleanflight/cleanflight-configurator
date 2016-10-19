@@ -1344,9 +1344,6 @@ var MSP = {
             bufView[5] = bufView[3] ^ bufView[4]; // checksum
         }
 
-        // dev version 0.57 code below got recently changed due to the fact that queueing same MSP codes was unsupported
-        // and was causing trouble while backup/restoring configurations
-        // watch out if the recent change create any inconsistencies and then adjust accordingly
         var obj = {'code': code, 'requestBuffer': bufferOut, 'callback': (callback_msp) ? callback_msp : false, 'timer': false};
 
         var requestExists = false;

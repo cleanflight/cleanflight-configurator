@@ -926,11 +926,11 @@ var MSP = {
                 var offset = 0;
                 RX_CONFIG.serialrx_provider = data.getUint8(offset, 1);
                 offset++;
-                RX_CONFIG.maxcheck = data.getUint16(offset, 1);
+                RX_CONFIG.stick_max = data.getUint16(offset, 1);
                 offset += 2;
-                RX_CONFIG.midrc = data.getUint16(offset, 1);
+                RX_CONFIG.stick_center = data.getUint16(offset, 1);
                 offset += 2;
-                RX_CONFIG.mincheck = data.getUint16(offset, 1);
+                RX_CONFIG.stick_min = data.getUint16(offset, 1);
                 offset += 2;
                 RX_CONFIG.spektrum_sat_bind = data.getUint8(offset, 1);
                 offset++;
@@ -1548,12 +1548,12 @@ MSP.crunch = function (code) {
 
         case MSP_codes.MSP_SET_RX_CONFIG:
             buffer.push(RX_CONFIG.serialrx_provider);
-            buffer.push(lowByte(RX_CONFIG.maxcheck));
-            buffer.push(highByte(RX_CONFIG.maxcheck));
-            buffer.push(lowByte(RX_CONFIG.midrc));
-            buffer.push(highByte(RX_CONFIG.midrc));
-            buffer.push(lowByte(RX_CONFIG.mincheck));
-            buffer.push(highByte(RX_CONFIG.mincheck));
+            buffer.push(lowByte(RX_CONFIG.stick_max));
+            buffer.push(highByte(RX_CONFIG.stick_max));
+            buffer.push(lowByte(RX_CONFIG.stick_center));
+            buffer.push(highByte(RX_CONFIG.stick_center));
+            buffer.push(lowByte(RX_CONFIG.stick_min));
+            buffer.push(highByte(RX_CONFIG.stick_min));
             buffer.push(RX_CONFIG.spektrum_sat_bind);
             buffer.push(lowByte(RX_CONFIG.rx_min_usec));
             buffer.push(highByte(RX_CONFIG.rx_min_usec));

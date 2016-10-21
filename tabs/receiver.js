@@ -13,9 +13,12 @@ TABS.receiver.initialize = function (callback) {
     }
 
     function get_misc_data() {
-        MSP.send_message(MSP_codes.MSP_MISC, false, false, get_rc_data);
+        MSP.send_message(MSP_codes.MSP_MISC, false, false, get_rx_config);
     }
 
+    function get_rx_config() {
+        MSP.send_message(MSP_codes.MSP_RX_CONFIG, false, false, get_rc_data);
+    }
     function get_rc_data() {
         MSP.send_message(MSP_codes.MSP_RC, false, false, get_rc_map);
     }
@@ -61,6 +64,11 @@ TABS.receiver.initialize = function (callback) {
         // fill in data from RC_tuning
         $('.tunings .throttle input[name="mid"]').val(RC_tuning.throttle_MID.toFixed(2));
         $('.tunings .throttle input[name="expo"]').val(RC_tuning.throttle_EXPO.toFixed(2));
+
+        // fill in RX config
+        $('input[name="stick_min"]').val(RX_CONFIG.stick_min);
+        $('input[name="stick_center"]').val(RX_CONFIG.stick_center);
+        $('input[name="stick_max"]').val(RX_CONFIG.stick_max);
 
         $('.tunings .rate input[name="rate"]').val(RC_tuning.RC_RATE.toFixed(2));
         $('.tunings .rate input[name="expo"]').val(RC_tuning.RC_EXPO.toFixed(2));
@@ -315,6 +323,10 @@ TABS.receiver.initialize = function (callback) {
             RC_tuning.throttle_MID = parseFloat($('.tunings .throttle input[name="mid"]').val());
             RC_tuning.throttle_EXPO = parseFloat($('.tunings .throttle input[name="expo"]').val());
 
+            RX_CONFIG.stick_min = parseInt($('input[name="stick_min"]').val());
+            RX_CONFIG.stick_center = parseInt($('input[name="stick_center"]').val());
+            RX_CONFIG.stick_max = parseInt($('input[name="stick_max"]').val());
+
             RC_tuning.RC_RATE = parseFloat($('.tunings .rate input[name="rate"]').val());
             RC_tuning.RC_EXPO = parseFloat($('.tunings .rate input[name="expo"]').val());
             RC_tuning.RC_YAW_EXPO = parseFloat($('.tunings .yaw_rate input[name="yaw_expo"]').val());
@@ -341,7 +353,11 @@ TABS.receiver.initialize = function (callback) {
             }
 
             function save_misc() {
-                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_3d);
+                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_rx_config);
+            }
+
+            function save_rx_config() {
+                MSP.send_message(MSP_codes.MSP_SET_RX_CONFIG, MSP.crunch(MSP_codes.MSP_SET_RX_CONFIG), false, save_3d);
             }
             
             function save_3d() {

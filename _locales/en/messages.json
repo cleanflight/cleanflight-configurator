@@ -590,9 +590,6 @@
     "configurationThrottleMinimum": {
         "message": "Minimum Throttle"
     },
-    "configurationThrottleMid": {
-        "message": "Middle Throttle [RC inputs center value]"
-    },
     "configurationThrottleMaximum": {
         "message": "Maximum Throttle"
     },
@@ -784,6 +781,24 @@
     },
     "receiverRcRate": {
         "message": "RC Rate"
+    },
+    "receiverStickMin": {
+        "message": "Stick Min"
+    },
+    "receiverHelpStickMin": {
+        "message": "The value (in us) used to determine if a stick is low."
+    },
+    "receiverStickCenter": {
+        "message": "Stick Center"
+    },
+    "receiverHelpStickCenter": {
+        "message": "The value (in us) used to determine if a stick is centered."
+    },
+    "receiverStickMax": {
+        "message": "Stick Max"
+    },
+    "receiverHelpStickMax": {
+        "message": "The value (in us) used to determine if a stick is high."
     },
     "receiverDeadband": {
         "message": "RC Deadband"

@@ -142,7 +142,7 @@
     background-color: #14407a;
 }
 
-.tab-receiver .tunings {
+.tab-receiver  .graph .tunings {
     float: right;
     width: 45%;
 }

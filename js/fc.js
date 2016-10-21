@@ -263,9 +263,9 @@ var FC = {
         
         RX_CONFIG = {
             serialrx_provider:      0,
-            maxcheck:               0,
-            midrc:                  0,
-            mincheck:               0,
+            stick_max:              0,
+            stick_center:           0,
+            stick_min:              0,
             spektrum_sat_bind:      0,
             rx_min_usec:            0,
             rx_max_usec:            0

@@ -31,7 +31,63 @@
                 </div>
             </div>
         </div>
-        <div class="fc_column half" style="margin-left: 20px;">
+        <div class="fc_column half tunings" style="margin-left: 20px;">
+            <div class="gui_box grey" style="float: right;">
+                <div class="spacer" style="margin-top: 10px; margin-bottom: 10px;">
+                    <table class="deadband">
+                        <tr>
+                            <th i18n="receiverStickMin"></th>
+                            <th i18n="receiverStickCenter"></th>
+                            <th i18n="receiverStickMax"></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="cf_tip" i18n_title="receiverHelpStickMin">
+                                    <input type="number" name="stick_min" min="1000" max="1200" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="cf_tip" i18n_title="receiverHelpStickCenter">
+                                    <input type="number" name="stick_center" min="1401" max="1599" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="cf_tip" i18n_title="receiverHelpStickMax">
+                                    <input type="number" name="stick_max" min="1800" max="2000" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="spacer" style="margin-top: 10px; margin-bottom: 10px;">
+                    <table class="deadband">
+                        <tr>
+                            <th i18n="receiverDeadband"></th>
+                            <th i18n="receiverYawDeadband"></th>
+                            <th i18n="recevier3dDeadbandThrottle"></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="cf_tip" i18n_title="receiverHelpDeadband">
+                                    <input type="number" name="deadband" step="1" min="0" max="32" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="cf_tip" i18n_title="receiverHelpYawDeadband">
+                                    <input type="number" name="yaw_deadband" step="1" min="0" max="100" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="cf_tip" i18n_title="receiverHelp3dDeadbandThrottle">
+                                    <input type="number" name="3ddeadbandthrottle" step="1" min="0" max="1000" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="fc_column half graph" style="margin-left: 20px;">
             <div class="gui_box grey" style="float: right;">
                 <div class="spacer" style="margin-top: 10px; margin-bottom: 10px;">
                     <div class="cf_column curves" style="width: calc(55% - 10px); min-width: 200px;">
@@ -39,6 +95,7 @@
                             <canvas width="200" height="117"></canvas>
                         </div>
                     </div>
+
                     <div class="fc_column half tunings">
                         <table class="throttle">
                             <tr>
@@ -48,30 +105,6 @@
                             <tr>
                                 <td><input type="number" name="mid" step="0.01" min="0" max="1" /></td>
                                 <td><input type="number" name="expo" step="0.01" min="0" max="1" /></td>
-                            </tr>
-                        </table>
-                        <table class="deadband">
-                            <tr>
-                                <th i18n="receiverDeadband"></th>
-                                <th i18n="receiverYawDeadband"></th>
-                                <th i18n="recevier3dDeadbandThrottle"></th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="cf_tip" i18n_title="receiverHelpDeadband">
-                                        <input type="number" name="deadband" step="1" min="0" max="32" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="cf_tip" i18n_title="receiverHelpYawDeadband">
-                                        <input type="number" name="yaw_deadband" step="1" min="0" max="100" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="cf_tip" i18n_title="receiverHelp3dDeadbandThrottle">
-                                        <input type="number" name="3ddeadbandthrottle" step="1" min="0" max="1000" />
-                                    </div>
-                                </td>
                             </tr>
                         </table>
                     </div>

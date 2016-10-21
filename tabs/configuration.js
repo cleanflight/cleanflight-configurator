@@ -506,7 +506,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
 
             function save_features() {
-                MSP.send_message(MSP_codes.MSP_SET_MISC, MSP.crunch(MSP_codes.MSP_SET_MISC), false, save_board_alignment);
+                MSP.send_message(MSP_codes.MSP_SET_FEATURE, MSP.crunch(MSP_codes.MSP_SET_FEATURE), false, save_board_alignment);
             }
 
             function save_board_alignment() {

@@ -1,7 +1,8 @@
 'use strict';
 
 TABS.receiver = {
-  rateChartHeight: 117
+  rateChartHeight: 117,
+  initialEnabledFeatures: 0,
 };
 
 TABS.receiver.initialize = function (callback) {
@@ -58,6 +59,152 @@ TABS.receiver.initialize = function (callback) {
     MSP.send_message(MSP_codes.MSP_RC_TUNING, false, false, get_misc_data);
 
     function process_html() {
+        self.initialEnabledFeatures = FEATURE.enabled;
+
+        // generate features
+        var features = [
+            {bit: 0, group: 'rxMode', mode: 'group', name: 'RX_PPM'},
+            {bit: 3, group: 'rxMode', mode: 'group', name: 'RX_SERIAL'},
+            {bit: 13, group: 'rxMode', mode: 'group', name: 'RX_PARALLEL_PWM'},
+            {bit: 14, group: 'rxMode', mode: 'group', name: 'RX_MSP'},
+        ];
+
+        //
+        // START OF CODE COPIED FROM configuration.js
+        //
+        
+        function isFeatureEnabled(featureName) {
+            for (var i = 0; i < features.length; i++) {
+                if (features[i].name == featureName && bit_check(FEATURE.enabled, features[i].bit)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        var radioGroups = [];
+        
+        var features_e = $('.features');
+        for (var i = 0; i < features.length; i++) {
+            var row_e;
+            
+            var feature_tip_html = '';
+            if (features[i].haveTip) {
+                feature_tip_html = '<div class="helpicon cf_tip" i18n_title="feature' + features[i].name + 'Tip"></div>';
+            }
+            
+            if (features[i].mode === 'group') {
+                row_e = $('<tr><td style="width: 15px;"><input style="width: 13px;" class="feature" id="feature-'
+                        + i
+                        + '" value="'
+                        + features[i].bit
+                        + '" title="'
+                        + features[i].name
+                        + '" type="radio" name="'
+                        + features[i].group
+                        + '" /></td><td><label for="feature-'
+                        + i
+                        + '">'
+                        + features[i].name
+                        + '</label></td><td><span i18n="feature' + features[i].name + '"></span>' 
+                        + feature_tip_html + '</td></tr>');
+                radioGroups.push(features[i].group);
+            } else {
+                row_e = $('<tr><td><input class="feature toggle"'
+                        + i
+                        + '" name="'
+                        + features[i].name
+                        + '" title="'
+                        + features[i].name
+                        + '" type="checkbox"/></td><td><label for="feature-'
+                        + i
+                        + '">'
+                        + features[i].name
+                        + '</label></td><td><span i18n="feature' + features[i].name + '"></span>' 
+                        + feature_tip_html + '</td></tr>');
+                
+                var feature_e = row_e.find('input.feature');
+
+                feature_e.prop('checked', bit_check(FEATURE.enabled, features[i].bit));
+                feature_e.data('bit', features[i].bit);
+            }
+
+            features_e.each(function () {
+                if ($(this).hasClass(features[i].group)) {
+                    $(this).append(row_e);
+                }
+            });
+        }
+
+        for (var i = 0; i < radioGroups.length; i++) {
+            var group = radioGroups[i];
+            var controls_e = $('input[name="' + group + '"].feature');
+            
+            
+            controls_e.each(function() {
+                var bit = parseInt($(this).attr('value'));
+                var state = bit_check(FEATURE.enabled, bit);
+                
+                $(this).prop('checked', state);
+            });
+        }
+        
+        $('input[type="radio"].feature', features_e).change(function () {
+            var element = $(this),
+                group = element.attr('name');
+
+            var controls_e = $('input[name="' + group + '"]');
+            var selected_bit = controls_e.filter(':checked').val();
+            
+            controls_e.each(function() {
+                var bit = $(this).attr('value');
+                
+                var selected = (selected_bit == bit);
+                if (selected) {
+                    FEATURE.enabled = bit_set(FEATURE.enabled, bit);
+                } else {
+                    FEATURE.enabled = bit_clear(FEATURE.enabled, bit);
+                }
+
+            });
+        });
+        
+        //
+        // END OF CODE COPIED FROM configuration.js
+        //
+        
+        
+        // generate serial RX
+        var serialRXtypes = [
+            'SPEKTRUM1024',
+            'SPEKTRUM2048',
+            'SBUS',
+            'SUMD',
+            'SUMH',
+            'SRXL (XBUS_MODE_B)',
+            'XBUS_MODE_B_RJ01'
+        ];
+
+        if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
+            serialRXtypes.push('IBUS');
+        }
+
+        if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
+            serialRXtypes.push('JETIEXBUS');
+        }
+        
+        var serialRX_e = $('select.serialRX');
+        for (var i = 0; i < serialRXtypes.length; i++) {
+            serialRX_e.append('<option value="' + i + '">' + serialRXtypes[i] + '</option>');
+        }
+
+        serialRX_e.change(function () {
+            RX_CONFIG.serialrx_provider = parseInt($(this).val());
+        });
+
+        // select current serial RX type
+        serialRX_e.val(RX_CONFIG.serialrx_provider);
+        
         // translate to user-selected language
         localize();
 
@@ -345,11 +492,27 @@ TABS.receiver.initialize = function (callback) {
                 RC_MAP[i] = strBuffer.indexOf(RC_MAP_Letters[i]);
             }
 
+            // track feature usage
+            if (isFeatureEnabled('RX_SERIAL')) {
+                googleAnalytics.sendEvent('Setting', 'SerialRxProvider', serialRXtypes[RX_CONFIG.serialrx_provider]);
+            }
+            
+            for (var i = 0; i < features.length; i++) {
+                var featureName = features[i].name;
+                if (isFeatureEnabled(featureName)) {
+                    googleAnalytics.sendEvent('Setting', 'Feature', featureName);
+                }
+            }
+
             // catch rssi aux
             MISC.rssi_channel = parseInt($('select[name="rssi_channel"]').val());
 
             function save_rc_map() {
-                MSP.send_message(MSP_codes.MSP_SET_RX_MAP, MSP.crunch(MSP_codes.MSP_SET_RX_MAP), false, save_misc);
+                MSP.send_message(MSP_codes.MSP_SET_RX_MAP, MSP.crunch(MSP_codes.MSP_SET_RX_MAP), false, save_features);
+            }
+
+            function save_features() {
+                MSP.send_message(MSP_codes.MSP_SET_FEATURE, MSP.crunch(MSP_codes.MSP_SET_FEATURE), false, save_misc);
             }
 
             function save_misc() {
@@ -379,10 +542,40 @@ TABS.receiver.initialize = function (callback) {
             }
 
             function save_to_eeprom() {
-                MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function () {
-                    GUI.log(chrome.i18n.getMessage('receiverEepromSaved'));
-                });
+                MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, reboot_if_needed);
             }
+            
+            function reboot_if_needed() {
+                GUI.log(chrome.i18n.getMessage('receiverEepromSaved'));
+
+                var reboot_needed = FEATURE.enabled != self.initialEnabledFeatures;
+                
+                if (reboot_needed) {
+                    GUI.tab_switch_cleanup(function() {
+                        MSP.send_message(MSP_codes.MSP_SET_REBOOT, false, false, reinitialize);
+                    });
+                }
+            }
+
+            function reinitialize() {
+                GUI.log(chrome.i18n.getMessage('deviceRebooting'));
+
+                if (BOARD.find_board_definition(CONFIG.boardIdentifier).vcp) { // VCP-based flight controls may crash old drivers, we catch and reconnect
+                    $('a.connect').click();
+                    GUI.timeout_add('start_connection',function start_connection() {
+                        $('a.connect').click();
+                    },2500);
+                } else {
+
+                    GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
+                        MSP.send_message(MSP_codes.MSP_IDENT, false, false, function () {
+                            GUI.log(chrome.i18n.getMessage('deviceReady'));
+                            TABS.configuration.initialize(false, $('#content').scrollTop());
+                        });
+                    },1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
+                }
+            }
+            
 
             MSP.send_message(MSP_codes.MSP_SET_RC_TUNING, MSP.crunch(MSP_codes.MSP_SET_RC_TUNING), false, save_rc_map);
         });

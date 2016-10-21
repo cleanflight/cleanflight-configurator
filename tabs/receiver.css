@@ -2,11 +2,31 @@
     font-weight: normal;
 }
 
+.tab-receiver .gui_box {
+    font-style: bold;
+    font-family: 'open_sanssemibold', Arial;
+}
+
+.tab-receiver .gui_box .features span {
+    font-style: normal;
+    font-family: 'open_sansregular', Arial;
+    line-height: 19px;
+    color: #4F4F4F;
+    font-size: 11px;
+}
+
 .tab-receiver .spacer {
     padding-left: 10px;
     padding-right: 9px;
     width: calc(100% - 18px);
 }
+
+.tab-receiver .spacer_box {
+    padding-bottom: 10px;
+    float: left;
+    width: calc(100% - 20px);
+}
+
 
 .tab-receiver input[type="number"]::-webkit-inner-spin-button {
     border: 0;
@@ -20,7 +40,7 @@
 
 .tab-receiver .bars {
     float: left;
-    width: calc(50% - 20px);
+    width: 100%;
     font-weight: bold;
 }
 
@@ -437,4 +457,75 @@
     stroke: none;
     fill: #828885;
     font-size: 10px;
+}
+
+.tab-receiver .leftWrapper {
+    float: left;
+    width: calc(50% - 20px);
+}
+
+.tab-receiver .rightWrapper {
+    float: left;
+    width: calc(50% - 0px);
+    margin: 0 0 10px 20px;
+}
+
+.tab-receiver .gui_box_titlebar {
+    margin-bottom: 0px;
+}
+
+.tab-receiver .rxprovider select {
+    border: 1px solid silver;
+}
+
+.tab-receiver .rxprovider {
+    min-height: 214px;
+}
+
+.tab-receiver .rxprovider .serialRX {
+    width: 100%;
+}
+
+.tab-receiver .rxMode tr:last-child td {
+    border-bottom: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.tab-receiver .feature-container table {
+    margin-bottom: 10px;
+    width: 100%;
+    float: left;
+}
+
+.tab-receiver .feature-container thead {
+    display: none;
+}
+
+.tab-receiver .feature-container table, 
+.tab-receiver .feature-container table th,
+.tab-receiver .feature-container table td {
+    padding: 0px;
+    padding-left: 0px;
+    text-align: left;
+}
+
+.tab-receiver .feature-container table th {
+    padding-left: 3px;
+    padding: 3px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-receiver .feature-container table td {
+    padding-left: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-receiver .feature-container table tr td:first-child {
+    text-align: left;
+    width: 55px;
+}
+
+.tab-receiver .feature-container table td {
+    padding: 5px 3px;
 }

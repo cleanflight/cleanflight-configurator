@@ -245,33 +245,20 @@
     margin-bottom: 0px;
 }
 
-.tab-configuration .rssi .gui_box, .tab-configuration .system .gui_box {
-    min-height: 145px;
-    float: left;
+.tab-configuration .gui_box.acc,
+.tab-configuration .gui_box.rssi,
+.tab-configuration .gui_box.current,
+.tab-configuration .gui_box.voltage {
+    min-height: 105px;
 }
 
-.tab-configuration .mixer .gui_box, .tab-configuration .motorstop .gui_box {
+.tab-configuration .gui_box.gps {
+    min-height: 228px;
+}
+
+.tab-configuration .gui_box.mixer,
+.tab-configuration .gui_box.motorstop {
     min-height: 290px;
-    float: left;
-}
-
-.tab-configuration .board .gui_box, .tab-configuration .acc .gui_box {
-    min-height: 137px;
-    float: left;
-}
-
-.tab-configuration .gps .gui_box, .tab-configuration .other .gui_box {
-    min-height: 355px;
-    float: left;
-    margin-bottom: 10px;
-}
-
-.tab-configuration .current .gui_box {
-    float: left;
-}
-
-.tab-configuration .rxprovider {
-    min-height: 214px;
 }
 
 .tab-configuration .current td:nth-child(2) {
@@ -313,12 +300,6 @@
     width: 90%;
     height: 90%;
     padding: 5%;
-}
-
-.tab-configuration .rxMode tr:last-child td {
-    border-bottom: 0px;
-    padding-bottom: 0px;
-    margin-bottom: 0px;
 }
 
 .tab-configuration .gui_box {

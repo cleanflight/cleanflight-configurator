@@ -223,9 +223,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             });
         }
         
-        // translate to user-selected language
-        localize();
-
         for (var i = 0; i < radioGroups.length; i++) {
             var group = radioGroups[i];
             var controls_e = $('input[name="' + group + '"].feature');
@@ -238,7 +235,27 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 $(this).prop('checked', state);
             });
         }
+        
+        $('input[type="radio"].feature', features_e).change(function () {
+            var element = $(this),
+                group = element.attr('name');
 
+            var controls_e = $('input[name="' + group + '"]');
+            var selected_bit = controls_e.filter(':checked').val();
+            
+            controls_e.each(function() {
+                var bit = $(this).attr('value');
+                
+                var selected = (selected_bit == bit);
+                if (selected) {
+                    FEATURE.enabled = bit_set(FEATURE.enabled, bit);
+                } else {
+                    FEATURE.enabled = bit_clear(FEATURE.enabled, bit);
+                }
+
+            });
+        });
+        
         
         var alignments = [
             'CW 0°',
@@ -331,38 +348,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
 
         gps_ubx_sbas_e.val(MISC.gps_ubx_sbas);
 
-
-        // generate serial RX
-        var serialRXtypes = [
-            'SPEKTRUM1024',
-            'SPEKTRUM2048',
-            'SBUS',
-            'SUMD',
-            'SUMH',
-            'SRXL (XBUS_MODE_B)',
-            'XBUS_MODE_B_RJ01'
-        ];
-
-        if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
-            serialRXtypes.push('IBUS');
-        }
-
-        if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
-            serialRXtypes.push('JETIEXBUS');
-        }
-        
-        var serialRX_e = $('select.serialRX');
-        for (var i = 0; i < serialRXtypes.length; i++) {
-            serialRX_e.append('<option value="' + i + '">' + serialRXtypes[i] + '</option>');
-        }
-
-        serialRX_e.change(function () {
-            RX_CONFIG.serialrx_provider = parseInt($(this).val());
-        });
-
-        // select current serial RX type
-        serialRX_e.val(RX_CONFIG.serialrx_provider);
-
         // for some odd reason chrome 38+ changes scroll according to the touched select element
         // i am guessing this is a bug, since this wasn't happening on 37
         // code below is a temporary fix, which we will be able to remove in the future (hopefully)
@@ -437,27 +422,8 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
         });
 
-        // UI hooks
-        $('input[type="radio"].feature', features_e).change(function () {
-            var element = $(this),
-                group = element.attr('name');
-
-            var controls_e = $('input[name="' + group + '"]');
-            var selected_bit = controls_e.filter(':checked').val();
-            
-            controls_e.each(function() {
-                var bit = $(this).attr('value');
-                
-                var selected = (selected_bit == bit);
-                if (selected) {
-                    FEATURE.enabled = bit_set(FEATURE.enabled, bit);
-                } else {
-                    FEATURE.enabled = bit_clear(FEATURE.enabled, bit);
-                }
-
-            });
-        });
-
+        // translate to user-selected language
+        localize();
 
         $('a.save').click(function () {
             // gather data that doesn't have automatic change event bound
@@ -494,10 +460,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             SENSOR_ALIGNMENT.align_mag = parseInt(orientation_mag_e.val());
 
             // track feature usage
-            if (isFeatureEnabled('RX_SERIAL')) {
-                googleAnalytics.sendEvent('Setting', 'SerialRxProvider', serialRXtypes[RX_CONFIG.serialrx_provider]);
-            }
-            
             for (var i = 0; i < features.length; i++) {
                 var featureName = features[i].name;
                 if (isFeatureEnabled(featureName)) {

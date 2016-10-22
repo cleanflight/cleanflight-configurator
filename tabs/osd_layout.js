@@ -49,6 +49,36 @@ FONT.blocks = {
             key: 'motors',
             data: [0,0,0,0,5,0,0,6,0,0,0,0,7,0,0,8],
             width: 4
+        },
+        mah: {
+            key: 'mah',
+            data: [48,49,50,51,52,22],
+            width: 6
+        },
+        amp: {
+            key: 'amp',
+            data: [0x31,0x32,0x2e,0x35,0x36,0x17],
+            width: 6
+        },
+        voltage_5v: {
+            key: 'voltage_5v',
+            data: [0x1e,0x00,0x35,0x2e,0x30,0x15],
+            width: 6
+        },
+        voltage_12v: {
+            key: 'voltage_12v',
+            data: [0x1e,0x31,0x32,0x2e,0x30,0x14],
+            width: 6
+        },
+        battery: {
+            key: 'battery',
+            data: [0x1e,0x31,0x36,0x2e,0x38,0x30],
+            width: 6
+        },
+        battery_fc: {
+            key: 'battery_fc',
+            data: [0x1e,0x31,0x36,0x2e,0x38,0x30],
+            width: 6
         }
 };
 
@@ -92,6 +122,12 @@ FONT.parseMCMFontFile = function(data) {
     }
     FONT.drawBlock(FONT.blocks.logo);
     FONT.drawBlock(FONT.blocks.motors);
+    FONT.drawBlock(FONT.blocks.mah);
+    FONT.drawBlock(FONT.blocks.amp);
+    FONT.drawBlock(FONT.blocks.battery);
+    FONT.drawBlock(FONT.blocks.battery_fc);
+    FONT.drawBlock(FONT.blocks.voltage_5v);
+    FONT.drawBlock(FONT.blocks.voltage_12v);
     return FONT.data.characters;
 };
 
@@ -255,34 +291,34 @@ OSD.constants = {
         {
             id: 3,
             name: 'mahDrawn',
-            example_value: 'MAH:  1337' 
+            example_block: FONT.blocks.mah 
         },
         {
             id: 4,
             name: 'amperage',
-            example_value: 'AMP: 0.30A' 
+            example_block: FONT.blocks.amp 
         },
         
         // voltage
         {
             id: 6,
             name: 'voltage5V',
-            example_value: '5V:  0.1V' 
+            example_block: FONT.blocks.voltage_5v
         },
         {
             id: 7,
             name: 'voltage12V',
-            example_value: '12V: 12.5V' 
+            example_block: FONT.blocks.voltage_12v
         },
         {
             id: 8,
             name: 'voltageBattery',
-            example_value: 'BAT: 16.8V' 
+            example_block: FONT.blocks.battery
         },
         {
             id: 9,
             name: 'voltageBatteryFC',
-            example_value: 'FC: 16.8V' 
+            example_block: FONT.blocks.battery_fc
         },
         
         // modes

@@ -645,6 +645,14 @@ TABS.osd_layout.initialize = function (callback) {
         $block.bind('drag', function() {
             ui_field.position_y = ($block.offset().top - $canvas.offset().top) / FONT.constants.SIZES.CHAR_HEIGHT;
             ui_field.position_x = ($block.offset().left - $canvas.offset().left) / FONT.constants.SIZES.CHAR_WIDTH;
+            
+            if (ui_field.position_y < OSD_VIDEO_STATE.text_height / 2) {
+                ui_field.vertical_alignment = "top";
+            } else {
+                ui_field.vertical_alignment = "bottom";
+            }
+            
+            console.log('drag - align:' + ui_field.vertical_alignment + ', y: ' + ui_field.position_y);
         });
         if (!ui_field.enabled) {
             $block.addClass('hide_block');

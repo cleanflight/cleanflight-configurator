@@ -49,36 +49,6 @@ FONT.blocks = {
             key: 'motors',
             data: [0,0,0,0,5,0,0,6,0,0,0,0,7,0,0,8],
             width: 4
-        },
-        mah: {
-            key: 'mah',
-            data: [48,49,50,51,52,22],
-            width: 6
-        },
-        amp: {
-            key: 'amp',
-            data: [0x31,0x32,0x2e,0x35,0x36,0x17],
-            width: 6
-        },
-        voltage_5v: {
-            key: 'voltage_5v',
-            data: [0x1e,0x00,0x35,0x2e,0x30,0x15],
-            width: 6
-        },
-        voltage_12v: {
-            key: 'voltage_12v',
-            data: [0x1e,0x31,0x32,0x2e,0x30,0x14],
-            width: 6
-        },
-        battery: {
-            key: 'battery',
-            data: [0x1e,0x31,0x36,0x2e,0x38,0x30],
-            width: 6
-        },
-        battery_fc: {
-            key: 'battery_fc',
-            data: [0x1e,0x31,0x36,0x2e,0x38,0x30],
-            width: 6
         }
 };
 
@@ -122,12 +92,6 @@ FONT.parseMCMFontFile = function(data) {
     }
     FONT.drawBlock(FONT.blocks.logo);
     FONT.drawBlock(FONT.blocks.motors);
-    FONT.drawBlock(FONT.blocks.mah);
-    FONT.drawBlock(FONT.blocks.amp);
-    FONT.drawBlock(FONT.blocks.battery);
-    FONT.drawBlock(FONT.blocks.battery_fc);
-    FONT.drawBlock(FONT.blocks.voltage_5v);
-    FONT.drawBlock(FONT.blocks.voltage_12v);
     return FONT.data.characters;
 };
 
@@ -279,46 +243,46 @@ OSD.constants = {
         {
             id: 1,
             name: 'onDuration',
-            example_value: '00:00' 
+            example_value: '123:45' 
         },
         {
             id: 2,
             name: 'armedDuration',
-            example_value: '00:00' 
+            example_value: '123:45' 
         },
         
         // current
         {
             id: 3,
             name: 'mahDrawn',
-            example_block: FONT.blocks.mah 
+            example_value: ' 1500' + String.fromCharCode(0x16) 
         },
         {
             id: 4,
             name: 'amperage',
-            example_block: FONT.blocks.amp 
+            example_value: '12.10' + String.fromCharCode(0x17) 
         },
         
         // voltage
         {
             id: 6,
             name: 'voltage5V',
-            example_block: FONT.blocks.voltage_5v
+            example_value: String.fromCharCode(0x15) + ' 5.0V' 
         },
         {
             id: 7,
             name: 'voltage12V',
-            example_block: FONT.blocks.voltage_12v
+            example_value: String.fromCharCode(0x15) + '12.0V' 
         },
         {
             id: 8,
             name: 'voltageBattery',
-            example_block: FONT.blocks.battery
+            example_value: String.fromCharCode(0x1e) + '16.8V' 
         },
         {
             id: 9,
             name: 'voltageBatteryFC',
-            example_block: FONT.blocks.battery_fc
+            example_value: String.fromCharCode(0x1e) + '16.8V' 
         },
         
         // modes
@@ -330,19 +294,19 @@ OSD.constants = {
         {
             id: 11,
             name: 'indicatorMag',
-            example_value: 'M' 
+            example_value: String.fromCharCode(0x1b)
         },
         {
             id: 12,
             name: 'indicatorBaro',
-            example_value: 'B' 
+            example_value: String.fromCharCode(0x1c)
         },
         
         // rx
         {
             id: 13,
             name: 'rssiFC',
-            example_value: 'RSSI:100' 
+            example_value: '100' + String.fromCharCode(0x1d) 
         },
         
         // pilot
@@ -496,7 +460,7 @@ TABS.osd_layout.initialize = function (callback) {
                     };
                     elements.push(element);
                 });
-                
+                console.log(elements);
                 MSP.sendOsdLayout(elements, save_pilot);
             }
 

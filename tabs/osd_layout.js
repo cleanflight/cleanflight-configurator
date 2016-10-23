@@ -313,7 +313,7 @@ OSD.constants = {
         {
             id: 14,
             name: 'callsign',
-            example_value: ':::CALLSIGN:::' 
+            example_value: ':::CALLSIGN:::'
         },
         
         // motors
@@ -537,11 +537,34 @@ TABS.osd_layout.initialize = function (callback) {
 
         FONT.initData();
 
-        for (let element of OSD_LAYOUT.elements) {
-            var element_defaults = find_element_defaults(element.id);
+        for (let element_id of OSD_ELEMENT_SUMMARY.supported_element_ids) {
+            var element_defaults = find_element_defaults(element_id);
             if (!element_defaults) {
                 continue;
             }
+            
+            var element = null;
+            
+            for (let candidate of OSD_LAYOUT.elements) {
+                if (candidate.id != element_id) {
+                    continue;
+                }
+                element = candidate;
+                break; 
+            } 
+            
+            if (!element) {
+                element = {
+                    id: element_id,
+                    initial_flag_mask: 0,
+                    enabled: false,
+                    positionable: true,
+                    x: 0,
+                    y: 0,
+                };
+            }
+            
+            console.log(element);
 
             var text_key = 'osdElement_' + element_defaults.name;
             

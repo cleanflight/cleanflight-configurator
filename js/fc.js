@@ -46,6 +46,9 @@ var RX_CONFIG;
 var FAILSAFE_CONFIG;
 var RXFAIL_CONFIG;
 var PILOT_CONFIG;
+var VTX;
+var VTX_STATE;
+var VTX_CONFIG;
 
 var FC = {
     resetState: function() {
@@ -284,6 +287,24 @@ var FC = {
         
         PILOT_CONFIG = {
             callsign: " CLEANFLIGHT! ",
+        };
+        
+        VTX = {
+            supported: false,
+        };
+        
+        VTX_STATE = {
+            channel: 0,
+            band: 0,
+            rfPower: 0,
+            enabled: false,
+        };
+        
+        VTX_CONFIG = {
+            channel: 0,
+            band: 0,
+            rfPower: 0,
+            enabledOnBoot: false,
         };
     }
 };

@@ -405,6 +405,29 @@
     "initialSetupModel": {
         "message": "Model: $1"
     },
+    
+    "initialSetupVTXHead": {
+        "message": "VTX"
+    },
+    "initialSetupVTXBandAndChannel": {
+        "message": "Band and Channel"
+    },
+    "initialSetupVTXBandAndChannelValue": {
+        "message": "$1-$2"
+    },
+    "initialSetupVTXRFPower": {
+        "message": "RF Power"
+    },
+    "initialSetupVTXState": {
+        "message": "State"
+    },
+    "initialSetupVTXStateValueEnabled": {
+        "message": "Enabled"
+    },
+    "initialSetupVTXStateValueDisabled": {
+        "message": "Disabled"
+    },
+    
     "initialSetupAttitude": {
         "message": "$1 deg"
     },

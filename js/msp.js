@@ -52,6 +52,8 @@ var MSP_codes = {
     MSP_SET_BLACKBOX_CONFIG:     81,
     MSP_TRANSPONDER_CONFIG:      82,
     MSP_SET_TRANSPONDER_CONFIG:  83,
+    MSP_VTX:                     88,
+    MSP_SET_VTX:                 89,
 
     MSP_LED_STRIP_MODECOLOR:     127,
     MSP_SET_LED_STRIP_MODECOLOR: 221,
@@ -448,6 +450,22 @@ var MSP = {
                 offset += 1;
                 BATTERY_STATE.mah_drawn = data.getUint16(offset, 1);
                 offset += 2;
+                break;
+            case MSP_codes.MSP_VTX:
+                var offset = 0;
+                var flags = data.getUint8(offset++, 1);
+                
+                VTX.supported = bit_check(flags, 0);
+                
+                VTX_STATE.enabled = bit_check(flags, 1);
+                VTX_STATE.channel = data.getUint8(offset++, 1);
+                VTX_STATE.band = data.getUint8(offset++, 1);
+                VTX_STATE.rfPower = data.getUint8(offset++, 1);
+
+                VTX_CONFIG.channel = data.getUint8(offset++, 1);
+                VTX_CONFIG.band = data.getUint8(offset++, 1);
+                VTX_CONFIG.rfPower = data.getUint8(offset++, 1);
+                VTX_CONFIG.enabledOnBoot = data.getUint8(offset++, 1);
                 break;
 
             case MSP_codes.MSP_RC_TUNING:

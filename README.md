@@ -69,7 +69,7 @@ There is an IRC channel for Cleanflight, here: irc://irc.freenode.net/#cleanflig
 Support for Baseflight Configurator can also be found on IRC, here: irc://irc.freenode.net/#multiwii
 
 ### Slack Channel
-There is an Slack channel for Cleanflight, here: https://clean-flight.slack.com/signup
+There is an Slack channel for Cleanflight, here: https://clean-flight-join.herokuapp.com/
 
 ## Technical details
 

@@ -25,7 +25,11 @@ TABS.power.initialize = function (callback) {
     }
     
     function load_amperage_meter_configs() {
-        MSP.send_message(MSP_codes.MSP_AMPERAGE_METER_CONFIG, false, false, load_voltage_meter_configs);
+        MSP.send_message(MSP_codes.MSP_AMPERAGE_METER_CONFIG, false, false, load_voltage_meters);
+    }
+
+    function load_voltage_meters() {
+        MSP.send_message(MSP_codes.MSP_VOLTAGE_METERS, false, false, load_voltage_meter_configs);
     }
 
     function load_voltage_meter_configs() {

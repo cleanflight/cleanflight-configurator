@@ -1078,17 +1078,32 @@
     "transponderInformation": {
         "message": "Transponders systems allow race organizers to time your laps.  The transponder is fitted to your aircraft and when your aircraft passes the timing gate the track-side receiver registers your code and records your laptime.  When fitting an IR based transponder your should ensure that it points outward from your aircraft towards the track-side receivers and that the light beam is not obstructed by your airframe, battery-straps, cables, propellers, etc."
     },
-    "transponderConfiguration": {
-        "message": "Configuration"
+    "transponderTypeIlap": {
+        "message": "iLap"
     },
-    "transponderData": {
+    "transponderTypeArcitimer": {
+        "message": "aRCiTimer"
+    },
+    "transponderConfigurationIlap": {
+        "message": "Configuration iLap"
+    },
+    "transponderConfigurationArcitimer": {
+        "message": "Configuration aRCiTimer"
+    },
+    "transponderDataIlap": {
         "message": "Data"
     },
-    "transponderDataHelp": {
+    "transponderDataArcitimer": {
+        "message": "Transponder ID"
+    },
+    "transponderDataHelpIlap": {
         "message": "Hexadecimal digits only, 0-9, A-F"
     },
+    "transponderArciTimerHelp": {
+        "message": "For more information please visit <a href='http://www.arcitimer.com/'>aRCiTimer site</a>"
+    },
     "transponderButtonSave": {
-        "message": "Save"
+	  "message": "Save and Reboot"
     },
     "transponderDataInvalid": {
         "message": "Transponder data is <span style=\"color: red\">invalid</span>"

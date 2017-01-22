@@ -1190,7 +1190,6 @@ var MSP = {
                 }
                 break;
             case MSP_codes.MSP_TRANSPONDER_TYPE:
-                console.log(data);
                 var offset = 0;
                 TRANSPONDER.type = [];
                 var bytesRemaining = data.byteLength - offset; 

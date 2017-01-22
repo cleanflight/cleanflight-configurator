@@ -1846,5 +1846,9 @@
     },
     "osdLayoutEepromSaved": {
         "message": "EEPROM <span style=\"color: #57a929\">saved</span>"
+    },
+    "osdElement_averageSystemLoad": {
+        "message": "CPU Usage (FC)"
     }
+
 }

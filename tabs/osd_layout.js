@@ -338,6 +338,11 @@ OSD.constants = {
             name: 'vtxRfPower',
             example_value: '0' 
         },
+        {
+            id: 19,
+            name: 'averageSystemLoad',
+            example_value: '100%'
+        },
     ],
 };
 

@@ -4,7 +4,7 @@
     width: calc(100% - 20px);
 }
 
-.tab-transponder .text input {
+.tab-transponder .text input, .tab-transponder .radio input {
     width: 100px;
     padding-left: 3px;
     height: 20px;
@@ -17,13 +17,18 @@
     font-weight: normal;
 }
 
+.tab-transponder .radio input {
+    width: 40px;
+    height: 22px;
+}
+
 .tab-transponder .text .disabled {
     width: 43px;
     padding: 0px 5px;
     background-color: #ececec;
 }
 
-.tab-transponder .text span {
+.tab-transponder .text span, .tab-transponder .radio span {
     margin-left: 0px;
 }
 
@@ -35,7 +40,7 @@
     margin: 0px;
 }
 
-.tab-transponder .text
+.tab-transponder .text, .tab-transponder .radio
  {
     margin-bottom: 5px;
     clear: left;
@@ -45,7 +50,7 @@
     float: left;
 }
 
-.tab-transponder .text:last-child {
+.tab-transponder .text:last-child, .tab-transponder .radio:last-child {
     border-bottom: none;
     padding-bottom: 0px;
     margin-bottom: 0px;
@@ -54,6 +59,12 @@
 .tab-transponder .textspacer {
     float: left;
     width: 115px;
+    height: 21px;
+}
+
+.tab-transponder .textspacer-small {
+    float: left;
+    width: 40px;
     height: 21px;
 }
 
@@ -72,4 +83,10 @@
 
 .tab-transponder.transponder-supported .require-transponder-supported {
     display: block;
+}
+
+.tab-transponder .options select {
+    width: 100px;
+    height: 20px;
+    border: 1px solid silver;
 }

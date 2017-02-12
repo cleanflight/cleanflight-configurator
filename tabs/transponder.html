@@ -4,7 +4,7 @@
         <div class="cf_doc_version_bt">
             <a id="button-documentation" href="https://github.com/cleanflight/cleanflight/releases" target="_blank"></a>
         </div>
-        
+
         <div class="require-transponder-unsupported note">
             <div class="note_spacer">
                 <p i18n="transponderNotSupported"></p>
@@ -12,41 +12,103 @@
         </div>
 
         <div class="require-transponder-supported">
-            
+
             <div class="note" style="margin-bottom: 20px;">
                 <div class="note_spacer">
                     <p i18n="transponderHelp"></p>
                 </div>
             </div>
-            
-            <div class="gui_box grey">
+
+	        <div class="gui_box grey">
+		        <div class="gui_box_titlebar">
+			        <div class="spacer_box_title" i18n="transponderConfigurationType"></div>
+		        </div>
+		        <div class="spacer_box">
+			        <div class="radio transponderType">
+				        <div class="textspacer-small" >
+					        <input id="transponder_type_arcitimer" type="radio" name="type" value="0" spellcheck="false"/>
+				        </div>
+				        <label for="transponder_type_arcitimer"><span i18n="transponderTypeArcitimer"></span>
+				        </label>
+			        </div>
+			        <div class="radio transponderType">
+				        <div class="textspacer-small" >
+					        <input id="transponder_type_ilap" type="radio" name="type" value="1" spellcheck="false"/>
+				        </div>
+				        <label for="transponder_type_ilap"><span i18n="transponderTypeIlap"></span>
+				        </label>
+			        </div>
+		        </div>
+	        </div>
+
+            <div id="transponderConfigurationIlap" class="gui_box grey">
                 <div class="gui_box_titlebar">
-                    <div class="spacer_box_title" i18n="transponderConfiguration"></div>
+                    <div class="spacer_box_title" i18n="transponderConfigurationIlap"></div>
                 </div>
                 <div class="spacer_box">
                     <div class="text transponderData">
                         <div class="textspacer" >
-                            <input type="text" name="data" spellcheck="false"/>
+                            <input id="transponder_data_ilap" type="text" name="data_ilap" spellcheck="false"/>
                         </div>
-                        <label for="failsafe_feature_new"><span i18n="transponderData"></span>
+                        <label for="transponder_data_ilap"><span i18n="transponderDataIlap"></span>
                         </label>
-                        <div class="helpicon cf_tip" i18n_title="transponderDataHelp"></div>
+                        <div class="helpicon cf_tip" i18n_title="transponderDataHelpIlap"></div>
                     </div>
                 </div>
             </div>
+
+	        <div id="transponderConfigurationArcitimer" class="gui_box grey">
+		        <div class="gui_box_titlebar">
+			        <div class="spacer_box_title" i18n="transponderConfigurationArcitimer"></div>
+		        </div>
+		        <div class="spacer_box">
+			        <div class="text transponderData">
+				        <div class="textspacer options">
+
+					        <select id="transponder_data" name="data_arcitimer" spellcheck="false">
+								<option value="E00370FC0FFE07E0FF">ID 1</option>
+						        <option value="007C003EF800FC0FFE">ID 2</option>
+						        <option value="F8811FF8811FFFC7FF">ID 3</option>
+						        <option value="007C003EF81F800FFE">ID 4</option>
+						        <option value="F00FFF00FFF00FF0FF">ID 5</option>
+						        <option value="007CF0C1071F7C00F0">ID 6</option>
+						        <option value="E003F03F00FF03F0C1">ID 7</option>
+						        <option value="00FC0FFE071F3E00FE">ID 8</option>
+						        <option value="E083BFF00F9E38C0FF">ID 9</option>
+					        </select>
+				        </div>
+				        <label for="transponder_data">
+					        <span i18n="transponderDataArcitimer"></span>
+				        </label>
+				        <div class="note_spacer">
+				        </div>
+				        <div class="note" style="margin-bottom: 20px;">
+					        <div class="note_spacer">
+						        <p i18n="transponderArciTimerHelp"></p>
+					        </div>
+				        </div>
+			        </div>
+		        </div>
+	        </div>
+
+
             <div class="clear-both"></div>
         </div>
-        
+
         <div class="note">
             <div class="note_spacer">
                 <p i18n="transponderInformation"></p>
             </div>
         </div>
-        
+
     </div>
     <div class="content_toolbar require-transponder-supported">
-        <div class="btn save_btn">
+        <div class="btn save_btn save_no_reboot">
             <a class="save" href="#" i18n="transponderButtonSave"></a>
         </div>
+
+	    <div class="btn save_btn save_reboot">
+		    <a class="save" href="#" i18n="transponderButtonSaveReboot"></a>
+	    </div>
     </div>
 </div>

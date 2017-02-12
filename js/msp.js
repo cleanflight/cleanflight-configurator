@@ -55,6 +55,9 @@ var MSP_codes = {
     MSP_VTX:                     88,
     MSP_SET_VTX:                 89,
 
+    MSP_SET_TRANSPONDER_TYPE:    99,
+    MSP_TRANSPONDER_TYPE:        98,
+
     MSP_LED_STRIP_MODECOLOR:     127,
     MSP_SET_LED_STRIP_MODECOLOR: 221,
     
@@ -277,7 +280,7 @@ var MSP = {
     },
     process_data: function (code, message_buffer, message_length) {
         var data = new DataView(message_buffer, 0); // DataView (allowing us to view arrayBuffer as struct/union)
-
+       
         if (!this.unsupported) switch (code) {
             case MSP_codes.MSP_IDENT:
                 console.log('Using deprecated msp command: MSP_IDENT');
@@ -454,9 +457,9 @@ var MSP = {
             case MSP_codes.MSP_VTX:
                 var offset = 0;
                 var flags = data.getUint8(offset++, 1);
-                
+
                 VTX.supported = bit_check(flags, 0);
-                
+
                 VTX_STATE.enabled = bit_check(flags, 1);
                 VTX_STATE.channel = data.getUint8(offset++, 1);
                 VTX_STATE.band = data.getUint8(offset++, 1);
@@ -1186,8 +1189,19 @@ var MSP = {
                     TRANSPONDER.data.push(data.getUint8(offset++));
                 }
                 break;
+            case MSP_codes.MSP_TRANSPONDER_TYPE:
+                var offset = 0;
+                TRANSPONDER.type = [];
+                var bytesRemaining = data.byteLength - offset; 
+                for (var i = 0; i < bytesRemaining; i++) {
+                    TRANSPONDER.type.push(data.getUint8(offset++));
+                }
+                break;
             case MSP_codes.MSP_SET_TRANSPONDER_CONFIG:
                 console.log("Transponder config saved");
+                break;
+            case MSP_codes.MSP_SET_TRANSPONDER_TYPE:
+                console.log("Transponder type config saved");
                 break;
             case MSP_codes.MSP_SET_MODE_RANGE:
                 console.log('Mode range saved');
@@ -1597,6 +1611,11 @@ MSP.crunch = function (code) {
         case MSP_codes.MSP_SET_TRANSPONDER_CONFIG:
             for (var i = 0; i < TRANSPONDER.data.length; i++) {
                 buffer.push(TRANSPONDER.data[i]);
+            }
+            break;
+        case MSP_codes.MSP_SET_TRANSPONDER_TYPE: 
+            for (var i = 0; i < TRANSPONDER.type.length; i++) {
+                buffer.push(TRANSPONDER.type[i]);
             }
             break;
 

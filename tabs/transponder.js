@@ -1,5 +1,10 @@
 'use strict';
 
+var transponderType = {
+    0 : 'arcitimer',
+    1 : 'ilap',
+};
+
 TABS.transponder = {
     available: false
 };
@@ -61,15 +66,15 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
         $(".tab-transponder")
             .toggleClass("transponder-supported", TABS.transponder.available && TRANSPONDER.supported);
 
-
         if (TABS.transponder.available) {
-            var type = TRANSPONDER.type[0] ? 'ilap' : 'arcitimer';
-            $("input[name=type][value='" + type + "']").prop("checked", true);
-            toogleTimerType(type);
+            var originalType = TRANSPONDER.type[0];
+
+            $("input[name=type][value='" + (TRANSPONDER.type[0]) + "']").prop("checked", true);
+            toogleTimerType(TRANSPONDER.type[0], originalType);
 
             $("input[name=type]").change(
                 function () {
-                    toogleTimerType($(this).val());
+                    toogleTimerType($(this).val(), originalType);
                 }
             );
 
@@ -82,7 +87,7 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 
             $('a.save').click(function () {
 
-                if ($("input[name=type]:checked").val() == 'arcitimer') {
+                if ($("input[name=type]:checked").val() == 0) {
                     switch ($('select[name="data_arcitimer"]').val()) {
                         default:
                         case 'E00370FC0FFE07E0FF':
@@ -147,12 +152,13 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 
                 function save_to_eeprom() {
                     GUI.log(chrome.i18n.getMessage('transponderEepromSaved'));
-                    MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, reboot);
-                }
-
-                function reboot() {
-                    GUI.tab_switch_cleanup(function () {
-                        MSP.send_message(MSP_codes.MSP_SET_REBOOT, false, false, reinitialize);
+                    MSP.send_message(MSP_codes.MSP_EEPROM_WRITE, false, false, function(){
+                        GUI.log(chrome.i18n.getMessage('transponderEepromSaved'));
+                        if(TRANSPONDER.type[0] != originalType){
+                            GUI.tab_switch_cleanup(function () {
+                                MSP.send_message(MSP_codes.MSP_SET_REBOOT, false, false, reinitialize);
+                            });
+                        }
                     });
                 }
 
@@ -179,11 +185,19 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
             }
         }
 
-        function toogleTimerType(activeTimerType) {
+        function toogleTimerType(type, originalType) {
+            if(type != originalType){
+               $('.save_no_reboot').hide();
+               $('.save_reboot').show();
+            }else{
+                $('.save_no_reboot').show();
+                $('.save_reboot').hide();
+            }
+
             $('#transponderConfigurationIlap').hide();
             $('#transponderConfigurationArcitimer').hide();
 
-            var type = activeTimerType.charAt(0).toUpperCase() + activeTimerType.slice(1);
+            var type = transponderType[type].charAt(0).toUpperCase() + transponderType[type].slice(1);
             $('#transponderConfiguration' + type).show();
         }
 

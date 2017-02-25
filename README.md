@@ -1,41 +1,39 @@
-# Betaflight Configurator
+# Cleanflight Configurator
 
-![Betaflight](http://static.rcgroups.net/forums/attachments/6/1/0/3/7/6/a9088900-228-bf_logo.jpg)
+Cleanflight Configurator is a crossplatform configuration tool for the [Cleanflight](http://cleanflight.com/) flight control system.
 
-Betaflight Configurator is a crossplatform configuration tool for the Betaflight flight control system.
+It runs as an app within Google Chrome and allows you to configure the Cleanflight software running on any [supported Cleanflight target](https://github.com/cleanflight/cleanflight/blob/master/docs/Boards.md).
 
-It runs as an app within Google Chrome and allows you to configure the Betaflight software running on any [supported Betaflight target](https://github.com/betaflight/betaflight/tree/master/src/main/target).
+Various types of aircraft are supported by the tool and by cleanflight, e.g. quadcopters, hexacopters, octocopters and fixed-wing aircraft.
 
-Various types of aircraft are supported by the tool and by Betaflight, e.g. quadcopters, hexacopters, octocopters and fixed-wing aircraft.
+[![available in the Chrome web store](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/cleanflight-configurator/enacoimjcgeinfnnnpajinjgmkahmfgb)
 
-## Authors
+## Project History
 
-Betaflight Configurator is a [fork](#credits) of the Cleanflight Configurator with support for Betaflight instead of Cleanflight.
+Cleanflight Configurator was originally a [fork](#credits) of Baseflight Configurator with support for Cleanflight instead of Baseflight.
 
-This configurator is the only configurator with support for Betaflight specific features. It will likely require that you run the latest firmware on the flight controller.
-If you are experiencing any problems please make sure you are running the [latest firmware version](https://github.com/betaflight/betaflight/releases/).
+This configurator is the only configurator with support for Cleanflight specific features. It will likely require that you run the latest firmware on the flight controller.
+If you are experiencing any problems please make sure you are running the [latest firmware version](https://github.com/cleanflight/cleanflight/releases/latest).
 
 ## Installation
 
 ### Via chrome webstore
 
-[![available in the Chrome web store](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/betaflight-configurator/kdaghagfopacdngbohiknlhcocjccjao)
-
-1. Visit [Chrome web store](https://chrome.google.com/webstore/detail/betaflight-configurator/kdaghagfopacdngbohiknlhcocjccjao)
+1. Visit [Chrome web store](https://chrome.google.com/webstore/detail/cleanflight-configurator/enacoimjcgeinfnnnpajinjgmkahmfgb)
 2. Click **+ Free**
 
-Please note - the application will automatically update itself when new versions are released.  Please ensure you maintain configuration backups as described in the Betaflight documentation.
+Please note - the application will automatically update itself when new versions are released.  Please ensure you maintain configuration backups as described in the Cleanflight documentation.
 
 ### Alternative way
 
 1. Clone the repo to any local directory or download it as zip
 2. Start Chromium or Google Chrome and go to tools -> extension
 3. Check the "Developer mode" checkbox
-4. Click on load unpacked extension and point it to the Betaflight Configurator directory (for example D:/betaflight-configurator)
+4. Click on load unpacked extension and point it to the Cleanflight Configurator directory (for example D:/cleanflight-configurator)
 
 ## How to use
 
-You can find the Betaflight Configurator icon in your application tab "Apps"
+You can find the Cleanflight Configurator icon in your application tab "Apps"
 
 ## Notes
 
@@ -57,13 +55,17 @@ If you need help your please use the multiwii or rcgroups forums or visit the IR
 
 ### Issue trackers
 
-For Betaflight configurator issues raise them here
+For Cleanflight configurator issues raise them here
 
-https://github.com/betaflight/betaflight-configurator/issues
+https://github.com/cleanflight/cleanflight-configurator/issues
 
-For Betaflight firmware issues raise them here
+For Cleanflight firmware issues raise them here
 
-https://github.com/betaflight/betaflight/issues
+https://github.com/cleanflight/cleanflight/issues
+
+### IRC Channel
+
+There is an IRC channel for Cleanflight, here: irc://irc.freenode.net/#cleanflight
 
 ## Technical details
 
@@ -73,8 +75,8 @@ The configurator is based on chrome.serial API running on Google Chrome/Chromium
 
 We accept clean and reasonable patches, submit them!
 
-## Credits
+## Authors
 
+Dominic Clifton/hydra - maintainer of the Cleanflight firmware and configurator. 
 ctn - primary author and maintainer of Baseflight Configurator from which Cleanflight Configurator project was forked.
 
-Hydra -  author and maintainer of Cleanflight Configurator from which this project was forked.

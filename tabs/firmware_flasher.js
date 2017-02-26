@@ -42,7 +42,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             var unsortedTargets = [];
             releaseData.forEach(function(release){
                 release.assets.forEach(function(asset){
-                    var targetFromFilenameExpression = /betaflight_([\d.]+)?_?([^.]+)\.(.*)/;
+                    var targetFromFilenameExpression = /cleanflight_([\d.]+)?_?([^.]+)\.(.*)/;
                     var match = targetFromFilenameExpression.exec(asset.name);
 
                     if ((!showDevReleases && release.prerelease) || !match) {
@@ -65,7 +65,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                 var version = matchVersionFromTag[1];
 
                 release.assets.forEach(function(asset){
-                    var targetFromFilenameExpression = /betaflight_([\d.]+)?_?([^.]+)\.(.*)/;
+                    var targetFromFilenameExpression = /cleanflight_([\d.]+)?_?([^.]+)\.(.*)/;
                     var match = targetFromFilenameExpression.exec(asset.name);
 
                     if ((!showDevReleases && release.prerelease) || !match) {
@@ -126,7 +126,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             chrome.storage.local.get(['releaseDataLastUpdate', 'releaseData'], function (result) {
                 var releaseDataTimestamp = $.now();
                 if (!result.releaseData || !result.releaseDataLastUpdate || releaseDataTimestamp - result.releaseDataLastUpdate > 3600 * 1000) {
-                    $.get('https://api.github.com/repos/betaflight/betaflight/releases', function (releaseData) {
+                    $.get('https://api.github.com/repos/cleanflight/cleanflight/releases', function (releaseData) {
                         GUI.log("Loaded release information from GitHub.");
 
                         chrome.storage.local.set({'releaseDataLastUpdate': releaseDataTimestamp, 'releaseData': releaseData}, function () {});

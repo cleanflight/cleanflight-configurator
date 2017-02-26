@@ -16,7 +16,6 @@
     border-top: 1px dotted silver;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-image: url(../images/arrow.svg);
     background-repeat: no-repeat;
     background-position: 0px 8px;
     background-size: 12px;
@@ -25,10 +24,6 @@
 .tab-help li span {
     margin-left: 17px;
     display:block;
-}
-
-.tab-help li span a {
-    color: #ffbb00;
 }
 
 .tab-help .subline {

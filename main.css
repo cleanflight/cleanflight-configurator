@@ -53,17 +53,13 @@ a.disabled {
 
 .helpicon:hover {
     opacity: 0.9;
-    background-image: url(images/icons/cf_icon_info_green.svg);
     transition: none;  
 }
 
 .cf_doc_version_bt a {
     padding: 1px 9px 1px 9px;
     margin-top: -45px;
-    background-color: #ffbb00;
     border-radius: 3px;
-    border: 1px solid #e8b423;
-    color: #000;
     float: right;
     font-family: 'open_sansbold', Arial;
     font-size: 10px;
@@ -75,7 +71,6 @@ a.disabled {
 }
 
 .cf_doc_version_bt a:hover {
-    background-color: #fecb3f;
     transition: all ease 0.2s;
 }
 
@@ -122,7 +117,6 @@ input[type="number"]::-webkit-inner-spin-button {
     float: left;
     height: 70px;
     z-index: 0;
-    background-image: url("images/light-wide-2.svg");
     background-repeat: no-repeat;
     width: 340px;
     background-position: left center;
@@ -242,8 +236,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .gyroicon.active {
-    background-image: url(images/icons/sensor_gyro_on.png);
-    color: #61d514;
     color: #818181;
 }
 
@@ -261,8 +253,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .accicon.active {
-    background-image: url(images/icons/sensor_acc_on.png);
-    color: #61d514;
     color: #818181;
 }
 
@@ -280,7 +270,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .magicon.active {
-    background-image: url(images/icons/sensor_mag_on.png);
     color: #818181;
 }
 
@@ -298,7 +287,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .gpsicon.active {
-    background-image: url(images/icons/sensor_sat_on.png);
     color: #818181;
 }
 
@@ -316,7 +304,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .baroicon.active {
-    background-image: url(images/icons/sensor_baro_on.png);
     color: #818181;
 }
 
@@ -334,7 +321,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .sonaricon.active {
-    background-image: url(images/icons/sensor_sonar_on.png);
     color: #818181;
 }
 
@@ -361,7 +347,7 @@ input[type="number"]::-webkit-inner-spin-button {
     height: 20px;
     margin-top: 10px;
     margin-right: 10px;
-    background-image: url('./images/CF_settings_white.svg');
+    background-image: url('./images/settings_white.svg');
     background-position: -1px -1px;
     background-repeat: no-repeat;
     opacity: 0.4;
@@ -450,7 +436,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
 #log a {
     font-weight: regular;
-    color: #ffbb00;
 }
 
 #log a:hover {
@@ -482,7 +467,6 @@ input[type="number"]::-webkit-inner-spin-button {
     float: left;
     height: calc(100% - 150px);
     width: 200px;
-    border-right: 4px solid #ffbb00;
     background-color: #2e2e2e;
     transition: all 0.2s;
 
@@ -555,16 +539,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #tabs li.active a {
-    background-color: #ffbb00;
-    color: #000;
     transition: none;
-    text-shadow: 0px 1px rgba(255, 255, 255, 0.45);
-
 }
 
 #tabs li.active a:hover {
     cursor: default;
-    background-color: #ffbb00;
 }
 
 .tabicon {
@@ -952,7 +931,6 @@ dialog {
 
 /* Tab Title */
 .tab_title {
-    border-bottom: 1px solid #ffbb00;
     font-size: 20px;
     line-height: 24px;
     height: 30px;
@@ -1001,10 +979,7 @@ dialog {
     margin-top: 0px;
     margin-bottom: 0px;
     margin-right: 20px;
-    background-color: #ffbb00;
     border-radius: 3px;
-    border: 1px solid #dba718;
-    color: #000;
     float: right;
     font-family: 'open_sansbold', Arial;
     font-size: 12px;
@@ -1024,7 +999,6 @@ dialog {
 }
 
 .content_toolbar .btn a:active {
-    background-color: #ffbb00;
     transition: all ease 0.0s;
     box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.35);
 }
@@ -1165,7 +1139,6 @@ dialog {
 }
 
 .gui_note .gui_box_titlebar {
-    background-color: #ffbb00;
     background-image: linear-gradient(-45deg, rgba(255, 255, 255, .3) 10%, transparent 10%, transparent 20%,
         rgba(255, 255, 255, .3) 20%, rgba(255, 255, 255, .3) 30%, transparent 30%, transparent 40%,
         rgba(255, 255, 255, .3) 40%, rgba(255, 255, 255, .3) 50%, transparent 50%, transparent 60%,
@@ -1221,9 +1194,7 @@ dialog {
     margin-top: 9px;
     margin-bottom: 0px;
     margin-right: 20px;
-    background-color: #ffbb00;
     border-radius: 3px;
-    border: 1px solid #dba718;
     color: #000;
     float: right;
     font-family: 'open_sansbold', Arial;
@@ -1255,9 +1226,7 @@ dialog {
 .default_btn a {
     padding: 5px 0px 5px 0px;
     text-align: center;
-    background-color: #ffbb00;
     border-radius: 4px;
-    border: 1px solid #dba718;
     color: #000;
     font-family: 'open_sanssemibold', Arial;
     font-size: 12px;
@@ -1313,10 +1282,8 @@ dialog {
 }
 
 .small a:hover {
-    background-color: #ffbb00;
     color: #000;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
-    border: 1px solid #ffbb00;
     transition: all ease 0.2s;
 }
 
@@ -1327,18 +1294,10 @@ dialog {
 }
 
 .green a {
-    background-color: #ffbb00;
-    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
-    color: #000;
-    border: 1px solid #dba718;
     transition: all ease 0.2s;
 }
 
 .green a:hover {
-    background-color: #ffcc3f;
-    border: 1px solid #dba718;
-    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
-    color: #000;
     transition: all ease 0.2s;
 }
 
@@ -1381,7 +1340,6 @@ dialog {
 }
 
 .gps_true {
-    background-color: #ffbb00;
     padding: 1px 7px 2px 7px;
     border-radius: 3px;
     color: #FFFFFF;
@@ -1417,8 +1375,6 @@ dialog {
 }
 
 .connect_b a.connect {
-    background-color: #ffbb00;
-    border: 1px solid #dba718;
     background-image: url(images/icons/cf_icon_usb2_white.svg);
     background-repeat: no-repeat;
     background-size: 44px;
@@ -1532,7 +1488,6 @@ dialog {
 
 
 .dataflash-free_global {
-    background-color: #ffbb00;
     border-radius: 4px;
 }
 
@@ -1647,7 +1602,6 @@ dialog {
     position: relative;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.20);
     border-radius: 0px;
-    background-color: #ffbb00;
     /* border-radius: 4px; */
     margin-top: 0px;
 }
@@ -1711,9 +1665,6 @@ button {
 }
 
 button.active {
-    background-color: #ffbb00;
-    border: 1px solid #dba718;
-    color: #000;
 }
 
 .jBox-Tooltip {

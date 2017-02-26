@@ -12,6 +12,10 @@ TABS.landing.initialize = function (callback) {
         // translate to user-selected language
         localize();
 
+        $('div.welcome a, div.sponsors a').click(function () {
+            googleAnalytics.sendEvent('ExternalUrls', 'Click', $(this).prop('href'));
+        });
+        
         // load changelog content
         $('#changelog .log').load('./changelog.html');
 

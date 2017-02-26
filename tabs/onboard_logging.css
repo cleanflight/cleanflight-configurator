@@ -107,7 +107,6 @@
 
 .tab-onboard_logging .dataflash-used,
 .tab-onboard_logging .sdcard-other {
-    background-color: #ffbb00;
     border-radius: 4px;
 }
 
@@ -263,10 +262,7 @@
     margin-top: 8px;
     margin-bottom: 8px;
     margin-right: 10px;
-    background-color: #ffbb00;
     border-radius: 3px;
-    border: 1px solid #dba718;
-    color: #000;
     font-family: 'open_sansbold', Arial;
     font-size: 12px;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
@@ -279,7 +275,6 @@
     line-height: 28px;
 }
 .tab-onboard_logging .regular-button:hover {
-    background-color: #ffcc3e;
     transition: all ease 0.2s;
 }
 .tab-onboard_logging .regular-button:active {

@@ -503,7 +503,7 @@ TABS.motors.initialize = function (callback) {
                 $('.motor-' + i + ' .indicator', motors_wrapper).css({
                     'margin-top' : margin_top + 'px',
                     'height' : height + 'px',
-                    'background-color' : 'rgba(255,187,0,1.'+ color +')'
+                    'background-color' : 'rgba(89,170,41,1.'+ color +')'
                 });
             }
 
@@ -515,7 +515,7 @@ TABS.motors.initialize = function (callback) {
                     color = parseInt(data * 0.009);
 
                 $('.servo-' + i + ' .label', servos_wrapper).text(SERVO_DATA[i]);
-                $('.servo-' + i + ' .indicator', servos_wrapper).css({'margin-top' : margin_top + 'px', 'height' : height + 'px', 'background-color' : 'rgba(255,187,0,1'+ color +')'});
+                $('.servo-' + i + ' .indicator', servos_wrapper).css({'margin-top' : margin_top + 'px', 'height' : height + 'px', 'background-color' : 'rgba(89,170,41,1'+ color +')'});
             }
             //keep the following here so at least we get a visual cue of our motor setup
             update_arm_status();                        

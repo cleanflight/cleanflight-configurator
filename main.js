@@ -1,5 +1,13 @@
 'use strict';
 
+// Google Analytics
+var googleAnalyticsService = analytics.getService('ice_cream_app');
+var googleAnalytics = googleAnalyticsService.getTracker(atob("VUEtNTI4MjA5MjAtMQ=="));
+var googleAnalyticsConfig = false;
+googleAnalyticsService.getConfig().addCallback(function (config) {
+    googleAnalyticsConfig = config;
+});
+
 $(document).ready(function () {
     // translate to user-selected language
     localize();
@@ -116,6 +124,7 @@ $(document).ready(function () {
 
                 function content_ready() {
                     GUI.tab_switch_in_progress = false;
+                    googleAnalytics.sendAppView(GUI.active_tab);
                 }
 
                 switch (tab) {
@@ -201,6 +210,8 @@ $(document).ready(function () {
             el.after('<div id="options-window"></div>');
 
             $('div#options-window').load('./tabs/options.html', function () {
+                googleAnalytics.sendAppView('Options');
+
                 // translate to user-selected language
                 localize();
 
@@ -211,7 +222,8 @@ $(document).ready(function () {
                     }
 
                     $('div.notifications input').change(function () {
-                        var check = $(this).is(':checked');
+                        var checked = $(this).is(':checked');
+                        googleAnalytics.sendEvent('Settings', 'Notifications', checked);
 
                         chrome.storage.local.set({'update_notify': check});
                     });
@@ -224,6 +236,7 @@ $(document).ready(function () {
 
                     $('div.permanentExpertMode input').change(function () {
                         var checked = $(this).is(':checked');
+                        googleAnalytics.sendEvent('Settings', 'PermanentExpertMode', checked);
 
                         chrome.storage.local.set({'permanentExpertMode': checked});
 
@@ -233,6 +246,19 @@ $(document).ready(function () {
                         }
 
                     }).change();
+                    
+                    
+                    // if tracking is enabled, check the statistics checkbox
+                    if (googleAnalyticsConfig.isTrackingPermitted()) {
+                        $('div.statistics input').prop('checked', true);
+                    }
+
+                    $('div.statistics input').change(function () {
+                        var checked = $(this).is(':checked');
+                        googleAnalytics.sendEvent('Settings', 'GoogleAnalytics', checked);
+                        googleAnalyticsConfig.setTrackingPermitted(check);
+                    });
+                    
                 });
 
                 function close_and_cleanup(e) {

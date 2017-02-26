@@ -243,9 +243,7 @@ GUI_control.prototype.tab_switch_cleanup = function (callback) {
 GUI_control.prototype.switchery = function() {
     $('.togglesmall').each(function(index, elem) {
         var switchery = new Switchery(elem, {
-          size: 'small',
-          color: '#ffbb00',
-          secondaryColor: '#c4c4c4'
+          size: 'small'
         });
         $(elem).on("change", function (evt) {
             switchery.setPosition();
@@ -255,8 +253,6 @@ GUI_control.prototype.switchery = function() {
 
     $('.toggle').each(function(index, elem) {
         var switchery = new Switchery(elem, {
-            color: '#ffbb00',
-            secondaryColor: '#c4c4c4'
         });
         $(elem).on("change", function (evt) {
             switchery.setPosition();
@@ -266,9 +262,7 @@ GUI_control.prototype.switchery = function() {
 
     $('.togglemedium').each(function(index, elem) {
         var switchery = new Switchery(elem, {
-            className: 'switcherymid',
-            color: '#ffbb00',
-            secondaryColor: '#c4c4c4'
+            className: 'switcherymid'
          });
          $(elem).on("change", function (evt) {
              switchery.setPosition();
@@ -284,8 +278,14 @@ GUI_control.prototype.content_ready = function (callback) {
     if (CONFIGURATOR.connectionValid) {
         // Build link to in-use CF version documentation
         var documentationButton = $('div#content #button-documentation');
-        documentationButton.html("Wiki");
-        documentationButton.attr("href","https://github.com/betaflight/betaflight/wiki");
+        if (CONFIG.flightControllerIdentifier == 'BTFL') {
+            documentationButton.html("Wiki");
+            documentationButton.attr("href","https://github.com/betaflight/betaflight/wiki");
+        }
+        if (CONFIG.flightControllerIdentifier == 'CLFL') {
+            documentationButton.html("Documentation for " + CONFIG.flightControllerVersion);
+            documentationButton.attr("href","https://github.com/cleanflight/cleanflight/tree/v{0}/docs".format(CONFIG.flightControllerVersion));
+        }
     }
 
     // loading tooltip

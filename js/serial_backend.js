@@ -193,17 +193,20 @@ function onOpen(openInfo) {
             if (semver.gte(CONFIG.apiVersion, CONFIGURATOR.apiVersionAccepted)) {
 
                 MSP.send_message(MSPCodes.MSP_FC_VARIANT, false, false, function () {
-                    if (CONFIG.flightControllerIdentifier === 'BTFL') {
+                    if (CONFIG.flightControllerIdentifier === 'BTFL' || (CONFIG.flightControllerIdentifier === 'CLFL')) {
                         MSP.send_message(MSPCodes.MSP_FC_VERSION, false, false, function () {
 
+                            googleAnalytics.sendEvent('Firmware', 'Variant', CONFIG.flightControllerIdentifier + ',' + CONFIG.flightControllerVersion);
                             GUI.log(chrome.i18n.getMessage('fcInfoReceived', [CONFIG.flightControllerIdentifier, CONFIG.flightControllerVersion]));
 
                             MSP.send_message(MSPCodes.MSP_BUILD_INFO, false, false, function () {
 
+                                googleAnalytics.sendEvent('Firmware', 'Using', CONFIG.buildInfo);
                                 GUI.log(chrome.i18n.getMessage('buildInfoReceived', [CONFIG.buildInfo]));
 
                                 MSP.send_message(MSPCodes.MSP_BOARD_INFO, false, false, function () {
 
+                                    googleAnalytics.sendEvent('Board', 'Using', CONFIG.boardIdentifier + ',' + CONFIG.boardVersion);
                                     GUI.log(chrome.i18n.getMessage('boardInfoReceived', [CONFIG.boardIdentifier, CONFIG.boardVersion]));
 
                                     MSP.send_message(MSPCodes.MSP_UID, false, false, function () {
@@ -473,7 +476,7 @@ function update_live_status() {
        if (AUX_CONFIG[i] == 'ARM') {
                if (bit_check(CONFIG.mode, i))
                        $(".armedicon").css({
-                               'background-image': 'url(images/icons/cf_icon_armed_active.svg)'
+                               'background-image': 'url(images/cf/icons/cf_icon_armed_active.svg)'
                            });
                else
                        $(".armedicon").css({
@@ -483,7 +486,7 @@ function update_live_status() {
        if (AUX_CONFIG[i] == 'FAILSAFE') {
                if (bit_check(CONFIG.mode, i))
                        $(".failsafeicon").css({
-                               'background-image': 'url(images/icons/cf_icon_failsafe_active.svg)'
+                               'background-image': 'url(images/cf/icons/cf_icon_failsafe_active.svg)'
                            });
                else
                        $(".failsafeicon").css({
@@ -507,7 +510,7 @@ function update_live_status() {
    
        if (active) {
            $(".linkicon").css({
-               'background-image': 'url(images/icons/cf_icon_link_active.svg)'
+               'background-image': 'url(images/cf/icons/cf_icon_link_active.svg)'
            });
        } else {
            $(".linkicon").css({

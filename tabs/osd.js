@@ -630,7 +630,7 @@ TABS.osd.initialize = function (callback) {
 
         // Open modal window
         OSD.GUI.jbox = new jBox('Modal', {
-            width: 600,
+            width: 800,
             height: 240,
             closeButton: 'title',
             animation: false,

@@ -450,7 +450,16 @@ button {
     font-weight: normal;    
     }
 
+/*
+.tab-osd .fontmanager {
+    width: 800px;
+}
 
+.tab-osd .fontmanagercontent {
+    display: none;
+    width: 800px;
+}
+*/
 
 
 @media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
@@ -458,3 +467,4 @@ button {
     height: calc(100% - 30px);
   }
 }
+

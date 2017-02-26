@@ -18,7 +18,6 @@
 
 .jBox-container {
 	background: #fff;
-	border:1px solid #ffbb00;
 	font-size:11px;
 	line-height:13px;
 	color:#525352;
@@ -82,8 +81,6 @@
 	background: #fff;
 	-webkit-transform: rotate(45deg);
 	transform: rotate(45deg);
-	border:1px solid #ffbb00;
-
 }
 
 .jBox-pointer-top:after {

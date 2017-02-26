@@ -208,7 +208,7 @@ OSD.initData = function() {
     alarms: [],
     display_items: [],
     last_positions: {},
-    preview_logo: true,
+    preview_logo: false,
     preview: []
   };
 };

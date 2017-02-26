@@ -40,7 +40,7 @@ $(document).ready(function () {
     chrome.storage.local.get(['lastVersionChecked', 'lastVersionAvailableOnline'], function (result) {
         if (typeof result.lastVersionChecked === undefined || ($.now() - result.lastVersionChecked) > 3600 * 1000) {
             try {
-                var url = 'https://api.github.com/repos/betaflight/betaflight-configurator/tags';
+                var url = 'https://api.github.com/repos/cleanflight/cleanflight-configurator/tags';
                 $.get(url).done(function (data) {
                     var versions = data.sort(function (v1, v2) {
                         try {

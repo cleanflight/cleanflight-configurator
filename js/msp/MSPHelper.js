@@ -882,9 +882,20 @@ MspHelper.prototype.process_data = function(dataHandler) {
                     TRANSPONDER.data.push(data.readU8());
                 }
                 break;
+			case MSPCodes.MSP_TRANSPONDER_TYPE:
+				var offset = 0;
+				TRANSPONDER.type = [];
+				var bytesRemaining = data.byteLength - offset;
+				for (var i = 0; i < bytesRemaining; i++) {
+					TRANSPONDER.type.push(data.getUint8(offset++));
+				}
+				break;
             case MSPCodes.MSP_SET_TRANSPONDER_CONFIG:
                 console.log("Transponder config saved");
                 break;
+			case MSPCodes.MSP_SET_TRANSPONDER_TYPE:
+				console.log("Transponder type config saved");
+				break;
             case MSPCodes.MSP_SET_MODE_RANGE:
                 console.log('Mode range saved');
                 break;
@@ -1120,6 +1131,10 @@ MspHelper.prototype.crunch = function(code) {
                 buffer.push8(TRANSPONDER.data[i]);
             }
             break;
+
+		case MSPCodes.MSP_SET_TRANSPONDER_TYPE:
+            buffer.push8(TRANSPONDER.type[0]);
+			break;
 
         case MSPCodes.MSP_SET_CHANNEL_FORWARDING:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

@@ -3,8 +3,7 @@
     float: left;
     width: calc(100% - 20px);
 }
-
-.tab-transponder .text input {
+.tab-transponder .text input, .tab-transponder .radio input {
     width: 100px;
     padding-left: 3px;
     height: 20px;
@@ -16,27 +15,26 @@
     font-size: 12px;
     font-weight: normal;
 }
-
+.tab-transponder .radio input {
+    width: 40px;
+    height: 22px;
+}
 .tab-transponder .text .disabled {
     width: 43px;
     padding: 0px 5px;
     background-color: #ececec;
 }
-
-.tab-transponder .text span {
+.tab-transponder .text span, .tab-transponder .radio span {
     margin-left: 0px;
 }
-
 .tab-transponder input {
     float: left;
 }
-
 .tab-transponder span {
     margin: 0px;
 }
-
-.tab-transponder .text
- {
+.tab-transponder .text, .tab-transponder .radio
+{
     margin-bottom: 5px;
     clear: left;
     padding-bottom: 5px;
@@ -44,19 +42,21 @@
     width: 100%;
     float: left;
 }
-
-.tab-transponder .text:last-child {
+.tab-transponder .text:last-child, .tab-transponder .radio:last-child {
     border-bottom: none;
     padding-bottom: 0px;
     margin-bottom: 0px;
 }
-
 .tab-transponder .textspacer {
     float: left;
     width: 115px;
     height: 21px;
 }
-
+.tab-transponder .textspacer-small {
+    float: left;
+    width: 40px;
+    height: 21px;
+}
 .tab-transponder .gui_box span {
     font-style: normal;
     font-family: 'open_sansregular', Arial;
@@ -64,12 +64,15 @@
     color: #4F4F4F;
     font-size: 11px;
 }
-
 .require-transponder-supported,
 .tab-transponder.transponder-supported .require-transponder-unsupported {
     display: none;
 }
-
 .tab-transponder.transponder-supported .require-transponder-supported {
     display: block;
+}
+.tab-transponder .options select {
+    width: 100px;
+    height: 20px;
+    border: 1px solid silver;
 }

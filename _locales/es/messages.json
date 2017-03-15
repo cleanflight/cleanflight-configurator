@@ -133,16 +133,16 @@
     },
 
     "serialPortOpened": {
-        "message": "Serial port <span class=\"message-positive\">successfully</span> opened with ID: $1"
+        "message": "Puerto serie <span class=\"message-positive\">abierto</span> con ID: $1"
     },
     "serialPortOpenFail": {
-        "message": "<span style=\"color: red\">Failed</span> to open serial port"
+        "message": "<span style=\"color: red\">Error</span> abriendo puerto serie"
     },
     "serialPortClosedOk": {
-        "message": "Serial port <span class=\"message-positive\">successfully</span> closed"
+        "message": "Puerto serie <span class=\"message-positive\">cerrado</span>"
     },
     "serialPortClosedFail": {
-        "message": "<span style=\"color: red\">Failed</span> to close serial port"
+        "message": "<span style=\"color: red\">Error</span> cerrando puerto serie"
     },
 
     "usbDeviceOpened": {

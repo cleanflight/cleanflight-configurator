@@ -182,7 +182,7 @@
         "message": "You need to <strong>upgrade</strong> your firmware before you can use the $1 tab."
     },
     "firmwareVersion": {
-        "message": "Firmware Version: <strong>$1</strong>"
+        "message": "Version del Firmware: <strong>$1</strong>"
     },
     "apiVersionReceived": {
         "message": "MultiWii API version <span class=\"message-positive\">received</span> - <strong>$1</strong>"

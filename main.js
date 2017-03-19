@@ -241,8 +241,8 @@ $(document).ready(function () {
                         chrome.storage.local.set({'permanentExpertMode': checked});
 
                         $('input[name="expertModeCheckbox"]').prop('checked', checked).change();
-                        if (BF_CONFIG) {
-                            updateTabList(BF_CONFIG.features);
+                        if (FEATURE_CONFIG) {
+                            updateTabList(FEATURE_CONFIG.features);
                         }
 
                     }).change();
@@ -388,8 +388,8 @@ $(document).ready(function () {
         }
 
         $('input[name="expertModeCheckbox"]').change(function () {
-            if (BF_CONFIG) {
-                updateTabList(BF_CONFIG.features);
+            if (FEATURE_CONFIG) {
+                updateTabList(FEATURE_CONFIG.features);
             }
         }).change();
     });

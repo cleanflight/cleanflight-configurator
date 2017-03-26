@@ -20,11 +20,16 @@ var Features = function (config) {
         {bit: 14, group: 'rxMode', mode: 'select', name: 'RX_MSP'},
         {bit: 15, group: 'rssi', name: 'RSSI_ADC'},
         {bit: 16, group: 'other', name: 'LED_STRIP'},
-        {bit: 17, group: 'other', name: 'DISPLAY', haveTip: true},
-        {bit: 19, group: 'other', name: 'BLACKBOX', haveTip: true}
+        {bit: 17, group: 'other', name: 'DISPLAY', haveTip: true}
     ];
 
-    if (semver.gte(CONFIG.apiVersion, "1.12.0")) {
+    if (semver.lt(config.apiVersion, "1.33.0")) {
+        features.push(
+            {bit: 19, group: 'other', name: 'BLACKBOX', haveTip: true}
+        );
+    }
+
+    if (semver.gte(config.apiVersion, "1.12.0")) {
         features.push(
             {bit: 20, group: 'other', name: 'CHANNEL_FORWARDING'}
         );
@@ -58,7 +63,7 @@ var Features = function (config) {
                 features.push(
                     {bit: 23, group: 'pidTuning', name: 'SUPEREXPO_RATES'}
                 );
-            } else {
+            } else if (semver.lt(config.apiVersion, "1.33.0")) {
                 features.push(
                     {bit: 23, group: 'other', name: 'SDCARD'}
                 );

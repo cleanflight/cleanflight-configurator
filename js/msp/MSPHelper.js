@@ -875,21 +875,13 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 console.log("Blackbox config saved");
                 break;
             case MSPCodes.MSP_TRANSPONDER_CONFIG:
-                TRANSPONDER.supported = (data.readU8() & 1) != 0;
+                TRANSPONDER.config = data.readU8();
                 TRANSPONDER.data = [];
                 var bytesRemaining = data.byteLength - 1;
                 for (var i = 0; i < bytesRemaining; i++) {
                     TRANSPONDER.data.push(data.readU8());
                 }
                 break;
-			case MSPCodes.MSP_TRANSPONDER_TYPE:
-				var offset = 0;
-				TRANSPONDER.type = [];
-				var bytesRemaining = data.byteLength - offset;
-				for (var i = 0; i < bytesRemaining; i++) {
-					TRANSPONDER.type.push(data.getUint8(offset++));
-				}
-				break;
             case MSPCodes.MSP_SET_TRANSPONDER_CONFIG:
                 console.log("Transponder config saved");
                 break;

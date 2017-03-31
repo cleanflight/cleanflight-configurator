@@ -1,8 +1,17 @@
 'use strict';
+
 var transponderType = {
-	0 : 'arcitimer',
-	1 : 'ilap',
+	ARCITIMER : {
+		key: 'arcitimer',
+		mask: 0x04,
+	},
+	ILAP : {
+		key: 'ilap',
+		mask: 0x02,
+	}
 };
+
+
 TABS.transponder = {
 	available: false
 };
@@ -23,15 +32,15 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 	function load_html() {
 		$('#content').load("./tabs/transponder.html", process_html);
 	}
-	// get the transponder data and a flag to see if transponder support is enabled on the FC
-	var load_config = function () {
-		MSP.send_message(MSPCodes.MSP_TRANSPONDER_TYPE, false, false, load_html);
-	};
-	MSP.send_message(MSPCodes.MSP_TRANSPONDER_CONFIG, false, false, load_config);
+
+	MSP.send_message(MSPCodes.MSP_TRANSPONDER_CONFIG, false, false, load_html);
+
 	//////////////
 	// Convert a hex string to a byte array
-	function hexToBytes(hex) {
-		for (var bytes = [], c = 0; c < hex.length; c += 2)
+	function hexToBytes(type, hex) {
+		var bytes = [];
+		bytes.push(type);
+		for (var c = 0; c < hex.length; c += 2)
 			bytes.push(~parseInt(hex.substr(c, 2), 16));
 		return bytes;
 	}
@@ -46,19 +55,46 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 		}
 		return hex.join("").toUpperCase();
 	}
+
+	function parseConfig(TRANSPONDER){
+		TRANSPONDER.supported = Boolean(TRANSPONDER.config & 0x1);
+
+		if(TRANSPONDER.config & transponderType.ARCITIMER.mask){
+			TRANSPONDER.type = transponderType.ARCITIMER;
+		}else if(TRANSPONDER.config & transponderType.ILAP.mask){
+			TRANSPONDER.type = transponderType.ILAP;
+		}else {
+			throw "Unknow transponder type";
+		}
+
+		TRANSPONDER.dataLength = (TRANSPONDER.config >> 4);
+	}
+
+
 	function process_html() {
 		// translate to user-selected language
-
 		localize();
+		parseConfig(TRANSPONDER);
+
 		$(".tab-transponder")
 			.toggleClass("transponder-supported", TABS.transponder.available && TRANSPONDER.supported);
+
 		if (TABS.transponder.available) {
-			var originalType = TRANSPONDER.type[0];
-			$("input[name=type][value='" + (TRANSPONDER.type[0]) + "']").prop("checked", true);
-			toogleTimerType(TRANSPONDER.type[0], originalType);
+
+			var originalType = TRANSPONDER.type.key;
+			$("input[name=type][value='" + (TRANSPONDER.type.key) + "']").prop("checked", true);
+
+			toogleTimerType(TRANSPONDER.type.key, originalType);
+
 			$("input[name=type]").change(
 				function () {
 					toogleTimerType($(this).val(), originalType);
+
+					//for arcitimer, 0
+					if($(this).val() == 0 && $('select[name="data_arcitimer"]').val() == null){
+						$('select[name="data_arcitimer"]').val($('select[name="data_arcitimer"] option:first').val());
+					}
+
 				}
 			);
 			var data = bytesToHex(TRANSPONDER.data);
@@ -66,7 +102,7 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 			$('input[name="data_ilap"]').prop('maxLength', data.length - 6);
 			$('select[name="data_arcitimer"]').val(data);
 			$('a.save').click(function () {
-				if ($("input[name=type]:checked").val() == 0) {
+				if ($("input[name=type]:checked").val() == transponderType.ARCITIMER.key) {
 					switch ($('select[name="data_arcitimer"]').val()) {
 						default:
 						case 'E00370FC0FFE07E0FF':
@@ -97,8 +133,8 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 							dataString = 'E083BFF00F9E38C0FF';
 							break
 					}
-					TRANSPONDER.data = hexToBytes(dataString);
-					TRANSPONDER.type = [0];
+					TRANSPONDER.data = hexToBytes(transponderType.ARCITIMER.mask, dataString);
+					TRANSPONDER.type = transponderType.ARCITIMER;
 				} else {
 					// gather data that doesn't have automatic change event bound
 					var dataString = $('input[name="data_ilap"]').val();
@@ -108,31 +144,32 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 						GUI.log(chrome.i18n.getMessage('transponderDataInvalid'));
 						return;
 					}
-					TRANSPONDER.data = hexToBytes(dataForsend);
-					TRANSPONDER.type = [1];
+					TRANSPONDER.data = hexToBytes(transponderType.ILAP.mask, dataForsend);
+					TRANSPONDER.type = transponderType.ILAP;
 				}
+
 				// send data to FC
 				//
-				function save_transponder_type() {
-					MSP.send_message(MSPCodes.MSP_SET_TRANSPONDER_TYPE, mspHelper.crunch(MSPCodes.MSP_SET_TRANSPONDER_TYPE), false, save_transponder_data);
-				}
 				function save_transponder_data() {
+					console.log(TRANSPONDER.data);
 					MSP.send_message(MSPCodes.MSP_SET_TRANSPONDER_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_TRANSPONDER_CONFIG), false, save_to_eeprom);
 				}
+
 				function save_to_eeprom() {
 					GUI.log(chrome.i18n.getMessage('transponderEepromSaved'));
 					MSP.send_message(MSPCodes.MSP_EEPROM_WRITE, false, false, function(){
 						GUI.log(chrome.i18n.getMessage('transponderEepromSaved'));
-						if(TRANSPONDER.type[0] != originalType){
+						if(TRANSPONDER.type.key != originalType){
 							GUI.tab_switch_cleanup(function () {
 								MSP.send_message(MSPCodes.MSP_SET_REBOOT, false, false, reinitialize);
 							});
 						}
 					});
 				}
-				save_transponder_type();
+				save_transponder_data();
 			});
 		}
+
 		function reinitialize() {
 			GUI.log(chrome.i18n.getMessage('deviceRebooting'));
 			if (BOARD.find_board_definition(CONFIG.boardIdentifier).vcp) {
@@ -149,6 +186,7 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 				}, 1500);
 			}
 		}
+
 		function toogleTimerType(type, originalType) {
 			if(type != originalType){
 				$('.save_no_reboot').hide();
@@ -159,12 +197,15 @@ TABS.transponder.initialize = function (callback, scrollPosition) {
 			}
 			$('#transponderConfigurationIlap').hide();
 			$('#transponderConfigurationArcitimer').hide();
-			var type = transponderType[type].charAt(0).toUpperCase() + transponderType[type].slice(1);
+			var type = type.charAt(0).toUpperCase() + type.slice(1);
 			$('#transponderConfiguration' + type).show();
+
 		}
+
 		GUI.content_ready(callback);
 	}
 };
+
 TABS.transponder.cleanup = function (callback) {
 	if (callback) callback();
 };

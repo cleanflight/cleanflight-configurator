@@ -158,6 +158,9 @@ $(document).ready(function () {
                     case 'osd':
                         TABS.osd.initialize(content_ready);
                         break;
+                    case 'power':
+                        TABS.power.initialize(content_ready);
+                        break;
                     case 'setup':
                         TABS.setup.initialize(content_ready);
                         break;

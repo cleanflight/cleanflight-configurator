@@ -85,7 +85,7 @@ TABS.firmware_flasher.initialize = function (callback) {
 
                     var descriptor = {
                         "releaseUrl": release.html_url,
-                        "name"      : version,
+                        "name"      : release.name,
                         "version"   : version,
                         "url"       : asset.browser_download_url,
                         "file"      : asset.name,
@@ -191,7 +191,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                 TABS.firmware_flasher.releases[target].forEach(function(descriptor) {
                     var select_e =
                             $("<option value='{0}'>{0} - {1} - {2} ({3})</option>".format(
-                                    descriptor.version,
+                                    descriptor.name,
                                     descriptor.target,
                                     descriptor.date,
                                     descriptor.status

@@ -173,6 +173,9 @@
     "firmwareTypeNotSupported": {
         "message": "Non - Cleanflight/Betaflight firmware is <span style=\"color: red\">not supported</span>, except for CLI mode."
     },
+    "firmwareUpgradeRequired": {
+        "message": "The firmware on this device needs upgrading to a newer version. Use CLI for backup before flashing. CLI backup/restore procedure is in the documention."
+    },
 
     "tabSwitchConnectionRequired": {
         "message": "You need to <strong>connect</strong> before you can view any of the tabs."

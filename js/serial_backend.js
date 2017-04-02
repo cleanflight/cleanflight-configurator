@@ -200,10 +200,12 @@ function onOpen(openInfo) {
                             GUI.log(chrome.i18n.getMessage('fcInfoReceived', [CONFIG.flightControllerIdentifier, CONFIG.flightControllerVersion]));
 
                             
-                            if ((CONFIG.flightControllerIdentifier === 'CLFL' && semver.lt(CONFIG.apiVersion, '1.33.0')) ||
+                            if ((CONFIG.flightControllerIdentifier === 'CLFL' && semver.lt(CONFIG.apiVersion, '1.34.0')) ||
                                 (CONFIG.flightControllerIdentifier === 'BTFL' && semver.lt(CONFIG.apiVersion, '1.20.0'))) {
-                                GUI.show_modal(chrome.i18n.getMessage('warningTitle'),
-                                        chrome.i18n.getMessage('firmwareVersionNotSupported', [CONFIGURATOR.apiVersionAccepted]));
+                                GUI.show_modal(
+                                    chrome.i18n.getMessage('warningTitle'),
+                                    chrome.i18n.getMessage('firmwareUpgradeRequired')
+                                );
 
                                 connectCli();
                             } else {

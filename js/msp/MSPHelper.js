@@ -875,7 +875,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 console.log("Blackbox config saved");
                 break;
             case MSPCodes.MSP_TRANSPONDER_CONFIG:
-                TRANSPONDER.supported = (data.readU8() & 1) != 0;
+                TRANSPONDER.config = data.readU8();
                 TRANSPONDER.data = [];
                 var bytesRemaining = data.byteLength - 1;
                 for (var i = 0; i < bytesRemaining; i++) {
@@ -885,6 +885,9 @@ MspHelper.prototype.process_data = function(dataHandler) {
             case MSPCodes.MSP_SET_TRANSPONDER_CONFIG:
                 console.log("Transponder config saved");
                 break;
+			case MSPCodes.MSP_SET_TRANSPONDER_TYPE:
+				console.log("Transponder type config saved");
+				break;
             case MSPCodes.MSP_SET_MODE_RANGE:
                 console.log('Mode range saved');
                 break;
@@ -1120,6 +1123,10 @@ MspHelper.prototype.crunch = function(code) {
                 buffer.push8(TRANSPONDER.data[i]);
             }
             break;
+
+		case MSPCodes.MSP_SET_TRANSPONDER_TYPE:
+            buffer.push8(TRANSPONDER.type[0]);
+			break;
 
         case MSPCodes.MSP_SET_CHANNEL_FORWARDING:
             for (var i = 0; i < SERVO_CONFIG.length; i++) {

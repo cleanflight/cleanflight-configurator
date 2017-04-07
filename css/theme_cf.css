@@ -154,6 +154,18 @@ button.active {
   background-color: #c4c4c4 !important;
 }
 
+.ic_welcome {
+    background-image: url(/images/cf/icons/cf_icon_welcome_grey.svg);
+}
+
+.ic_welcome:hover {
+    background-image: url(/images/cf/icons/cf_icon_welcome_white.svg);
+}
+
+li.active .ic_welcome {
+    background-image: url(/images/cf/icons/cf_icon_welcome_white.svg);
+}
+
 .gyroicon.active {
     background-image: url(/images/cf/icons/sensor_gyro_on.png);
 }

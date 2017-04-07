@@ -733,18 +733,6 @@ li.active .ic_motor {
     background-image: url(images/icons/cf_icon_motor_white.svg);
 }
 
-.ic_welcome {
-    background-image: url(images/icons/cf_icon_welcome_grey.svg);
-}
-
-.ic_welcome:hover {
-    background-image: url(images/icons/cf_icon_welcome_white.svg);
-}
-
-li.active .ic_welcome {
-    background-image: url(images/icons/cf_icon_welcome_white.svg);
-}
-
 .ic_help {
     background-image: url(images/icons/cf_icon_help_grey.svg);
 }

@@ -898,7 +898,7 @@
         "message": "D Setpoint Weight"
     },
     "pidTuningPtermSetpointHelp": {
-        "message": "This parameter determines the transient behaviour setpoint weight on stick return (only from version 3.0.1). The lower the value gets the more smooth end of flips or rolls will be."
+        "message": "This parameter determines the transient behaviour setpoint weight on stick return. The lower the value gets the more smooth end of flips or rolls will be."
     },
     "pidTuningDtermSetpointHelp": {
         "message": "This parameter determines the stick accelerating effect within derivative component.<br> Value of 0 equals to old Measuemenent method where D only tracks gyro, while value of 1 equals to old Error method with equal gyro and stick tracking ratio.<br> Lower value equals to slower/smoother stick response, while higher value provides more stick acceleration response.<br> Note that RC interpolation is recommended to be enabled with higher values to prevent control kicks making noise."
@@ -1722,7 +1722,7 @@
         "message": "RC Expo Power"
     },
     "pidTuningRcExpoPowerHelp": {
-        "message": "The exponent that is used when calculating RC Expo. In Betaflight versions prior to 3.0, value is fixed at 3."
+        "message": "The exponent that is used when calculating RC Expo."
     },
     "pidTuningLevel": {
         "message": "Angle/Horizon"

@@ -733,18 +733,6 @@ li.active .ic_motor {
     background-image: url(images/icons/cf_icon_motor_white.svg);
 }
 
-.ic_welcome {
-    background-image: url(images/icons/cf_icon_welcome_grey.svg);
-}
-
-.ic_welcome:hover {
-    background-image: url(images/icons/cf_icon_welcome_white.svg);
-}
-
-li.active .ic_welcome {
-    background-image: url(images/icons/cf_icon_welcome_white.svg);
-}
-
 .ic_help {
     background-image: url(images/icons/cf_icon_help_grey.svg);
 }
@@ -788,6 +776,19 @@ li.active .ic_transponder {
 
 .ic_osd:hover, li.active .ic_osd {
     background-image: url(images/icons/icon_osd_white.svg);
+}
+
+.ic_power {
+    background-image: url(images/icons/cf_icon_power_grey.svg);
+    background-position-y: 9px;
+}
+
+.ic_power:hover {
+    background-image: url(images/icons/cf_icon_power_white.svg);
+}
+
+li.active .ic_power {
+    background-image: url(images/icons/cf_icon_power_white.svg);
 }
 
 /* SPARE Tab-Icons */

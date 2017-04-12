@@ -77,6 +77,9 @@
     "tabSetup": {
         "message": "Setup"
     },
+    "tabSetupOSD": {
+        "message": "OSD Setup"
+    },
     "tabConfiguration": {
         "message": "Configuration"
     },
@@ -103,6 +106,9 @@
     },
     "tabOsd": {
         "message": "OSD"
+    },
+    "tabPower": {
+        "message": "Power & Battery"
     },
     "tabGPS": {
         "message": "GPS"
@@ -169,6 +175,9 @@
     },
     "firmwareTypeNotSupported": {
         "message": "Non - Cleanflight/Betaflight firmware is <span style=\"color: red\">not supported</span>, except for CLI mode."
+    },
+    "firmwareUpgradeRequired": {
+        "message": "The firmware on this device needs upgrading to a newer version. Use CLI for backup before flashing. CLI backup/restore procedure is in the documention."
     },
 
     "tabSwitchConnectionRequired": {
@@ -590,6 +599,9 @@
     "featureOSD": {
         "message": "On Screen Display"
     },
+    "featureVTX": {
+        "message": "Video Transmitter"
+    },
     "featureFAILSAFE": {
         "message": "Enable Failsafe Stage 2"
     },
@@ -701,44 +713,8 @@
     "configurationThrottleMinimumCommandHelp": {
         "message": "This is the value that is sent to the ESCs when the craft is disarmed. Set this to a value that has the motors stopped (1000 for most ESCs)."
     },
-    "configurationBatteryVoltage": {
-        "message": "Battery Voltage"
-    },
-    "configurationBatteryCurrent": {
-        "message": "Battery Current"
-    },
-    "configurationBatteryMeterType": {
-        "message": "Battery Meter Type"
-    },
-    "configurationBatteryMinimum": {
-        "message": "Minimum Cell Voltage"
-    },
-    "configurationBatteryMaximum": {
-        "message": "Maximum Cell Voltage"
-    },
-    "configurationBatteryWarning": {
-        "message": "Warning Cell Voltage"
-    },
-    "configurationBatteryScale": {
-        "message": "Voltage Scale"
-    },
-    "configurationCurrentMeterType": {
-        "message": "Current Meter Type"
-    },
-    "configurationCurrent": {
-        "message": "Current Sensor"
-    },
-    "configurationCurrentScale": {
-        "message": "Scale the output voltage to milliamps [1/10th mV/A]"
-    },
-    "configurationCurrentOffset": {
-        "message": "Offset in millivolt steps"
-    },
-    "configurationBatteryMultiwiiCurrent": {
-        "message": "Enable support for legacy Multiwii MSP current output"
-    },
     "configuration3d": {
-        "message": "3D"
+        "message": "3D ESC/Motor Features"
     },
     "configuration3dDeadbandLow": {
         "message": "3D Deadband Low"
@@ -775,6 +751,12 @@
     },
     "configurationGPSubxSbas": {
         "message": "Ground Assistance Type"
+    },
+    "configurationGPSAutoBaud": {
+        "message": "Auto Baud"
+    },
+    "configurationGPSAutoConfig": {
+        "message": "Auto Config"
     },
     "configurationGPSHelp": {
         "message": "<strong>Note:</strong> Remember to configure a Serial Port (via Ports tab) when using GPS feature."
@@ -919,7 +901,7 @@
         "message": "D Setpoint Weight"
     },
     "pidTuningPtermSetpointHelp": {
-        "message": "This parameter determines the transient behaviour setpoint weight on stick return (only from version 3.0.1). The lower the value gets the more smooth end of flips or rolls will be."
+        "message": "This parameter determines the transient behaviour setpoint weight on stick return. The lower the value gets the more smooth end of flips or rolls will be."
     },
     "pidTuningDtermSetpointHelp": {
         "message": "This parameter determines the stick accelerating effect within derivative component.<br> Value of 0 equals to old Measuemenent method where D only tracks gyro, while value of 1 equals to old Error method with equal gyro and stick tracking ratio.<br> Lower value equals to slower/smoother stick response, while higher value provides more stick acceleration response.<br> Note that RC interpolation is recommended to be enabled with higher values to prevent control kicks making noise."
@@ -1018,11 +1000,23 @@
     "receiverThrottleExpo": {
         "message": "Throttle EXPO"
     },
-    "receiverMidRc": {
-        "message": "Center value for RC channels"
+    "receiverStickMin": {
+        "message": "Stick Min"
     },
-    "receiverMidRcHelp": {
-        "message": "This is the center value <span style=\"font-weight: bold\">for all RC channels</span>. Set this to the value that your transmitter sends when the stick is centered for a channel. To adjust the thrust at throttle mid position, change the 'Trottle MID' value on the PID Tuning tab."
+    "receiverHelpStickMin": {
+        "message": "The value (in us) used to determine if a stick is low."
+    },
+    "receiverStickCenter": {
+        "message": "Stick Center"
+    },
+    "receiverHelpStickCenter": {
+        "message": "The value (in us) used to determine if a stick is centered."
+    },
+    "receiverStickMax": {
+        "message": "Stick Max"
+    },
+    "receiverHelpStickMax": {
+        "message": "The value (in us) used to determine if a stick is high."
     },
     "receiverDeadband": {
         "message": "RC Deadband"
@@ -1030,12 +1024,18 @@
     "receiverHelpDeadband": {
         "message": "These are values (in us) by how much RC input can be different before it's considered valid. For transmitters with jitter on outputs, this value can be increased if rc inputs twitch while idle."
     },
-    "receiverHelpYawDeadband": {
-        "message": "These are values (in us) by how much RC input can be different before it's considered valid. For transmitters with jitter on outputs, this value can be increased if rc inputs twitch while idle. <strong>This setting is for Yaw only.</strong>"
-    },
     "receiverYawDeadband": {
         "message": "Yaw Deadband"
     },
+    "receiverHelpYawDeadband": {
+        "message": "These are values (in us) by how much RC input can be different before it's considered valid. For transmitters with jitter on outputs, this value can be increased if rc inputs twitch while idle. <strong>This setting is for Yaw only.</strong>"
+    },    
+    "recevier3dDeadbandThrottle": {
+        "message": "3D Throttle Deadband"
+    },
+    "receiverHelp3dDeadbandThrottle": {
+        "message": "These are values (in us).  To widen the neutral zone increased the value. <strong>This setting is for 3D throttle only.</strong>"
+    },    
     "receiverChannelMap": {
         "message": "Channel Map"
     },
@@ -1725,7 +1725,7 @@
         "message": "RC Expo Power"
     },
     "pidTuningRcExpoPowerHelp": {
-        "message": "The exponent that is used when calculating RC Expo. In Betaflight versions prior to 3.0, value is fixed at 3."
+        "message": "The exponent that is used when calculating RC Expo."
     },
     "pidTuningLevel": {
         "message": "Angle/Horizon"
@@ -1895,6 +1895,226 @@
     "failsafeKillSwitchHelp": {
         "message": "Set this option to make the failsafe switch, configured in the modes tab, act as a direct kill switch, bypassing the selected failsafe procedure. <strong>Note:</strong> Arming is blocked with the failsafe kill switch in the ON position"
     },
+    
+    "powerButtonSave": {
+        "message": "Save"
+    },
+    "powerFirmwareUpgradeRequired": {
+        "message": "Firmware upgrade <span style=\"color: red\">required</span>.  Battery/Amperage/Voltage configurations using API &lt; 1.22.0 is not supported."
+    },
+    "powerBatteryVoltageMeterSource": {
+        "message": "Voltage Meter Source"
+    },
+    "powerBatteryCurrentMeterSource": {
+        "message": "Current Meter Source"
+    },
+    "powerBatteryMinimum": {
+        "message": "Minimum Cell Voltage"
+    },
+    "powerBatteryMaximum": {
+        "message": "Maximum Cell Voltage"
+    },
+    "powerBatteryWarning": {
+        "message": "Warning Cell Voltage"
+    },
+    "powerVoltageHead": {
+        "message": "Voltage"
+    },
+    "powerVoltageValue": {
+        "message": "$1 V"
+    },
+    "powerAmperageValue": {
+        "message": "$1 A"
+    },    
+    "powerVoltageId10": {
+        "message": "Battery"
+    },
+    "powerVoltageId20": {
+        "message": "5V"
+    },
+    "powerVoltageId30": {
+        "message": "9V"
+    },
+    "powerVoltageId40": {
+        "message": "12V"
+    },
+    "powerVoltageId50": {
+        "message": "ESC Combined"
+    },
+    "powerVoltageId60": {
+        "message": "ESC Motor 1"
+    },
+    "powerVoltageId61": {
+        "message": "ESC Motor 2"
+    },
+    "powerVoltageId62": {
+        "message": "ESC Motor 3"
+    },
+    "powerVoltageId63": {
+        "message": "ESC Motor 4"
+    },
+    "powerVoltageId64": {
+        "message": "ESC Motor 5"
+    },
+    "powerVoltageId65": {
+        "message": "ESC Motor 6"
+    },
+    "powerVoltageId66": {
+        "message": "ESC Motor 7"
+    },
+    "powerVoltageId67": {
+        "message": "ESC Motor 8"
+    },
+    "powerVoltageId68": {
+        "message": "ESC Motor 9"
+    },
+    "powerVoltageId69": {
+        "message": "ESC Motor 10"
+    },
+    "powerVoltageId70": {
+        "message": "ESC Motor 11"
+    },
+    "powerVoltageId71": {
+        "message": "ESC Motor 12"
+    },
+    "powerVoltageId80": {
+        "message": "Cell 1"
+    },
+    "powerVoltageId81": {
+        "message": "Cell 2"
+    },
+    "powerVoltageId82": {
+        "message": "Cell 3"
+    },
+    "powerVoltageId83": {
+        "message": "Cell 4"
+    },
+    "powerVoltageId84": {
+        "message": "Cell 5"
+    },
+    "powerVoltageId85": {
+        "message": "Cell 6"
+    },
+    
+
+    "powerVoltageScale": {
+        "message": "Scale"
+    },
+    "powerVoltageDivider": {
+        "message": "Divider Value"
+    },
+    "powerVoltageMultiplier": {
+        "message": "Multiplier Value"
+    },
+
+    "powerAmperageHead": {
+        "message": "Amperage"
+    },
+    "powerAmperageId10": {
+        "message": "Battery"
+    },
+    "powerAmperageId50": {
+        "message": "ESC Combined"
+    },
+    "powerAmperageId60": {
+        "message": "ESC Motor 1"
+    },
+    "powerAmperageId61": {
+        "message": "ESC Motor 2"
+    },
+    "powerAmperageId62": {
+        "message": "ESC Motor 3"
+    },
+    "powerAmperageId63": {
+        "message": "ESC Motor 4"
+    },
+    "powerAmperageId64": {
+        "message": "ESC Motor 5"
+    },
+    "powerAmperageId65": {
+        "message": "ESC Motor 6"
+    },
+    "powerAmperageId66": {
+        "message": "ESC Motor 7"
+    },
+    "powerAmperageId67": {
+        "message": "ESC Motor 8"
+    },
+    "powerAmperageId68": {
+        "message": "ESC Motor 9"
+    },
+    "powerAmperageId69": {
+        "message": "ESC Motor 10"
+    },
+    "powerAmperageId70": {
+        "message": "ESC Motor 11"
+    },
+    "powerAmperageId71": {
+        "message": "ESC Motor 12"
+    },
+    "powerAmperageId80": {
+        "message": "Virtual"
+    },
+    "powerMahValue": {
+        "message": "$1 mAh"
+    },
+    
+    "powerAmperageScale": {
+        "message": "Scale the output voltage to milliamps [1/10th mV/A]"
+    },
+    "powerAmperageOffset": {
+        "message": "Offset in millivolt steps"
+    },
+    
+    "powerBatteryHead": {
+        "message": "Battery"
+    },
+    "powerBatteryConnected": {
+        "message": "Connected"
+    },
+    "powerBatteryConnectedValueYes": {
+        "message": "Yes (Cells: $1)"
+    },
+    "powerBatteryConnectedValueNo": {
+        "message": "No"
+    },
+    "powerBatteryVoltage": {
+        "message": "Voltage"
+    },
+    "powerBatteryCurrentDrawn": {
+        "message": "mAh used"
+    },
+    "powerBatteryAmperage": {
+        "message": "Amperage"
+    },
+    "powerBatteryCapacity": {
+        "message": "Capacity (mAh)"
+    },
+    
+    "osdSetupHead": {
+        "message": "Info"
+    },
+    "osdSetupVideoMode": {
+        "message": "Video Mode"
+    },
+    "osdSetupCameraConnected": {
+        "message": "Camera Connected"
+    },
+    "osdSetupCameraConnectedValueYes": {
+        "message": "Yes"
+    },
+    "osdSetupCameraConnectedValueNo": {
+        "message": "No"
+    },
+    
+    "osdSetupResetText": {
+        "message": "Reset OSD to default"
+    },
+    "osdSetupButtonReset": {
+        "message": "Reset Settings"
+    },
+    
+
     "mainHelpArmed": {
         "message": "Motor Arming"
     },
@@ -1976,10 +2196,13 @@
     "pidTuningRatesTip": {
         "message": "Play with the rates and see how those affect the stick curve"
     },
-    "configurationMisc": {
-        "message": "Misc"
+    "configurationCamera": {
+        "message": "Camera"
     },
-    "configurationVesselName": {
+    "configurationPersonalization": {
+        "message": "Personalization"
+    },
+    "craftName": {
         "message": "Craft name"
     },
     "configurationFpvCamAngleDegrees": {

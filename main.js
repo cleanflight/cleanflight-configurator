@@ -158,9 +158,16 @@ $(document).ready(function () {
                     case 'osd':
                         TABS.osd.initialize(content_ready);
                         break;
+                    case 'power':
+                        TABS.power.initialize(content_ready);
+                        break;
                     case 'setup':
                         TABS.setup.initialize(content_ready);
                         break;
+                    case 'setup_osd':
+                        TABS.setup_osd.initialize(content_ready);
+                        break;
+                        
                     case 'configuration':
                         TABS.configuration.initialize(content_ready);
                         break;
@@ -241,8 +248,8 @@ $(document).ready(function () {
                         chrome.storage.local.set({'permanentExpertMode': checked});
 
                         $('input[name="expertModeCheckbox"]').prop('checked', checked).change();
-                        if (BF_CONFIG) {
-                            updateTabList(BF_CONFIG.features);
+                        if (FEATURE_CONFIG) {
+                            updateTabList(FEATURE_CONFIG.features);
                         }
 
                     }).change();
@@ -388,8 +395,8 @@ $(document).ready(function () {
         }
 
         $('input[name="expertModeCheckbox"]').change(function () {
-            if (BF_CONFIG) {
-                updateTabList(BF_CONFIG.features);
+            if (FEATURE_CONFIG) {
+                updateTabList(FEATURE_CONFIG.features);
             }
         }).change();
     });
@@ -489,12 +496,13 @@ function updateTabList(features) {
     } else {
         $('#tabs ul.mode-connected li.tab_transponder').hide();
     }
-
+/* FIXME this approach doesn't work for OSD SLAVE boards as they don't have an 'OSD' feature.
     if (features.isEnabled('OSD')) {
         $('#tabs ul.mode-connected li.tab_osd').show();
     } else {
         $('#tabs ul.mode-connected li.tab_osd').hide();
     }
+*/
 }
 
 function zeroPad(value, width) {

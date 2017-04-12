@@ -20,6 +20,7 @@ SYM.MAH = 0x07;
 SYM.METRE = 0xC;
 SYM.FEET = 0xF;
 SYM.GPS_SAT = 0x1F;
+SYM.BATTERY = 0x96;
 
 
 var FONT = FONT || {};
@@ -242,7 +243,7 @@ OSD.constants = {
       name: 'MAIN_BATT_VOLTAGE',
       default_position: -29,
       positionable: true,
-      preview: FONT.symbol(SYM.VOLT) + '16.8'
+      preview: FONT.symbol(SYM.BATTERY) + '16.8' + FONT.symbol(SYM.VOLT)
     },
     RSSI_VALUE: {
       name: 'RSSI_VALUE',
@@ -272,7 +273,7 @@ OSD.constants = {
       name: 'VTX_CHANNEL',
       default_position: 1,
       positionable: true,
-      preview: 'CH:1'
+      preview: 'R:2'
     },
     VOLTAGE_WARNING: {
       name: 'VOLTAGE_WARNING',
@@ -323,7 +324,7 @@ OSD.constants = {
       name: 'CRAFT_NAME',
       default_position: -77,
       positionable: true,
-      preview: '[CRAFT_NAME]'
+      preview: 'CRAFT_NAME'
     },
     ALTITUDE: {
       name: 'ALTITUDE',
@@ -337,13 +338,13 @@ OSD.constants = {
       name: 'ONTIME',
       default_position: -1,
       positionable: true,
-      preview: FONT.symbol(SYM.ON_M) + '  4:11'
+      preview: FONT.symbol(SYM.ON_M) + '05:42'
     },
     FLYTIME: {
       name: 'FLYTIME',
       default_position: -1,
       positionable: true,
-      preview: FONT.symbol(SYM.FLY_M) + '  4:11'
+      preview: FONT.symbol(SYM.FLY_M) + '04:11'
     },
     FLYMODE: {
       name: 'FLYMODE',
@@ -403,7 +404,7 @@ OSD.constants = {
       name: 'AVG_CELL_VOLTAGE',
       default_position: 12 << 5,
       positionable: true,
-      preview: '3.98V'
+      preview: FONT.symbol(SYM.BATTERY) + '3.98' + FONT.symbol(SYM.VOLT)
     }
   }
 };
@@ -522,7 +523,7 @@ OSD.msp = {
   },
   encodeOther: function() {
     var result = [-1, OSD.data.video_system];
-    if (semver.gte(CONFIG.apiVersion, "1.21.0")) {
+    if (OSD.data.state.haveOsdFeature && semver.gte(CONFIG.apiVersion, "1.21.0")) {
       result.push8(OSD.data.unit_mode);
       // watch out, order matters! match the firmware
       result.push8(OSD.data.alarms.rssi.value);
@@ -542,18 +543,30 @@ OSD.msp = {
   decode: function(payload) {
     var view = payload.data;
     var d = OSD.data;
-    d.compiled_in = view.readU8();
-    d.video_system = view.readU8();
-
-    if (semver.gte(CONFIG.apiVersion, "1.21.0")) {
-      d.unit_mode = view.readU8();
-      d.alarms = {};
-      d.alarms['rssi'] = { display_name: 'Rssi', value: view.readU8() };
-      d.alarms['cap']= { display_name: 'Capacity', value: view.readU16() };
-      d.alarms['time'] = { display_name: 'Minutes', value: view.readU16() };
-      d.alarms['alt'] = { display_name: 'Altitude', value: view.readU16() };
+    d.flags = view.readU8();
+    
+    if (d.flags > 0) {
+      if (payload.length > 1) {
+        d.video_system = view.readU8();
+        if (semver.gte(CONFIG.apiVersion, "1.21.0") && bit_check(d.flags, 0)) {
+          d.unit_mode = view.readU8();
+          d.alarms = {};
+          d.alarms['rssi'] = { display_name: 'Rssi', value: view.readU8() };
+          d.alarms['cap']= { display_name: 'Capacity', value: view.readU16() };
+          d.alarms['time'] = { display_name: 'Minutes', value: view.readU16() };
+          d.alarms['alt'] = { display_name: 'Altitude', value: view.readU16() };
+        }
+      }
     }
+    
+    d.state = {};
+    d.state.haveSomeOsd = (d.flags != 0) 
+    d.state.haveMax7456Video = bit_check(d.flags, 4) || (d.flags == 1 && semver.lt(CONFIG.apiVersion, "1.34.0"));
+    d.state.haveOsdFeature = bit_check(d.flags, 0) || (d.flags == 1 && semver.lt(CONFIG.apiVersion, "1.34.0"));
+    d.state.isOsdSlave = bit_check(d.flags, 1) && semver.gte(CONFIG.apiVersion, "1.34.0");
+
     d.display_items = [];
+    
     // start at the offset from the other fields
     while (view.offset < view.byteLength && d.display_items.length < OSD.constants.DISPLAY_FIELDS.length) {
       var v = null;
@@ -651,15 +664,17 @@ TABS.osd.initialize = function (callback) {
           // ask for the OSD config data
           MSP.promise(MSPCodes.MSP_OSD_CONFIG)
           .then(function(info) {
+              
             OSD.chooseFields();
-            // fc responsed with short message: osd unsupported
-            if (info.length < 4) {
+            
+            OSD.msp.decode(info);
+            
+            if (OSD.data.state.haveSomeOsd == 0) {
               $('.unsupported').fadeIn();
               return;
             }
             $('.supported').fadeIn();
-            OSD.msp.decode(info);
-
+            
             // show Betaflight logo in preview
             var $previewLogo = $('.preview-logo').empty();
             $previewLogo.append(
@@ -727,6 +742,14 @@ TABS.osd.initialize = function (callback) {
                 var $input = $('<label/>').append(alarmInput);
                 $alarms.append($input);
               }
+            }
+            
+            if (!OSD.data.state.haveMax7456Video) {
+              $('.requires-max7456').hide();
+            }
+
+            if (!OSD.data.state.haveOsdFeature) {
+              $('.requires-osd-feature').hide();
             }
 
             // display fields on/off and position

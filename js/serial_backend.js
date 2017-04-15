@@ -371,6 +371,7 @@ function onClosed(result) {
     MSP.clearListeners();
     
     CONFIGURATOR.connectionValid = false;
+    CONFIGURATOR.cliValid = false;
     CONFIGURATOR.cliActive = false;
 }
 

@@ -294,7 +294,7 @@ GUI_control.prototype.content_ready = function (callback) {
         }
         if (CONFIG.flightControllerIdentifier == 'CLFL') {
             documentationButton.html("Documentation for " + CONFIG.flightControllerVersion);
-            documentationButton.attr("href","https://github.com/cleanflight/cleanflight/tree/v{0}/docs".format(CONFIG.flightControllerVersion));
+            documentationButton.attr("href","https://github.com/cleanflight/cleanflight/tree/CLFL_v{0}/docs".format(CONFIG.flightControllerVersion));
         }
     }
 

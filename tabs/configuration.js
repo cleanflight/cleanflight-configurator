@@ -474,7 +474,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             serialRXtypes.push('SRXL');
         }
 
-        if (semver.gte(CONFIG.flightControllerVersion, "3.2.0"))  {
+        if (semver.gte(CONFIG.apiVersion, "1.35.0"))  {
             serialRXtypes.push('TARGET_CUSTOM');
         }
 

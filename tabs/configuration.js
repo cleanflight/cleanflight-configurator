@@ -474,6 +474,10 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             serialRXtypes.push('SRXL');
         }
 
+        if (semver.gte(CONFIG.apiVersion, "1.35.0")) {
+            serialRXtypes.push('TARGET_CUSTOM');
+        }
+
         var serialRX_e = $('select.serialRX');
         for (var i = 0; i < serialRXtypes.length; i++) {
             serialRX_e.append('<option value="' + i + '">' + serialRXtypes[i] + '</option>');

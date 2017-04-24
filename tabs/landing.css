@@ -13,11 +13,41 @@
 }
 
 .tab-landing .content_top {
-    height: 140px;
+    height: 100px;
     background: #fff;
     padding: 20px;
     background-image: url(../images/pattern.png);
     background-size: 300px;
+}
+
+.tab-landing .community {
+    text-align: center;
+    margin: 15px 0px;
+}
+
+.tab-landing .community a {
+    display: block;
+}
+
+.tab-landing .community ul span {
+    color: white;
+    position: absolute;
+    padding: 10px;
+}
+
+.tab-landing .community ul {
+    font-size: 20px;
+    text-align: center;
+    width: 400px;
+    height: 50px;
+    display: inline-block;
+    position: relative;
+}
+
+.tab-landing .community ul i {
+    font-size: 50px;
+    color: white;
+    margin-left: -200px;
 }
 
 .tab-landing .content_mid {

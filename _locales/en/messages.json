@@ -352,6 +352,13 @@
         "message": "<a href=\"http://betaflight.tk/slack\" target=\"_blank\">Betaflight devs on slack</a>"
     },
     
+    "communityRCGroupsSupport": {
+        "message": "RC Groups Support"
+    },
+    "communitySlackSupport": {
+        "message": "Slack Support Live Chat"
+    },
+    
 
     "initialSetupBackupAndRestoreApiVersion": {
         "message": "<span style=\"color: red\">Backup and restore functionality disabled.</span>  You have firmware with API version <span style=\"color: red\">$1</span>, backup and restore requires <span class=\"message-positive\">$2</span>.  Please backup your settings via the CLI, see Betaflight documentation for procedure."
@@ -2253,16 +2260,7 @@
       "onboardLoggingEraseInProgress": {
     	"message": "Erase in progress, please wait..."
     },
-      "onboardLoggingOnboardSDCard": {
+    "onboardLoggingOnboardSDCard": {
     	"message": "Onboard SD card"
     }
-
-
-
-
-
-
-
-
-
 }

@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "38",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "author": "Cleanflight Project",
     "name": "Cleanflight - Configurator",
     "short_name": "Cleanflight",
@@ -29,6 +29,7 @@
         "https://*.githubusercontent.com/",
         "http://*.cleanflight.com/",
         "https://*.amazonaws.com/",
+        "https://cleanflight.slack.com/*",
         "serial",
         "usb",
         "storage",

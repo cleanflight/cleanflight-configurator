@@ -33,12 +33,6 @@
     "autoConnectDisabled": {
         "message": "Auto-Connect: Disabled - User needs to select the correct serial port and click \"Connect\" button on its own"
     },
-    "expertMode": {
-        "message": "Enable Expert Mode"
-    },
-    "permanentExpertMode": {
-        "message": "Permanently enable Expert Mode"
-    },
     "deviceRebooting": {
         "message": "Device - <span style=\"color: red\">Rebooting</span>"
     },

@@ -227,45 +227,24 @@ $(document).ready(function () {
                     if (typeof result.update_notify === 'undefined' || result.update_notify) {
                         $('div.notifications input').prop('checked', true);
                     }
-
-                    $('div.notifications input').change(function () {
-                        var checked = $(this).is(':checked');
-                        googleAnalytics.sendEvent('Settings', 'Notifications', checked);
-
-                        chrome.storage.local.set({'update_notify': check});
-                    });
                 });
 
-                chrome.storage.local.get('permanentExpertMode', function (result) {
-                    if (result.permanentExpertMode) {
-                        $('div.permanentExpertMode input').prop('checked', true);
-                    }
+                $('div.notifications input').change(function () {
+                    var checked = $(this).is(':checked');
+                    googleAnalytics.sendEvent('Settings', 'Notifications', checked);
 
-                    $('div.permanentExpertMode input').change(function () {
-                        var checked = $(this).is(':checked');
-                        googleAnalytics.sendEvent('Settings', 'PermanentExpertMode', checked);
+                    chrome.storage.local.set({'update_notify': check});
+                });
 
-                        chrome.storage.local.set({'permanentExpertMode': checked});
+                // if tracking is enabled, check the statistics checkbox
+                if (googleAnalyticsConfig.isTrackingPermitted()) {
+                    $('div.statistics input').prop('checked', true);
+                }
 
-                        $('input[name="expertModeCheckbox"]').prop('checked', checked).change();
-                        if (FEATURE_CONFIG) {
-                            updateTabList(FEATURE_CONFIG.features);
-                        }
-
-                    }).change();
-                    
-                    
-                    // if tracking is enabled, check the statistics checkbox
-                    if (googleAnalyticsConfig.isTrackingPermitted()) {
-                        $('div.statistics input').prop('checked', true);
-                    }
-
-                    $('div.statistics input').change(function () {
-                        var checked = $(this).is(':checked');
-                        googleAnalytics.sendEvent('Settings', 'GoogleAnalytics', checked);
-                        googleAnalyticsConfig.setTrackingPermitted(check);
-                    });
-                    
+                $('div.statistics input').change(function () {
+                    var checked = $(this).is(':checked');
+                    googleAnalytics.sendEvent('Settings', 'GoogleAnalytics', checked);
+                    googleAnalyticsConfig.setTrackingPermitted(check);
                 });
 
                 function close_and_cleanup(e) {
@@ -388,18 +367,6 @@ $(document).ready(function () {
         $(this).text(state ? 'Hide Log' : 'Show Log');
         $(this).data('state', state);
     });
-
-    chrome.storage.local.get('permanentExpertMode', function (result) {
-        if (result.permanentExpertMode) {
-            $('input[name="expertModeCheckbox"]').prop('checked', true);
-        }
-
-        $('input[name="expertModeCheckbox"]').change(function () {
-            if (FEATURE_CONFIG) {
-                updateTabList(FEATURE_CONFIG.features);
-            }
-        }).change();
-    });
 });
 
 function notifyOutdatedVersion(version) {
@@ -444,33 +411,11 @@ function bytesToSize(bytes) {
     return bytes;
 }
 
-function isExpertModeEnabled() {
-    return $('input[name="expertModeCheckbox"]').is(':checked');
-}
-
 function updateTabList(features) {
-    if (features.isEnabled('GPS') && isExpertModeEnabled()) {
+    if (features.isEnabled('GPS')) {
         $('#tabs ul.mode-connected li.tab_gps').show();
     } else {
         $('#tabs ul.mode-connected li.tab_gps').hide();
-    }
-
-    if (isExpertModeEnabled()) {
-        $('#tabs ul.mode-connected li.tab_failsafe').show();
-    } else {
-        $('#tabs ul.mode-connected li.tab_failsafe').hide();
-    }
-
-    if (isExpertModeEnabled()) {
-        $('#tabs ul.mode-connected li.tab_adjustments').show();
-    } else {
-        $('#tabs ul.mode-connected li.tab_adjustments').hide();
-    }
-
-    if (isExpertModeEnabled()) {
-        $('#tabs ul.mode-connected li.tab_servos').show();
-    } else {
-        $('#tabs ul.mode-connected li.tab_servos').hide();
     }
 
     if (features.isEnabled('LED_STRIP')) {
@@ -479,30 +424,11 @@ function updateTabList(features) {
         $('#tabs ul.mode-connected li.tab_led_strip').hide();
     }
 
-    if (isExpertModeEnabled()) {
-        $('#tabs ul.mode-connected li.tab_sensors').show();
-    } else {
-        $('#tabs ul.mode-connected li.tab_sensors').hide();
-    }
-
-    if (isExpertModeEnabled()) {
-        $('#tabs ul.mode-connected li.tab_logging').show();
-    } else {
-        $('#tabs ul.mode-connected li.tab_logging').hide();
-    }
-
     if (features.isEnabled('TRANSPONDER')) {
         $('#tabs ul.mode-connected li.tab_transponder').show();
     } else {
         $('#tabs ul.mode-connected li.tab_transponder').hide();
     }
-/* FIXME this approach doesn't work for OSD SLAVE boards as they don't have an 'OSD' feature.
-    if (features.isEnabled('OSD')) {
-        $('#tabs ul.mode-connected li.tab_osd').show();
-    } else {
-        $('#tabs ul.mode-connected li.tab_osd').hide();
-    }
-*/
 }
 
 function zeroPad(value, width) {

@@ -1468,6 +1468,16 @@
         "message": "Flight logs can be recorded to your flight controller's onboard SD card slot."
     },
 
+    "dataflashNone": {
+        "message": "No dataflash <br>chip found"
+    },
+    "dataflashHeading": {
+        "message": "Dataflash" 
+    },
+    "dataflashUsage": {
+        "message": "$1 / $2" 
+    },
+    
     "dataflashNote": {
         "message": "Flight logs can be recorded to your flight controller's onboard dataflash chip."
     },

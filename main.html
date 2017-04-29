@@ -150,12 +150,13 @@
         </div>
         <div class="header-wrapper">
             <div id="dataflash_wrapper_global">
-                <div class="noflash_global" align="center">No dataflash <br>chip found</div>
-                <ul class="dataflash-contents_global">
-                    <li class="dataflash-free_global">
-                        <div class="legend">Dataflash: free space</div>
-                    </li>
-                </ul>
+                <div class="dataflash-noflash_global" i18n="dataflashNone"></div>
+                <div class="dataflash-haveflash_global">
+                    <ul class="dataflash-capacity_global">
+                        <li class="dataflash-free_global"><div class="dataflash-usage_global"></div></li>
+                    </ul>
+                    <p class="dataflash-heading_global" i18n="dataflashHeading"></p>
+                </div>
             </div>
               <div id="sensor-status" class="sensor_state mode-connected">
                 <ul>

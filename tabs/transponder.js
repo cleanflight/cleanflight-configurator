@@ -37,6 +37,9 @@ TABS.transponder.initialize = function(callback, scrollPosition) {
                 'ID 9': 'E083BFF00F9E38C0FF',
             }
         }, //arcitimer
+		3: {
+            dataType: dataTypes.TEXT //<input type="text">
+        }, //ERLT
     };
     /////////////////////////////////////////////
 

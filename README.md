@@ -43,7 +43,11 @@ Make sure Settings -> System -> "User hardware acceleration when available" is c
 
 ### Linux users
 
-Dont forget to add your user into dialout group "sudo usermod -aG dialout YOUR_USERNAME" for serial access
+If connecting Cleanflight Configurator to your flight controller's USB port does not work out-of-the box, follow this check-list:
+
+1. After connecting, `sudo dmesg` should print a message similar to `usb 2-1.1: new full-speed USB device number 17 using ehci-pci`. If not, there may be a problem with your cable/FC.
+2. FCs with USB Virtual Com Port (VCP) usually use USB CDC (Communications Device Class) ACM (Abstract Control Model) protocol. The driver `cdc_acm` (kernel option `CONFIG_USB_ACM`) should pick up the device, `cdc_acm 2-1.1:1.0: ttyACM0: USB ACM device` should appear in `sudo dmesg`.
+3. The device file (usually `/dev/ttyACM0`) needs to be writeable by your user account. This is best achieved by creating a udev rule `/etc/udev/rules.d/90-ttyACM-group-plugdev.rules` that contains `KERNEL=="ttyACM[0-9]", GROUP="plugdev"` and ensuring you are in the `plugdev` group using `sudo usermod -aG plugdev YOUR_USERNAME`. Re-plug the device / logout & login for changes to take effect.
 
 ### Linux / MacOSX users
 

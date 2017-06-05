@@ -8,7 +8,6 @@ window.addEventListener('message', function (e) {
          zoom++;
          map.setZoom(zoom);
          break;
-         
        case 'zoom_out':
          var zoom = map.getZoom();
          zoom--;
@@ -63,21 +62,15 @@ function initialize() {
     map:map
   });
 
-  // You can use a LatLng literal in place of a google.maps.LatLng object when
-  // creating the Marker object. Once the Marker object is instantiated, its
-  // position will be available as a google.maps.LatLng object. In this case,
-  // we retrieve the marker's position using the
-  // google.maps.LatLng.getPosition() method.
-       var infowindow = new google.maps.InfoWindow({
-         content: '<p>Your Location: ' + marker.getPosition() + '</p>'
-       });
+  var infowindow = new google.maps.InfoWindow();
 
-       google.maps.event.addListener(marker, 'click', function() {
-         infowindow.open(map, marker);
-       });
+  google.maps.event.addListener(marker, 'click', function() {
+     infowindow.setContent('<p>Your Location: ' + map.getCenter() + '</p>');
+     infowindow.open(map, marker);
+  });
 
-       window.addEventListener('message', function(e) {
-         var data = e.data;
-         var origin = e.origin;
-       });
+  window.addEventListener('message', function(e) {
+    var data = e.data;
+    var origin = e.origin;
+  });
 }

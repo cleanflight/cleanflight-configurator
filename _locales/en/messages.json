@@ -1241,17 +1241,26 @@
     "transponderType2": {
         "message": "aRCiTimer"
     },
+    "transponderType3": {
+        "message": "ERLT"
+    },
     "transponderConfiguration1": {
         "message": "Configuration iLap"
     },
     "transponderConfiguration2": {
         "message": "Configuration aRCiTimer"
     },
+    "transponderConfiguration3": {
+        "message": "Configuration ERLT"
+    },
     "transponderData1": {
         "message": "Data"
     },
     "transponderData2": {
         "message": "Transponder ID"
+    },
+    "transponderData3": {
+        "message": "ERLT ID"
     },
     "transponderDataHelp1": {
         "message": "Hexadecimal digits only, 0-9, A-F"
@@ -1262,7 +1271,13 @@
     "transponderHelp2": {
         "message": "For more information please visit <a href=\"http://www.arcitimer.com/\" title=\"aRCiTimer\" target=\"_blank\">aRCiTimer site</a>"
     },
-    "transponderButtonSave": {
+	"transponderDataHelp3": {
+        "message": "2 x Hexadecimal digits only, 00-3F"
+    },
+    "transponderHelp3": {
+        "message": "For more information please visit <a href=\"https://github.com/polyvision/EasyRaceLapTimer\" title=\"aRCiTimer\" target=\"_blank\">EasyRaceLapTimer site</a>"
+    },
+	"transponderButtonSave": {
         "message": "Save"
     },
     "transponderButtonSaveReboot": {

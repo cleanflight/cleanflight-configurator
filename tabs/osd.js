@@ -21,6 +21,8 @@ SYM.METRE = 0xC;
 SYM.FEET = 0xF;
 SYM.GPS_SAT = 0x1F;
 SYM.BATTERY = 0x96;
+SYM.ARROW_SOUTH=0x60;
+SYM.ARROW_EAST=0x64;
 
 
 var FONT = FONT || {};
@@ -363,6 +365,24 @@ OSD.constants = {
       default_position: -1,
       positionable: true,
       preview: FONT.symbol(SYM.GPS_SAT) + '14'
+    },
+    GPS_LON: {
+      name: 'GPS_LON',
+      default_position: -1,
+      positionable: true,
+      preview: FONT.symbol(SYM.ARROW_SOUTH) + '00.00'
+    },
+    GPS_LAT: {
+      name: 'GPS_LAT',
+      default_position: -1,
+      positionable: true,
+      preview: FONT.symbol(SYM.ARROW_EAST) + '00.00'
+    },
+    DEBUG: {
+      name: 'DEBUG',
+      default_position: -1,
+      positionable: true,
+      preview: 'DBG     0     0     0     0'
     },
     PID_ROLL: {
       name: 'PID_ROLL',

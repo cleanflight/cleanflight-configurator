@@ -425,6 +425,70 @@ OSD.constants = {
       default_position: 12 << 5,
       positionable: true,
       preview: FONT.symbol(SYM.BATTERY) + '3.98' + FONT.symbol(SYM.VOLT)
+    },
+    PITCH_ANGLE: {
+      name: 'PITCH_ANGLE',
+      default_position: -1,
+      positionable: true,
+      preview: '-00.0'
+    },
+    ROLL_ANGLE: {
+      name: 'ROLL_ANGLE',
+      default_position: -1,
+      positionable: true,
+      preview: '-00.0'
+    },
+    MAIN_BATT_USAGE: {
+      name: 'MAIN_BATT_USAGE',
+      default_position: -17,
+      positionable: true,
+      preview: FONT.symbol(SYM.PB_START) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_END) + FONT.symbol(SYM.PB_EMPTY) + FONT.symbol(SYM.PB_CLOSE)
+    },
+    ARMED_TIME: {
+      name: 'ARMED_TIME',
+      default_position: -1,
+      positionable: true,
+      preview: FONT.symbol(SYM.FLY_M) + '02:07'
+    },
+    HOME_DIR: {
+        name: 'HOME_DIR',
+        default_position: -1,        
+        positionable: true,
+        preview: FONT.symbol(SYM.ARROW_SOUTH + 2)
+      }    
+
+  },
+
+  ALL_STATISTIC_FIELDS: {
+    MAX_SPEED: {
+      name: 'MAX_SPEED'
+    },
+    MIN_BATTERY: {
+      name: 'MIN_BATTERY'
+    },
+    MIN_RSSI: {
+      name: 'MIN_RSSI'
+    },
+    MAX_CURRENT: {
+      name: 'MAX_CURRENT'
+    },
+    USED_MAH: {
+      name: 'USED_MAH'
+    },
+    MAX_ALTITUDE: {
+      name: 'MAX_ALTITUDE'
+    },
+    BLACKBOX: {
+      name: 'BLACKBOX'
+    },
+    END_BATTERY: {
+      name: 'END_BATTERY'
+    },
+    FLYTIME: {
+      name: 'FLY_TIME'
+    },
+    ARMEDTIME: {
+      name: 'ARMED_TIME'
     }
   }
 };
@@ -465,6 +529,27 @@ OSD.chooseFields = function () {
           F.BATTERY_WARNING,
           F.AVG_CELL_VOLTAGE
         ]);
+        if (semver.gte(CONFIG.apiVersion, "1.34.0")) {
+          OSD.constants.DISPLAY_FIELDS = OSD.constants.DISPLAY_FIELDS.concat([
+            F.GPS_LON,
+            F.GPS_LAT,
+            F.DEBUG
+          ]);
+          if (semver.gte(CONFIG.apiVersion, "1.35.0")) {
+            OSD.constants.DISPLAY_FIELDS = OSD.constants.DISPLAY_FIELDS.concat([
+              F.PITCH_ANGLE,
+              F.ROLL_ANGLE
+            ]);
+            if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
+              OSD.constants.DISPLAY_FIELDS = OSD.constants.DISPLAY_FIELDS.concat([
+                F.MAIN_BATT_USAGE,
+                F.ARMED_TIME,
+                F.DISARMED,
+                F.HOME_DIR
+              ]);
+            }
+          }
+        }
       }
     }
   }

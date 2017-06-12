@@ -21,6 +21,7 @@ SYM.METRE = 0xC;
 SYM.FEET = 0xF;
 SYM.GPS_SAT = 0x1F;
 SYM.BATTERY = 0x96;
+SYM.ARROW_NORTH=0x68;
 SYM.ARROW_SOUTH=0x60;
 SYM.ARROW_EAST=0x64;
 
@@ -451,19 +452,31 @@ OSD.constants = {
       preview: FONT.symbol(SYM.FLY_M) + '02:07'
     },
     HOME_DIR: {
-        name: 'HOME_DIRECTION',
-        default_position: -1,        
-        positionable: true,
-        preview: FONT.symbol(SYM.ARROW_SOUTH + 2)
+      name: 'HOME_DIRECTION',
+      default_position: -1,
+      positionable: true,
+      preview: FONT.symbol(SYM.ARROW_SOUTH + 2)
     },
     HOME_DIST: {
-        name: 'HOME_DISTANCE',
-        default_position: -1,        
-        positionable: true,
-        preview:  function(osd_data) {
-            return '43' + FONT.symbol(osd_data.unit_mode === 0 ? SYM.FEET : SYM.METRE)
-        }
-    }    
+      name: 'HOME_DISTANCE',
+      default_position: -1,
+      positionable: true,
+      preview:  function(osd_data) {
+        return '43' + FONT.symbol(osd_data.unit_mode === 0 ? SYM.FEET : SYM.METRE)
+      }
+    },
+    NUMERICAL_HEADING: {
+      name: 'NUMERICAL_HEADING',
+      default_position: -1,
+      positionable: true,
+      preview: FONT.symbol(SYM.ARROW_EAST) + '90'
+    },
+    NUMERICAL_VARIO: {
+      name: 'NUMERICAL_VARIO',
+      default_position: -1,
+      positionable: true,
+      preview: FONT.symbol(SYM.ARROW_NORTH) + '8.7'
+    }
   },
 
   ALL_STATISTIC_FIELDS: {
@@ -556,7 +569,9 @@ OSD.chooseFields = function () {
                 F.ARMED_TIME,
                 F.DISARMED,
                 F.HOME_DIR,
-                F.HOME_DIST
+                F.HOME_DIST,
+                F.NUMERICAL_HEADING,
+                F.NUMERICAL_VARIO
               ]);
             }
           }

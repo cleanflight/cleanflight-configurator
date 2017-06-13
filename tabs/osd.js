@@ -24,6 +24,12 @@ SYM.BATTERY = 0x96;
 SYM.ARROW_NORTH=0x68;
 SYM.ARROW_SOUTH=0x60;
 SYM.ARROW_EAST=0x64;
+SYM.HEADING_LINE=0x1D;
+SYM.HEADING_DIVIDED_LINE=0x1C;
+SYM.HEADING_N=0x18;
+SYM.HEADING_S=0x19;
+SYM.HEADING_E=0x1A;
+SYM.HEADING_W=0x1B;
 
 
 var FONT = FONT || {};
@@ -508,7 +514,17 @@ OSD.constants = {
       default_position: -1,
       positionable: true,
       preview: FONT.symbol(SYM.ARROW_NORTH) + '8.7'
-    }
+    },
+    COMPASS_BAR: {
+        name: 'COMPASS_BAR',
+        default_position: -1,        
+        positionable: true,
+        preview:  function(osd_data) {
+            return FONT.symbol(SYM.HEADING_W)            + FONT.symbol(SYM.HEADING_LINE) + FONT.symbol(SYM.HEADING_DIVIDED_LINE) + 
+                   FONT.symbol(SYM.HEADING_LINE)         + FONT.symbol(SYM.HEADING_N)    + FONT.symbol(SYM.HEADING_LINE) + 
+                   FONT.symbol(SYM.HEADING_DIVIDED_LINE) + FONT.symbol(SYM.HEADING_LINE) + FONT.symbol(SYM.HEADING_E) 
+        }
+    }        
   },
   ALL_STATISTIC_FIELDS: {
     MAX_SPEED: {
@@ -612,7 +628,8 @@ OSD.chooseFields = function () {
                 F.HOME_DIR,
                 F.HOME_DIST,
                 F.NUMERICAL_HEADING,
-                F.NUMERICAL_VARIO
+                F.NUMERICAL_VARIO,
+                F.COMPASS_BAR
               ]);
             }
           }

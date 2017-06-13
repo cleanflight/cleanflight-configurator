@@ -496,7 +496,10 @@ OSD.constants = {
     },
     ARMEDTIME: {
       name: 'ARMED_TIME'
-    }
+    },
+    MAX_DISTANCE: {
+        name: 'MAX_DISTANCE'
+    }    
   }
 };
 
@@ -581,6 +584,23 @@ OSD.chooseFields = function () {
       F.ALTITUDE
     ];
   }
+
+  // Choose ststistic fields
+  // Nothing much to do here, I'm preempting there being new statistics
+  F = OSD.constants.ALL_STATISTIC_FIELDS;
+  OSD.constants.STATISTIC_FIELDS = [
+    F.MAX_SPEED,
+    F.MIN_BATTERY,
+    F.MIN_RSSI,
+    F.MAX_CURRENT,
+    F.USED_MAH,
+    F.MAX_ALTITUDE,
+    F.BLACKBOX,
+    F.END_BATTERY,
+    F.FLYTIME,
+    F.ARMEDTIME,
+    F.MAX_DISTANCE
+  ];
 };
 
 OSD.updateDisplaySize = function() {

@@ -21,7 +21,34 @@ SYM.METRE = 0xC;
 SYM.FEET = 0xF;
 SYM.GPS_SAT = 0x1F;
 SYM.BATTERY = 0x96;
+SYM.TEMP_F = 0x0D;
+SYM.TEMP_C = 0x0E;
 
+// Direction arrows
+SYM.ARROW_SOUTH = 0x60;
+SYM.ARROW_2 = 0x61;
+SYM.ARROW_3 = 0x62;
+SYM.ARROW_4 = 0x63;
+SYM.ARROW_EAST = 0x64;
+SYM.ARROW_6 = 0x65;
+SYM.ARROW_7 = 0x66;
+SYM.ARROW_8 = 0x67;
+SYM.ARROW_NORTH = 0x68;
+SYM.ARROW_10 = 0x69;
+SYM.ARROW_11 = 0x6A;
+SYM.ARROW_12 = 0x6B;
+SYM.ARROW_WEST = 0x6C;
+SYM.ARROW_14 = 0x6D;
+SYM.ARROW_15 = 0x6E;
+SYM.ARROW_16 = 0x6F;
+
+// Progress bar
+SYM.PB_START = 0x8A;
+SYM.PB_FULL  = 0x8B;
+SYM.PB_HALF  = 0x8C;
+SYM.PB_EMPTY = 0x8D;
+SYM.PB_END   = 0x8E;
+SYM.PB_CLOSE = 0x8F;
 
 var FONT = FONT || {};
 
@@ -201,6 +228,20 @@ FONT.symbol = function(hexVal) {
 
 var OSD = OSD || {};
 
+OSD.pos = function(x, y, visible) {
+  var OSD_POS_BITS = 5;
+
+  var visibleFlag = 0;
+
+  if (visible === undefined || visible === null) {
+    visibleFlag = 0x800
+  } else {
+    visibleFlag = visible ? 0x800 : 0;
+  }
+
+  return ((x) & 0x1F) | ((y << OSD_POS_BITS) & 0x1F) | visibleFlag;
+}
+
 // parsed fc output and output to fc, used by to OSD.msp.encode
 OSD.initData = function() {
   OSD.data = {
@@ -273,7 +314,7 @@ OSD.constants = {
       name: 'VTX_CHANNEL',
       default_position: 1,
       positionable: true,
-      preview: 'R:2'
+      preview: 'R:2:0'
     },
     VOLTAGE_WARNING: {
       name: 'VOLTAGE_WARNING',
@@ -405,6 +446,74 @@ OSD.constants = {
       default_position: 12 << 5,
       positionable: true,
       preview: FONT.symbol(SYM.BATTERY) + '3.98' + FONT.symbol(SYM.VOLT)
+    },
+    DEBUG: {
+      name: 'DEBUG',
+      default_position: OSD.pos(1, 0),
+      positionable: true,
+      preview: 'DBG 12345 67890 98765 43210'
+    },
+    PITCH_ANGLE: {
+      name: 'PITCH_ANGLE',
+      default_position: OSD.pos(1, 8),
+      positionable: true,
+      preview: '-25.7'
+    },
+    ROLL_ANGLE: {
+      name: 'ROLL_ANGLE',
+      default_position: OSD.pos(1, 9),
+      positionable: true,
+      preview: '-13.3'
+    },
+    GPS_LAT: {
+      name: 'GPS_LAT',
+      default_position: OSD.pos(1, 2),
+      positionable: true,
+      preview: FONT.symbol(SYM.ARROW_EAST) + '50.1234567'
+    },
+    GPS_LON: {
+      name: 'GPS_LON',
+      default_position: OSD.pos(18, 2),
+      positionable: true,
+      preview: FONT.symbol(SYM.ARROW_SOUTH) + '19.1234567'
+    },
+    MAIN_BATT_USAGE: {
+      name: 'MAIN_BATT_USAGE',
+      default_position: OSD.pos(8, 12),
+      positionable: true,
+      preview:
+        FONT.symbol(SYM.PB_START) +
+        FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) +
+        FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) +
+        FONT.symbol(SYM.PB_FULL) + FONT.symbol(SYM.PB_FULL) +
+        FONT.symbol(SYM.PB_EMPTY) + FONT.symbol(SYM.PB_EMPTY) +
+        FONT.symbol(SYM.PB_EMPTY) + FONT.symbol(SYM.PB_EMPTY) +
+        FONT.symbol(SYM.PB_EMPTY) +
+        FONT.symbol(SYM.PB_CLOSE)
+    },
+    ARMED_TIME: {
+      name: 'ARMED_TIME',
+      default_position: OSD.pos(1, 2),
+      positionable: true,
+      preview: FONT.symbol(SYM.FLY_M) + '04:11'
+    },
+    DISARMED_V1_32: {
+      name: 'DISARMED',
+      default_position: OSD.pos(11, 4),
+      positionable: true,
+      preview: 'DISARMED'
+    },
+    ESC_TMP: {
+      name: 'ESC_TEMPERATURE',
+      default_position: OSD.pos(1, 14),
+      positionable: true,
+      preview: FONT.symbol(SYM.TEMP_C) + '31'
+    },
+    ESC_RPM: {
+      name: 'ESC_SPEED',
+      default_position: OSD.pos(1, 15),
+      positionable: true,
+      preview: '12345'
     }
   }
 };
@@ -443,7 +552,17 @@ OSD.chooseFields = function () {
         OSD.constants.DISPLAY_FIELDS = OSD.constants.DISPLAY_FIELDS.concat([
           F.PID_RATE_PROFILE,
           F.BATTERY_WARNING,
-          F.AVG_CELL_VOLTAGE
+          F.AVG_CELL_VOLTAGE,
+          F.GPS_LON,
+          F.GPS_LAT,
+          F.DEBUG,
+          F.PITCH_ANGLE,
+          F.ROLL_ANGLE,
+          F.MAIN_BATT_USAGE,
+          F.ARMED_TIME,
+          F.DISARMED_V1_32,
+          F.ESC_TMP,
+          F.ESC_RPM
         ]);
       }
     }
@@ -664,17 +783,15 @@ TABS.osd.initialize = function (callback) {
           // ask for the OSD config data
           MSP.promise(MSPCodes.MSP_OSD_CONFIG)
           .then(function(info) {
-              
             OSD.chooseFields();
-            
             OSD.msp.decode(info);
-            
+
             if (OSD.data.state.haveSomeOsd == 0) {
               $('.unsupported').fadeIn();
               return;
             }
             $('.supported').fadeIn();
-            
+
             // show Betaflight logo in preview
             var $previewLogo = $('.preview-logo').empty();
             $previewLogo.append(

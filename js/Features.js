@@ -72,7 +72,12 @@ var Features = function (config) {
 
         if (semver.gte(CONFIG.apiVersion, "1.20.0")) {
             features.push(
-                {bit: 18, group: 'other', name: 'OSD'},
+                {bit: 18, group: 'other', name: 'OSD'}
+            );
+        }
+
+        if (semver.gte(CONFIG.apiVersion, "1.20.0") && semver.lte(CONFIG.apiVersion, "1.35.0")) {
+            features.push(
                 {bit: 24, group: 'other', name: 'VTX'}
             );
         }

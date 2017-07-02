@@ -567,7 +567,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             var element = $(this);
 
             FEATURE_CONFIG.features.updateData(element);
-            updateTabList(FEATURE_CONFIG.features);
 
             switch (element.attr('name')) {
                 case 'MOTOR_STOP':
@@ -591,7 +590,6 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             var element = $(this);
 
             FEATURE_CONFIG.features.updateData(element);
-            updateTabList(FEATURE_CONFIG.features);
 
             switch (element.attr('name')) {
                 case 'rxMode':

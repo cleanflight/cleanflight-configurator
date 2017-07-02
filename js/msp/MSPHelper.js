@@ -557,8 +557,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
 
             case MSPCodes.MSP_FEATURE_CONFIG:
                 FEATURE_CONFIG.features.setMask(data.readU32());
-
-                updateTabList(FEATURE_CONFIG.features);
                 break;
 
             case MSPCodes.MSP_BOARD_ALIGNMENT_CONFIG:

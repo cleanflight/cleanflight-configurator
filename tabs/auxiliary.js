@@ -15,8 +15,13 @@ TABS.auxiliary.initialize = function (callback) {
     }
 
     function get_rc_data() {
-        MSP.send_message(MSPCodes.MSP_RC, false, false, load_html);
+        MSP.send_message(MSPCodes.MSP_RC, false, false, get_ports_config);
     }
+    
+    function get_ports_config() {
+        MSP.send_message(MSPCodes.MSP_CF_SERIAL_CONFIG, false, false, load_html);
+    }
+
 
     function load_html() {
         $('#content').load("./tabs/auxiliary.html", process_html);
@@ -24,11 +29,41 @@ TABS.auxiliary.initialize = function (callback) {
 
     MSP.send_message(MSPCodes.MSP_BOXNAMES, false, false, get_mode_ranges);
 
+    // return true if user has choose a special peripheral
+    function isPeripheralSelected(peripheralName) {
+        for (var portIndex = 0; portIndex < SERIAL_CONFIG.ports.length; portIndex++) {
+            var serialPort = SERIAL_CONFIG.ports[portIndex];
+            if (serialPort.functions.indexOf(peripheralName) >= 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function adjustRunCamSplitBoxNameWithModeID(modeId, originalModeName) {
+        switch (modeId) {
+            case 32: // BOXCAMERA1
+                return "CAMERA WI-FI";
+            case 33: // BOXCAMERA2
+                return "CAMERA POWER";
+            case 34: // BOXCAMERA3
+                return "CAMERA CHANGE MODE"
+            default:
+                return originalModeName;
+        }
+    }
+
     function createMode(modeIndex, modeId) {
         var modeTemplate = $('#tab-auxiliary-templates .mode');
         var newMode = modeTemplate.clone();
         
         var modeName = AUX_CONFIG[modeIndex];
+        // if user choose the runcam split at peripheral column, then adjust the boxname(BOXCAMERA1, BOXCAMERA2, BOXCAMERA3)
+        if (isPeripheralSelected("RUNCAM_SPLIT_CONTROL")) {
+            modeName = adjustRunCamSplitBoxNameWithModeID(modeId, modeName);
+        }
+
         $(newMode).attr('id', 'mode-' + modeIndex);
         $(newMode).find('.name').text(modeName);
         
@@ -109,7 +144,7 @@ TABS.auxiliary.initialize = function (callback) {
         $(rangeElement).find('.channel').val(auxChannelIndex);
 
     }
-    
+
     function process_html() {
 
         var auxChannelCount = RC.active_channels - 4;

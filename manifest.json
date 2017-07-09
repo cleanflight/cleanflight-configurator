@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "38",
-    "version": "2.0.4",
+    "version": "2.1.0",
     "author": "Cleanflight Project",
     "name": "Cleanflight - Configurator",
     "short_name": "Cleanflight",

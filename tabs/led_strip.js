@@ -42,6 +42,7 @@ TABS.led_strip.initialize = function (callback, scrollPosition) {
             load_html();
     }
 
+
     function load_html() {
         $('#content').load("./tabs/led_strip.html", process_html);
     }

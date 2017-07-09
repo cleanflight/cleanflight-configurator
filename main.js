@@ -167,7 +167,6 @@ $(document).ready(function () {
                     case 'setup_osd':
                         TABS.setup_osd.initialize(content_ready);
                         break;
-                        
                     case 'configuration':
                         TABS.configuration.initialize(content_ready);
                         break;
@@ -425,8 +424,13 @@ function generateFilename(prefix, suffix) {
     var date = new Date();
     var filename = prefix;
 
-    if (CONFIG && CONFIG.name && CONFIG.name.trim() !== '') {
-        filename = filename + '_' + CONFIG.name.trim().replace(' ', '_');
+    if (CONFIG) {
+        if (CONFIG.flightControllerIdentifier) {
+        	filename = CONFIG.flightControllerIdentifier + '_' + filename; 	
+        }
+        if(CONFIG.name && CONFIG.name.trim() !== '') {
+        	filename = filename + '_' + CONFIG.name.trim().replace(' ', '_');
+        }
     }
 
     filename = filename + '_' + date.getFullYear()

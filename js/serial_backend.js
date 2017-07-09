@@ -198,7 +198,6 @@ function onOpen(openInfo) {
                             googleAnalytics.sendEvent('Firmware', 'Variant', CONFIG.flightControllerIdentifier + ',' + CONFIG.flightControllerVersion);
                             GUI.log(chrome.i18n.getMessage('fcInfoReceived', [CONFIG.flightControllerIdentifier, CONFIG.flightControllerVersion]));
 
-                            
                             if ((CONFIG.flightControllerIdentifier === 'CLFL' && semver.lt(CONFIG.apiVersion, '1.34.0')) ||
                                 (CONFIG.flightControllerIdentifier === 'BTFL' && semver.lt(CONFIG.apiVersion, '1.20.0'))) {
                                 GUI.show_modal(
@@ -221,33 +220,8 @@ function onOpen(openInfo) {
     
                                         MSP.send_message(MSPCodes.MSP_UID, false, false, function () {
                                             GUI.log(chrome.i18n.getMessage('uniqueDeviceIdReceived', [CONFIG.uid[0].toString(16) + CONFIG.uid[1].toString(16) + CONFIG.uid[2].toString(16)]));
-    
-                                            // continue as usually
-                                            CONFIGURATOR.connectionValid = true;
-                                            
-                                            GUI.allowedTabs = [];
-                                            
-                                            switch (CONFIG.boardType) {
-                                                case 0:
-                                                case 2:
-                                                    GUI.allowedTabs = GUI.defaultAllowedFCTabsWhenConnected.slice();
-                                                    if (semver.lt(CONFIG.apiVersion, "1.4.0")) {
-                                                        GUI.allowedTabs.splice(GUI.allowedTabs.indexOf('led_strip'), 1);
-                                                    }
-                                                    
-                                                    GUI.canChangePidController = semver.gte(CONFIG.apiVersion, CONFIGURATOR.pidControllerChangeMinApiVersion);
-                                                    break;
-                                                    
-                                                case 1:
-                                                    GUI.allowedTabs = GUI.defaultAllowedOSDTabsWhenConnected.slice();
-                                                    break;
-                                            }
-    
-                                            onConnect();
-    
-                                            var defaultTab = GUI.allowedTabs[0];
-                                            
-                                            $('#tabs ul.mode-connected .tab_' + defaultTab + ' a').click();
+
+                                            finishOpen();
                                         });
                                     });
                                 });
@@ -280,6 +254,33 @@ function onOpen(openInfo) {
         // reset data
         $('div#connectbutton a.connect').data("clicks", false);
     }
+}
+
+function finishOpen() {
+
+    CONFIGURATOR.connectionValid = true;
+    
+    GUI.allowedTabs = [];
+    
+    switch (CONFIG.boardType) {
+        case 0:
+        case 2:
+            GUI.allowedTabs = GUI.defaultAllowedFCTabsWhenConnected.slice();
+            if (semver.lt(CONFIG.apiVersion, "1.4.0")) {
+                GUI.allowedTabs.splice(GUI.allowedTabs.indexOf('led_strip'), 1);
+            }
+            break;
+            
+        case 1:
+            GUI.allowedTabs = GUI.defaultAllowedOSDTabsWhenConnected.slice();
+            break;
+    }
+
+    onConnect();
+
+    var defaultTab = GUI.allowedTabs[0];
+    
+    $('#tabs ul.mode-connected .tab_' + defaultTab + ' a').click();
 }
 
 function connectCli() {
@@ -408,7 +409,7 @@ function sensor_status(sensors_detected) {
         $('.accicon', e_sensor_status).removeClass('active');
     }
 
-    if (CONFIG.boardType == 0 || CONFIG.boardType == 2) { // Gyro status is not reported by FC 
+    if ((CONFIG.boardType == 0 || CONFIG.boardType == 2) && have_sensor(sensors_detected, 'gyro')) {
         $('.gyro', e_sensor_status).addClass('on');
         $('.gyroicon', e_sensor_status).addClass('active');
     } else {
@@ -461,6 +462,12 @@ function have_sensor(sensors_detected, sensor_code) {
             return bit_check(sensors_detected, 3);
         case 'sonar':
             return bit_check(sensors_detected, 4);
+        case 'gyro':
+            if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
+                return bit_check(sensors_detected, 5);
+            } else {
+                return true;
+            }
     }
     return false;
 }

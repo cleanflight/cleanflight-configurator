@@ -188,10 +188,13 @@
         "message": "Firmware Version: <strong>$1</strong>"
     },
     "apiVersionReceived": {
-        "message": "MultiWii API version <span class=\"message-positive\">received</span> - <strong>$1</strong>"
+        "message": "MultiWii API version: <strong>$1</strong>"
     },
     "uniqueDeviceIdReceived": {
-        "message": "Unique device ID <span class=\"message-positive\">received</span> - <strong>0x$1</strong>"
+        "message": "Unique device ID: <strong>0x$1</strong>"
+    },
+    "craftNameReceived": {
+        "message": "Craft name: <strong>$1</strong>"
     },
     "boardInfoReceived": {
         "message": "Board: <strong>$1</strong>, version: <strong>$2</strong>"
@@ -355,7 +358,7 @@
     
 
     "initialSetupBackupAndRestoreApiVersion": {
-        "message": "<span style=\"color: red\">Backup and restore functionality disabled.</span>  You have firmware with API version <span style=\"color: red\">$1</span>, backup and restore requires <span class=\"message-positive\">$2</span>.  Please backup your settings via the CLI, see Betaflight documentation for procedure."
+        "message": "<span style=\"color: red\">Backup and restore functionality disabled.</span>  You have firmware with API version <span style=\"color: red\">$1</span>, backup and restore requires <span class=\"message-positive\">$2</span>.  Please backup your settings via the CLI, see documentation for procedure."
     },
     "initialSetupButtonCalibrateAccel": {
         "message": "Calibrate Accelerometer"
@@ -739,7 +742,7 @@
         "message": "Cycles/Sec [Hz]"
     },
     "configurationLoopTimeHelp": {
-        "message": "<strong>Note:</strong> Make sure your FC is capable to operate on these speeds! Check CPU and cycletime stability. Changing this may require PID re-tuning. TIP: Disable Accelerometer and other sensors to gain more performance."
+        "message": "<strong>Note:</strong> Make sure your FC is able to operate at these speeds! Check CPU and cycletime stability. Changing this may require PID re-tuning. TIP: Disable Accelerometer and other sensors to gain more performance."
     },
     "configurationGPS": {
         "message": "GPS"
@@ -1002,7 +1005,7 @@
         "message": "Please read receiver chapter of the documentation.  Configure serial port (if required), receiver mode (serial/ppm/pwm), provider (for serial receivers), bind receiver, set channel map, configure channel endpoints/range on TX so that all channels go from ~1000 to ~2000.  Set midpoint (default 1500), trim channels to 1500, configure stick deadband, verify behaviour when TX is off or out of range.<br /><span style=\"color: red\">IMPORTANT:</span> Before flying read failsafe chapter of documentation and configure failsafe."
     },
     "tuningHelp": {
-        "message": "<b>Tuning tips</b><br /><span style=\"color: red\">IMPORTANT:</span> It is important to verify motor temperatures during first flights. The higher the filter value gets the better it may fly, but you do to get more noise into the motors. <br>Default value of 100hz is optimal, but for noiser setups you can try lowering Dterm filter to 50hz and possibly also the gyro filter."
+        "message": "<b>Tuning tips</b><br /><span style=\"color: red\">IMPORTANT:</span> It is important to verify motor temperatures during first flights. The higher the filter value gets the better it may fly, but you also will get more noise into the motors. <br>Default value of 100hz is optimal, but for noiser setups you can try lowering Dterm filter to 50hz and possibly also the gyro filter."
     },
     "receiverThrottleMid": {
         "message": "Throttle MID"
@@ -1518,7 +1521,7 @@
         "message": "Confirm dataflash erase"
     },
     "dataflashConfirmEraseNote": {
-        "message": "This will erase any Blackbox logs or other data contained in the dataflash which will take about 20 seconds, are you sure?"
+        "message": "This will erase any Blackbox logs or other data contained in the dataflash. It should take about 20 seconds, are you sure?"
     },
     "dataflashSavingTitle": {
         "message": "Saving dataflash to file"
@@ -1604,7 +1607,7 @@
         "message": "Select firmware version for your board."
     },
     "firmwareFlasherNoRebootDescription": {
-        "message": "Enable if you powered your FC while the bootloader pins are jumpered or have your FC's BOOT button pressed."
+        "message": "Enable if your FC is in boot mode. i.e. if you powered on your FC with the bootloader pins jumped or whilst holding your FC's BOOT button."
     },
     "firmwareFlasherFlashOnConnect": {
         "message": "Flash on connect"
@@ -1661,7 +1664,7 @@
         "message": "Flash Firmware"
     },
     "firmwareFlasherGithubInfoHead": {
-        "message": "Github Firmware Info"
+        "message": "GitHub Firmware Info"
     },
     "firmwareFlasherCommiter": {
         "message": "Committer:"
@@ -1711,6 +1714,78 @@
     },
     "ledStripEepromSaved": {
         "message": "EEPROM <span class=\"message-positive\">saved</span>"
+    },
+    "ledStripVtxOverlay": {
+        "message": "VTX (uses vtx frequency to assign color)"
+    },
+    "ledStripFunctionSection": {
+      "message": "LED Functions"
+    },
+    "ledStripFunctionTitle": {
+      "message": "Function"
+    },
+    "ledStripColorModifierTitle": {
+      "message": "Color modifier"
+    },
+    "ledStripThrottleFunction": {
+      "message": "Throttle"
+    },
+    "ledStripVtxFunction": {
+      "message": "Larson scanner"
+    },
+    "ledStripBlinkTitle": {
+      "message": "Blink"
+    },
+    "ledStripBlinkAlwaysOverlay": {
+      "message": "Blink always"
+    },
+    "ledStripBlinkLandingOverlay": {
+      "message": "Blink on landing"
+    },
+    "ledStripOverlayTitle": {
+      "message": "Overlay"
+    },
+    "ledStripWarningsOverlay": {
+      "message": "Warnings"
+    },
+    "ledStripIndecatorOverlay": {
+      "message": "Indicator (uses position on matrix)"
+    },
+    "ledStripVtxOverlay": {
+        "message": "VTX (uses vtx frequency to assign color)"
+    },
+    "ledStripFunctionSection": {
+      "message": "LED Functions"
+    },
+    "ledStripFunctionTitle": {
+      "message": "Function"
+    },
+    "ledStripColorModifierTitle": {
+      "message": "Color modifier"
+    },
+    "ledStripThrottleFunction": {
+      "message": "Throttle"
+    },
+    "ledStripVtxFunction": {
+      "message": "Larson scanner"
+    },
+    "ledStripBlinkTitle": {
+      "message": "Blink"
+    },
+    "ledStripBlinkAlwaysOverlay": {
+      "message": "Blink always"
+    },
+    "ledStripBlinkLandingOverlay": {
+      "message": "Blink on landing"
+    },
+    "ledStripOverlayTitle": {
+      "message": "Overlay"
+    },
+    "ledStripWarningsOverlay": {
+      "message": "Warnings"
+    },
+    "ledStripIndecatorOverlay": {
+      "message": "Indicator (uses position on matrix)"
     },
     "ledStripVtxOverlay": {
         "message": "VTX (uses vtx frequency to assign color)"
@@ -1976,7 +2051,7 @@
         "message": "Delay for turning off the Motors during Failsafe [1 = 0.1 sec.]"
     },
     "failsafeOffDelayHelp": {
-        "message": "Time to stay in landing mode untill the motors are turned off and the craft is disarmed"
+        "message": "Time to stay in landing mode until the motors are turned off and the craft is disarmed"
     },
     "failsafeSubTitle1": {
         "message": "Stage 2 - Failsafe Procedure"
@@ -1991,14 +2066,14 @@
         "message": "Failsafe Kill Switch (setup Failsafe in Modes Tab)"
     },
     "failsafeKillSwitchHelp": {
-        "message": "Set this option to make the failsafe switch, configured in the modes tab, act as a direct kill switch, bypassing the selected failsafe procedure. <strong>Note:</strong> Arming is blocked with the failsafe kill switch in the ON position"
+        "message": "Set this option to make the failsafe switch (Modes Tab) act as a direct kill switch, bypassing the selected failsafe procedure. <strong>Note:</strong> Arming is blocked with the failsafe kill switch in the ON position"
     },
 
     "powerButtonSave": {
         "message": "Save"
     },
     "powerFirmwareUpgradeRequired": {
-        "message": "Firmware upgrade <span style=\"color: red\">required</span>.  Battery/Amperage/Voltage configurations using API &lt; 1.22.0 is not supported."
+        "message": "Firmware upgrade <span style=\"color: red\">required</span>.  Battery/Amperage/Voltage configurations using API &lt; 1.33.0 is not supported."
     },
     "powerBatteryVoltageMeterSource": {
         "message": "Voltage Meter Source"
@@ -2309,7 +2384,7 @@
         "message": "Time since the craft was last armed"
     },
     "osdDescElementWarnings": {
-        "message": "Alerts (e.g. low battery) and warnings for potential problems (e.g. critically low battery), and visual beeper."
+        "message": "Alerts (e.g. low battery), warnings (e.g. reasons for not arming, critically low battery) and visual beeper (4 flashing asterisks)."
     },
     "osdDescElementEscTemperature": {
         "message": "Temperature reported by ESC telemetry"
@@ -2331,6 +2406,12 @@
     },
     "osdDescElementCompassBar": {
         "message": "Graphical compass bar showing current heading"
+    },
+    "osdDescElementTimer1" : {
+        "message": "Shows the value of timer 1"
+    },
+    "osdDescElementTimer2" : {
+        "message": "Shows the value of timer 2"
     },
 
     "osdDescStatMaxSpeed": {
@@ -2369,6 +2450,22 @@
     "osdDescStatBlackboxLogNumber": {
         "message": "Log number for this flights Blackbox log"
     },
+    "osdDescStatTimer1": {
+        "message": "Value of timer 1 at time of disarming"
+    },
+    "osdDescStatTimer2": {
+        "message": "Value of timer 2 at time of disarming"
+    },
+
+    "osdTimerSourceTooltip": {
+        "message": "Select the timer source, this controls the duration/event that the timer measures"
+    },
+    "osdTimerPrecisionTooltip": {
+        "message": "Select the timer precision, this controls to what precision the time is reported in"
+    },
+    "osdTimerAlarmTooltip": {
+        "message": "Select the timer alarm threshold in minutes, when the time exceeds this value the OSD element will blink, setting this to 0 disables the alarm"
+    },
 
     "mainHelpArmed": {
         "message": "Motor Arming"
@@ -2383,7 +2480,7 @@
         "message": "ESC/Motor protocol"
     },
     "configurationEscProtocolHelp": {
-        "message": "Select here your motor protocol. <br>Make sure to verify product site of your ESC to what protocol is supported. <br> <b>Be carefull using DSHOT900 and DSHOT1200 as not many ESC's support it!</b>"
+        "message": "Select your motor protocol. <br>Make sure to verify the protocol is supported by your ESC, this information should be on the makers website. <br> <b>Be carefull using DSHOT900 and DSHOT1200 as not many ESC's support it!</b>"
     },
     "configurationunsyndePwm": {
         "message": "Motor PWM speed Separated from PID speed"
@@ -2419,7 +2516,7 @@
         "message": "Profile"
     },
     "pidTuningProfileTip": {
-        "message": "Up to 3 (2 for some controllers) different profiles can be stored on the flight controller. The profiles include all the settings on this tab. Once in the field, simple stick commands (see online instructions) can be used to switch between the profiles."
+        "message": "Up to 3 (2 for some controllers) different pid profiles can be stored on the flight controller. The pid profiles include pid, d setpoint and angle/horizon settings on this tab. Once in the field, simple stick commands (see online instructions) can be used to switch between the profiles."
     },
     "pidTuningRateProfile": {
         "message": "Rateprofile"

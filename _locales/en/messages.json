@@ -582,6 +582,12 @@
     "featureESC_SENSOR": {
         "message": "Use KISS ESC 24A telemetry as sensor"
     },
+    "featureDYNAMIC_FILTER": {
+        "message": "Dynamic Notch Filter"
+    },    
+    "featureDYNAMIC_FILTERTip": {
+        "message": "The filter center and cutoff are calculated constantly based on gyro data.<br />The order of filters when enabled is: <i>rawGyro -> dynamicNotch -> notch1 -> notch2 -> lpf</i>"
+    },        
     "featureCHANNEL_FORWARDING": {
         "message": "Forward aux channels to servo outputs"
     },

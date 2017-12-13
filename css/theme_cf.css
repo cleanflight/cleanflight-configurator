@@ -147,6 +147,7 @@ button.active {
 }
 
 .message-negative {
+    color: red;
 }
 
 .switchery {

@@ -1,5 +1,18 @@
 .DS_store
 nbproject/
 .idea
+.project
+.settings/
+node_modules/
+npm-debug.log
+cache/
+apps/
+dist/
+debug/
+release/
 
+# artefacts for Eclipse
 /.settings/
+
+# artefacts for Visual Studio Code
+/.vscode/

@@ -1,0 +1,357 @@
+#logo {
+    background-image: url(../images/cf/cf-light-wide-2.svg);
+}
+
+.logo_text {
+    left: 31px;
+    top: 63px;
+}
+
+.cf_doc_version_bt a {
+    background-color: #59aa29;
+    border: 1px solid #4c8829;
+    color: #fff;
+}
+
+.cf_doc_version_bt a:hover {
+    background-color: #6ac435;
+}
+
+#log a {
+    color: #59aa29;
+}
+
+.tab_container {
+    border-right: 4px solid #59aa29;
+}
+
+#tabs li.active a {
+    background-color: #59aa29;
+    color: #fff;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.45);
+}
+
+#tabs li.active a:hover {
+    background-color: #59aa29;
+}
+
+.tab_title {
+    border-bottom: 1px solid #59aa29;
+}
+
+.content_toolbar .btn a {
+    background-color: #59aa29;
+    border: 1px solid #4c8829;
+    color: #fff;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
+}
+
+.content_toolbar .btn a:hover {
+    background-color: #6ac435;
+}
+
+.content_toolbar .btn a:active {
+    background-color: #4d9324;
+}
+
+.gui_note {
+    background: #ffffdd;
+}
+
+.gui_note .gui_box_titlebar {
+    background-color: #cccc00;
+}
+
+.fixed_band .save_btn a {
+
+    background-color: #59aa29;
+    border: 1px solid #4c8829;
+    color: #fff;
+}
+
+.fixed_band .save_btn a:hover {
+    background-color: #6ac435;
+}
+
+.default_btn a {
+    background-color: #fff;
+    border: 1px solid #59aa29;
+    color: #59aa29;
+}
+
+.default_btn a.disabled {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.default_btn a:hover {
+    background-color: #6ac435;
+    color: #fff;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
+}
+
+.default_btn a:active {
+    background-color: #4d9324;
+}
+
+.small a:hover {
+    background-color: #6ac435;
+    color: #fff;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
+    border: 1px solid #59aa29;
+}
+
+.green a {
+    background-color: #59aa29;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    border: 1px solid #59aa29;
+}
+
+.green a:hover {
+    background-color: #6ac435;
+    border: 1px solid #4d9324;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
+    color: #fff;
+}
+
+.gps_true {
+    background-color: #59aa29;
+}
+
+.connect_b a.connect {
+    background-color: #56ac1d;
+    border: 1px solid #5bbb1b;
+}
+
+.connect_b a.connect:hover {
+    background-color: #68c02e;
+}
+
+.dataflash-free_global {
+    background-color: #59AA29;
+}
+
+.battery-status {
+    background-color: #59AA29;
+}
+
+button.active {
+    background-color: #6ac435;
+    border: 1px solid #4d9324;
+    color: #000;
+}
+
+.message-positive {
+    color: #59aa29;
+}
+
+.message-negative {
+}
+
+.switchery {
+  color: #59aa29;
+  background-color: #c4c4c4 !important;
+}
+
+.ic_welcome {
+    background-image: url(../images/cf/icons/cf_icon_welcome_grey.svg);
+}
+
+.ic_welcome:hover {
+    background-image: url(../images/cf/icons/cf_icon_welcome_white.svg);
+}
+
+li.active .ic_welcome {
+    background-image: url(../images/cf/icons/cf_icon_welcome_white.svg);
+}
+
+.gyroicon.active {
+    background-image: url(../images/cf/icons/sensor_gyro_on.png);
+    color: #61d514;
+}
+
+.accicon.active {
+    background-image: url(../images/cf/icons/sensor_acc_on.png);
+    color: #61d514;
+}
+
+.magicon.active {
+    background-image: url(../images/cf/icons/sensor_mag_on.png);
+    color: #61d514;
+}
+
+.baroicon.active {
+    background-image: url(../images/cf/icons/sensor_baro_on.png);
+    color: #61d514;
+}
+
+.gpsicon.active {
+    background-image: url(../images/cf/icons/sensor_sat_on.png);
+    color: #61d514;
+}
+
+.sonaricon.active {
+    background-image: url(../images/cf/icons/sensor_sonar_on.png);
+    color: #61d514;
+}
+
+.tab-landing .content_wrapper {
+    background-color: #436c2c;
+}
+
+.tab-landing .content_top {
+    background: #59aa29;
+}
+
+.tab-landing .content_mid {
+    background-color: #eaeaea;
+}
+
+.tab-landing .logowrapper {
+    color: white;
+}
+
+.tab-landing .logowrapper img {
+    width: 420px;
+}
+
+#changelog .wrapper {
+    border-left: 5px solid green;
+}
+
+#changelog .button {
+    background: green;
+}
+
+#changelog .button a {
+    color: white;
+}
+
+.tab-help li span a {
+    color: #59aa29;
+}
+
+.tab-help li {
+    background-image: url(../images/cf/icons/arrow_green.svg);
+}
+
+.tab-failsafe .pro1 {
+    background-image: url(../images/cf/icons/cf_failsafe_procedure1.svg);
+}
+
+.tab-failsafe .pro2 {
+    background-image: url(../images/cf/icons/cf_failsafe_procedure2.svg);
+}
+
+.tab-failsafe .pro3 {
+    background-image: url(../images/cf/icons/cf_failsafe_procedure3.svg);
+}
+
+.tab-failsafe .pro4 {
+    background-image: url(../images/cf/icons/cf_failsafe_procedure4.svg);
+}
+
+.tab-pid_tuning .tab_container td.active {
+    background-color: #59aa29;
+}
+
+.tab-pid_tuning .tab_container td.active a {
+    color: #fff;
+    background-color: #59aa29;
+}
+
+.tab-pid_tuning .tabborder {
+    background-color: #59aa29;
+}
+
+.tab-auxiliary .range .marker, .tab-auxiliary .channel-slider .noUi-connect {
+    background: #59aa29;
+}
+
+.tab-auxiliary .mode.on .info {
+    background: #59aa29;
+    color: white;
+}
+
+.tab-auxiliary .mode.on:nth-child(odd) .info {
+    background: #59aa29;
+}
+
+.tab-adjustments .range .marker, .tab-adjustments .channel-slider .noUi-connect {
+    background: #59aa29;
+}
+
+.tab-firmware_flasher .info .progress.valid::-webkit-progress-bar {
+    background-color: #59aa29;
+}
+
+.tab-firmware_flasher .info .progress.valid::-webkit-progress-value {
+    background-color: #59aa29;
+}
+
+progress[value]::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, .15), rgba(0, 0, 0, .15)),
+        -webkit-linear-gradient(left, #59aa29, #59aa29);
+}
+
+.tab-onboard_logging .dataflash-used,
+.tab-onboard_logging .sdcard-other {
+    background: #59aa29;
+}
+
+.tab-onboard_logging .regular-button {
+    background-color: #59aa29;
+    border: 1px solid #5bbb1b;
+    color: white;
+}
+
+.tab-onboard_logging .regular-button:hover {
+    background-color: #6ac435;
+}
+
+.button-enable a {
+    background-color: #59aa29;
+    border: 1px solid #4c8829;
+    color: #fff;
+}
+
+#accel_calib_running {
+    border: 1px solid #59aa29;
+    color: #59aa29;
+}
+
+#mag_calib_running {
+    border: 1px solid #59aa29;
+    color: #59aa29;
+}
+
+.jBox-container {
+    border: 1px solid #59aa29;
+}
+
+.jBox-pointer:after {
+    border: 1px solid #59aa29;
+}
+
+.helpicon:hover {
+    background-image: url(../images/cf/icons/cf_icon_info_green.svg);
+}
+
+.tab-cli .backdrop {
+    background-image: url(../images/cf/cf-light-wide-1.svg);
+    background-size: 600px;
+}
+
+#canvas-watermark {
+    float: left;
+    background-image: url(../images/cf/cf-light-wide-1.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 100%;
+    background-size: 80%;
+    opacity: 0.15;
+    width: 100%;
+    height: 100%;
+    /* z-index: 0; */
+    position: absolute;
+}

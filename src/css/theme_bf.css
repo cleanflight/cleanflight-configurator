@@ -1,0 +1,347 @@
+#logo {
+    background-image: url(../images/bf/bf-light-wide-2.svg);
+}
+
+.logo_text {
+    left: 80px;
+    top: 50px;
+}
+
+.cf_doc_version_bt a {
+    background-color: #ffbb00;
+    border: 1px solid #e8b423;
+    color: #000;
+}
+
+.cf_doc_version_bt a:hover {
+    background-color: #fecb3f;
+}
+
+#log a {
+    color: #ffbb00;
+}
+
+.tab_container {
+    border-right: 4px solid #ffbb00;
+}
+
+#tabs li.active a {
+    background-color: #ffbb00;
+    color: #000;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.45);
+}
+
+#tabs li.active a:hover {
+    background-color: #ffbb00;
+}
+
+.tab_title {
+    border-bottom: 1px solid #ffbb00;
+}
+
+.content_toolbar .btn a {
+    background-color: #ffbb00;
+    border: 1px solid #dba718;
+    color: #000;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
+}
+
+.content_toolbar .btn a:hover {
+    background-color: #ffcc3e;
+}
+
+.content_toolbar .btn a:active {
+    background-color: #ffbb00;
+}
+
+.gui_note {
+    background: #fff6de;
+}
+
+.gui_note .gui_box_titlebar {
+    background-color: #ffbb00;
+}
+
+.fixed_band .save_btn a {
+
+    background-color: #ffbb00;
+    border: 1px solid #dba718;
+    color: #000;
+}
+
+.fixed_band .save_btn a:hover {
+    background-color: #ffcc3f;
+}
+
+.default_btn a {
+    background-color: #ffbb00;
+    border: 1px solid #dba718;
+    color: #000;
+}
+
+.default_btn a.disabled {
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+}
+
+.default_btn a:hover {
+    background-color: #ffcc3f;
+    color: #000;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
+}
+
+.default_btn a:active {
+    background-color: #ffcc3f;
+}
+
+.small a:hover {
+    background-color: #ffbb00;
+    color: #000;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
+    border: 1px solid #ffbb00;
+}
+
+.green a {
+    background-color: #ffbb00;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
+    color: #000;
+    border: 1px solid #dba718;
+}
+
+.green a:hover {
+    background-color: #ffcc3f;
+    border: 1px solid #dba718;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
+    color: #000;
+}
+
+.gps_true {
+    background-color: #ffbb00;
+}
+
+.connect_b a.connect {
+    background-color: #ffbb00;
+    border: 1px solid #dba718;
+}
+
+.connect_b a.connect:hover {
+    background-color: #ffcc3f;
+}
+
+.dataflash-free_global {
+    background-color: #ffbb00;
+}
+
+.battery-status {
+    background-color: #ffbb00;
+}
+
+button.active {
+    background-color: #ffbb00;
+    border: 1px solid #dba718;
+    color: #000;
+}
+
+.message-positive {
+    color: #ffbb00;
+}
+
+.message-negative {
+}
+
+.switchery {
+  color: #ffbb00;
+  background-color: #c4c4c4 !important;
+}
+
+.ic_welcome {
+    background-image: url(../images/bf/icons/cf_icon_welcome_grey.svg);
+}
+
+.ic_welcome:hover {
+    background-image: url(../images/bf/icons/cf_icon_welcome_white.svg);
+}
+
+li.active .ic_welcome {
+    background-image: url(../images/bf/icons/cf_icon_welcome_white.svg);
+}
+
+.gyroicon.active {
+    background-image: url(../images/bf/icons/sensor_gyro_on.png);
+    color: #818181;
+}
+
+.accicon.active {
+    background-image: url(../images/bf/icons/sensor_acc_on.png);
+    color: #818181;
+}
+
+.magicon.active {
+    background-image: url(../images/bf/icons/sensor_mag_on.png);
+    color: #818181;
+}
+
+.baroicon.active {
+    background-image: url(../images/bf/icons/sensor_baro_on.png);
+    color: #818181;
+}
+
+.gpsicon.active {
+    background-image: url(../images/bf/icons/sensor_sat_on.png);
+    color: #818181;
+}
+
+.sonaricon.active {
+    background-image: url(../images/bf/icons/sensor_sonar_on.png);
+    color: #818181;
+}
+
+.tab-landing .content_wrapper {
+    background-color: #2e2e2e;
+}
+
+.tab-landing .content_top {
+    background: #fff;
+    background-image: url(../images/bf/pattern.png);
+    background-size: 300px;
+}
+
+.tab-landing .content_mid {
+    background-color: #ffbb00;
+}
+
+.tab-landing .logowrapper {
+    color: black;
+}
+
+.tab-landing .logowrapper img {
+    width: 600px;
+}
+
+#changelog .wrapper {
+    border-left: 5px solid #ffbb00;
+}
+
+#changelog .button {
+    background: #ffbb00;
+}
+
+#changelog .button a {
+    color: #000;
+}
+
+.tab-help li span a {
+    color: #ffbb00;
+}
+
+.tab-help li {
+    background-image: url(../images/bf/icons/arrow_yellow.svg);
+}
+
+.tab-failsafe .pro1 {
+    background-image: url(../images/bf/icons/cf_failsafe_procedure1.svg);
+}
+
+.tab-failsafe .pro2 {
+    background-image: url(../images/bf/icons/cf_failsafe_procedure2.svg);
+}
+
+.tab-failsafe .pro3 {
+    background-image: url(../images/bf/icons/cf_failsafe_procedure3.svg);
+}
+
+.tab-failsafe .pro4 {
+    background-image: url(../images/bf/icons/cf_failsafe_procedure4.svg);
+}
+
+.tab-pid_tuning .tab_container td.active {
+    background-color: #ffbb00;
+}
+
+.tab-pid_tuning .tab_container td.active a {
+    color: #000;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.45);
+    background-color: #ffbb00;
+}
+
+.tab-pid_tuning .tabborder {
+    background-color: #ffbb00;
+}
+
+.tab-auxiliary .range .marker, .tab-auxiliary .channel-slider .noUi-connect {
+    background: #ffbb00;
+}
+
+.tab-auxiliary .mode.on .info {
+    background: #ffbb00;
+    color: black;
+}
+
+.tab-auxiliary .mode.on:nth-child(odd) .info {
+    background: #ffbb00;
+}
+
+.tab-adjustments .range .marker, .tab-adjustments .channel-slider .noUi-connect {
+    background: #ffbb00;
+}
+
+.tab-firmware_flasher .info .progress.valid::-webkit-progress-bar {
+    background-color: #ffbb00;
+}
+
+.tab-firmware_flasher .info .progress.valid::-webkit-progress-value {
+    background-color: #ffbb00;
+}
+
+progress[value]::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, .15), rgba(0, 0, 0, .15)),
+        -webkit-linear-gradient(left, #ffbb00, #ffbb00);
+}
+
+.tab-onboard_logging .dataflash-used,
+.tab-onboard_logging .sdcard-other {
+    background-color: #ffbb00;
+}
+
+.tab-onboard_logging .regular-button {
+    background-color: #ffbb00;
+    border: 1px solid #dba718;
+    color: black;
+}
+
+.tab-onboard_logging .regular-button:hover {
+    background-color: #ffcc3e;
+}
+
+.button-enable a {
+    background-color: #ffbb00;
+    border: 1px solid #dba718;
+    color: #000;
+}
+
+#accel_calib_running {
+    border: 1px solid #ffbb00;
+    color: #ffbb00;
+}
+
+#mag_calib_running {
+    border: 1px solid #ffbb00;
+    color: #ffbb00;
+}
+
+.jBox-container {
+    border: 1px solid #ffbb00;
+}
+
+.jBox-pointer:after {
+    border:1px solid #ffbb00;
+}
+
+.helpicon:hover {
+    background-image: url(../images/bf/icons/cf_icon_info_yellow.svg);
+}
+
+.tab-cli .backdrop {
+    background-image: url(../images/bf/bf-light-wide-1.svg);
+    background-size: 600px;
+}

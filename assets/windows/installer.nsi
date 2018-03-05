@@ -24,8 +24,8 @@ Name "${APP_NAME}"
 BrandingText "${COMPANY_NAME}"
 
 # set the icon
-!define MUI_ICON ".\bf_installer_icon.ico"
-!define MUI_UNICON ".\bf_uninstaller_icon.ico"
+!define MUI_ICON ".\cf_installer_icon.ico"
+!define MUI_UNICON ".\cf_uninstaller_icon.ico"
 
 #Define uninstall list name
 !define UninstName "uninbf00"

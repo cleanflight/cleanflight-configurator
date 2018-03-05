@@ -3,7 +3,7 @@
 NSIS Uninstaller Data
 Copyright 2014 Aleksandr Ivankiv
 
-Modified by the Betaflight Team project to let it be used out of the uninstall section
+Modified by the Cleanflight Team project to let it be used out of the uninstall section
 */
 
 ;--------------------------------

@@ -15,7 +15,7 @@ function startApplication() {
             minWidth: 1024,
             minHeight: 550
         },
-        icon: 'images/bf_icon_128.png'
+        icon: 'images/cf_icon_128.png'
     }, function (createdWindow) {
         createdWindow.onClosed.addListener(function () {
             // automatically close the port when application closes

@@ -487,7 +487,7 @@ function release_osx64() {
                     { 'x': 448, 'y': 342, 'type': 'link', 'path': '/Applications' },
                     { 'x': 192, 'y': 344, 'type': 'file', 'path': pkg.name + '.app', 'name': 'Cleanflight Configurator.app' }
                 ],
-                background: path.join(__dirname, 'assets/osx/bf_dmg-background.png'),
+                background: path.join(__dirname, 'assets/osx/cf_dmg-background.png'),
                 format: 'UDZO',
                 window: {
                     size: {

@@ -104,7 +104,7 @@
         "message": "显示测试版本的配置程序更新提示"
     },
     "configuratorUpdateNotice": {
-        "message": "你正在使用旧版本的 <b> Betaflight地面站 <\/b>。<br> 版本<b>$1<\/b>已经在网上发布。请到 <a href=\"$2\" target=\"_blank\">发布页面<\/a>下载安装最新的地面站，<br>更新之前请关闭地面站."
+        "message": "你正在使用旧版本的 <b> Cleanflight地面站 <\/b>。<br> 版本<b>$1<\/b>已经在网上发布。请到 <a href=\"$2\" target=\"_blank\">发布页面<\/a>下载安装最新的地面站，<br>更新之前请关闭地面站."
     },
     "configuratorUpdateWebsite": {
         "message": "打开版本发布网站"
@@ -314,13 +314,13 @@
         "message": "<span class=\"message-negative\">10秒<\/span>内没有接收到配置信息，飞控通信 <span class=\"message-negative\"> 失败<\/span>"
     },
     "firmwareVersionNotSupported": {
-        "message": "<span class=\"message-negative\">Betaflight configutator不支持<\/span>该固件版本 . 请更新到Betaflight 支持的固件版本<strong>$1<\/strong> 或者更高. 更新固件之前，使用CLI 来备份设置.具体操作信息请参考Betaflight文档.<br \/>如果不想更新到最新的固件，可以使用支持该固件的configurator 来设置使用。"
+        "message": "<span class=\"message-negative\">Cleanflight configutator不支持<\/span>该固件版本 . 请更新到Cleanflight 支持的固件版本<strong>$1<\/strong> 或者更高. 更新固件之前，使用CLI 来备份设置.具体操作信息请参考Cleanflight文档.<br \/>如果不想更新到最新的固件，可以使用支持该固件的configurator 来设置使用。"
     },
     "firmwareTypeNotSupported": {
-        "message": "该固件版本的Betaflight configurator <span class=\"message-negative\">不支持<\/span>,只能使用CLI模式."
+        "message": "该固件版本的Cleanflight configurator <span class=\"message-negative\">不支持<\/span>,只能使用CLI模式."
     },
     "firmwareUpgradeRequired": {
-        "message": "飞控固件需要更新到新的版本，使用CLI 来备份设置。具体操作信息请参考 Betaflight 文档。<br \/>如果不想更新到最新的固件，可以使用支持该固件的地面站来设置使用。"
+        "message": "飞控固件需要更新到新的版本，使用CLI 来备份设置。具体操作信息请参考 Cleanflight 文档。<br \/>如果不想更新到最新的固件，可以使用支持该固件的地面站来设置使用。"
     },
     "infoVersions": {
         "message": "运行- OS: <strong>$1<\/strong>, Chrome: <strong>$2<\/strong>, Configurator: <strong>$3<\/strong"
@@ -344,7 +344,7 @@
         "message": "<span class=\"message-negative\">不能<\/span> 执行当前操作，请等待上一个操作完成……"
     },
     "tabSwitchUpgradeRequired": {
-        "message": "需要<strong>更新<\/strong>到最新版本的 Betaflight 固件才能使用 $1 页面"
+        "message": "需要<strong>更新<\/strong>到最新版本的 Cleanflight 固件才能使用 $1 页面"
     },
     "firmwareVersion": {
         "message": "固件版本：<strong>$1<\/strong>"
@@ -431,19 +431,19 @@
         "message": "EEPROM <span class=\"message-positive\">已保存<\/span>"
     },
     "defaultWelcomeIntro": {
-        "message": "欢迎使用<strong>Betaflight - 配置程序<\/strong>，为简化固件升级，设置和调校飞控而生的工具。"
+        "message": "欢迎使用<strong>Cleanflight - 配置程序<\/strong>，为简化固件升级，设置和调校飞控而生的工具。"
     },
     "defaultWelcomeHead": {
         "message": "硬件"
     },
     "defaultWelcomeText": {
-        "message": "本应用支持所有能运行betaflight的飞控。在”固件烧写“页面查看所有支持的飞控列表。<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/betaflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> 下载 Betaflight Blackbox Explorer<\/a><br \/><br \/>固件源代码可以点击 <a href=\"https:\/\/github.com\/betaflight\/betaflight\" title=\"www.github.com\" target=\"_blank\">这里<\/a> 下载<br \/>最新发布已编译的固件可以点击 <a href=\"https:\/\/github.com\/betaflight\/betaflight\/releases\" title=\"www.github.com\" target=\"_blank\">这里<\/a> 下载<br \/><br \/>最新的 <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x 驱动<\/a> 可以点击 <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">这里<\/a> 下载 <br \/>最新的 <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP Drivers<\/a> 可以点击 <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">这里<\/a> 下载<br \/>最新的 <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a>可以点击 <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">这里<\/a> 下载<br \/>"
+        "message": "本应用支持所有能运行cleanflight的飞控。在”固件烧写“页面查看所有支持的飞控列表。<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/cleanflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> 下载 Cleanflight Blackbox Explorer<\/a><br \/><br \/>固件源代码可以点击 <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\" title=\"www.github.com\" target=\"_blank\">这里<\/a> 下载<br \/>最新发布已编译的固件可以点击 <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/releases\" title=\"www.github.com\" target=\"_blank\">这里<\/a> 下载<br \/><br \/>最新的 <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x 驱动<\/a> 可以点击 <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">这里<\/a> 下载 <br \/>最新的 <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP Drivers<\/a> 可以点击 <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">这里<\/a> 下载<br \/>最新的 <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a>可以点击 <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">这里<\/a> 下载<br \/>"
     },
     "defaultContributingHead": {
         "message": "参与开发"
     },
     "defaultContributingText": {
-        "message": "如果你想帮助betaflight开发出更好的飞控固件，你可以通过:<br \/><ul><li>在论坛和IRC里帮助回答其他用户的问题。<\/li><li> 参与程序固件和configurator开发，例如-增加新功能，解决漏洞。改善代码<\/li><li>和测试<a href=\"https:\/\/github.com\/Betaflight\/betaflight\/pulls\" target=\"_blank\">新功能和修补漏洞<\/a>和提供测试反馈<\/li><li>帮助 <a href=\"https:\/\/github.com\/betaflight\/betaflight\/issues\" target=\"_blank\">测试实现新功能<\/a>. <\/li><li>在这里 <a href=\"https:\/\/crowdin.com\/project\/betaflight-configurator\" target=\"_blank\">帮助翻译configurator <\/a>到你使用的语言.<\/li><li><\/li><\/ul>"
+        "message": "如果你想帮助cleanflight开发出更好的飞控固件，你可以通过:<br \/><ul><li>在论坛和IRC里帮助回答其他用户的问题。<\/li><li> 参与程序固件和configurator开发，例如-增加新功能，解决漏洞。改善代码<\/li><li>和测试<a href=\"https:\/\/github.com\/Cleanflight\/cleanflight\/pulls\" target=\"_blank\">新功能和修补漏洞<\/a>和提供测试反馈<\/li><li>帮助 <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/issues\" target=\"_blank\">测试实现新功能<\/a>. <\/li><li>在这里 <a href=\"https:\/\/crowdin.com\/project\/cleanflight-configurator\" target=\"_blank\">帮助翻译configurator <\/a>到你使用的语言.<\/li><li><\/li><\/ul>"
     },
     "defaultChangelogAction": {
         "message": "更新日志"
@@ -458,7 +458,7 @@
         "message": "开源\/捐赠说明"
     },
     "defaultDonateText": {
-        "message": "这是一个完全<strong>开源 <\/strong>的工具 ，所有<strong>betaflight<\/strong>的用户都可免费使用。<br \/>如果你觉得Betaflight和betaflight configurator对你有很大帮助，请考虑通过捐赠来<strong>支持<\/strong>它们的开发。"
+        "message": "这是一个完全<strong>开源 <\/strong>的工具 ，所有<strong>cleanflight<\/strong>的用户都可免费使用。<br \/>如果你觉得Cleanflight和cleanflight configurator对你有很大帮助，请考虑通过捐赠来<strong>支持<\/strong>它们的开发。"
     },
     "defaultDonate": {
         "message": "捐赠"
@@ -470,13 +470,13 @@
         "message": "文档\/手册"
     },
     "defaultDocumentation": {
-        "message": "Betaflight的文档和发布说明可以在wiki里面找到。<br \/><br \/>"
+        "message": "Cleanflight的文档和发布说明可以在wiki里面找到。<br \/><br \/>"
     },
     "defaultDocumentation1": {
-        "message": "学习Betaflight最好的资源是使用Betaflight wiki，它在 <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\" target=\"_blank\">这里<\/a> 。"
+        "message": "学习Cleanflight最好的资源是使用Cleanflight wiki，它在 <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">这里<\/a> 。"
     },
     "defaultDocumentation2": {
-        "message": "最新发布版本的信息可以在 <a href=\"https:\/\/github.com\/Betaflight\/Betaflight\/releases\" target=\"_blank\">这里<\/a> 找到。"
+        "message": "最新发布版本的信息可以在 <a href=\"https:\/\/github.com\/Cleanflight\/Cleanflight\/releases\" target=\"_blank\">这里<\/a> 找到。"
     },
     "defaultSupportHead": {
         "message": "支持"
@@ -494,19 +494,19 @@
         "message": "<a href=\"http:\/\/www.rcgroups.com\/forums\/showthread.php?t=2464844&page=1\" target=\"_blank\">RC Groups thread<\/a>"
     },
     "defaultSupport2": {
-        "message": "<a href=\"http:\/\/betaflight.info\" target=\"_blank\">Betaflight Wiki<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">Cleanflight Wiki<\/a>"
     },
     "defaultSupport3": {
-        "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Betaflight 设置教程视频<\/a>"
+        "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Cleanflight 设置教程视频<\/a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https:\/\/github.com\/Betaflight\" target=\"_blank\">GitHub<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/Cleanflight\" target=\"_blank\">GitHub<\/a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"http:\/\/betaflight.tk\/slack\" target=\"_blank\">Betaflight 开发 slack<\/a>"
+        "message": "<a href=\"http:\/\/cleanflight.com\/slack\" target=\"_blank\">Cleanflight 开发 slack<\/a>"
     },
     "initialSetupBackupAndRestoreApiVersion": {
-        "message": "<span class=\"message-negative\">备份和恢复功能被禁用。<\/span>当前飞控固件的API版本为 <span class=\"message-negative\">$1<\/span>，而备份和恢复功能需要版本 <span class=\"message-positive\">$2<\/span>。请通过 CLI 命令行手工备份，具体操作流程请参阅 Betaflight 文档。"
+        "message": "<span class=\"message-negative\">备份和恢复功能被禁用。<\/span>当前飞控固件的API版本为 <span class=\"message-negative\">$1<\/span>，而备份和恢复功能需要版本 <span class=\"message-positive\">$2<\/span>。请通过 CLI 命令行手工备份，具体操作流程请参阅 Cleanflight 文档。"
     },
     "initialSetupButtonCalibrateAccel": {
         "message": "校准加速度计"
@@ -875,7 +875,7 @@
         "message": "反转电机转向"
     },
     "configurationReverseMotorSwitchHelp": {
-        "message": "启用这个选项以让 Betaflight 知道电机和螺旋桨已被设定为反向旋转。"
+        "message": "启用这个选项以让 Cleanflight 知道电机和螺旋桨已被设定为反向旋转。"
     },
     "configurationAutoDisarmDelay": {
         "message": "[seconds] 秒后锁定电机（需要启用 MOTOR_STOP）"
@@ -1379,7 +1379,7 @@
         "message": "预览"
     },
     "receiverMspWarningText": {
-        "message": "这些摇杆使 Betaflight 可以无需遥控器和接收机就可以解锁飞控进行测试。然而，<strong> 这项功能并非是为实际飞行而设，且螺旋桨必须被拆除。\n <\/strong><br><br>此功能并不保证可以可靠地控制你的飞机。 <strong>如果不拆除螺旋桨可能会造成严重的伤害。<\/strong>"
+        "message": "这些摇杆使 Cleanflight 可以无需遥控器和接收机就可以解锁飞控进行测试。然而，<strong> 这项功能并非是为实际飞行而设，且螺旋桨必须被拆除。\n <\/strong><br><br>此功能并不保证可以可靠地控制你的飞机。 <strong>如果不拆除螺旋桨可能会造成严重的伤害。<\/strong>"
     },
     "receiverMspEnableButton": {
         "message": "启用控制"
@@ -2108,13 +2108,13 @@
         "message": "信息："
     },
     "firmwareFlasherWarningText": {
-        "message": "请<span class=\"message-negative\">不要<\/span>尝试烧写<strong>Betaflight不支持的飞控板<\/strong>。烧写固件过程中千万<br \/><span class=\"message-negative\">不要<\/span> <strong>断开连接飞控连接<\/strong> <strong>或关闭电脑<\/strong><br \/><br \/><strong>注意：<\/strong>STM32 的bootloader储存在ROM中，所以不会有变砖可能。<br \/><strong>注意：在固件烧写页面<\/strong><span class=\"message-negative\">自动连接<\/span>会被自动禁用。<br \/><strong>注意：<\/strong>烧写固件可能会清空设置，请务必先备份好你的数据。<br \/><strong>注意：<\/strong>如果烧写遇到问题，<strong>尝试拔掉连接到飞控的所有连线<\/strong> 然后尝试重启，更新地面站，升级驱动。<br \/><strong>注意：<\/strong>当使用虚拟USB（VCP）的飞控（大多数新的飞控都是），请仔细阅读Betaflight手册USB flashing部分章节，并确保驱动和软件已正确安装。"
+        "message": "请<span class=\"message-negative\">不要<\/span>尝试烧写<strong>Cleanflight不支持的飞控板<\/strong>。烧写固件过程中千万<br \/><span class=\"message-negative\">不要<\/span> <strong>断开连接飞控连接<\/strong> <strong>或关闭电脑<\/strong><br \/><br \/><strong>注意：<\/strong>STM32 的bootloader储存在ROM中，所以不会有变砖可能。<br \/><strong>注意：在固件烧写页面<\/strong><span class=\"message-negative\">自动连接<\/span>会被自动禁用。<br \/><strong>注意：<\/strong>烧写固件可能会清空设置，请务必先备份好你的数据。<br \/><strong>注意：<\/strong>如果烧写遇到问题，<strong>尝试拔掉连接到飞控的所有连线<\/strong> 然后尝试重启，更新地面站，升级驱动。<br \/><strong>注意：<\/strong>当使用虚拟USB（VCP）的飞控（大多数新的飞控都是），请仔细阅读Cleanflight手册USB flashing部分章节，并确保驱动和软件已正确安装。"
     },
     "firmwareFlasherRecoveryHead": {
         "message": "<strong> 恢复\/丢失通信 <\/strong>"
     },
     "firmwareFlasherRecoveryText": {
-        "message": "如果飞控板失去通信，你可以按照以下的几个步骤来恢复：<ul><li>关闭电源<\/li><li>打开'无重启序列'，打开‘擦除整个芯片‘选项。<\/li><li>短接BOOT引脚，或者按住BOOT 按键。<\/li><li>上电(如果操作正确，飞控的“活动”灯不会闪烁)。<\/li><li>如果需要请安装STM32 驱动和Zadig if(参阅Betaflight手册<a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\/Installing-Betaflight\"target=\"_blank\">USB Flashing<\/a> 部分 ).<\/li><li>关闭Befaflight软件，关闭所有Chrome应用，然后重新启动Betaflight。<\/li><li>释放BOOT按键（如有）。<\/li><li>烧写正确的固件(参照飞控厂商制定的波特率)。<\/li><li>断电。<\/li><li>移除BOOT引脚的短接。<\/li><li>上电(飞控“活动”灯应该会闪烁).<\/li><li>正常连接。<\/li><\/ul>"
+        "message": "如果飞控板失去通信，你可以按照以下的几个步骤来恢复：<ul><li>关闭电源<\/li><li>打开'无重启序列'，打开‘擦除整个芯片‘选项。<\/li><li>短接BOOT引脚，或者按住BOOT 按键。<\/li><li>上电(如果操作正确，飞控的“活动”灯不会闪烁)。<\/li><li>如果需要请安装STM32 驱动和Zadig if(参阅Cleanflight手册<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\/Installing-Cleanflight\"target=\"_blank\">USB Flashing<\/a> 部分 ).<\/li><li>关闭Befaflight软件，关闭所有Chrome应用，然后重新启动Cleanflight。<\/li><li>释放BOOT按键（如有）。<\/li><li>烧写正确的固件(参照飞控厂商制定的波特率)。<\/li><li>断电。<\/li><li>移除BOOT引脚的短接。<\/li><li>上电(飞控“活动”灯应该会闪烁).<\/li><li>正常连接。<\/li><\/ul>"
     },
     "firmwareFlasherButtonLeave": {
         "message": "关闭固件烧写"
@@ -2473,7 +2473,7 @@
         "message": "RC 曲线权重"
     },
     "pidTuningRcExpoPowerHelp": {
-        "message": "该指数用以计算RC Expo。在 Betaflight 3.0版本之前，该值固定为3。"
+        "message": "该指数用以计算RC Expo。在 Cleanflight 3.0版本之前，该值固定为3。"
     },
     "pidTuningLevel": {
         "message": "角度\/水平"
@@ -2587,7 +2587,7 @@
         "message": "任意角度（直立，反转，旋转等）安装飞控板。当使用外部传感器时，请使用传感器校正设置(陀螺，加速度计，磁场计)来决定独立于飞控板的传感器位置。"
     },
     "failsafeFeaturesHelpOld": {
-        "message": "失控保护功能被大量重做。请使用Betaflight <strong>v1.12.0+<\/strong> 来启用增强的失控保护设置页。"
+        "message": "失控保护功能被大量重做。请使用Cleanflight <strong>v1.12.0+<\/strong> 来启用增强的失控保护设置页。"
     },
     "failsafePaneTitleOld": {
         "message": "接收机失控保护"
@@ -2662,7 +2662,7 @@
         "message": "保存"
     },
     "powerFirmwareUpgradeRequired": {
-        "message": "固件更新 <span class=\"message-negative\">要求<\/span>。 电池\/电流\/电压通过API &lt; 1.33.0 设置。 (Betaflight 版本&lt;= 3.17) 不支持。"
+        "message": "固件更新 <span class=\"message-negative\">要求<\/span>。 电池\/电流\/电压通过API &lt; 1.33.0 设置。 (Cleanflight 版本&lt;= 3.17) 不支持。"
     },
     "powerBatteryVoltageMeterSource": {
         "message": "电压计选择"
@@ -3322,7 +3322,7 @@
         "message": "<b>误差导数模式<\/b>提供更加直接的摇杆反应，适合竞速比赛。<br><br><b>测量导数模式<\/b> 提供更平滑摇杆的反应，适合花式飞行。"
     },
     "pidTuningPidControllerTip": {
-        "message": "<b>传统 vs Betaflight (浮点数):<\/b> PID 比例和PID逻辑完全一样的.两者之间更换理论不需要重新调参. 传统的也是betaflight开发者参与重新改写，但是用的是整数来计算. Betaflight PID 用的是浮点数来计算，并且是专门为多轴飞行器设置<br> <b>浮点 vs 整数:<\/b> PID 比例和PID逻辑完全一样的. N两者之间更换理论不需要重新调参. 使用F1芯片的飞控缺乏板载的FPU，打开浮点计算将会增加CPU负荷，使用整数会得到更加好的运行效果。但是浮点计算会提供稍微更加准确的计算"
+        "message": "<b>传统 vs Cleanflight (浮点数):<\/b> PID 比例和PID逻辑完全一样的.两者之间更换理论不需要重新调参. 传统的也是cleanflight开发者参与重新改写，但是用的是整数来计算. Cleanflight PID 用的是浮点数来计算，并且是专门为多轴飞行器设置<br> <b>浮点 vs 整数:<\/b> PID 比例和PID逻辑完全一样的. N两者之间更换理论不需要重新调参. 使用F1芯片的飞控缺乏板载的FPU，打开浮点计算将会增加CPU负荷，使用整数会得到更加好的运行效果。但是浮点计算会提供稍微更加准确的计算"
     },
     "pidTuningFilterTip": {
         "message": "<b>陀螺仪软件滤波器：<\/b> 陀螺仪的低通滤波。更低的数字会提供更多的过滤效果。<br><b>D Term 滤波器：<\/b>Dterm 低通滤波器。会影响D值的调参，更低的数字会提供更多的过滤效果。 <br><b>方向滤波器：<\/b> 对方向输出进行滤波。对方向轴震动或者噪声很严重的情况会有帮助。"

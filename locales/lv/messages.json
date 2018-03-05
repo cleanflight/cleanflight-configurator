@@ -101,7 +101,7 @@
         "message": "Rādīt atjauninājumu paziņojumus priekš konfiguratora nestabilajām versijām"
     },
     "configuratorUpdateNotice": {
-        "message": "Jūs lietojat novecojušu <b>Betaflight Konfiguratora<\/b> versiju.<br>Versija <b>$1<\/b> ir pieejama, lūdzu apmeklējiet <a href=\"$2\" target=\"_blank\">relīžu lapu<\/a>, lai lejupielādētu un uzstādītu jaunāko versiju ar labojumiem un uzlabojumiem.<br>Lūdzu aizveriet konfiguratora logu pirms atjaunināšanās."
+        "message": "Jūs lietojat novecojušu <b>Cleanflight Konfiguratora<\/b> versiju.<br>Versija <b>$1<\/b> ir pieejama, lūdzu apmeklējiet <a href=\"$2\" target=\"_blank\">relīžu lapu<\/a>, lai lejupielādētu un uzstādītu jaunāko versiju ar labojumiem un uzlabojumiem.<br>Lūdzu aizveriet konfiguratora logu pirms atjaunināšanās."
     },
     "configuratorUpdateWebsite": {
         "message": "Dodieties uz relīzes vietni"
@@ -314,7 +314,7 @@
         "message": "Šī programmatūras versija <span class=\"message-negative\">netiek atbalstīta<\/span>. Lūdzu atjaunināties uz programmatūru, kas atbalsta API versiju <strong>$1<\/strong> vai augstāk. Izmantojiet CLI lai veiktu dublēšanu pirms programmēšanas. CLI dublēšanass\/atjaunošanas procedūras aprakstītas dokumentācijā. <br \/> Alternatīvi jūs varat lejuplādēt un lietot veco konfiguratora versiju, ja jūs neesat gatavs atjaunināt."
     },
     "firmwareTypeNotSupported": {
-        "message": "Programmas, kas nav Cleanflight\/Betaflight <span class=\"message-negative\">netiek atbalstītas<\/span>, izņemot CLI režīmu."
+        "message": "Programmas, kas nav Cleanflight\/Cleanflight <span class=\"message-negative\">netiek atbalstītas<\/span>, izņemot CLI režīmu."
     },
     "firmwareUpgradeRequired": {
         "message": "Šai programmatūrai uz šīs iekārtas nepieciešama atjaunināšana uz jaunāku versiju. Izmantojiet CLI, lai dublētu datus pirms programmēšanas. CLI dublēšanas\/atjaunošanas procedūras ir dokumentācijā. <br \/>Alternatīva ir lejupielādēt un lietot veco konfiguratora versiju, ja jūs neesat gatavs atjaunināt."
@@ -341,7 +341,7 @@
         "message": "Jūs patreiz to <span class=\"message-negative\">nevarat<\/span> izdarīt, lūdzu, uzgaidiet kamēr esošā operācija beigsies ..."
     },
     "tabSwitchUpgradeRequired": {
-        "message": "Jums vajag <strong>atjaunot<\/strong> jūsu programmatūras versiju uz jaunāko Betaflight versiju pirms varat sākt izmantot $1 cilni."
+        "message": "Jums vajag <strong>atjaunot<\/strong> jūsu programmatūras versiju uz jaunāko Cleanflight versiju pirms varat sākt izmantot $1 cilni."
     },
     "firmwareVersion": {
         "message": "Programmaparatūras versija: <strong>$1<\/strong>"
@@ -428,19 +428,19 @@
         "message": "EEPROM <span class=\"message-positive\"> saglabāts<\/span>"
     },
     "defaultWelcomeIntro": {
-        "message": "Laipni lūgti <strong>Betaflight - Configurator<\/strong>, utilītā, kas paredzēta, lai vienkāršotu lidojuma kontroliera atjaunināšanu, konfigurēšanu un noregulēšanu."
+        "message": "Laipni lūgti <strong>Cleanflight - Configurator<\/strong>, utilītā, kas paredzēta, lai vienkāršotu lidojuma kontroliera atjaunināšanu, konfigurēšanu un noregulēšanu."
     },
     "defaultWelcomeHead": {
         "message": "Aparatūra"
     },
     "defaultWelcomeText": {
-        "message": "Šī aplikācija atbalsta visus kontrolierus uz kuriem var darboties Betaflight. Programmatora cilnē var skatīt atbalstāmo kontrolieru sarakstu.<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/betaflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> Lejuplādēt Betaflight Blackbox<\/a><br \/><br \/>Programmatūras izejas kods var tikt lejupielādēts <a href=\"https:\/\/github.com\/betaflight\/betaflight\" title=\"www.github.com\" target=\"_blank\">šeit<\/a><br \/>Jaunākais programmatūras binārais attēls ir pieejams <a href=\"https:\/\/github.com\/betaflight\/betaflight\/releases\" title=\"www.github.com\" target=\"_blank\">šeit<\/a><br \/><br \/>Jaunākais <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x Drivers<\/a> var tikt lejuplādēts <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">šeit<\/a><br \/>Jaunākais <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP Drivers<\/a> var tikt lejuplādēts <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">šeit<\/a><br \/>Jaunākais <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a> priekš Windows USB draivera instalācijas var tikt lejuplādēts <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">šeit<\/a><br \/>"
+        "message": "Šī aplikācija atbalsta visus kontrolierus uz kuriem var darboties Cleanflight. Programmatora cilnē var skatīt atbalstāmo kontrolieru sarakstu.<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/cleanflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> Lejuplādēt Cleanflight Blackbox<\/a><br \/><br \/>Programmatūras izejas kods var tikt lejupielādēts <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\" title=\"www.github.com\" target=\"_blank\">šeit<\/a><br \/>Jaunākais programmatūras binārais attēls ir pieejams <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/releases\" title=\"www.github.com\" target=\"_blank\">šeit<\/a><br \/><br \/>Jaunākais <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x Drivers<\/a> var tikt lejuplādēts <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">šeit<\/a><br \/>Jaunākais <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP Drivers<\/a> var tikt lejuplādēts <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">šeit<\/a><br \/>Jaunākais <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a> priekš Windows USB draivera instalācijas var tikt lejuplādēts <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">šeit<\/a><br \/>"
     },
     "defaultContributingHead": {
         "message": "Atbalstīt"
     },
     "defaultContributingText": {
-        "message": "Ja jūs vēlaties padarīt Betaflight vēl labāku jūs varat palīdzēt daudzos veidos, ieskaitot:<br \/><ul><li>Atbildot uz citu lietotāju jautājumiem forumos un IRC.<\/li><li>Atbalstot programmatūras un konfiguratora kodu - jaunas iespējas, labojumi, uzlabojumi<\/li><li>Testējot <a href=\"https:\/\/github.com\/Betaflight\/betaflight\/pulls\" target=\"_blank\">jaunās iespējas\/labojumus<\/a> sniedzot atsauksmes.<\/li><li>Palīdzot ar <a href=\"https:\/\/github.com\/betaflight\/betaflight\/issues\" target=\"_blank\">problēmām un komentējot iespēju pieprasījumus<\/a>.<\/li><li>Sadarbojoties <a href=\"https:\/\/crowdin.com\/project\/betaflight-configurator\" target=\"_blank\">tulkojot konfiguratora aplikāciju<\/a>jūsu valodā.<\/li><li><\/li><\/ul>"
+        "message": "Ja jūs vēlaties padarīt Cleanflight vēl labāku jūs varat palīdzēt daudzos veidos, ieskaitot:<br \/><ul><li>Atbildot uz citu lietotāju jautājumiem forumos un IRC.<\/li><li>Atbalstot programmatūras un konfiguratora kodu - jaunas iespējas, labojumi, uzlabojumi<\/li><li>Testējot <a href=\"https:\/\/github.com\/Cleanflight\/cleanflight\/pulls\" target=\"_blank\">jaunās iespējas\/labojumus<\/a> sniedzot atsauksmes.<\/li><li>Palīdzot ar <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/issues\" target=\"_blank\">problēmām un komentējot iespēju pieprasījumus<\/a>.<\/li><li>Sadarbojoties <a href=\"https:\/\/crowdin.com\/project\/cleanflight-configurator\" target=\"_blank\">tulkojot konfiguratora aplikāciju<\/a>jūsu valodā.<\/li><li><\/li><\/ul>"
     },
     "defaultChangelogAction": {
         "message": "Izmaiņas"
@@ -455,7 +455,7 @@
         "message": "Atvērtā koda \/ ziedojuma paziņojums"
     },
     "defaultDonateText": {
-        "message": "Šī utilīta ir pilnībā <strong>atvērta koda tipa<\/strong> un ir pieejama bezmaksas visiem <strong>Betaflight<\/strong> lietotājiem.<br \/>Ja tev Betaflight vai Betaflight konfigurators ir noderīgi, lūdzu apsver iespēju <strong>atbalstīt<\/strong> to izstrādi ziedojot."
+        "message": "Šī utilīta ir pilnībā <strong>atvērta koda tipa<\/strong> un ir pieejama bezmaksas visiem <strong>Cleanflight<\/strong> lietotājiem.<br \/>Ja tev Cleanflight vai Cleanflight konfigurators ir noderīgi, lūdzu apsver iespēju <strong>atbalstīt<\/strong> to izstrādi ziedojot."
     },
     "defaultDonate": {
         "message": "Ziedot"
@@ -467,13 +467,13 @@
         "message": "Dokumentācija \/ Manuāli"
     },
     "defaultDocumentation": {
-        "message": "Betaflight dokumentācija ir pieejama relīzes dokumentācijā un wiki.<br \/><br \/>"
+        "message": "Cleanflight dokumentācija ir pieejama relīzes dokumentācijā un wiki.<br \/><br \/>"
     },
     "defaultDocumentation1": {
-        "message": "Betaflight wiki ir lielisks informācijas avots, to var atrast <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\" target=\"_blank\">šeit<\/a>."
+        "message": "Cleanflight wiki ir lielisks informācijas avots, to var atrast <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">šeit<\/a>."
     },
     "defaultDocumentation2": {
-        "message": "Programmatūras relīzes dokumentācija ir pieejama GitHub relīžu lapā <a href=\"https:\/\/github.com\/Betaflight\/Betaflight\/releases\" target=\"_blank\">šeit<\/a>."
+        "message": "Programmatūras relīzes dokumentācija ir pieejama GitHub relīžu lapā <a href=\"https:\/\/github.com\/Cleanflight\/Cleanflight\/releases\" target=\"_blank\">šeit<\/a>."
     },
     "defaultSupportHead": {
         "message": "Atbalsts"
@@ -491,19 +491,19 @@
         "message": "<a href=\"http:\/\/www.rcgroups.com\/forums\/showthread.php?t=2464844&page=1\" target=\"_blank\">RC Grupas diskusijas<\/a>"
     },
     "defaultSupport2": {
-        "message": "<a href=\"http:\/\/betaflight.info\" target=\"_blank\">Betaflight Wiki<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">Cleanflight Wiki<\/a>"
     },
     "defaultSupport3": {
-        "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Betaflight Video<\/a>"
+        "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Cleanflight Video<\/a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https:\/\/github.com\/Betaflight\" target=\"_blank\">GitHub<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/Cleanflight\" target=\"_blank\">GitHub<\/a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"http:\/\/betaflight.tk\/slack\" target=\"_blank\">Betaflight izstrādātāji iekš slack<\/a>"
+        "message": "<a href=\"http:\/\/cleanflight.com\/slack\" target=\"_blank\">Cleanflight izstrādātāji iekš slack<\/a>"
     },
     "initialSetupBackupAndRestoreApiVersion": {
-        "message": "<span class=\"message-negative\">Dublēšanas un atjaunošanas funkcionalitāte ir atslēgta.<\/span>Jūsu programmatūras API versija <span class=\"message-negative\">$1<\/span>, dublēšanai un atjaunošanai nepieciešama <span class=\"message-positive\">$2<\/span>.  Lūdzu, dublējat savus iestatījumus ar CLI, procedūras aprakstu skatīt Betaflight dokumentācijā."
+        "message": "<span class=\"message-negative\">Dublēšanas un atjaunošanas funkcionalitāte ir atslēgta.<\/span>Jūsu programmatūras API versija <span class=\"message-negative\">$1<\/span>, dublēšanai un atjaunošanai nepieciešama <span class=\"message-positive\">$2<\/span>.  Lūdzu, dublējat savus iestatījumus ar CLI, procedūras aprakstu skatīt Cleanflight dokumentācijā."
     },
     "initialSetupButtonCalibrateAccel": {
         "message": "Kalibrēt akselerometru"
@@ -872,7 +872,7 @@
         "message": "Motoru griešanās virziens ir reversā"
     },
     "configurationReverseMotorSwitchHelp": {
-        "message": "Ieslēdzot šo iespēju Betaflight tiks pateikts, ka motori un propelleri ir uzlikti pretējā griešanas virzienā."
+        "message": "Ieslēdzot šo iespēju Cleanflight tiks pateikts, ka motori un propelleri ir uzlikti pretējā griešanas virzienā."
     },
     "configurationAutoDisarmDelay": {
         "message": "Deaktivēt motorus pēc uzstādītās laika aiztures[seconds] (Nepieciešama MOTOR_STOP funkcija)"
@@ -1376,7 +1376,7 @@
         "message": "Priekšskatījums"
     },
     "receiverMspWarningText": {
-        "message": "Šīs sviras ļauj Betaflight būt atvizētam un notestētam bez raidītāja vai uztvērēja klātbūtnes. Tomēr, <strong>šī iespēja nav paredzēta lidošanai un propelleriem jābūt noņemtiem.<\/strong><br><br>Šī iespēja negarantē pilnvērtīgu gaisa kuģa vadību. <strong>Ir liela varbūtība, ka būs nopietnas traumas, ja propelleri paliks nenoņemti.<\/strong>"
+        "message": "Šīs sviras ļauj Cleanflight būt atvizētam un notestētam bez raidītāja vai uztvērēja klātbūtnes. Tomēr, <strong>šī iespēja nav paredzēta lidošanai un propelleriem jābūt noņemtiem.<\/strong><br><br>Šī iespēja negarantē pilnvērtīgu gaisa kuģa vadību. <strong>Ir liela varbūtība, ka būs nopietnas traumas, ja propelleri paliks nenoņemti.<\/strong>"
     },
     "receiverMspEnableButton": {
         "message": "Ieslēgt vadību"
@@ -2105,13 +2105,13 @@
         "message": "Ziņa:"
     },
     "firmwareFlasherWarningText": {
-        "message": "Lūdzu <span class=\"message-negative\">nemēģiniet<\/span> programmēt <strong>ne-Betaflight<\/strong> dzelžus ar šo programmatoru.<br \/> <span class=\"message-negative\">Nemēģiniet <\/span> <strong>atvienot<\/strong> plati vai <strong>slēgt ārā<\/strong> jūsu datoru kamēr programmējas.<br \/><br \/><strong>Piezīme: <\/strong>STM32 ielādētājs atrodas uz ROM atmiņas, to nav iespējams sabojāt.<br \/><strong>Piezīme: <\/strong><span class=\"message-negative\">Auto-savienojums<\/span> ir vienmēr izslēgts kamēr jūs esat programmatora cilnē.<br \/><strong>Piezīme: <\/strong>Pārliecinieties ka jums ir rezerves kopija; daži atjauninājumi var pilnībā notīrīt jūsu konfigurāciju.<br \/><strong>Piezīme:<\/strong> Ja jums ir sarežģījumi ar programmēšanu, no sākuma <strong>pamēģiniet atslēgt visu kabeļus no kontroliera<\/strong>, pamēģiniet pārstartēt, atjaunināt Chrome, atjaunināt draiverus.<br \/><strong>Piezīme:<\/strong> Kad programmējat plates kurām ir tiešs USB ligzdas savienojums (lielākoties jaunās plates), pārliecinieties, ka izlasījāt USB programmēšanas sadaļu no Betaflight manuāla, un esat pareizi instalējuši programmatūru un draiverus"
+        "message": "Lūdzu <span class=\"message-negative\">nemēģiniet<\/span> programmēt <strong>ne-Cleanflight<\/strong> dzelžus ar šo programmatoru.<br \/> <span class=\"message-negative\">Nemēģiniet <\/span> <strong>atvienot<\/strong> plati vai <strong>slēgt ārā<\/strong> jūsu datoru kamēr programmējas.<br \/><br \/><strong>Piezīme: <\/strong>STM32 ielādētājs atrodas uz ROM atmiņas, to nav iespējams sabojāt.<br \/><strong>Piezīme: <\/strong><span class=\"message-negative\">Auto-savienojums<\/span> ir vienmēr izslēgts kamēr jūs esat programmatora cilnē.<br \/><strong>Piezīme: <\/strong>Pārliecinieties ka jums ir rezerves kopija; daži atjauninājumi var pilnībā notīrīt jūsu konfigurāciju.<br \/><strong>Piezīme:<\/strong> Ja jums ir sarežģījumi ar programmēšanu, no sākuma <strong>pamēģiniet atslēgt visu kabeļus no kontroliera<\/strong>, pamēģiniet pārstartēt, atjaunināt Chrome, atjaunināt draiverus.<br \/><strong>Piezīme:<\/strong> Kad programmējat plates kurām ir tiešs USB ligzdas savienojums (lielākoties jaunās plates), pārliecinieties, ka izlasījāt USB programmēšanas sadaļu no Cleanflight manuāla, un esat pareizi instalējuši programmatūru un draiverus"
     },
     "firmwareFlasherRecoveryHead": {
         "message": "<strong>Atkopšanas \/ Zaudēja komunikāciju<\/strong>"
     },
     "firmwareFlasherRecoveryText": {
-        "message": "Ja jums pazuda savienojums ar plati veiciet šos soļus, lai atjaunotu savienojumu: <ul><li>Atvienojiet no barošanas avota<\/li><li>Ieslēdziet 'Nepielietot restartu', Ieslēdziet 'Pilnīga kontroliera dzēšana'.<\/li><li>Savienojiet ielādes kontaktus vai turiet ielādes pogu.<\/li><li>Pieslēdziet barošanas avotam (LED aktīvi NEmirgos, ja viss ir izdarīts pareizi).<\/li><li>Ieinstalējiet visus STM32 draiverus un Zadig ja nepieciešams (skatīt <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\/Installing-Betaflight\"target=\"_blank\">USB Programmēšana<\/a> Betaflight manuāla sadaļā).<\/li><li>Aizveriet konfiguratoru, aizveriet visas Chrome ejošās instances, aizveriet visas Chrome aplikācijas, Pārstartējiet konfiguratoru.<\/li><li>Atlaidiet ielādes pogu ja tāda platei ir.<\/li><li> Saprogrammējiet ar pareizo programmatūru (pielietojiet specifisku datu ātrumu ja tāds ir norādīts plates manuāli).<\/li><li>Atvienojiet no barošanas avota.<\/li><li>Noņemiet ielādes savienotāju.<\/li><li>Pieslēdziet barošanas avotam (LED vajadzētu aktīvi mirgot).<\/li><li>Savienojieties kā parasti.<\/li><\/ul>"
+        "message": "Ja jums pazuda savienojums ar plati veiciet šos soļus, lai atjaunotu savienojumu: <ul><li>Atvienojiet no barošanas avota<\/li><li>Ieslēdziet 'Nepielietot restartu', Ieslēdziet 'Pilnīga kontroliera dzēšana'.<\/li><li>Savienojiet ielādes kontaktus vai turiet ielādes pogu.<\/li><li>Pieslēdziet barošanas avotam (LED aktīvi NEmirgos, ja viss ir izdarīts pareizi).<\/li><li>Ieinstalējiet visus STM32 draiverus un Zadig ja nepieciešams (skatīt <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\/Installing-Cleanflight\"target=\"_blank\">USB Programmēšana<\/a> Cleanflight manuāla sadaļā).<\/li><li>Aizveriet konfiguratoru, aizveriet visas Chrome ejošās instances, aizveriet visas Chrome aplikācijas, Pārstartējiet konfiguratoru.<\/li><li>Atlaidiet ielādes pogu ja tāda platei ir.<\/li><li> Saprogrammējiet ar pareizo programmatūru (pielietojiet specifisku datu ātrumu ja tāds ir norādīts plates manuāli).<\/li><li>Atvienojiet no barošanas avota.<\/li><li>Noņemiet ielādes savienotāju.<\/li><li>Pieslēdziet barošanas avotam (LED vajadzētu aktīvi mirgot).<\/li><li>Savienojieties kā parasti.<\/li><\/ul>"
     },
     "firmwareFlasherButtonLeave": {
         "message": "Pamest programmatoru"
@@ -2470,7 +2470,7 @@
         "message": "RC Ekspo jauda"
     },
     "pidTuningRcExpoPowerHelp": {
-        "message": "Eksponents tiek lietots RC Ekspo kalkulācijās. Iekš Betaflight versijās pirms 3.0, vērtība fiksēta uz 3."
+        "message": "Eksponents tiek lietots RC Ekspo kalkulācijās. Iekš Cleanflight versijās pirms 3.0, vērtība fiksēta uz 3."
     },
     "pidTuningLevel": {
         "message": "Leņķa\/Horizonta"
@@ -2584,7 +2584,7 @@
         "message": "Patvaļīga plates pagriešana grādos, lai atļautu uzstādīt to sāniski \/ augšpēdus \/ pagrieztu utt. Kad darbojas ar ārējo sensoru, izmantojiet sensora pielāgošanu (Žiro, Aksel, Mag), lai definētu sensora pozīciju neatkarīgi no plates orientācijas. "
     },
     "failsafeFeaturesHelpOld": {
-        "message": "Failsafe konfigurācija ir ievērojami mainījusies. Lietojiet Betaflight <strong>v1.12.0+<\/strong> lai piekļūtu uzlabotajam konfigurācijas panelim."
+        "message": "Failsafe konfigurācija ir ievērojami mainījusies. Lietojiet Cleanflight <strong>v1.12.0+<\/strong> lai piekļūtu uzlabotajam konfigurācijas panelim."
     },
     "failsafePaneTitleOld": {
         "message": "Uztvērēja Failsafe"
@@ -2659,7 +2659,7 @@
         "message": "Saglabāt"
     },
     "powerFirmwareUpgradeRequired": {
-        "message": "Programmatūras atjaunināšana <span class=\"message-negative\">nepieciešama<\/span>. Akumulatora\/Strāvas stipruma\/Sprieguma konfigurācija lietojot API &lt; 1.33.0 (Betaflight relīzi &lt;= 3.17) nav pieejama."
+        "message": "Programmatūras atjaunināšana <span class=\"message-negative\">nepieciešama<\/span>. Akumulatora\/Strāvas stipruma\/Sprieguma konfigurācija lietojot API &lt; 1.33.0 (Cleanflight relīzi &lt;= 3.17) nav pieejama."
     },
     "powerBatteryVoltageMeterSource": {
         "message": "Voltmetra avots"
@@ -3319,7 +3319,7 @@
         "message": "<b>Atvasinājums no kļūdas<\/b> sniedz daudz tiešāku sviras atsauci un vairāk piemērots sacensībām.<br><br><b>Atvasinājums no mērījumiem<\/b> sniedz vienmērīgāku sviras atsauci, kas ir vairāk piemērots frīstailam"
     },
     "pidTuningPidControllerTip": {
-        "message": "<b>Mantojuma vs Betaflight (peldošais):<\/b> PID mērogošana un PID loģika ir tāda pati. Nav obligāti nepieciešama atkārtota pieregulēšana. Mantojums ir vecais betaflight, kura pamata PID kontrolieris balstīts uz veselo skaitļu matemātikas. Betaflight PID kontrolieris pielieto peldošā punkta matemātiku un tas dod daudz jaunu iespēju, īpaši izstrādātu priekš multirotoriem<br> <b>Peldošais vs veselais:<\/b> PID mērogošana un PID loģika ir tāda pati. Nav nepieciešama atkārtota pieregulēšana. F1 platēm nav integrēta FPU un peldoša punkta matemātika ievērojami palielina CPU noslodzi un veselo skaitļu matemātika uzlabo ātrdarbību, bet samazina precizitāti."
+        "message": "<b>Mantojuma vs Cleanflight (peldošais):<\/b> PID mērogošana un PID loģika ir tāda pati. Nav obligāti nepieciešama atkārtota pieregulēšana. Mantojums ir vecais cleanflight, kura pamata PID kontrolieris balstīts uz veselo skaitļu matemātikas. Cleanflight PID kontrolieris pielieto peldošā punkta matemātiku un tas dod daudz jaunu iespēju, īpaši izstrādātu priekš multirotoriem<br> <b>Peldošais vs veselais:<\/b> PID mērogošana un PID loģika ir tāda pati. Nav nepieciešama atkārtota pieregulēšana. F1 platēm nav integrēta FPU un peldoša punkta matemātika ievērojami palielina CPU noslodzi un veselo skaitļu matemātika uzlabo ātrdarbību, bet samazina precizitāti."
     },
     "pidTuningFilterTip": {
         "message": "<b>Gyro Soft filtrs:<\/b>Žiroskopa zemfrekvenču filtrs. Izmantojiet zemākas vērtības, lai panāktu efektīvāku filtrēšanu.<br><b>D Term Filtrs:<\/b> Dterm zemfrekvenču filtrs. Var ietekmēt D regulējumu. Izmantojiet zemākas vērtības, lai panāktu efektīvāku filtrēšanu. <br><b>Yaw filtrs:<\/b> Filtrē Yaw izvadi. Tas var palīdzēt ar konstrukcijas trokšņiem uz Yaw ass."

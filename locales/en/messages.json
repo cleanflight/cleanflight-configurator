@@ -3,7 +3,7 @@
         "message": "0"
     },
     "windowTitle": {
-        "message": "Betaflight Configurator",
+        "message": "Cleanflight Configurator",
         "description": "Title of the application window, usually not translated"
     },
     "warningTitle": {
@@ -358,7 +358,7 @@
         "message": "This firmware version is <span class=\"message-negative\">not supported</span>. Please upgrade to firmware that supports api version <strong>$1</strong> or higher. Use CLI for backup before flashing. CLI backup/restore procedure is in the documention.<br />Alternatively download and use an old version of the configurator if you are not ready to upgrade."
     },
     "firmwareTypeNotSupported": {
-        "message": "Non - Cleanflight/Betaflight firmware is <span class=\"message-negative\">not supported</span>, except for CLI mode."
+        "message": "Non - Cleanflight/Cleanflight firmware is <span class=\"message-negative\">not supported</span>, except for CLI mode."
     },
     "firmwareUpgradeRequired": {
         "message": "The firmware on this device needs upgrading to a newer version. Use CLI for backup before flashing. CLI backup/restore procedure is in the documention.<br />Alternatively download and use an old version of the configurator if you are not ready to upgrade."
@@ -497,7 +497,7 @@
         "message": "Download and install the Blackbox Log Explorer to replay your recorded blackbox logs."
     },
     "defaultBlackboxLink1": {
-        "message": "<a href=\"https://chrome.google.com/webstore/detail/betaflight-blackbox-explo/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\">for Cleanflight v2.x / Betaflight</a>"
+        "message": "<a href=\"https://chrome.google.com/webstore/detail/cleanflight-blackbox-explo/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\">for Cleanflight v2.x / Cleanflight</a>"
     },
     "defaultBlackboxLink2": {
         "message": "<a href=\"https://chrome.google.com/webstore/detail/cleanflight-blackbox-expl/cahpidddaimdojnddnahjpnefajpheep?hl=en\" target=\"_blank\">for Cleanflight v1.x</a>)"
@@ -536,7 +536,7 @@
         "message": "The Markdown latest online documentation is available <a href=\"https://github.com/cleanflight/cleanflight/tree/master/docs\" target=\"_blank\">here</a> - you can switch to the appropriate version of the documentation by selecting the tag."
     },
     "defaultDocumentation3": {
-        "message": "The Betaflight wiki is a great resource for information, it can be found <a href=\"https://github.com/betaflight/betaflight/wiki\" target=\"_blank\">here</a>."
+        "message": "The Cleanflight wiki is a great resource for information, it can be found <a href=\"https://github.com/cleanflight/cleanflight/wiki\" target=\"_blank\">here</a>."
     },
     "defaultDocumentation4": {
         "message": "The release notes for the firmware can be read at github releases page, <a href=\"https://github.com/cleanflight/cleanflight/releases\" target=\"_blank\">here</a>."
@@ -563,10 +563,10 @@
         "message": "<a href=\"https://github.com/cleanflight\" target=\"_blank\">GitHub</a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"http://betaflight.info\" target=\"_blank\">Betaflight Wiki</a>"
+        "message": "<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">Cleanflight Wiki</a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"https://www.youtube.com/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Betaflight Videos</a>"
+        "message": "<a href=\"https://www.youtube.com/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Cleanflight Videos</a>"
     },
     "extraSupport1": {
         "message": "<a href=\"irc://irc.freenode.net/#cleanflight\" target=\"_blank\">#Cleanflight IRC channel on freenode</a>"
@@ -575,10 +575,10 @@
         "message": "<a href=\"http://webchat.freenode.net/?channels=cleanflight\" target=\"_blank\">Cleanflight IRC (Join via WebClient)</a>"
     },
     "extraSupport3": {
-        "message": "<a href=\"https://github.com/Betaflight\" target=\"_blank\">GitHub</a>"
+        "message": "<a href=\"https://github.com/Cleanflight\" target=\"_blank\">GitHub</a>"
     },
     "extraSupport4": {
-        "message": "<a href=\"http://betaflight.tk/slack\" target=\"_blank\">Betaflight devs on slack</a>"
+        "message": "<a href=\"http:\/\/cleanflight.com\/slack\" target=\"_blank\">Cleanflight devs on slack</a>"
     },
     
     "communityRCGroupsSupport": {
@@ -959,7 +959,7 @@
         "message": "Motor direction is reversed"
     },
        "configurationReverseMotorSwitchHelp": {
-        "message": "Enabling this option will tell Betaflight that motors and props are set to run in the reverse direction."
+        "message": "Enabling this option will tell Cleanflight that motors and props are set to run in the reverse direction."
     },
     "configurationAutoDisarmDelay": {
         "message": "Disarm motors after set delay [seconds] (Requires MOTOR_STOP feature)"
@@ -1474,7 +1474,7 @@
     },
 
     "receiverMspWarningText": {
-        "message": "These sticks allow Betaflight to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and propellers must not be attached.</strong><br><br>This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if propellers are left on.</strong>"
+        "message": "These sticks allow Cleanflight to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and propellers must not be attached.</strong><br><br>This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if propellers are left on.</strong>"
     },
     "receiverMspEnableButton": {
         "message": "Enable controls"
@@ -3458,7 +3458,7 @@
         "message": "<b>Derivative from Error</b> provides more direct stick response and is mostly prefered for Racing.<br><br><b>Derivative from Measurement</b> provides smoother stick response what is more usefull for freestyling"
     },
     "pidTuningPidControllerTip": {
-        "message": "<b>Legacy vs Betaflight (float):</b> PID scaling and PID logic is exactly the same. Not necessarily retune needed. Legacy is old betaflight evolved rewrite, which is basic PID controller based on integer math. Betaflight PID controller uses floating point math and has many new features specifically designed for multirotor applications <br> <b>Float vs Integer:</b> PID scaling and PID logic is exactly the same. No retune needed. F1 boards have no onboard FPU and floating point math increases CPU load and integer math will improve performance, but float math might gain slightly more precision."
+        "message": "<b>Legacy vs Cleanflight (float):</b> PID scaling and PID logic is exactly the same. Not necessarily retune needed. Legacy is old cleanflight evolved rewrite, which is basic PID controller based on integer math. Cleanflight PID controller uses floating point math and has many new features specifically designed for multirotor applications <br> <b>Float vs Integer:</b> PID scaling and PID logic is exactly the same. No retune needed. F1 boards have no onboard FPU and floating point math increases CPU load and integer math will improve performance, but float math might gain slightly more precision."
     },
     "pidTuningFilterTip": {
         "message": "<b>Gyro Soft Filter:</b> Lowpass filter for gyro. Use lower value for more filtering.<br><b>D Term Filter:</b> Lowpass filter for Dterm. Can affect D tuning. Use lower value for more filtering. <br><b>Yaw Filter:</b> Filters yaw output. It can help on setups with noisy yaw axis."

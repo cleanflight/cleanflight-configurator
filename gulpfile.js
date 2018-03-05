@@ -29,7 +29,7 @@ var nwBuilderOptions = {
     version: '0.27.4',
     files: './dist/**/*',
     macIcns: './src/images/bf_icon.icns',
-    macPlist: { 'CFBundleDisplayName': 'Betaflight Configurator'},
+    macPlist: { 'CFBundleDisplayName': 'Cleanflight Configurator'},
     winIco: './src/images/bf_icon.ico'
 };
 
@@ -174,7 +174,7 @@ function getRunDebugAppCommand(arch) {
 }
 
 function getReleaseFilename(platform, ext) {
-    return 'betaflight-configurator_' + pkg.version + '_' + platform + '.' + ext;
+    return 'cleanflight-configurator_' + pkg.version + '_' + platform + '.' + ext;
 }
 
 function clean_dist() { 
@@ -359,7 +359,7 @@ function release_zip(arch) {
     var output = getReleaseFilename(arch, 'zip');
     var base = path.join(APPS_DIR, pkg.name, arch);
 
-    return compressFiles(src, base, output, 'Betaflight Configurator');
+    return compressFiles(src, base, output, 'Cleanflight Configurator');
 }
 
 // Create distribution package for chromeos platform
@@ -396,11 +396,11 @@ function release_deb(arch, done) {
              architecture: getLinuxPackageArch('deb', arch),
              maintainer: pkg.author,
              description: pkg.description,
-             postinst: ['xdg-desktop-menu install /opt/betaflight/betaflight-configurator/betaflight-configurator.desktop'],
-             prerm: ['xdg-desktop-menu uninstall betaflight-configurator.desktop'],
+             postinst: ['xdg-desktop-menu install /opt/cleanflight/cleanflight-configurator/cleanflight-configurator.desktop'],
+             prerm: ['xdg-desktop-menu uninstall cleanflight-configurator.desktop'],
              depends: 'libgconf-2-4',
              changelog: [],
-             _target: 'opt/betaflight/betaflight-configurator',
+             _target: 'opt/cleanflight/cleanflight-configurator',
              _out: RELEASE_DIR,
              _copyright: 'assets/linux/copyright',
              _clean: true
@@ -430,9 +430,9 @@ function release_rpm(arch, done) {
              files:
                  [ { cwd: path.join(APPS_DIR, pkg.name, arch),
                      src: '*',
-                     dest: '/opt/betaflight/betaflight-configurator' } ],
-             postInstallScript: ['xdg-desktop-menu install /opt/betaflight/betaflight-configurator/betaflight-configurator.desktop'],
-             preUninstallScript: ['xdg-desktop-menu uninstall betaflight-configurator.desktop'],
+                     dest: '/opt/cleanflight/cleanflight-configurator' } ],
+             postInstallScript: ['xdg-desktop-menu install /opt/cleanflight/cleanflight-configurator/cleanflight-configurator.desktop'],
+             preUninstallScript: ['xdg-desktop-menu uninstall cleanflight-configurator.desktop'],
              tempDir: path.join(RELEASE_DIR,'tmp-rpm-build-' + arch),
              keepTemp: false,
              verbose: false,
@@ -482,10 +482,10 @@ function release_osx64() {
             target: path.join(RELEASE_DIR, getReleaseFilename('macOS', 'dmg')),
             basepath: path.join(APPS_DIR, pkg.name, 'osx64'),
             specification: {
-                title: 'Betaflight Configurator',
+                title: 'Cleanflight Configurator',
                 contents: [
                     { 'x': 448, 'y': 342, 'type': 'link', 'path': '/Applications' },
-                    { 'x': 192, 'y': 344, 'type': 'file', 'path': pkg.name + '.app', 'name': 'Betaflight Configurator.app' }
+                    { 'x': 192, 'y': 344, 'type': 'file', 'path': pkg.name + '.app', 'name': 'Cleanflight Configurator.app' }
                 ],
                 background: path.join(__dirname, 'assets/osx/dmg-background.png'),
                 format: 'UDZO',

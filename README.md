@@ -21,7 +21,7 @@ If you are experiencing any problems please make sure you are running the [lates
 
 ### Standalone
 
-Download the installer from [Releases.](https://github.com/betaflight/betaflight-configurator/releases)
+Download the installer from [Releases.](https://github.com/cleanflight/cleanflight-configurator/releases)
 
 ### Via Chrome Web Store
 
@@ -85,7 +85,7 @@ You can also use multiple platforms e.g. `gulp <taskname> --osx64 --linux64`.
 
 ## Languages
 
-Betaflight Configurator has been translated into several languages. The application will try to detect and use your system language if a translation into this language is available. You can help [translating the application into your language](https://crowdin.com/project/betaflight-configurator).
+Cleanflight Configurator has been translated into several languages. The application will try to detect and use your system language if a translation into this language is available. You can help [translating the application into your language](https://crowdin.com/project/cleanflight-configurator).
 
 If you prefer to have the application in English or any other language, you can select your desired language in the options menu of the application.
 
@@ -109,7 +109,7 @@ If you have 3D model animation problems, enable "Override software rendering lis
 
 ## Support
 
-If you need help please reach out on the [betaflightgroup](https://betaflightgroup.slack.com) slack channel before raising issues on github. Register and [request slack access here](http://www.betaflight.tk).
+If you need help please reach out on the [cleanflight](https://cleanflight.slack.com/) slack channel before raising issues on github. Register and [request slack access here](http://cleanflight.com/slack).
 
 ### Issue trackers
 
@@ -139,4 +139,4 @@ Dominic Clifton/hydra - maintainer of the Cleanflight firmware and configurator.
 ctn - primary author and maintainer of Baseflight Configurator from which Cleanflight Configurator project was forked.
 
 
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/betaflight-configurator/localized.svg)](https://crowdin.com/project/betaflight-configurator)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/cleanflight-configurator/localized.svg)](https://crowdin.com/project/cleanflight-configurator)

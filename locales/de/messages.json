@@ -101,7 +101,7 @@
         "message": "Zeige Updateinformationen für experimentelle Versionen des Konfigurators"
     },
     "configuratorUpdateNotice": {
-        "message": "Du benutzt eine veraltete Version des <b>Betaflight Konfigurators<\/b>. <br>Version <b>$1<\/b> ist online verfügbar. Bitte auf <a href=\"$2\" target=\"_blank\">der Downloadseite<\/a> herunterladen und installieren. <br>Den Konfigurator vor dem Herunterladen bitte schließen."
+        "message": "Du benutzt eine veraltete Version des <b>Cleanflight Konfigurators<\/b>. <br>Version <b>$1<\/b> ist online verfügbar. Bitte auf <a href=\"$2\" target=\"_blank\">der Downloadseite<\/a> herunterladen und installieren. <br>Den Konfigurator vor dem Herunterladen bitte schließen."
     },
     "configuratorUpdateWebsite": {
         "message": "Webseite mit Downloadversionen aufrufen"
@@ -311,7 +311,7 @@
         "message": "Die Firmware Version wird  <span class=\"message-negative\">nicht unterstützt<\/span>. Bitte auf eine Firmware updaten die API Version <strong>$1<\/strong> oder höher untersützt. Bitte die Kommandozeile vor dem Flashen für ein Backup nutzen. <br \/>Alternativ bitte eine alte Version des Konfigurators downloaden"
     },
     "firmwareTypeNotSupported": {
-        "message": "Nicht Betaflight\/Cleanfight Firmware wird <span class=\"message-negative\">nicht unterstützt<\/span> mit Ausnahme vom CLI Modus."
+        "message": "Nicht Cleanflight\/Cleanfight Firmware wird <span class=\"message-negative\">nicht unterstützt<\/span> mit Ausnahme vom CLI Modus."
     },
     "infoVersions": {
         "message": "Betriebssystem: <strong>$1<\/strong>, Chrome: <strong>$2<\/strong>, Konfigurator: <strong>$3<\/strong>"
@@ -422,19 +422,19 @@
         "message": "EEPROM <span class=\"message-positive\">gespeichert<\/span>"
     },
     "defaultWelcomeIntro": {
-        "message": "Willkommen im <strong> Betaflight - Konfigurator <\/strong>, einer Anwendung dafür gemacht um Updates, Konfiguration und Tuning deines Flugcontrollers zu erleichtern."
+        "message": "Willkommen im <strong> Cleanflight - Konfigurator <\/strong>, einer Anwendung dafür gemacht um Updates, Konfiguration und Tuning deines Flugcontrollers zu erleichtern."
     },
     "defaultWelcomeHead": {
         "message": "Hardware"
     },
     "defaultWelcomeText": {
-        "message": "Die Anwendung unterstützt alle Hardware auf der Betaflight laufen kann. Bitte Firmware Flash Tab prüfen für eine vollständige Liste .<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/betaflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> Download Betaflight Blackbox<\/a><br \/><br \/>Der Firmware Quelltext kann  <a href=\"https:\/\/github.com\/betaflight\/betaflight\" title=\"www.github.com\" target=\"_blank\">hier<\/a> heruntergeladen werden<br \/>Die neuesten Binärdateien gibt es <a href=\"https:\/\/github.com\/betaflight\/betaflight\/releases\" title=\"www.github.com\" target=\"_blank\">hier<\/a><br \/><br \/>Neuste <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x Drivers<\/a> können  <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">hier<\/a> heruntergeladen werden.<br \/>Neueste  <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP Drivers<\/a> gibt es<a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">hier<\/a><br \/>Aktuelle  <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a> Versionen für Windows gibt es  <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">hier<\/a><br \/>"
+        "message": "Die Anwendung unterstützt alle Hardware auf der Cleanflight laufen kann. Bitte Firmware Flash Tab prüfen für eine vollständige Liste .<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/cleanflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> Download Cleanflight Blackbox<\/a><br \/><br \/>Der Firmware Quelltext kann  <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\" title=\"www.github.com\" target=\"_blank\">hier<\/a> heruntergeladen werden<br \/>Die neuesten Binärdateien gibt es <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/releases\" title=\"www.github.com\" target=\"_blank\">hier<\/a><br \/><br \/>Neuste <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x Drivers<\/a> können  <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">hier<\/a> heruntergeladen werden.<br \/>Neueste  <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP Drivers<\/a> gibt es<a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">hier<\/a><br \/>Aktuelle  <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a> Versionen für Windows gibt es  <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">hier<\/a><br \/>"
     },
     "defaultContributingHead": {
         "message": "Mitmachen"
     },
     "defaultContributingText": {
-        "message": "Wenn du helfen willst, Betaflight noch besser zu machen, kannst du das auf mehrere Arten tun:<br \/><ul><li>Beantworte Fragen anderer Benutzer in Foren oder im IRC.<\/li><li>Steuere Code für neue Firmwares und den Konfigurator bei - neue Funktionen, Bugfixes oder Verbesserungen.<\/li><li>Teste <a href=\"https:\/\/github.com\/Betaflight\/betaflight\/pulls\" target=\"_blank\">neue Funktionen<\/a> und gibt uns Feedback.<\/li><li>Hilf uns bei <a href=\"https:\/\/github.com\/betaflight\/betaflight\/issues\" target=\"_blank\">Problemen und Funktionswünschen<\/a>.<\/li><li>Hilf mit den <a href=\"https:\/\/crowdin.com\/project\/betaflight-configurator\" target=\"_blank\">Konfigurator zu übersetzen<\/a><\/li><li><\/li><\/ul>"
+        "message": "Wenn du helfen willst, Cleanflight noch besser zu machen, kannst du das auf mehrere Arten tun:<br \/><ul><li>Beantworte Fragen anderer Benutzer in Foren oder im IRC.<\/li><li>Steuere Code für neue Firmwares und den Konfigurator bei - neue Funktionen, Bugfixes oder Verbesserungen.<\/li><li>Teste <a href=\"https:\/\/github.com\/Cleanflight\/cleanflight\/pulls\" target=\"_blank\">neue Funktionen<\/a> und gibt uns Feedback.<\/li><li>Hilf uns bei <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/issues\" target=\"_blank\">Problemen und Funktionswünschen<\/a>.<\/li><li>Hilf mit den <a href=\"https:\/\/crowdin.com\/project\/cleanflight-configurator\" target=\"_blank\">Konfigurator zu übersetzen<\/a><\/li><li><\/li><\/ul>"
     },
     "defaultChangelogAction": {
         "message": "Changelog"
@@ -449,7 +449,7 @@
         "message": "Open Source \/ Spenden Hinweis"
     },
     "defaultDonateText": {
-        "message": "Dieses Programm ist komplett <strong> Open Source<\/strong> and für alle <strong>Betaflight<\/strong> Benutzer kostenlos verfügbar. Falls der Konfigurator hilfreich ist, bitte denke darüber nach das Projekt mit einer Spende zu <strong>unterstützen<\/strong>"
+        "message": "Dieses Programm ist komplett <strong> Open Source<\/strong> and für alle <strong>Cleanflight<\/strong> Benutzer kostenlos verfügbar. Falls der Konfigurator hilfreich ist, bitte denke darüber nach das Projekt mit einer Spende zu <strong>unterstützen<\/strong>"
     },
     "defaultDonate": {
         "message": "Spenden"
@@ -461,13 +461,13 @@
         "message": "Dokumentation"
     },
     "defaultDocumentation": {
-        "message": "Betaflight Dokumentation gibt es in den Release Notes und im Wiki.<br \/><br \/>"
+        "message": "Cleanflight Dokumentation gibt es in den Release Notes und im Wiki.<br \/><br \/>"
     },
     "defaultDocumentation1": {
-        "message": "Das Betaflight Wiki ist eine großartige Quelle für Informationen. Es kann <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\" target=\"_blank\">hier<\/a> aufgerufen werden"
+        "message": "Das Cleanflight Wiki ist eine großartige Quelle für Informationen. Es kann <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">hier<\/a> aufgerufen werden"
     },
     "defaultDocumentation2": {
-        "message": "Die Release Notes für neue Firmwares gibt es auf der  <a href=\"https:\/\/github.com\/Betaflight\/Betaflight\/releases\" target=\"_blank\">Github Release Seite<\/a>."
+        "message": "Die Release Notes für neue Firmwares gibt es auf der  <a href=\"https:\/\/github.com\/Cleanflight\/Cleanflight\/releases\" target=\"_blank\">Github Release Seite<\/a>."
     },
     "defaultSupportHead": {
         "message": "Hilfe"
@@ -485,19 +485,19 @@
         "message": "<a href=\"http:\/\/www.rcgroups.com\/forums\/showthread.php?t=2464844&page=1\" target=\"_blank\">RC Groups Forumsthema<\/a>"
     },
     "defaultSupport2": {
-        "message": "<a href=\"http:\/\/betaflight.info\" target=\"_blank\">Betaflight Wiki<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">Cleanflight Wiki<\/a>"
     },
     "defaultSupport3": {
-        "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Betaflight Videos<\/a>"
+        "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Cleanflight Videos<\/a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https:\/\/github.com\/Betaflight\" target=\"_blank\">GitHub<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/Cleanflight\" target=\"_blank\">GitHub<\/a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"http:\/\/betaflight.tk\/slack\" target=\"_blank\">Betaflight devs on slack<\/a>"
+        "message": "<a href=\"http:\/\/cleanflight.com\/slack\" target=\"_blank\">Cleanflight devs on slack<\/a>"
     },
     "initialSetupBackupAndRestoreApiVersion": {
-        "message": "<span class=\"message-negative\">Backup and restore functionality disabled.<\/span> You have firmware with API version <span class=\"message-negative\">$1<\/span>, backup and restore requires <span class=\"message-positive\">$2<\/span>. Please backup your settings via the CLI, see Betaflight documentation for procedure."
+        "message": "<span class=\"message-negative\">Backup and restore functionality disabled.<\/span> You have firmware with API version <span class=\"message-negative\">$1<\/span>, backup and restore requires <span class=\"message-positive\">$2<\/span>. Please backup your settings via the CLI, see Cleanflight documentation for procedure."
     },
     "initialSetupButtonCalibrateAccel": {
         "message": "Beschleunigungssensor kalibieren"
@@ -866,7 +866,7 @@
         "message": "Motor Drehrichtung umkehren"
     },
     "configurationReverseMotorSwitchHelp": {
-        "message": "Falls diese Option aktiviert ist geht Betaflight davon aus, dass die Drehrichtung der Motoren umgekehrt wurde"
+        "message": "Falls diese Option aktiviert ist geht Cleanflight davon aus, dass die Drehrichtung der Motoren umgekehrt wurde"
     },
     "configurationAutoDisarmDelay": {
         "message": "Motoren disarmen nach gesetzer Wartezeit [seconds] (Benötigt Motor Stop Funktion)"
@@ -1370,7 +1370,7 @@
         "message": "Vorschau"
     },
     "receiverMspWarningText": {
-        "message": "Das Schaubild ermöglicht Betaflight zu armen und alles zu testen, ohne das eine Fernsteuerung verbunden ist. Achtung<strong> diese Funktion ist nicht für Flugtests gemacht und Propeller sollten entfernt sein.<\/strong><br><br>Die Funktion garantiert keine verlässliche Steuerung des Fluggerätes.<strong>Ernsthafte Verletzungen könnten die Folge sein falls Sie mit montieren Propellern genutzt wird.<\/strong>"
+        "message": "Das Schaubild ermöglicht Cleanflight zu armen und alles zu testen, ohne das eine Fernsteuerung verbunden ist. Achtung<strong> diese Funktion ist nicht für Flugtests gemacht und Propeller sollten entfernt sein.<\/strong><br><br>Die Funktion garantiert keine verlässliche Steuerung des Fluggerätes.<strong>Ernsthafte Verletzungen könnten die Folge sein falls Sie mit montieren Propellern genutzt wird.<\/strong>"
     },
     "receiverMspEnableButton": {
         "message": "Kontrolle aktivieren"
@@ -2099,13 +2099,13 @@
         "message": "Nachricht:"
     },
     "firmwareFlasherWarningText": {
-        "message": "Bitte versuche <span class=\"message-negative\">nicht<\/span>, mit diesem Firmware-Flasher <strong>non-Betaflight<\/strong> hardware zu flashen.<br \/>Den FC <span class=\"message-negative\">nicht<\/span> <strong>ausstecken<\/strong> und den Computer während des flashens <span class=\"message-negative\">nicht<\/span> <strong>abschalten<\/strong>. <br \/><br \/><strong>Hinweis: <\/strong>Der STM32-Bootloader ist im ROM gespeichert und kann nicht zerstört werden.<br \/><strong>Hinweis: <\/strong><span class=\"message-negative\">Automatisch Verbinden<\/span> ist immer ausgeschaltet, während du den Firmware-Flasher verwendest.<br \/><strong>Hinweis: <\/strong>Stelle sicher, dass du ein Backup deiner Konfiguration hast; einige Upgrades\/Downgrades werden diese eventuell löschen.<br \/><strong>Hinweis:<\/strong> Falls es Probleme beim flashen gibt, stelle sicher, daß<strong>keine anderen Geräte an den seriellen Ports von deinem FC angeschlossen sind<\/strong>, reboote den Computer und aktualisiere deine Treiber.<br \/><strong>Hinweis:<\/strong> Wenn du einen FC mit direkt verbundenem USB-Port flashst (die meisten modernen FCs), stelle sicher, daß du den Abschnitt \"USB Flashing\" des Betaflight-Handbuches gelesen hast, und daß korrekte Treiber und Software installiert sind"
+        "message": "Bitte versuche <span class=\"message-negative\">nicht<\/span>, mit diesem Firmware-Flasher <strong>non-Cleanflight<\/strong> hardware zu flashen.<br \/>Den FC <span class=\"message-negative\">nicht<\/span> <strong>ausstecken<\/strong> und den Computer während des flashens <span class=\"message-negative\">nicht<\/span> <strong>abschalten<\/strong>. <br \/><br \/><strong>Hinweis: <\/strong>Der STM32-Bootloader ist im ROM gespeichert und kann nicht zerstört werden.<br \/><strong>Hinweis: <\/strong><span class=\"message-negative\">Automatisch Verbinden<\/span> ist immer ausgeschaltet, während du den Firmware-Flasher verwendest.<br \/><strong>Hinweis: <\/strong>Stelle sicher, dass du ein Backup deiner Konfiguration hast; einige Upgrades\/Downgrades werden diese eventuell löschen.<br \/><strong>Hinweis:<\/strong> Falls es Probleme beim flashen gibt, stelle sicher, daß<strong>keine anderen Geräte an den seriellen Ports von deinem FC angeschlossen sind<\/strong>, reboote den Computer und aktualisiere deine Treiber.<br \/><strong>Hinweis:<\/strong> Wenn du einen FC mit direkt verbundenem USB-Port flashst (die meisten modernen FCs), stelle sicher, daß du den Abschnitt \"USB Flashing\" des Cleanflight-Handbuches gelesen hast, und daß korrekte Treiber und Software installiert sind"
     },
     "firmwareFlasherRecoveryHead": {
         "message": "<strong>Wiederherstellung \/ abgebrochene Kommunikation<\/strong>"
     },
     "firmwareFlasherRecoveryText": {
-        "message": "Wenn du die Verbindung zu deinem FC verloren hast:<ul><li>Abschalten<\/li><li> 'Nicht Rebooten' aktivieren, 'Speicher löschen' aktivieren.<\/li><li>BOOT-Pins überbrücken oder BOOT-Knopf drücken.<\/li><li>Einschalten (Aktivitäts-LED wird NICHT blinken, wenn alles klappt).<\/li><li>STM32-Treiber und Zadig installieren (falls benötigt, siehe <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\/Installing-Betaflight\"target=\"_blank\">USB Flashing<\/a> Abschnitt des Betaflight-Handbuches).<\/li><li>Konfigurator schliessen, alle Chrome-Instanzen schliessen, alle Chrome-Apps schliessen, Konfigurator neustarten<\/li><li>BOOT-Knopf loslassen, wenn dein FC einen hat.<\/li><li>Korrekte Firmware flashen (mit manueller Baudrate, falls das im Handbuch von deinem FC steht).<\/li><li>FC abschalten.<\/li><li>BOOT-Jumper entfernen (falls dein FC einen hat).<\/li><li>FC einschalten (Aktivitäts-LED sollte blinken).<\/li><li>Normal verbinden.<\/li><\/ul>"
+        "message": "Wenn du die Verbindung zu deinem FC verloren hast:<ul><li>Abschalten<\/li><li> 'Nicht Rebooten' aktivieren, 'Speicher löschen' aktivieren.<\/li><li>BOOT-Pins überbrücken oder BOOT-Knopf drücken.<\/li><li>Einschalten (Aktivitäts-LED wird NICHT blinken, wenn alles klappt).<\/li><li>STM32-Treiber und Zadig installieren (falls benötigt, siehe <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\/Installing-Cleanflight\"target=\"_blank\">USB Flashing<\/a> Abschnitt des Cleanflight-Handbuches).<\/li><li>Konfigurator schliessen, alle Chrome-Instanzen schliessen, alle Chrome-Apps schliessen, Konfigurator neustarten<\/li><li>BOOT-Knopf loslassen, wenn dein FC einen hat.<\/li><li>Korrekte Firmware flashen (mit manueller Baudrate, falls das im Handbuch von deinem FC steht).<\/li><li>FC abschalten.<\/li><li>BOOT-Jumper entfernen (falls dein FC einen hat).<\/li><li>FC einschalten (Aktivitäts-LED sollte blinken).<\/li><li>Normal verbinden.<\/li><\/ul>"
     },
     "firmwareFlasherButtonLeave": {
         "message": "Firmware-Flasher verlassen"
@@ -2464,7 +2464,7 @@
         "message": "RC Expo Stärke"
     },
     "pidTuningRcExpoPowerHelp": {
-        "message": "Der Exponent zur Berechnung von RC Expo. In Betaflight-Versionen vor 3.0 ist der Wert fest auf 3 eingestellt."
+        "message": "Der Exponent zur Berechnung von RC Expo. In Cleanflight-Versionen vor 3.0 ist der Wert fest auf 3 eingestellt."
     },
     "pidTuningLevel": {
         "message": "Winkel\/Horizont"
@@ -2578,7 +2578,7 @@
         "message": "Abweichender Winkel (Grad) in dem das Board anders eingebaut wurde als vorgesehen (über Kopf, gedreht, usw.) Falls externe Sensoren (Gyro, Acc, Mag) verwendet werden, bitte diese ebenfalls neu anlernen."
     },
     "failsafeFeaturesHelpOld": {
-        "message": "Die Failsave Einstellungen haben sich geändert. Benutze Betaflight <strong>V1.12.0+<\/strong>um auf die verbesserten Einstellungen zuzugreifen."
+        "message": "Die Failsave Einstellungen haben sich geändert. Benutze Cleanflight <strong>V1.12.0+<\/strong>um auf die verbesserten Einstellungen zuzugreifen."
     },
     "failsafePaneTitleOld": {
         "message": "Empfänger Failsave"
@@ -2653,7 +2653,7 @@
         "message": "Speichern"
     },
     "powerFirmwareUpgradeRequired": {
-        "message": "Firmware-Aktualisierung <span class=\"message-negative\">benötigt<\/span>. Batterie-\/Strom-\/Spannungsmessungs-Konfiguration via API &lt; 1.33.0 (Betaflight Version &lt;= 3.17) wird nicht unterstützt."
+        "message": "Firmware-Aktualisierung <span class=\"message-negative\">benötigt<\/span>. Batterie-\/Strom-\/Spannungsmessungs-Konfiguration via API &lt; 1.33.0 (Cleanflight Version &lt;= 3.17) wird nicht unterstützt."
     },
     "powerBatteryVoltageMeterSource": {
         "message": "Voltmeter Quelle"
@@ -2875,7 +2875,7 @@
         "message": "<strong>Hinweis:<\/strong> OSD-VOrschau eventuell nicht in der aktuell auf dem FC installierten Schriftart."
     },
     "osdSetupUnsupportedNote1": {
-        "message": "Dein FC reagiert nicht auf OSD-Kommandos. Das bedeutet wahrscheinlich, daß er kein eingebautes Betaflight-OSD hat."
+        "message": "Dein FC reagiert nicht auf OSD-Kommandos. Das bedeutet wahrscheinlich, daß er kein eingebautes Cleanflight-OSD hat."
     },
     "osdSetupUnsupportedNote2": {
         "message": "Einige Flightcontroller haben ein eingebautes <a href=\"https:\/\/www.youtube.com\/watch?v=ikKH_6SQ-Tk\" target=\"_blank\">MinimOSD<\/a>, das über <a href=\"https:\/\/github.com\/ShikOfTheRa\/scarab-osd\/releases\/latest\" target='_blank'>scarab-osd<\/a> konfiguriert und geflasht werden kann.  Diese OSDs können nicht über dieses Interface konfiguriert werden."
@@ -3313,7 +3313,7 @@
         "message": "<b>Ableitung vom Fehler<\/b> erzeugt direktere Stick-Antwort und ist bevorzugt für Racing.<br><br><b>Ableitung von Messung<\/b> erzeugt weichere Stick-Antwort und ist nützlicher für Freeestyle"
     },
     "pidTuningPidControllerTip": {
-        "message": "<b>Legacy vs Betaflight (float):<\/b> PID Skalierung und PID Logik sind exakt gleich. Nicht notwendigerweise Neueinstellen notwendig. Legacy is das alte in Betaflight gewachsene rewrite, ein einfacher Integer-Arithmetik basierter Regler. Der Betaflight PID Regler nutzt Fleißkomma Arithmetik und hat viele neue Funktionen speziell für Multi-Rotor Anwendungen entwickelt.  <br> <b>Float vs Integer:<\/b> PID Skalierung und PID Logik sind exakt gleich. Kein Neueinstellen notwendig. F1 Boards haben keine FPU an Bord, somit belasten Fließkomma-Berechnungen die CPU Auslastung, und Integer Berechnungen verbessern die Performance. Jedoch liefert Fließkommaarithmetik die etwas höhere Genuigkeit."
+        "message": "<b>Legacy vs Cleanflight (float):<\/b> PID Skalierung und PID Logik sind exakt gleich. Nicht notwendigerweise Neueinstellen notwendig. Legacy is das alte in Cleanflight gewachsene rewrite, ein einfacher Integer-Arithmetik basierter Regler. Der Cleanflight PID Regler nutzt Fleißkomma Arithmetik und hat viele neue Funktionen speziell für Multi-Rotor Anwendungen entwickelt.  <br> <b>Float vs Integer:<\/b> PID Skalierung und PID Logik sind exakt gleich. Kein Neueinstellen notwendig. F1 Boards haben keine FPU an Bord, somit belasten Fließkomma-Berechnungen die CPU Auslastung, und Integer Berechnungen verbessern die Performance. Jedoch liefert Fließkommaarithmetik die etwas höhere Genuigkeit."
     },
     "pidTuningFilterTip": {
         "message": "<b>Gyro Soft Filter:<\/b> Tiefpassfilter für Gyro. Kleinerer Wert für mehr Filterung.<br><b>D-Term Filter:<\/b> Tiefpassfilter für D-Term. Beeinflusst D-Tuning. Kleiner Wert für mehr Filterung.<br><b>Yaw Filter:<\/b> Filtert Yaw-Werte. Kann bei Setups mit viel Rauschen auf der Yaw-Achse helfen."

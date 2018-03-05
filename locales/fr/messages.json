@@ -101,7 +101,7 @@
         "message": "Montrer les notifications de mise à jour des versions instables du configurateur"
     },
     "configuratorUpdateNotice": {
-        "message": "Vous utilisez une version dépassée du <b>Configurateur Betaflight<\/b>.<br>La version <b>$1<\/b> est disponible en ligne, rendez-vous <a href=\"$2\" target=\"_blank\">à la page \"version\" <\/a> pour télécharger et installer la dernière version pourvue de corrections et optimisations.<br>Svp, fermez le configurateur avant la mise à jour."
+        "message": "Vous utilisez une version dépassée du <b>Configurateur Cleanflight<\/b>.<br>La version <b>$1<\/b> est disponible en ligne, rendez-vous <a href=\"$2\" target=\"_blank\">à la page \"version\" <\/a> pour télécharger et installer la dernière version pourvue de corrections et optimisations.<br>Svp, fermez le configurateur avant la mise à jour."
     },
     "configuratorUpdateWebsite": {
         "message": "Aller sur le site de publication"
@@ -314,7 +314,7 @@
         "message": "Cette version du microprogramme <span class=\"message-negative\">n'est pas supportée<\/span>. Veuillez le mettre à jour vers une version compatible avec l'API <strong>$1<\/strong> ou ultérieure. Utiliser le CLI pour sauvegarder avant de flasher. Les procédures de sauvegarde \/ restauration par CLI sont décrites dans l'aide.<br \/> Téléchargez et utilisez une ancienne version du configurateur si vous n'êtes pas prêt à mettre à jour."
     },
     "firmwareTypeNotSupported": {
-        "message": "Les microprogrammes autres que Cleanflight\/Betaflight  ne sont <span class=\"message-negative\">pas pris en charge et non supportés<\/span>."
+        "message": "Les microprogrammes autres que Cleanflight\/Cleanflight  ne sont <span class=\"message-negative\">pas pris en charge et non supportés<\/span>."
     },
     "firmwareUpgradeRequired": {
         "message": "Le microprogramme de ce dispositif a besoin d'être mis à jour. Utilisez le CLI pour sauvegarder avant de flasher. Les procédures de sauvegarde\/restauration par le CLI sont décrites dans l'aide.<br \/> Téléchargez et utilisez une ancienne version du configurateur si vous n'êtes pas prêt à le mettre à jour."
@@ -428,19 +428,19 @@
         "message": "EEPROM <span class=\"message-positive\">enregistrée<\/span>"
     },
     "defaultWelcomeIntro": {
-        "message": "Bienvenue dans le <strong>Configurateur - Betaflight<\/strong>, un utilitaire pour simplifier la mise à jour, la configuration et les réglages de votre contrôleur de vol."
+        "message": "Bienvenue dans le <strong>Configurateur - Cleanflight<\/strong>, un utilitaire pour simplifier la mise à jour, la configuration et les réglages de votre contrôleur de vol."
     },
     "defaultWelcomeHead": {
         "message": "Matériel"
     },
     "defaultWelcomeText": {
-        "message": "L'application fonctionne avec toutes les cartes sous Betaflight. Consulter la liste dans la rubrique flash.<br><br><a href=\"https:\/\/chrome.google.com\/webstore\/detail\/betaflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> Télécharger Betaflight Blackbox<\/a><br \/><br \/>Le code source du firmware est à télécharger <a href=\"https:\/\/github.com\/betaflight\/betaflight\" title=\"www.github.com\" target=\"_blank\">ici<\/a><br \/>L'image du firmware la plus récente est <a href=\"https:\/\/github.com\/betaflight\/betaflight\/releases\" title=\"www.github.com\" target=\"_blank\">ici<\/a><br \/><br \/>Le dernier <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">pilote CP210x<\/a> est à télécharger <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">ici<\/a><br \/>Le dernier <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">pilote STM USB VCP<\/a>est à télécharger <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">ici<\/a><br \/>La dernière version de <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a> (utilitaire windows pour les pilotes USB) est à télécharger <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">ici<\/a><br \/>"
+        "message": "L'application fonctionne avec toutes les cartes sous Cleanflight. Consulter la liste dans la rubrique flash.<br><br><a href=\"https:\/\/chrome.google.com\/webstore\/detail\/cleanflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> Télécharger Cleanflight Blackbox<\/a><br \/><br \/>Le code source du firmware est à télécharger <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\" title=\"www.github.com\" target=\"_blank\">ici<\/a><br \/>L'image du firmware la plus récente est <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/releases\" title=\"www.github.com\" target=\"_blank\">ici<\/a><br \/><br \/>Le dernier <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">pilote CP210x<\/a> est à télécharger <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">ici<\/a><br \/>Le dernier <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">pilote STM USB VCP<\/a>est à télécharger <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">ici<\/a><br \/>La dernière version de <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a> (utilitaire windows pour les pilotes USB) est à télécharger <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">ici<\/a><br \/>"
     },
     "defaultContributingHead": {
         "message": "Participation"
     },
     "defaultContributingText": {
-        "message": "Vous souhaitez participer à l'amélioration de Betaflight, plusieurs possibilités:<br \/><ul><li>Répondre aux question des autres utilisateurs sur les forums, IRC et Slack.<\/li><li>Participer au développement du firmware et du configurateur - nouvelles fonctionnalités, améliorations et résolutions de bugs<\/li><li>Tester <a href=\"https:\/\/github.com\/Betaflight\/betaflight\/pulls\" target=\"_blank\">les nouvelles fonctionnalités\/résolutions de bugs<\/a> et transmettre des retours.<\/li><li>Aider <a href=\"https:\/\/github.com\/betaflight\/betaflight\/issues\" target=\"_blank\">avec des idées, commentaires et des demandes de fonctionnalités<\/a>.<\/li><li>Collaborer <a href=\"<a href=\"https:\/\/crowdin.com\/project\/betaflight-configurator\" target=\"_blank\">\" target=\"_blank\">à traduire le configurateur <\/a> dans votre langue.<\/li><li><\/li><\/ul>"
+        "message": "Vous souhaitez participer à l'amélioration de Cleanflight, plusieurs possibilités:<br \/><ul><li>Répondre aux question des autres utilisateurs sur les forums, IRC et Slack.<\/li><li>Participer au développement du firmware et du configurateur - nouvelles fonctionnalités, améliorations et résolutions de bugs<\/li><li>Tester <a href=\"https:\/\/github.com\/Cleanflight\/cleanflight\/pulls\" target=\"_blank\">les nouvelles fonctionnalités\/résolutions de bugs<\/a> et transmettre des retours.<\/li><li>Aider <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/issues\" target=\"_blank\">avec des idées, commentaires et des demandes de fonctionnalités<\/a>.<\/li><li>Collaborer <a href=\"<a href=\"https:\/\/crowdin.com\/project\/cleanflight-configurator\" target=\"_blank\">\" target=\"_blank\">à traduire le configurateur <\/a> dans votre langue.<\/li><li><\/li><\/ul>"
     },
     "defaultChangelogAction": {
         "message": "Notes de MAJ"
@@ -455,7 +455,7 @@
         "message": "Open Source \/ Avis de dons"
     },
     "defaultDonateText": {
-        "message": "Cet utilitaire est entièrement <strong>open source<\/strong> et disponible gratuitement à tous les utilisateurs de <strong>Betaflight<\/strong>.<br \/>Si vous trouvez Betaflight ou son configurateur utiles, n'hésitez pas à soutenir son développement. <strong>Soutenez-nous <\/strong> en faisant un don."
+        "message": "Cet utilitaire est entièrement <strong>open source<\/strong> et disponible gratuitement à tous les utilisateurs de <strong>Cleanflight<\/strong>.<br \/>Si vous trouvez Cleanflight ou son configurateur utiles, n'hésitez pas à soutenir son développement. <strong>Soutenez-nous <\/strong> en faisant un don."
     },
     "defaultDonate": {
         "message": "Don"
@@ -467,13 +467,13 @@
         "message": "Documentation \/ Manuel"
     },
     "defaultDocumentation": {
-        "message": "La documentation Betaflight est disponible en manuel et en wiki.<br \/><br \/>"
+        "message": "La documentation Cleanflight est disponible en manuel et en wiki.<br \/><br \/>"
     },
     "defaultDocumentation1": {
-        "message": "Le Wiki de Betaflight est une bonne source d'information, celle-ci est disponible <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\" target=\"_blank\">ici<\/a>."
+        "message": "Le Wiki de Cleanflight est une bonne source d'information, celle-ci est disponible <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">ici<\/a>."
     },
     "defaultDocumentation2": {
-        "message": "Les notes de version de microprogramme peuvent être lues sur la page des versions GitHub, <a href=\"https:\/\/github.com\/Betaflight\/Betaflight\/releases\" target=\"_blank\">ici<\/a>."
+        "message": "Les notes de version de microprogramme peuvent être lues sur la page des versions GitHub, <a href=\"https:\/\/github.com\/Cleanflight\/Cleanflight\/releases\" target=\"_blank\">ici<\/a>."
     },
     "defaultSupportHead": {
         "message": "Support"
@@ -491,19 +491,19 @@
         "message": "<a href=\"http:\/\/www.rcgroups.com\/forums\/showthread.php?t=2464844&page=1\" target=\"_blank\">Discussions sur  RC Groups<\/a>"
     },
     "defaultSupport2": {
-        "message": "<a href=\"http:\/\/betaflight.info\" target=\"_blank\">Wiki Betaflight<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">Wiki Cleanflight<\/a>"
     },
     "defaultSupport3": {
-        "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Vidéos Betaflight de Joshua Bardwell<\/a>"
+        "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Vidéos Cleanflight de Joshua Bardwell<\/a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https:\/\/github.com\/Betaflight\" target=\"_blank\">GitHub<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/Cleanflight\" target=\"_blank\">GitHub<\/a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"http:\/\/betaflight.tk\/slack\" target=\"_blank\">Développeurs de Betaflight sur Slack<\/a>"
+        "message": "<a href=\"http:\/\/cleanflight.com\/slack\" target=\"_blank\">Développeurs de Cleanflight sur Slack<\/a>"
     },
     "initialSetupBackupAndRestoreApiVersion": {
-        "message": "<span class=\"message-negative\">La sauvegarde et la restauration sont désactivés.<\/span> La version API de votre microprogramme est <span class=\"message-negative\">$1<\/span>, la version minimum requise est <span class=\"message-positive\">$2<\/span>.  Veuillez sauvegarder vos paramètres en CLI, voir la procédure dans l'aide Betaflight."
+        "message": "<span class=\"message-negative\">La sauvegarde et la restauration sont désactivés.<\/span> La version API de votre microprogramme est <span class=\"message-negative\">$1<\/span>, la version minimum requise est <span class=\"message-positive\">$2<\/span>.  Veuillez sauvegarder vos paramètres en CLI, voir la procédure dans l'aide Cleanflight."
     },
     "initialSetupButtonCalibrateAccel": {
         "message": "Calibrer l'accéléromètre"
@@ -872,7 +872,7 @@
         "message": "Sens de rotation inversé"
     },
     "configurationReverseMotorSwitchHelp": {
-        "message": "Si actif, informe Betaflight que les hélices et moteurs sont installés de façon à travailler dans le sens opposé."
+        "message": "Si actif, informe Cleanflight que les hélices et moteurs sont installés de façon à travailler dans le sens opposé."
     },
     "configurationAutoDisarmDelay": {
         "message": "Désarme les moteurs après un délais de [seconds] (nécessite MOTOR_STOP)"
@@ -1373,7 +1373,7 @@
         "message": "Prévisualisation"
     },
     "receiverMspWarningText": {
-        "message": "Ces sticks vont autoriser Betaflight à être armé et testé sans récepteur ni télécommande. Cependant, <strong> cette fonctionnalité ne sert pas à voler et les hélices doivent être retirées.<\/strong><br><br> Cette fonctionnalité ne garantie pas un contrôle fiable de l'appareil. <strong>Ne pas retirer les hélices entraîne à coup sûr de graves blessures.<\/strong>"
+        "message": "Ces sticks vont autoriser Cleanflight à être armé et testé sans récepteur ni télécommande. Cependant, <strong> cette fonctionnalité ne sert pas à voler et les hélices doivent être retirées.<\/strong><br><br> Cette fonctionnalité ne garantie pas un contrôle fiable de l'appareil. <strong>Ne pas retirer les hélices entraîne à coup sûr de graves blessures.<\/strong>"
     },
     "receiverMspEnableButton": {
         "message": "Autoriser le contrôle"
@@ -2102,13 +2102,13 @@
         "message": "Message:"
     },
     "firmwareFlasherWarningText": {
-        "message": "Merci de ne<span class=\"message-negative\"> pas<\/span> essayer de flasher de<strong>non-Betaflight<\/strong> carte avec cet outil.<br \/>Ne <span class=\"message-negative\">pas <\/span> <strong>déconnecter<\/strong> la carte ou <strong>la débrancher<\/strong> pendant que vous flashez.<br \/><br \/><strong>Note: <\/strong>le bootloader est stocké dans la ROM, il ne peut pas être supprimé.<br \/><strong>Note: <\/strong><span class=\"message-negative\">Auto-Connecte<\/span> est toujours désactivé pendant le flashage.<br \/><strong>Note: <\/strong>Assurez-vous d'avoir une sauvegarde parfois un flashage supprime toutes vos configurations..<br \/><strong>Note:<\/strong> Si vous rencontrez un problème <strong>essayez de déconnecter votre FC<\/strong> en premier essayez de rebooter, faites les mises à jour chrome et des drivers STM.<br \/><strong>Note:<\/strong> Quand vous flashez une carte par l'USB assurez d'avoir connaissance de toutes les documentations et d'avoir les bon drivers installés."
+        "message": "Merci de ne<span class=\"message-negative\"> pas<\/span> essayer de flasher de<strong>non-Cleanflight<\/strong> carte avec cet outil.<br \/>Ne <span class=\"message-negative\">pas <\/span> <strong>déconnecter<\/strong> la carte ou <strong>la débrancher<\/strong> pendant que vous flashez.<br \/><br \/><strong>Note: <\/strong>le bootloader est stocké dans la ROM, il ne peut pas être supprimé.<br \/><strong>Note: <\/strong><span class=\"message-negative\">Auto-Connecte<\/span> est toujours désactivé pendant le flashage.<br \/><strong>Note: <\/strong>Assurez-vous d'avoir une sauvegarde parfois un flashage supprime toutes vos configurations..<br \/><strong>Note:<\/strong> Si vous rencontrez un problème <strong>essayez de déconnecter votre FC<\/strong> en premier essayez de rebooter, faites les mises à jour chrome et des drivers STM.<br \/><strong>Note:<\/strong> Quand vous flashez une carte par l'USB assurez d'avoir connaissance de toutes les documentations et d'avoir les bon drivers installés."
     },
     "firmwareFlasherRecoveryHead": {
         "message": "<strong>Récupération \/ Communication coupée<\/strong>"
     },
     "firmwareFlasherRecoveryText": {
-        "message": "Si vous avez perdu la communication avec votre carte essayez ces procédures: <ul><li>Débranchez<\/li><li> Activez 'Séquence sans redémarrage', Activez 'Effacement complet de la puce '.<\/li><li>shuntez les bornes BOOT ou maintenez le bouton BOOT.<\/li><li>Re branchez (La LED d'activités ne devrait pas s'allumer).<\/li><li>Installez les drivers STM32 drivers et Zadig si nécessaire (voir <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\/Installing-Betaflight\"target=\"_blank\">USB Flashing<\/a> section of Betaflight manual).<\/li><li>Fermez le configurateur, Fermez toutes les instances de Chrome, Fermez toutes les applications Chrome, Redémarrez le Configurateur.<\/li><li>Relachez le bouton BOOT.<\/li><li>Flashez avec le bon firmware (en utilisant le bon baudrate).<\/li><li>Déconnectez.<\/li><li>Supprimez le shunt sur le BOOT.<\/li><li>Re branchez (La LED d'activités devrait flasher).<\/li><li>Connectez normalement.<\/li><\/ul>"
+        "message": "Si vous avez perdu la communication avec votre carte essayez ces procédures: <ul><li>Débranchez<\/li><li> Activez 'Séquence sans redémarrage', Activez 'Effacement complet de la puce '.<\/li><li>shuntez les bornes BOOT ou maintenez le bouton BOOT.<\/li><li>Re branchez (La LED d'activités ne devrait pas s'allumer).<\/li><li>Installez les drivers STM32 drivers et Zadig si nécessaire (voir <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\/Installing-Cleanflight\"target=\"_blank\">USB Flashing<\/a> section of Cleanflight manual).<\/li><li>Fermez le configurateur, Fermez toutes les instances de Chrome, Fermez toutes les applications Chrome, Redémarrez le Configurateur.<\/li><li>Relachez le bouton BOOT.<\/li><li>Flashez avec le bon firmware (en utilisant le bon baudrate).<\/li><li>Déconnectez.<\/li><li>Supprimez le shunt sur le BOOT.<\/li><li>Re branchez (La LED d'activités devrait flasher).<\/li><li>Connectez normalement.<\/li><\/ul>"
     },
     "firmwareFlasherButtonLeave": {
         "message": "Quitter le firmware flasheur"
@@ -2467,7 +2467,7 @@
         "message": "RC Expo Power"
     },
     "pidTuningRcExpoPowerHelp": {
-        "message": "L'exposant utilisé lors du calcul de RC Expo. Dans les versions de Betaflight antérieures à la version 3.0, la valeur est fixée à 3."
+        "message": "L'exposant utilisé lors du calcul de RC Expo. Dans les versions de Cleanflight antérieures à la version 3.0, la valeur est fixée à 3."
     },
     "pidTuningLevel": {
         "message": "Angle\/Horizon"
@@ -2581,7 +2581,7 @@
         "message": "Rotation arbitraire de la carte en degrés permettant un montage latéral \/ à l'envers \/ de côté etc. Si des capteurs externes sont utilisés, servez vous du sensor alignments (Gyro, Acc, Mag) pour définir leur position indépendamment  de l'orientation de la carte. "
     },
     "failsafeFeaturesHelpOld": {
-        "message": "La configuration du failsafe a beaucoup changée. Utilisez Betaflight <strong>v1.12.0+<\/strong> pour activer le panneau de configuration avancé."
+        "message": "La configuration du failsafe a beaucoup changée. Utilisez Cleanflight <strong>v1.12.0+<\/strong> pour activer le panneau de configuration avancé."
     },
     "failsafePaneTitleOld": {
         "message": "Failsafe récepteur"
@@ -2656,7 +2656,7 @@
         "message": "Sauvegarder"
     },
     "powerFirmwareUpgradeRequired": {
-        "message": "Mise à jour du firmware <span class=\"message-negative\">nécessaire<\/span>.  L'API &lt; 1.33.0 (Betaflight release &lt;= 3.17) ne permet de configurer les rubriques Batterie \/ Intensité \/ Tension."
+        "message": "Mise à jour du firmware <span class=\"message-negative\">nécessaire<\/span>.  L'API &lt; 1.33.0 (Cleanflight release &lt;= 3.17) ne permet de configurer les rubriques Batterie \/ Intensité \/ Tension."
     },
     "powerBatteryVoltageMeterSource": {
         "message": "Mesure de la tension"
@@ -2878,7 +2878,7 @@
         "message": "<strong>Note: <\/strong> La police d'écriture sur l’aperçu OSD et celle installée dans le contrôleur de vol peuvent être différentes."
     },
     "osdSetupUnsupportedNote1": {
-        "message": "Votre contrôleur de vol ne répond pas aux commandes OSD. L'OSD intégré n'est probablement pas celui de Betaflight."
+        "message": "Votre contrôleur de vol ne répond pas aux commandes OSD. L'OSD intégré n'est probablement pas celui de Cleanflight."
     },
     "osdSetupUnsupportedNote2": {
         "message": "Note certaines FC ont un  <a href=\"https:\/\/www.youtube.com\/watch?v=ikKH_6SQ-Tk\" target=\"_blank\">MinimOSD intégré<\/a> qui peut être configuré et flashé avec <a href=\"https:\/\/github.com\/ShikOfTheRa\/scarab-osd\/releases\/latest\" target='_blank'>scarab-osd<\/a>, le MinimOSD ne peut pas être configuré avec cette interface."
@@ -3316,7 +3316,7 @@
         "message": "<b>Derivative from Error<\/b>fourni un feeling plus direct et c'est le préféré pour la 'race'.<br><br><b>Derivative from Measurement<\/b> fourni plus de 'smooth' et c'est le préféré pour le freestyle"
     },
     "pidTuningPidControllerTip": {
-        "message": "<b>Legacy vs Betaflight (float):<\/b> PID scaling and PID logic is exactly the same. Not necessarily retune needed. Legacy is old betaflight evolved rewrite, which is basic PID controller based on integer math. Betaflight PID controller uses floating point math and has many new features specifically designed for multirotor applications <br> <b>Float vs Integer:<\/b> PID scaling and PID logic is exactly the same. No retune needed. F1 boards have no onboard FPU and floating point math increases CPU load and integer math will improve performance, but float math might gain slightly more precision."
+        "message": "<b>Legacy vs Cleanflight (float):<\/b> PID scaling and PID logic is exactly the same. Not necessarily retune needed. Legacy is old cleanflight evolved rewrite, which is basic PID controller based on integer math. Cleanflight PID controller uses floating point math and has many new features specifically designed for multirotor applications <br> <b>Float vs Integer:<\/b> PID scaling and PID logic is exactly the same. No retune needed. F1 boards have no onboard FPU and floating point math increases CPU load and integer math will improve performance, but float math might gain slightly more precision."
     },
     "pidTuningFilterTip": {
         "message": "<b>Filtre Gyro:<\/b> Filtre passe-bas sur le gyro. Baisser la valeur pour augmenter le filtre.<br><b>Filtre D Term:<\/b> Filtre passe-bas sur le Dterm. Cela peut affecter le tuning du D. Baisser la valeur pour augmenter le filtre.<br><b>Filtre Yaw:<\/b> Filtre sur la sortie du yaw. Cela peut aider sur les configurations qui ont du bruit sur l'axe du yaw."

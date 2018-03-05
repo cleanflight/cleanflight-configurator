@@ -434,13 +434,13 @@
         "message": "하드웨어"
     },
     "defaultWelcomeText": {
-        "message": "이 어플리케이션은 베타플라이트를 실행할 수 있는 모든 하드웨어를 지원합니다. 전체 하드웨어 목록은 플래시 탭을 확인하십시오.<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/betaflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> 베타플라이트 블랙박스 다운로드<\/a><br \/><br \/>펌웨어 소스 코드는 <a href=\"https:\/\/github.com\/betaflight\/betaflight\" title=\"www.github.com\" target=\"_blank\">여기서<\/a><br \/> 다운받으실 수 있습니다. 최신의 바이너리 펌웨어 이미지는 <a href=\"https:\/\/github.com\/betaflight\/betaflight\/releases\" title=\"www.github.com\" target=\"_blank\">여기서<\/a> 사용할 수 있습니다.<br \/><br \/>최신 <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x 드라이버<\/a>는 <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">여기서<\/a> 다운받으실 수 있습니다.<br \/>최신 <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP 드라이버<\/a>는 <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">여기서<\/a> 다운받으실 수 있습니다.<br \/>최신 윈도우 USB 드라이버 설치를 위한 <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a>는 <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">여기서<\/a> 다운받으실 수 있습니다.<br \/>"
+        "message": "이 어플리케이션은 베타플라이트를 실행할 수 있는 모든 하드웨어를 지원합니다. 전체 하드웨어 목록은 플래시 탭을 확인하십시오.<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/cleanflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> 베타플라이트 블랙박스 다운로드<\/a><br \/><br \/>펌웨어 소스 코드는 <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\" title=\"www.github.com\" target=\"_blank\">여기서<\/a><br \/> 다운받으실 수 있습니다. 최신의 바이너리 펌웨어 이미지는 <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/releases\" title=\"www.github.com\" target=\"_blank\">여기서<\/a> 사용할 수 있습니다.<br \/><br \/>최신 <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x 드라이버<\/a>는 <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">여기서<\/a> 다운받으실 수 있습니다.<br \/>최신 <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP 드라이버<\/a>는 <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">여기서<\/a> 다운받으실 수 있습니다.<br \/>최신 윈도우 USB 드라이버 설치를 위한 <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a>는 <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">여기서<\/a> 다운받으실 수 있습니다.<br \/>"
     },
     "defaultContributingHead": {
         "message": "기여하기"
     },
     "defaultContributingText": {
-        "message": "베타플라이트를 훨씬 더 좋게 만드는 데 도움이 되고 싶다면, 다음와 같은 다양한 방법으로 도움을 줄 수 있습니다:<br \/><ul><li>포럼과 IRC의 다른 사용자의 질문에 답변할 수 있습니다.<\/li><li>펌웨어와 컨피규레이터에 코드를 기부할 수 있습니다 - 새로운 기능, 오류 고침, 개선 등<\/li><li><a href=\"https:\/\/github.com\/Betaflight\/betaflight\/pulls\" target=\"_blank\">새로운 기능\/오류 고침<\/a>을 테스트하고 피드백을 제공할 수 있습니다.<\/li><li><a href=\"https:\/\/github.com\/betaflight\/betaflight\/issues\" target=\"_blank\">이슈와 기능 추가 요청<\/a>으로 도움을 줄 수 있습니다.<\/li><li>당신의 언어로 <a href=\"https:\/\/crowdin.com\/project\/betaflight-configurator\" target=\"_blank\">컨피규레이터 어플리케이션을 번역<\/a>하여 공동 작업할 수 있습니다.<br \/>한글번역에 대한 의견은 번역(교정)자: 류장협(oto4futur@gmail.com)에게 제안하십시오.<\/li><li><\/li><\/ul>"
+        "message": "베타플라이트를 훨씬 더 좋게 만드는 데 도움이 되고 싶다면, 다음와 같은 다양한 방법으로 도움을 줄 수 있습니다:<br \/><ul><li>포럼과 IRC의 다른 사용자의 질문에 답변할 수 있습니다.<\/li><li>펌웨어와 컨피규레이터에 코드를 기부할 수 있습니다 - 새로운 기능, 오류 고침, 개선 등<\/li><li><a href=\"https:\/\/github.com\/Cleanflight\/cleanflight\/pulls\" target=\"_blank\">새로운 기능\/오류 고침<\/a>을 테스트하고 피드백을 제공할 수 있습니다.<\/li><li><a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/issues\" target=\"_blank\">이슈와 기능 추가 요청<\/a>으로 도움을 줄 수 있습니다.<\/li><li>당신의 언어로 <a href=\"https:\/\/crowdin.com\/project\/cleanflight-configurator\" target=\"_blank\">컨피규레이터 어플리케이션을 번역<\/a>하여 공동 작업할 수 있습니다.<br \/>한글번역에 대한 의견은 번역(교정)자: 류장협(oto4futur@gmail.com)에게 제안하십시오.<\/li><li><\/li><\/ul>"
     },
     "defaultChangelogAction": {
         "message": "변경이력"
@@ -470,10 +470,10 @@
         "message": "베타플라이트 문서는 릴리즈 노트와 위키에 적용됩니다.<br \/><br \/>"
     },
     "defaultDocumentation1": {
-        "message": "베타플라이트 위키는 정보를 얻을 수 있는 훌륭한 자료입니다, 그것은 <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\" target=\"_blank\">여기서<\/a> 찾으실 수 있습니다."
+        "message": "베타플라이트 위키는 정보를 얻을 수 있는 훌륭한 자료입니다, 그것은 <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">여기서<\/a> 찾으실 수 있습니다."
     },
     "defaultDocumentation2": {
-        "message": "펌웨어에 대한 릴리즈 노트는 <a href=\"https:\/\/github.com\/Betaflight\/Betaflight\/releases\" target=\"_blank\">GitHub 릴리즈 페이지<\/a>에서 구독하실 수 있습니다."
+        "message": "펌웨어에 대한 릴리즈 노트는 <a href=\"https:\/\/github.com\/Cleanflight\/Cleanflight\/releases\" target=\"_blank\">GitHub 릴리즈 페이지<\/a>에서 구독하실 수 있습니다."
     },
     "defaultSupportHead": {
         "message": "지원"
@@ -491,16 +491,16 @@
         "message": "<a href=\"http:\/\/www.rcgroups.com\/forums\/showthread.php?t=2464844&page=1\" target=\"_blank\">RC 그룹 쓰레드<\/a>"
     },
     "defaultSupport2": {
-        "message": "<a href=\"http:\/\/betaflight.info\" target=\"_blank\">베타플라이트 위키<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">베타플라이트 위키<\/a>"
     },
     "defaultSupport3": {
         "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell 베타플라이트 동영상<\/a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https:\/\/github.com\/Betaflight\" target=\"_blank\">GitHub<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/Cleanflight\" target=\"_blank\">GitHub<\/a>"
     },
     "defaultSupport5": {
-        "message": "<a href=\"http:\/\/betaflight.tk\/slack\" target=\"_blank\">베타플라이트 개발 슬랙<\/a>"
+        "message": "<a href=\"http:\/\/cleanflight.com\/slack\" target=\"_blank\">베타플라이트 개발 슬랙<\/a>"
     },
     "initialSetupBackupAndRestoreApiVersion": {
         "message": "<span class=\"message-negative\">백업과 복구 기능이 비활성화되었습니다.<\/span> API 버전  <span class=\"message-negative\">$1<\/span>에 맞는 펌웨어여야 합니다, 백업과 복구 절차는 <span class=\"message-positive\">$2<\/span>를 참고하십시오. 당신의 설정을 CLI를 통해 백업하세요, 필요한 경우 절차에 대한 베타플라이트 문서를 확인하세요."
@@ -2111,7 +2111,7 @@
         "message": "<strong>통신 복구 \/ 손실<\/strong>"
     },
     "firmwareFlasherRecoveryText": {
-        "message": "보드와의 통신이 끊어진 경우 다음 단계에 따라 통신을 복구하십시오: <ul><li>전원을 끄십시오.<\/li><li>'재부팅 절차 없음', '칩 전부 삭제'를 활성화 하십시오.<\/li><li>부트 핀을 점프하거나 부트 버튼을 누르고 계십시오.<\/li><li>전원을 켜십시오.(제대로 완료되면 작동 중인 LED가 깜박거리지 않습니다)<\/li><li>필요한 경우 STM32 드라이버와 Zadig를 설치하십시오. (베타플라이트 매뉴얼의 <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\/Installing-Betaflight\"target=\"_blank\">>USB 플래싱<\/a> 섹션을 보십시오.)<\/li><li>컨피규레이터를 닫고, 모든 실행 중인 크롬 인스턴트, 크롬 앱을 닫으십시오. 컨피규레이터를 다시 시작하십시오.<\/li><li>FC에 BOOT 버튼이 있으면 해제하십시오.<\/li><li>올바른 펌웨어로 플래시 하십시오. (당신의 FC 매뉴얼에 명시된 경우 수동 전송 속도를 사용하여).<\/li><li>전원을 끄십시오.<\/li><li>BOOT 점퍼를 제거하십시오.<\/li><li>전원을 켜십시오. (작동 중인 LED가 깜박입니다.).<\/li><li>정상적으로 연결하십시오.<\/li><\/ul>"
+        "message": "보드와의 통신이 끊어진 경우 다음 단계에 따라 통신을 복구하십시오: <ul><li>전원을 끄십시오.<\/li><li>'재부팅 절차 없음', '칩 전부 삭제'를 활성화 하십시오.<\/li><li>부트 핀을 점프하거나 부트 버튼을 누르고 계십시오.<\/li><li>전원을 켜십시오.(제대로 완료되면 작동 중인 LED가 깜박거리지 않습니다)<\/li><li>필요한 경우 STM32 드라이버와 Zadig를 설치하십시오. (베타플라이트 매뉴얼의 <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\/Installing-Cleanflight\"target=\"_blank\">>USB 플래싱<\/a> 섹션을 보십시오.)<\/li><li>컨피규레이터를 닫고, 모든 실행 중인 크롬 인스턴트, 크롬 앱을 닫으십시오. 컨피규레이터를 다시 시작하십시오.<\/li><li>FC에 BOOT 버튼이 있으면 해제하십시오.<\/li><li>올바른 펌웨어로 플래시 하십시오. (당신의 FC 매뉴얼에 명시된 경우 수동 전송 속도를 사용하여).<\/li><li>전원을 끄십시오.<\/li><li>BOOT 점퍼를 제거하십시오.<\/li><li>전원을 켜십시오. (작동 중인 LED가 깜박입니다.).<\/li><li>정상적으로 연결하십시오.<\/li><\/ul>"
     },
     "firmwareFlasherButtonLeave": {
         "message": "펌웨어 플래시 도구 나가기"

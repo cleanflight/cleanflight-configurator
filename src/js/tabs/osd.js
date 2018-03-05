@@ -1066,6 +1066,10 @@ OSD.msp = {
     d.state.haveOsdFeature = bit_check(d.flags, 0) || (d.flags == 1 && semver.lt(CONFIG.apiVersion, "1.34.0"));
     d.state.isOsdSlave = bit_check(d.flags, 1) && semver.gte(CONFIG.apiVersion, "1.34.0");
 
+    if (d.state.isOsdSlave == false) {
+        $('.preview-help-container').show();
+    }
+
     d.display_items = [];
     d.stat_items = [];
     d.warnings = [];
@@ -1152,7 +1156,7 @@ OSD.msp = {
         item.preview = item.preview(d);
       }
     }
-
+        
     OSD.updateDisplaySize();
   }
 };

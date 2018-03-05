@@ -30,7 +30,7 @@ var nwBuilderOptions = {
     files: './dist/**/*',
     macIcns: './src/images/bf_icon.icns',
     macPlist: { 'CFBundleDisplayName': 'Cleanflight Configurator'},
-    winIco: './src/images/bf_icon.ico'
+    winIco: './src/images/cf_icon.ico'
 };
 
 //-----------------

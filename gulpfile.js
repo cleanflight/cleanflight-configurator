@@ -28,7 +28,7 @@ const RELEASE_DIR = './release/';
 var nwBuilderOptions = {
     version: '0.27.4',
     files: './dist/**/*',
-    macIcns: './src/images/bf_icon.icns',
+    macIcns: './src/images/cf_icon.icns',
     macPlist: { 'CFBundleDisplayName': 'Cleanflight Configurator'},
     winIco: './src/images/cf_icon.ico'
 };

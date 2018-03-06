@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "38",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "author": "Cleanflight Project",
     "name": "Cleanflight - Configurator",
     "short_name": "Cleanflight",
@@ -13,7 +13,7 @@
 
     "app": {
         "background": {
-            "scripts": ["eventPage.js"],
+            "scripts": ["js/eventPage.js"],
             "persistent": false
         }
     },
@@ -47,7 +47,7 @@
         "partitions": [
             {
                 "name": "map",
-                "accessible_resources" : ["tabs/map.html", "tabs/map.js", "/images/icons/cf_icon_position.png"]
+                "accessible_resources" : ["tabs/map.html", "js/tabs/map.js", "/images/icons/cf_icon_position.png"]
             }
         ]
     },

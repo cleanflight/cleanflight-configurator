@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Cleanflight Configurator
+Comment=Crossplatform configuration tool for the Cleanflight flight control system
+Exec=/opt/cleanflight/cleanflight-configurator/cleanflight-configurator
+Icon=/opt/cleanflight/cleanflight-configurator/icon/cf_icon_128.png
+Terminal=false
+Type=Application

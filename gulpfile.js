@@ -19,6 +19,7 @@ const concat = require('gulp-concat');
 const install = require("gulp-install");
 const rename = require('gulp-rename');
 const os = require('os');
+const removeTrailingPathSeparator = require('remove-trailing-path-separator');
 
 const DIST_DIR = './dist/';
 const APPS_DIR = './apps/';
@@ -401,7 +402,7 @@ function release_deb(arch, done) {
              depends: 'libgconf-2-4',
              changelog: [],
              _target: 'opt/cleanflight/cleanflight-configurator',
-             _out: RELEASE_DIR,
+             _out: removeTrailingPathSeparator(RELEASE_DIR),
              _copyright: 'assets/linux/copyright',
              _clean: true
     }));

@@ -53,6 +53,7 @@
     "nw-builder": "^3.4.1",
     "os": "^0.1.1",
     "platform-dependent-modules": "0.0.14",
+    "remove-trailing-path-separator": "^1.0.2",
     "rpm-builder": "^0.6.1",
     "temp": "^0.8.3"
   },

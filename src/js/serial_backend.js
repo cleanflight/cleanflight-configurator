@@ -214,10 +214,16 @@ function onOpen(openInfo) {
 
                             if ((CONFIG.flightControllerIdentifier === 'CLFL' && semver.lt(CONFIG.apiVersion, '1.34.0')) ||
                                 (CONFIG.flightControllerIdentifier === 'BTFL' && semver.lt(CONFIG.apiVersion, '1.20.0'))) {
-                                GUI.show_modal(
-                                    i18n.getMessage('warningTitle'),
-                                    i18n.getMessage('firmwareUpgradeRequired')
-                                );
+                                
+                                var dialog = $('.dialogConnectWarning')[0];
+
+                                $('.dialogConnectWarning-content').html(i18n.getMessage('firmwareUpgradeRequired'));
+
+                                $('.dialogConnectWarning-closebtn').click(function() {
+                                    dialog.close();
+                                });
+
+                                dialog.showModal();
 
                                 connectCli();
                             } else {

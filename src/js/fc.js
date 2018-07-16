@@ -105,6 +105,7 @@ var FC = {
         BEEPER_CONFIG = {
             beepers:                    0,
             dshotBeaconTone:            0,
+            dshotBeaconConditions:      0,
         };
         
         MIXER_CONFIG = {
@@ -333,16 +334,22 @@ var FC = {
         };
 
         FILTER_CONFIG = {
-            gyro_soft_lpf_hz:           0,
-            dterm_lpf_hz:               0,
-            yaw_lpf_hz:                 0,
-            gyro_soft_notch_hz_1:       0,
-            gyro_soft_notch_cutoff_1:   0,
+            gyro_hardware_lpf:          0,
+            gyro_32khz_hardware_lpf:    0,
+            gyro_lowpass_hz:            0,
+            gyro_lowpass_type:          0,
+            gyro_lowpass2_hz:           0,
+            gyro_lowpass2_type:         0,
+            gyro_notch_hz:              0,
+            gyro_notch_cutoff:          0,
+            gyro_notch2_hz:             0,
+            gyro_notch2_cutoff:         0,
+            dterm_lowpass_hz:           0,
+            dterm_lowpass_type:         0,
+            dterm_lowpass2_hz:          0,
             dterm_notch_hz:             0,
             dterm_notch_cutoff:         0,
-            gyro_soft_notch_hz_2:       0,
-            gyro_soft_notch_cutoff_2:   0,
-            dterm_filter_type:          0,
+            yaw_lowpass_hz:             0,
         };
 
         ADVANCED_TUNING = {
@@ -391,7 +398,7 @@ var FC = {
             failsafe_delay:                 0,
             failsafe_off_delay:             0,
             failsafe_throttle:              0,
-            failsafe_kill_switch:           0,
+            failsafe_switch_mode:           0,
             failsafe_throttle_low_delay:    0,
             failsafe_procedure:             0.
         };
@@ -399,12 +406,20 @@ var FC = {
         RXFAIL_CONFIG = [];
 
         DEFAULT = {
-            gyro_soft_notch_cutoff_1:       300,
-            gyro_soft_notch_hz_1:           400,
-            gyro_soft_notch_cutoff_2:       100,
-            gyro_soft_notch_hz_2:           200,
+            gyro_lowpass_hz:                100,
+            gyro_lowpass_type:                0,
+            gyro_lowpass2_hz:               300,
+            gyro_lowpass2_type:               0,
+            gyro_notch_cutoff:              300,
+            gyro_notch_hz:                  400,
+            gyro_notch2_cutoff:             100,
+            gyro_notch2_hz:                 200,
+            dterm_lowpass_hz:               100,
+            dterm_lowpass_type:               0,
+            dterm_lowpass2_hz:              200,
             dterm_notch_cutoff:             160,
             dterm_notch_hz:                 260,
+            yaw_lowpass_hz:                 100,
         };
     }
 };

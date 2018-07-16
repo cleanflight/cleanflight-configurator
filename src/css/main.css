@@ -107,11 +107,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .message-positive {
-    color: #ffbb00;
+    color: #ffbb00 !important;
 }
 
 .message-negative {
-    color: red;
+    color: red !important;
 }
 
 .headerbar {
@@ -193,7 +193,7 @@ input[type="number"]::-webkit-inner-spin-button {
     width: 136px;
 }
 
-#port-picker .auto_connect {
+#port-picker .auto_connect, .gray {
     color: #ddd;
 }
 

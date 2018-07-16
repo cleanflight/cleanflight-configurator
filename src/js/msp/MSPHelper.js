@@ -603,6 +603,9 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
                     BEEPER_CONFIG.dshotBeaconTone = data.readU8();
                 }
+                if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+                    BEEPER_CONFIG.dshotBeaconConditions.setMask(data.readU32());
+                }
                 break;
 
             case MSPCodes.MSP_BOARD_ALIGNMENT_CONFIG:
@@ -786,7 +789,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 FAILSAFE_CONFIG.failsafe_off_delay = data.readU8();
                 FAILSAFE_CONFIG.failsafe_throttle = data.readU16();
                 if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
-                    FAILSAFE_CONFIG.failsafe_kill_switch = data.readU8();
+                    FAILSAFE_CONFIG.failsafe_switch_mode = data.readU8();
                     FAILSAFE_CONFIG.failsafe_throttle_low_delay = data.readU16();
                     FAILSAFE_CONFIG.failsafe_procedure = data.readU8();
                 }
@@ -820,20 +823,29 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 }
                 break;
             case MSPCodes.MSP_FILTER_CONFIG:
-                FILTER_CONFIG.gyro_soft_lpf_hz = data.readU8();
-                FILTER_CONFIG.dterm_lpf_hz = data.readU16();
-                FILTER_CONFIG.yaw_lpf_hz = data.readU16();
+                FILTER_CONFIG.gyro_lowpass_hz = data.readU8();
+                FILTER_CONFIG.dterm_lowpass_hz = data.readU16();
+                FILTER_CONFIG.yaw_lowpass_hz = data.readU16();
                 if (semver.gte(CONFIG.apiVersion, "1.20.0")) {
-                    FILTER_CONFIG.gyro_soft_notch_hz_1 = data.readU16();
-                    FILTER_CONFIG.gyro_soft_notch_cutoff_1 = data.readU16();
+                    FILTER_CONFIG.gyro_notch_hz = data.readU16();
+                    FILTER_CONFIG.gyro_notch_cutoff = data.readU16();
                     FILTER_CONFIG.dterm_notch_hz = data.readU16();
                     FILTER_CONFIG.dterm_notch_cutoff = data.readU16();
                     if (semver.gte(CONFIG.apiVersion, "1.21.0")) {
-                        FILTER_CONFIG.gyro_soft_notch_hz_2 = data.readU16();
-                        FILTER_CONFIG.gyro_soft_notch_cutoff_2 = data.readU16();
+                        FILTER_CONFIG.gyro_notch2_hz = data.readU16();
+                        FILTER_CONFIG.gyro_notch2_cutoff = data.readU16();
                     }
                     if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
-                        FILTER_CONFIG.dterm_filter_type = data.readU8();
+                        FILTER_CONFIG.dterm_lowpass_type = data.readU8();
+                    }
+                    if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+                        FILTER_CONFIG.gyro_hardware_lpf = data.readU8();
+                        FILTER_CONFIG.gyro_32khz_hardware_lpf = data.readU8();
+                        FILTER_CONFIG.gyro_lowpass_hz = data.readU16();
+                        FILTER_CONFIG.gyro_lowpass2_hz = data.readU16();
+                        FILTER_CONFIG.gyro_lowpass_type = data.readU8();
+                        FILTER_CONFIG.gyro_lowpass2_type = data.readU8();
+                        FILTER_CONFIG.dterm_lowpass2_hz = data.readU16();
                     }
                 }
                 break;
@@ -861,6 +873,9 @@ MspHelper.prototype.process_data = function(dataHandler) {
                     if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
                         ADVANCED_TUNING.itermThrottleThreshold = data.readU16();
                         ADVANCED_TUNING.itermAcceleratorGain = data.readU16();
+                    }
+                    if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+                        ADVANCED_TUNING.dtermSetpointWeight = data.readU16();
                     }
                 }
                 break;
@@ -1203,7 +1218,10 @@ MspHelper.prototype.crunch = function(code) {
             var beeperMask = BEEPER_CONFIG.beepers.getMask();
             buffer.push32(beeperMask);
             if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
-                buffer.push8(BEEPER_CONFIG.dshotBeaconTone );
+                buffer.push8(BEEPER_CONFIG.dshotBeaconTone);
+            }
+            if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+                buffer.push32(BEEPER_CONFIG.dshotBeaconConditions.getMask());
             }
             break;
         case MSPCodes.MSP_SET_MIXER_CONFIG:
@@ -1364,7 +1382,7 @@ MspHelper.prototype.crunch = function(code) {
                 .push8(FAILSAFE_CONFIG.failsafe_off_delay)
                 .push16(FAILSAFE_CONFIG.failsafe_throttle);
             if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
-                buffer.push8(FAILSAFE_CONFIG.failsafe_kill_switch)
+                buffer.push8(FAILSAFE_CONFIG.failsafe_switch_mode)
                     .push16(FAILSAFE_CONFIG.failsafe_throttle_low_delay)
                     .push8(FAILSAFE_CONFIG.failsafe_procedure);
             }
@@ -1452,20 +1470,29 @@ MspHelper.prototype.crunch = function(code) {
             }
             break;
         case MSPCodes.MSP_SET_FILTER_CONFIG:
-            buffer.push8(FILTER_CONFIG.gyro_soft_lpf_hz)
-                .push16(FILTER_CONFIG.dterm_lpf_hz)
-                .push16(FILTER_CONFIG.yaw_lpf_hz);
+            buffer.push8(FILTER_CONFIG.gyro_lowpass_hz)
+                .push16(FILTER_CONFIG.dterm_lowpass_hz)
+                .push16(FILTER_CONFIG.yaw_lowpass_hz);
             if (semver.gte(CONFIG.apiVersion, "1.20.0")) {
-                buffer.push16(FILTER_CONFIG.gyro_soft_notch_hz_1)
-                    .push16(FILTER_CONFIG.gyro_soft_notch_cutoff_1)
+                buffer.push16(FILTER_CONFIG.gyro_notch_hz)
+                    .push16(FILTER_CONFIG.gyro_notch_cutoff)
                     .push16(FILTER_CONFIG.dterm_notch_hz)
                     .push16(FILTER_CONFIG.dterm_notch_cutoff);
                 if (semver.gte(CONFIG.apiVersion, "1.21.0")) {
-                    buffer.push16(FILTER_CONFIG.gyro_soft_notch_hz_2)
-                        .push16(FILTER_CONFIG.gyro_soft_notch_cutoff_2)
+                    buffer.push16(FILTER_CONFIG.gyro_notch2_hz)
+                        .push16(FILTER_CONFIG.gyro_notch2_cutoff)
                 }
                 if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
-                    buffer.push8(FILTER_CONFIG.dterm_filter_type);
+                    buffer.push8(FILTER_CONFIG.dterm_lowpass_type);
+                }
+                if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+                    buffer.push8(FILTER_CONFIG.gyro_hardware_lpf)
+                          .push8(FILTER_CONFIG.gyro_32khz_hardware_lpf)
+                          .push16(FILTER_CONFIG.gyro_lowpass_hz)
+                          .push16(FILTER_CONFIG.gyro_lowpass2_hz)
+                          .push8(FILTER_CONFIG.gyro_lowpass_type)
+                          .push8(FILTER_CONFIG.gyro_lowpass2_type)
+                          .push16(FILTER_CONFIG.dterm_lowpass2_hz);
                 }
             }
             break;
@@ -1477,7 +1504,7 @@ MspHelper.prototype.crunch = function(code) {
                     .push8(ADVANCED_TUNING.deltaMethod)
                     .push8(ADVANCED_TUNING.vbatPidCompensation)
                     .push8(ADVANCED_TUNING.dtermSetpointTransition)
-                    .push8(ADVANCED_TUNING.dtermSetpointWeight)
+                    .push8(Math.min(ADVANCED_TUNING.dtermSetpointWeight, 254))
                     .push8(ADVANCED_TUNING.toleranceBand)
                     .push8(ADVANCED_TUNING.toleranceBandReduction)
                     .push8(ADVANCED_TUNING.itermThrottleGain)
@@ -1490,6 +1517,9 @@ MspHelper.prototype.crunch = function(code) {
                 if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
                     buffer.push16(ADVANCED_TUNING.itermThrottleThreshold)
                         .push16(ADVANCED_TUNING.itermAcceleratorGain);
+                }
+                if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+                    buffer.push16(ADVANCED_TUNING.dtermSetpointWeight);
                 }
             }
             // only supports 1 version pre bf 3.0

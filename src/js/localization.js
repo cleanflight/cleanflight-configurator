@@ -6,7 +6,7 @@
 
 var i18n = {}
 
-const languagesAvailables = ['ca', 'de', 'en', 'es', 'fr', 'it', 'ja', 'ko', 'lv', 'zh_CN'];
+const languagesAvailables = ['ca', 'de', 'en', 'es', 'fr', 'it', 'ja', 'ko', 'lv', 'pt', 'zh_CN'];
 
 /**
  * Functions that depend on the i18n framework
@@ -39,9 +39,19 @@ i18n.init = function(cb) {
 }
 
 i18n.getMessage = function(messageID, parameters) {
-    var translatedString =  i18next.t(messageID + '.message');
 
-    if (parameters !== undefined) {
+    var translatedString;
+
+    // Option 1, no parameters or Object as parameters (i18Next type parameters)
+    if ((parameters === undefined) || ((parameters.constructor !== Array) && (parameters instanceof Object))) {
+        translatedString =  i18next.t(messageID + '.message', parameters);
+
+    // Option 2: parameters as $1, $2, etc.
+    // (deprecated, from the old Chrome i18n
+    } else {
+
+        translatedString =  i18next.t(messageID + '.message');
+
         if (parameters.constructor !== Array) {
             parameters = [parameters];
         }
@@ -147,3 +157,10 @@ function getValidLocale(userLocale) {
 
     return userLocale;
 }
+
+i18n.addResources = function(bundle) {
+    var takeFirst = obj => obj.hasOwnProperty("length") && 0 < obj.length ? obj[0] : obj;
+    var lang = takeFirst(i18next.options.fallbackLng),
+        ns = takeFirst(i18next.options.defaultNS);
+    i18next.addResourceBundle(lang, ns, bundle, true, true);
+};

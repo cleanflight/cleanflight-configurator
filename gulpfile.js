@@ -4,6 +4,8 @@ const pkg = require('./package.json');
 
 const child_process = require('child_process');
 const fs = require('fs');
+const fse = require('fs-extra');
+const https = require('follow-redirects').https;
 const path = require('path');
 
 const zip = require('gulp-zip');
@@ -13,6 +15,7 @@ const makensis = require('makensis');
 const deb = require('gulp-debian');
 const buildRpm = require('rpm-builder');
 const commandExistsSync = require('command-exists').sync;
+const targz = require('targz');
 
 const gulp = require('gulp');
 const concat = require('gulp-concat');
@@ -27,12 +30,15 @@ const DEBUG_DIR = './debug/';
 const RELEASE_DIR = './release/';
 
 var nwBuilderOptions = {
-    version: '0.28.3',
+    version: '0.31.0',
     files: './dist/**/*',
     macIcns: './src/images/cf_icon.icns',
     macPlist: { 'CFBundleDisplayName': 'Cleanflight Configurator'},
-    winIco: './src/images/cf_icon.ico'
+    winIco: './src/images/cf_icon.ico',
+    zip: false
 };
+
+var nwArmVersion = '0.27.6';
 
 //-----------------
 //Pre tasks operations
@@ -75,12 +81,13 @@ gulp.task('default', debugBuild);
 
 // Get platform from commandline args
 // #
-// # gulp <task> [<platform>]+        Run only for platform(s) (with <platform> one of --linux64, --linux32, --osx64, --win32, --win64, or --chromeos)
-// # 
+// # gulp <task> [<platform>]+        Run only for platform(s) (with <platform> one of --linux64, --linux32, --armv7, --osx64, --win32, --win64, or --chromeos)
+// #
 function getInputPlatforms() {
-    var supportedPlatforms = ['linux64', 'linux32', 'osx64', 'win32','win64', 'chromeos'];
+    var supportedPlatforms = ['linux64', 'linux32', 'armv7', 'osx64', 'win32','win64', 'chromeos'];
     var platforms = [];
     var regEx = /--(\w+)/;
+    console.log(process.argv);
     for (var i = 3; i < process.argv.length; i++) {
         var arg = process.argv[i].match(regEx)[1];
         if (supportedPlatforms.indexOf(arg) > -1) {
@@ -89,7 +96,7 @@ function getInputPlatforms() {
              console.log('Unknown platform: ' + arg);
              process.exit();
         }
-    }  
+    }
 
     if (platforms.length === 0) {
         var defaultPlatform = getDefaultPlatform();
@@ -127,10 +134,10 @@ function getDefaultPlatform() {
         defaultPlatform = 'win32';
 
         break;
-        
+
     default:
         defaultPlatform = '';
-    
+
         break;
     }
     return defaultPlatform;
@@ -157,6 +164,7 @@ function getRunDebugAppCommand(arch) {
 
     case 'linux64':
     case 'linux32':
+    case 'armv7':
         return path.join(DEBUG_DIR, pkg.name, arch, pkg.name);
 
         break;
@@ -178,24 +186,24 @@ function getReleaseFilename(platform, ext) {
     return 'cleanflight-configurator_' + pkg.version + '_' + platform + '.' + ext;
 }
 
-function clean_dist() { 
-    return del([DIST_DIR + '**'], { force: true }); 
+function clean_dist() {
+    return del([DIST_DIR + '**'], { force: true });
 };
 
-function clean_apps() { 
-    return del([APPS_DIR + '**'], { force: true }); 
+function clean_apps() {
+    return del([APPS_DIR + '**'], { force: true });
 };
 
-function clean_debug() { 
-    return del([DEBUG_DIR + '**'], { force: true }); 
+function clean_debug() {
+    return del([DEBUG_DIR + '**'], { force: true });
 };
 
-function clean_release() { 
-    return del([RELEASE_DIR + '**'], { force: true }); 
+function clean_release() {
+    return del([RELEASE_DIR + '**'], { force: true });
 };
 
-function clean_cache() { 
-    return del(['./cache/**'], { force: true }); 
+function clean_cache() {
+    return del(['./cache/**'], { force: true });
 };
 
 // Real work for dist task. Done in another task to call it via
@@ -239,8 +247,8 @@ function apps(done) {
     var platforms = getPlatforms();
     removeItem(platforms, 'chromeos');
 
-    buildNWApps(platforms, 'normal', APPS_DIR, done);
-};
+    buildNWAppsWrapper(platforms, 'normal', APPS_DIR, done);
+}
 
 function listPostBuildTasks(folder, done) {
 
@@ -249,28 +257,45 @@ function listPostBuildTasks(folder, done) {
     var postBuildTasks = [];
 
     if (platforms.indexOf('linux32') != -1) {
-        postBuildTasks.push(function post_build_linux32(done){ return post_build('linux32', folder, done) });
+        postBuildTasks.push(function post_build_linux32(done) {
+            return post_build('linux32', folder, done);
+        });
     }
 
     if (platforms.indexOf('linux64') != -1) {
-        postBuildTasks.push(function post_build_linux64(done){ return post_build('linux64', folder, done) });
+        postBuildTasks.push(function post_build_linux64(done) {
+            return post_build('linux64', folder, done);
+        });
+    }
+
+    if (platforms.indexOf('armv7') != -1) {
+        postBuildTasks.push(function post_build_armv7(done) {
+            return post_build('armv7', folder, done);
+        });
     }
 
     // We need to return at least one task, if not gulp will throw an error
     if (postBuildTasks.length == 0) {
-        postBuildTasks.push(function post_build_none(done){ done() });
+        postBuildTasks.push(function post_build_none(done) {
+            done();
+        });
     }
     return postBuildTasks;
 }
 
 function post_build(arch, folder, done) {
 
-    if ((arch =='linux32') || (arch == 'linux64')) {
+    if ((arch === 'linux32') || (arch === 'linux64')) {
         // Copy Ubuntu launcher scripts to destination dir
         var launcherDir = path.join(folder, pkg.name, arch);
         console.log('Copy Ubuntu launcher scripts to ' + launcherDir);
         return gulp.src('assets/linux/**')
                    .pipe(gulp.dest(launcherDir));
+    }
+
+    if (arch === 'armv7') {
+        console.log('Moving ARMv7 build from "linux32" to "armv7" directory...');
+        fse.moveSync(path.join(folder, pkg.name, 'linux32'), path.join(folder, pkg.name, 'armv7'));
     }
 
     return done();
@@ -281,11 +306,112 @@ function debug(done) {
     var platforms = getPlatforms();
     removeItem(platforms, 'chromeos');
 
-    buildNWApps(platforms, 'sdk', DEBUG_DIR, done);
+    buildNWAppsWrapper(platforms, 'sdk', DEBUG_DIR, done);
+}
+
+function injectARMCache(flavor, callback) {
+    var flavorPostfix = `-${flavor}`;
+    var flavorDownloadPostfix = flavor !== 'normal' ? `-${flavor}` : '';
+    clean_cache().then(function() {
+        if (!fs.existsSync('./cache')) {
+            fs.mkdirSync('./cache');
+        }
+        fs.closeSync(fs.openSync('./cache/_ARMv7_IS_CACHED', 'w'));
+        var versionFolder = `./cache/${nwBuilderOptions.version}${flavorPostfix}`;
+        if (!fs.existsSync(versionFolder)) {
+            fs.mkdirSync(versionFolder);
+        }
+        if (!fs.existsSync(versionFolder + '/linux32')) {
+            fs.mkdirSync(`${versionFolder}/linux32`);
+        }
+        var downloadedArchivePath = `${versionFolder}/nwjs${flavorPostfix}-v${nwArmVersion}-linux-arm.tar.gz`;
+        var downloadUrl = `https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/v${nwArmVersion}/nwjs${flavorDownloadPostfix}-v${nwArmVersion}-linux-arm.tar.gz`;
+        if (fs.existsSync(downloadedArchivePath)) {
+            console.log('Prebuilt ARMv7 binaries found in /tmp');
+            downloadDone(flavorDownloadPostfix, downloadedArchivePath, versionFolder);
+        } else {
+            console.log(`Downloading prebuilt ARMv7 binaries from "${downloadUrl}"...`);
+            process.stdout.write('> Starting download...\r');
+            var armBuildBinary = fs.createWriteStream(downloadedArchivePath);
+            var request = https.get(downloadUrl, function(res) {
+                var totalBytes = res.headers['content-length'];
+                var downloadedBytes = 0;
+                res.pipe(armBuildBinary);
+                res.on('data', function (chunk) {
+                    downloadedBytes += chunk.length;
+                    process.stdout.write(`> ${parseInt((downloadedBytes * 100) / totalBytes)}% done             \r`);
+                });
+                armBuildBinary.on('finish', function() {
+                    process.stdout.write('> 100% done             \n');
+                    armBuildBinary.close(function() {
+                        downloadDone(flavorDownloadPostfix, downloadedArchivePath, versionFolder);
+                    });
+                });
+            });
+        }
+    });
+
+    function downloadDone(flavorDownloadPostfix, downloadedArchivePath, versionFolder) {
+        console.log('Injecting prebuilt ARMv7 binaries into Linux32 cache...');
+        targz.decompress({
+            src: downloadedArchivePath,
+            dest: versionFolder,
+        }, function(err) {
+            if (err) {
+                console.log(err);
+                clean_debug();
+                process.exit(1);
+            } else {
+                fs.rename(
+                    `${versionFolder}/nwjs${flavorDownloadPostfix}-v${nwArmVersion}-linux-arm`,
+                    `${versionFolder}/linux32`,
+                    (err) => {
+                        if (err) {
+                            console.log(err);
+                            clean_debug();
+                            process.exit(1);
+                        }
+                        callback();
+                    }
+                );
+            }
+        });
+    }
+}
+
+function buildNWAppsWrapper(platforms, flavor, dir, done) {
+    function buildNWAppsCallback() {
+        buildNWApps(platforms, flavor, dir, done);
+    }
+
+    if (platforms.indexOf('armv7') !== -1) {
+        if (platforms.indexOf('linux32') !== -1) {
+            console.log('Cannot build ARMv7 and Linux32 versions at the same time!');
+            clean_debug();
+            process.exit(1);
+        }
+        removeItem(platforms, 'armv7');
+        platforms.push('linux32');
+
+        if (!fs.existsSync('./cache/_ARMv7_IS_CACHED', 'w')) {
+            console.log('Purging cache because it needs to be overwritten...');
+            clean_cache().then(() => {
+                injectARMCache(flavor, buildNWAppsCallback);
+            })
+        } else {
+            buildNWAppsCallback();
+        }
+    } else {
+        if (platforms.indexOf('linux32') !== -1 && fs.existsSync('./cache/_ARMv7_IS_CACHED')) {
+            console.log('Purging cache because it was previously overwritten...');
+            clean_cache().then(buildNWAppsCallback);
+        } else {
+            buildNWAppsCallback();
+        }
+    }
 }
 
 function buildNWApps(platforms, flavor, dir, done) {
-
     if (platforms.length > 0) {
         var builder = new NwBuilder(Object.assign({
             buildDir: dir,
@@ -312,7 +438,7 @@ function start_debug(done) {
 
     var platforms = getPlatforms();
 
-    var exec = require('child_process').exec;    
+    var exec = require('child_process').exec;
     if (platforms.length === 1) {
         var run = getRunDebugAppCommand(platforms[0]);
         console.log('Starting debug app (' + run + ')...');
@@ -375,7 +501,9 @@ function release_chromeos() {
 // Compress files from srcPath, using basePath, to outputFile in the RELEASE_DIR
 function compressFiles(srcPath, basePath, outputFile, zipFolder) {
     return gulp.src(srcPath, { base: basePath })
-               .pipe(rename(function(actualPath){ actualPath.dirname = path.join(zipFolder, actualPath.dirname) }))
+               .pipe(rename(function(actualPath) {
+                   actualPath.dirname = path.join(zipFolder, actualPath.dirname);
+               }))
                .pipe(zip(outputFile))
                .pipe(gulp.dest(RELEASE_DIR));
 }
@@ -524,15 +652,33 @@ function listReleaseTasks(done) {
     }
 
     if (platforms.indexOf('linux64') !== -1) {
-        releaseTasks.push(function release_linux64_zip(){ return release_zip('linux64') });
-        releaseTasks.push(function release_linux64_deb(done){ return release_deb('linux64', done) });
-        releaseTasks.push(function release_linux64_rpm(done){ return release_rpm('linux64', done) });
+        releaseTasks.push(function release_linux64_zip() {
+            return release_zip('linux64');
+        });
+        releaseTasks.push(function release_linux64_deb(done) {
+            return release_deb('linux64', done);
+        });
+        releaseTasks.push(function release_linux64_rpm(done) {
+            return release_rpm('linux64', done);
+        });
     }
 
     if (platforms.indexOf('linux32') !== -1) {
-        releaseTasks.push(function release_linux32_zip(){ return release_zip('linux32') });
-        releaseTasks.push(function release_linux32_deb(done){ return release_deb('linux32', done) });
-        releaseTasks.push(function release_linux32_rpm(done){ return release_rpm('linux32', done) });
+        releaseTasks.push(function release_linux32_zip() {
+            return release_zip('linux32');
+        });
+        releaseTasks.push(function release_linux32_deb(done) {
+            return release_deb('linux32', done);
+        });
+        releaseTasks.push(function release_linux32_rpm(done) {
+            return release_rpm('linux32', done);
+        });
+    }
+
+    if (platforms.indexOf('armv7') !== -1) {
+        releaseTasks.push(function release_armv7_zip() {
+            return release_zip('armv7');
+        });
     }
 
     if (platforms.indexOf('osx64') !== -1) {
@@ -540,11 +686,15 @@ function listReleaseTasks(done) {
     }
 
     if (platforms.indexOf('win32') !== -1) {
-        releaseTasks.push(function release_win32(done){ return release_win('win32', done) });
+        releaseTasks.push(function release_win32(done) {
+            return release_win('win32', done);
+        });
     }
 
     if (platforms.indexOf('win64') !== -1) {
-        releaseTasks.push(function release_win64(done){ return release_win('win64', done) });
+        releaseTasks.push(function release_win64(done) {
+            return release_win('win64', done);
+        });
     }
 
     return releaseTasks;

@@ -16,7 +16,23 @@ TABS.firmware_flasher.initialize = function (callback) {
     var intel_hex = false, // standard intel hex in string format
         parsed_hex = false; // parsed raw hex in array format
 
+        /**
+         * Change boldness of firmware option depending on cache status
+         * 
+         * @param {Descriptor} release 
+         */
+    function onFirmwareCacheUpdate(release) {
+        $("option[value='{0}']".format(release.version))
+            .css("font-weight", FirmwareCache.has(release)
+                ? "bold"
+                : "normal");
+    }
+
     $('#content').load("./tabs/firmware_flasher.html", function () {
+        FirmwareCache.load();
+        FirmwareCache.onPutToCache(onFirmwareCacheUpdate);
+        FirmwareCache.onRemoveFromCache(onFirmwareCacheUpdate);
+
         function parse_hex(str, callback) {
             // parsing hex in different thread
             var worker = new Worker('./js/workers/hex_parser.js');
@@ -30,17 +46,98 @@ TABS.firmware_flasher.initialize = function (callback) {
             worker.postMessage(str);
         }
 
-        function buildBoardOptions(releaseData) {
+        function process_hex(data, summary) {
+            intel_hex = data;
+
+            parse_hex(intel_hex, function (data) {
+                parsed_hex = data;
+
+                if (parsed_hex) {
+                    if (!FirmwareCache.has(summary)) {
+                        FirmwareCache.put(summary, intel_hex);
+                    }
+
+                    var url;
+
+                    $('span.progressLabel').html('<a class="save_firmware" href="#" title="Save Firmware">Loaded Online Firmware: (' + parsed_hex.bytes_total + ' bytes)</a>');
+
+                    $('a.flash_firmware').removeClass('disabled');
+
+                    $('div.release_info .target').text(summary.target);
+                    $('div.release_info .name').text(summary.version).prop('href', summary.releaseUrl);
+                    $('div.release_info .date').text(summary.date);
+                    $('div.release_info .status').text(summary.status);
+                    $('div.release_info .file').text(summary.file).prop('href', summary.url);
+
+                    var formattedNotes = summary.notes.replace(/#(\d+)/g, '[#$1](https://github.com/cleanflight/cleanflight/pull/$1)');
+                    formattedNotes = marked(formattedNotes);
+                    $('div.release_info .notes').html(formattedNotes);
+                    $('div.release_info .notes').find('a').each(function() {
+                        $(this).attr('target', '_blank');
+                    });
+
+                    $('div.release_info').slideDown();
+
+                } else {
+                    $('span.progressLabel').text(i18n.getMessage('firmwareFlasherHexCorrupted'));
+                }
+            });
+        }
+
+        function onLoadSuccess(data, summary) {
+            summary = typeof summary === "object" 
+                ? summary 
+                : $('select[name="firmware_version"] option:selected').data('summary');
+            process_hex(data, summary);
+            $("a.load_remote_file").removeClass('disabled');
+            $("a.load_remote_file").text(i18n.getMessage('firmwareFlasherButtonLoadOnline'));
+        };
+    
+        function buildJenkinsBoardOptions(builds) {
+            if (!builds) {
+                $('select[name="board"]').empty().append('<option value="0">Offline</option>');
+                $('select[name="firmware_version"]').empty().append('<option value="0">Offline</option>');
+
+                return;
+            }
+
+            var boards_e = $('select[name="board"]');
+            var versions_e = $('select[name="firmware_version"]');
+
+            var selectTargets = [];
+            Object.keys(builds)
+                .sort()
+                .forEach(function(target, i) {
+                    var descriptors = builds[target];
+                    descriptors.forEach(function(descriptor){
+                        if($.inArray(target, selectTargets) == -1) {
+                            selectTargets.push(target);
+                            var select_e =
+                                    $("<option value='{0}'>{0}</option>".format(
+                                            descriptor.target
+                                    )).data('summary', descriptor);
+                            boards_e.append(select_e);
+                        }
+                    });
+                });
+
+            TABS.firmware_flasher.releases = builds;
+
+            chrome.storage.local.get('selected_board', function (result) {
+                if (result.selected_board) {
+                    var boardBuilds = builds[result.selected_board]
+                    $('select[name="board"]').val(boardBuilds ? result.selected_board : 0).trigger('change');
+                }
+            });
+        }
+
+        function buildBoardOptions(releaseData, showDevReleases) {
             if (!releaseData) {
                 $('select[name="board"]').empty().append('<option value="0">Offline</option>');
                 $('select[name="firmware_version"]').empty().append('<option value="0">Offline</option>');
             } else {
-                var boards_e = $('select[name="board"]').empty();
-                var showDevReleases = ($('input.show_development_releases').is(':checked'));
-                boards_e.append($("<option value='0'>{0}</option>".format(i18n.getMessage('firmwareFlasherOptionLabelSelectBoard'))));
-
-                var versions_e = $('select[name="firmware_version"]').empty();
-                versions_e.append($("<option value='0'>{0}</option>".format(i18n.getMessage('firmwareFlasherOptionLabelSelectFirmwareVersion'))));
+                var boards_e = $('select[name="board"]');
+                var versions_e = $('select[name="firmware_version"]');
 
                 var releases = {};
                 var sortedTargets = [];
@@ -118,21 +215,78 @@ TABS.firmware_flasher.initialize = function (callback) {
                         });
                     });
                 TABS.firmware_flasher.releases = releases;
+
                 chrome.storage.local.get('selected_board', function (result) {
                     if (result.selected_board) {
-                        $('select[name="board"]').val(result.selected_board);
-                        $('select[name="board"]').trigger("change");
+                        var boardReleases = releases[result.selected_board]
+                        $('select[name="board"]').val(boardReleases ? result.selected_board : 0).trigger('change');
                     }
                 });
             }
         };
 
+        function showOrHideBuildTypeSelect() {
+            var showDevReleases = $(this).is(':checked');
+
+            if (showDevReleases) {
+                $('tr.build_type').show();
+            } else {
+                $('tr.build_type').hide();
+                buildType_e.val(0).trigger('change');
+            }
+        }
+
+        var buildTypes = [
+            {
+                tag: 'firmwareFlasherOptionLabelBuildTypeRelease',
+                loader: () => self.releaseChecker.loadReleaseData(releaseData => buildBoardOptions(releaseData, false))
+            },
+            {
+                tag: 'firmwareFlasherOptionLabelBuildTypeReleaseCandidate',
+                loader: () => self.releaseChecker.loadReleaseData(releaseData => buildBoardOptions(releaseData, true))
+            },
+            /*
+            {
+                tag: 'firmwareFlasherOptionLabelBuildTypeDevelopment',
+                loader: () => new JenkinsLoader('https://ci.betaflight.tech', 'Betaflight').loadBuilds(buildJenkinsBoardOptions)
+            },
+            {
+                tag: 'firmwareFlasherOptionLabelBuildTypeAKK3_3',
+                loader: () => new JenkinsLoader('https://ci.betaflight.tech', 'Betaflight Maintenance 3.3 (AKK - RDQ VTX Patch)').loadBuilds(buildJenkinsBoardOptions)
+            },
+            {
+                tag: 'firmwareFlasherOptionLabelBuildTypeAKK3_4',
+                loader: () => new JenkinsLoader('https://ci.betaflight.tech', 'Betaflight Maintenance 3.4 (AKK - RDQ VTX Patch)').loadBuilds(buildJenkinsBoardOptions)
+            }
+            */
+        ];
+
+        var buildType_e = $('select[name="build_type"]');
+        buildTypes.forEach((build, index) => {
+            buildType_e.append($("<option value='{0}' selected>{1}</option>".format(index, i18n.getMessage(build.tag))))
+        });
+
+        showOrHideBuildTypeSelect();
+        $('input.show_development_releases').change(showOrHideBuildTypeSelect);
+
         // translate to user-selected language
         i18n.localizePage();
 
-        // bind events
-        $('input.show_development_releases').click(function () {
-            self.releaseChecker.loadReleaseData(buildBoardOptions);
+        buildType_e.change(function() {
+            $("a.load_remote_file").addClass('disabled');
+            var build_type = $(this).val();
+
+            $('select[name="board"]').empty()
+            .append($("<option value='0'>{0}</option>".format(i18n.getMessage('firmwareFlasherOptionLabelSelectBoard'))));
+
+            $('select[name="firmware_version"]').empty()
+            .append($("<option value='0'>{0}</option>".format(i18n.getMessage('firmwareFlasherOptionLabelSelectFirmwareVersion'))));
+
+            if (!GUI.connect_lock) {
+                buildTypes[build_type].loader();
+            }
+
+            chrome.storage.local.set({'selected_build_type': build_type});
         });
 
         $('select[name="board"]').change(function() {
@@ -151,19 +305,24 @@ TABS.firmware_flasher.initialize = function (callback) {
                     versions_e.append($("<option value='0'>{0}</option>".format(i18n.getMessage('firmwareFlasherOptionLabelSelectFirmwareVersion'))));
                 } else {
                     versions_e.append($("<option value='0'>{0} {1}</option>".format(i18n.getMessage('firmwareFlasherOptionLabelSelectFirmwareVersionFor'), target)));
+
+                    TABS.firmware_flasher.releases[target].forEach(function(descriptor) {
+                        var select_e =
+                                $("<option value='{0}'>{0} - {1} - {2} ({3})</option>".format(
+                                        descriptor.version,
+                                        descriptor.target,
+                                        descriptor.date,
+                                        descriptor.status
+                                ))
+                                .css("font-weight", FirmwareCache.has(descriptor)
+                                        ? "bold"
+                                        : "normal"
+                                )
+                                .data('summary', descriptor);
+
+                        versions_e.append(select_e);
+                    });
                 }
-
-                TABS.firmware_flasher.releases[target].forEach(function(descriptor) {
-                    var select_e =
-                            $("<option value='{0}'>{0} - {1} - {2} ({3})</option>".format(
-                                    descriptor.name,
-                                    descriptor.target,
-                                    descriptor.date,
-                                    descriptor.status
-                            )).data('summary', descriptor);
-
-                    versions_e.append(select_e);
-                });
             }
             chrome.storage.local.set({'selected_board': target});
         });
@@ -226,7 +385,15 @@ TABS.firmware_flasher.initialize = function (callback) {
         $('select[name="firmware_version"]').change(function(evt){
             $('div.release_info').slideUp();
             $('a.flash_firmware').addClass('disabled');
-            if (evt.target.value=="0") {
+            let release = $("option:selected", evt.target).data("summary");
+            let isCached = FirmwareCache.has(release);
+            if (evt.target.value=="0" || isCached) {
+                if (isCached) {
+                    FirmwareCache.get(release, cached => {
+                        console.info("Release found in cache: " + release.file);
+                        onLoadSuccess(cached.hexdata, release);
+                    });
+                }
                 $("a.load_remote_file").addClass('disabled');
             }
             else {
@@ -241,40 +408,6 @@ TABS.firmware_flasher.initialize = function (callback) {
                 return;
             }
 
-            function process_hex(data, summary) {
-                intel_hex = data;
-
-                parse_hex(intel_hex, function (data) {
-                    parsed_hex = data;
-
-                    if (parsed_hex) {
-                        var url;
-
-                        $('span.progressLabel').html('<a class="save_firmware" href="#" title="Save Firmware">Loaded Online Firmware: (' + parsed_hex.bytes_total + ' bytes)</a>');
-
-                        $('a.flash_firmware').removeClass('disabled');
-
-                        $('div.release_info .target').text(summary.target);
-                        $('div.release_info .name').text(summary.version).prop('href', summary.releaseUrl);
-                        $('div.release_info .date').text(summary.date);
-                        $('div.release_info .status').text(summary.status);
-                        $('div.release_info .file').text(summary.file).prop('href', summary.url);
-
-                        var formattedNotes = summary.notes.replace(/#(\d+)/g, '[#$1](https://github.com/cleanflight/cleanflight/pull/$1)');
-                        formattedNotes = marked(formattedNotes);
-                        $('div.release_info .notes').html(formattedNotes);
-                        $('div.release_info .notes').find('a').each(function() {
-                            $(this).attr('target', '_blank');
-                        });
-
-                        $('div.release_info').slideDown();
-
-                    } else {
-                        $('span.progressLabel').text(i18n.getMessage('firmwareFlasherHexCorrupted'));
-                    }
-                });
-            }
-
             function failed_to_load() {
                 $('span.progressLabel').text(i18n.getMessage('firmwareFlasherFailedToLoadOnlineFirmware'));
                 $('a.flash_firmware').addClass('disabled');
@@ -286,11 +419,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             if (summary) { // undefined while list is loading or while running offline
                 $("a.load_remote_file").text(i18n.getMessage('firmwareFlasherButtonDownloading'));
                 $("a.load_remote_file").addClass('disabled');
-                $.get(summary.url, function (data) {
-                    process_hex(data, summary);
-                    $("a.load_remote_file").removeClass('disabled');
-                    $("a.load_remote_file").text(i18n.getMessage('firmwareFlasherButtonLoadOnline'));
-                }).fail(failed_to_load);
+                $.get(summary.url, onLoadSuccess).fail(failed_to_load);
             } else {
                 $('span.progressLabel').text(i18n.getMessage('firmwareFlasherFailedToLoadOnlineFirmware'));
             }
@@ -382,6 +511,11 @@ TABS.firmware_flasher.initialize = function (callback) {
                     });
                 });
             });
+        });
+
+        chrome.storage.local.get('selected_build_type', function (result) {
+            // ensure default build type is selected
+            buildType_e.val(result.selected_build_type || 0).trigger('change');
         });
 
         chrome.storage.local.get('no_reboot_sequence', function (result) {
@@ -481,15 +615,9 @@ TABS.firmware_flasher.initialize = function (callback) {
         });
 
         chrome.storage.local.get('show_development_releases', function (result) {
-            if (result.show_development_releases) {
-                $('input.show_development_releases').prop('checked', true);
-            } else {
-                $('input.show_development_releases').prop('checked', false);
-            }
-
-            self.releaseChecker.loadReleaseData(buildBoardOptions);
-
-            $('input.show_development_releases').change(function () {
+            $('input.show_development_releases')
+            .prop('checked', result.show_development_releases)
+            .change(function () {
                 chrome.storage.local.set({'show_development_releases': $(this).is(':checked')});
             }).change();
         });
@@ -507,6 +635,7 @@ TABS.firmware_flasher.initialize = function (callback) {
 
 TABS.firmware_flasher.cleanup = function (callback) {
     PortHandler.flush_callbacks();
+    FirmwareCache.unload();
 
     // unbind "global" events
     $(document).unbind('keypress');

@@ -2,7 +2,7 @@
     <div class="content_wrapper">
         <div class="tab_title" i18n="tabConfiguration"></div>
         <div class="cf_doc_version_bt">
-            <a id="button-documentation" href="https://github.com/cleanflight/cleanflight/releases" target="_blank"></a>
+            <a id="button-documentation" href="https://github.com/betaflight/betaflight/releases" target="_blank"></a>
         </div>
         <div class="note" style="margin-bottom: 20px;">
             <div class="note_spacer">
@@ -45,8 +45,8 @@
 
                         </div>
                     </div>
-
-                    <!-- BOARD ORIENTATION -->
+                    
+                                        <!-- BOARD ORIENTATION -->
                     <div class="board acc">
                         <div class="gui_box grey">
                             <div class="gui_box_titlebar">
@@ -140,7 +140,6 @@
                             </div>
                         </div>
                     </div>
-
                 </td>
                 <td style="width:calc(50%);vertical-align:top;">
                     <!-- ROW 1 - RIGHT PANE -->
@@ -241,7 +240,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- 3D -->
                     <div class="3d">
                         <div class="gui_box grey">
@@ -281,17 +279,17 @@
                             </div>
                         </div>
                     </div>
-                
                     <!-- DSHOT BEEPER -->
-                    <div class="dshotBeeper">
-                        <div class="gui_box grey">
+                    <div class="dshotBeeper" style="width: calc(100%);">
+                        <div class="gui_box grey" style="margin-top:10px;">
                             <div class="gui_box_titlebar">
                                 <div class="spacer_box_title" i18n="configurationDshotBeeper"></div>
+                                        <div class="helpicon cf_tip" i18n_title="configurationDshotBeaconHelp"></div>
                             </div>
                             <div class="spacer_box">
                                 <table cellpadding="0" cellspacing="0">
                                     <tbody class="dshot-beeper-configuration" id="noline">
-                                        <tr>
+                                        <tr class="dshotBeaconSwitch">
                                             <td>
                                                 <div class="number">
                                                     <div style="float: left; height: 20px; margin-right: 34px;">
@@ -305,9 +303,12 @@
                                         </tr>
                                         <tr class="dshotbeacon">
                                             <td>
-                                                <div class="number">
+                                                <div class="select">
                                                     <div style="float: left; height: 20px; margin-right: 10px;">
-                                                        <input type="number" id="dshotBeeperBeaconTone" step="1" min="1" max="5" />
+                                                        <select class="dshotBeeperBeaconTone">
+                                                            <option value="0" hidden></option>
+                                                            <!-- list generated here --> 
+                                                        </select>
                                                     </div>
                                                     <label for="dshotBeeperBeaconTone">
                                                         <span i18n="configurationDshotBeaconTone"></span>
@@ -317,10 +318,14 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <table cellpadding="0" cellspacing="0">
+                                    <tbody class="dshotBeaconConditions" id="noline">
+                                        <!-- table generated here -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                
                 </td>
             </tr>
             <tr>
@@ -448,7 +453,6 @@
                             </div>
                         </div>
                     </div>
-
                 </td>
             </tr>  
             <tr>
@@ -492,7 +496,77 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- GPS -->
+                    <div class="gps">
+                        <div class="gui_box grey gps">
+                            <div class="gui_box_titlebar">
+                                <div class="spacer_box_title" i18n="configurationGPS"></div>
+                            </div>
+                            <div class="spacer_box">
+                                <table cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th i18n="configurationFeatureEnabled"></th>
+                                            <th i18n="configurationFeatureDescription"></th>
+                                            <th i18n="configurationFeatureName"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="features gps">
+                                        <!-- table generated here -->
+                                    </tbody>
+                                </table>
+                                <div class="gpsSettings">
+                                    <div style="float:left; width:100%;">
+                                        <div class="note">
+                                            <div class="note_spacer">
+                                                <p i18n="configurationGPSHelp"></p>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="line">
+                                            <select class="gps_protocol">
+                                                <!-- list generated here -->
+                                            </select>
+                                            <span i18n="configurationGPSProtocol"></span>
+                                        </div>
+                                        <div class="line">
+                                            <select class="gps_baudrate">
+                                            <!-- list generated here -->
+                                            </select>
+                                            <span i18n="configurationGPSBaudrate"></span>
+                                        </div>
+                                        <div class="select gps_auto_baud">
+                                            <div style="float: left; height: 20px; margin-right: 15px; margin-left: 3px;">
+                                                <input type="checkbox" name="gps_auto_baud" class="toggle" />
+                                            </div>
+                                            <label for="gps_auto_baud"> <span class="freelabel"
+                                                i18n="configurationGPSAutoBaud"></span>
+                                            </label>
+                                        </div>
+                                        <div class="select gps_auto_config">
+                                            <div style="float: left; height: 20px; margin-right: 15px; margin-left: 3px;">
+                                                <input type="checkbox" name="gps_auto_config" class="toggle" />
+                                            </div>
+                                            <label for="gps_auto_config"> <span class="freelabel"
+                                                i18n="configurationGPSAutoConfig"></span>
+                                            </label>
+                                        </div>
+                                        <div class="line">
+                                            <select class="gps_ubx_sbas">
+                                                <!-- list generated here -->
+                                            </select>
+                                            <span i18n="configurationGPSubxSbas"></span>
+                                        </div>
+                                        <div class="number">
+                                            <label> <input type="number" name="mag_declination" step="0.01" min="-180" max="180" />
+                                            <span i18n="configurationMagDeclination"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
                 <td style="width:calc(50%);vertical-align:top;">
                     <!-- ROW 3 - RIGHT PANE -->
@@ -520,7 +594,6 @@
                             </div>
                         </div>
                     </div>
-
                 </td>
             </tr>
             <tr class="oldBatteryConfig">
@@ -642,85 +715,8 @@
             </tr>
 
             <tr class="beepers">
-                <td style="width:calc(50%);vertical-align:top;">
-                    <!-- ROW 5 - FULL WIDTH PANE -->
-
-                    <!-- GPS -->
-                    <div class="gps">
-                        <div class="gui_box grey gps">
-                            <div class="gui_box_titlebar">
-                                <div class="spacer_box_title" i18n="configurationGPS"></div>
-                            </div>
-                            <div class="spacer_box">
-                                <table cellpadding="0" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th i18n="configurationFeatureEnabled"></th>
-                                            <th i18n="configurationFeatureDescription"></th>
-                                            <th i18n="configurationFeatureName"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="features gps">
-                                        <!-- table generated here -->
-                                    </tbody>
-                                </table>
-                                <div class="gpsSettings">
-                                    <div style="float:left; width:100%;">
-                                        <div class="note">
-                                            <div class="note_spacer">
-                                                <p i18n="configurationGPSHelp"></p>
-                                            </div>
-                                        </div>
-                                    
-                                        <div class="line">
-                                            <select class="gps_protocol">
-                                                <!-- list generated here -->
-                                            </select>
-                                            <span i18n="configurationGPSProtocol"></span>
-                                        </div>
-                                        <div class="line">
-                                            <select class="gps_baudrate">
-                                            <!-- list generated here -->
-                                            </select>
-                                            <span i18n="configurationGPSBaudrate"></span>
-                                        </div>
-                                        <div class="select gps_auto_baud">
-                                            <div style="float: left; height: 20px; margin-right: 15px; margin-left: 3px;">
-                                                <input type="checkbox" name="gps_auto_baud" class="toggle" />
-                                            </div>
-                                            <label for="gps_auto_baud"> <span class="freelabel"
-                                                i18n="configurationGPSAutoBaud"></span>
-                                            </label>
-                                        </div>
-                                        <div class="select gps_auto_config">
-                                            <div style="float: left; height: 20px; margin-right: 15px; margin-left: 3px;">
-                                                <input type="checkbox" name="gps_auto_config" class="toggle" />
-                                            </div>
-                                            <label for="gps_auto_config"> <span class="freelabel"
-                                                i18n="configurationGPSAutoConfig"></span>
-                                            </label>
-                                        </div>
-                                        <div class="line">
-                                            <select class="gps_ubx_sbas">
-                                                <!-- list generated here -->
-                                            </select>
-                                            <span i18n="configurationGPSubxSbas"></span>
-                                        </div>
-                                        <div class="number">
-                                            <label> <input type="number" name="mag_declination" step="0.01" min="-180" max="180" />
-                                            <span i18n="configurationMagDeclination"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr class="beepers">
                 <td style="width:calc(100%)" colspan="2">
-                    <!-- ROW 6 - FULL WIDTH PANE -->
+                    <!-- ROW 5 - FULL WIDTH PANE -->
             
                     <!-- BEEPER -->
                     <div class="beepers" style="width: calc(100%);">
@@ -733,13 +729,13 @@
                                     <tbody class="beeper-configuration" id="noline">
                                         <tr class="beeper-template" style="display:none">
                                             <td>
-                                                <input class="beeper toggle" id="" name="" title="" type="checkbox" />
+                                                <input class="condition toggle" id="" name="" title="" type="checkbox" />
                                             </td>
                                             <td>
                                                 <label for=""></label>
                                             </td>
                                             <td>
-                                                <span i18n=""></span>
+                                                <span></span>
                                             </td>
                                         </tr>
                                         <!-- table generated here -->

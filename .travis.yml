@@ -1,12 +1,45 @@
+os:
+  - linux
+  - osx
+
+sudo: false
+
+dist: trusty
+
+addons:
+  apt:
+    packages:
+      - rpm
+
+git:
+  depth: 5
+
 language: node_js
 
+node_js:
+  - 8.11.2
+
+addons:
+  chrome: stable
+
 before_install:
+  - npm i -g npm@6.0.1
   - npm install gulp -g
 
 script:
-  - npm install
+  - npm test
   - gulp release
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then gulp release --chromeos; fi
 
 cache:
   directories:
   - node_modules
+
+notifications:
+  slack: betaflightgroup:LQSj02nsBEdefcO5UQcLgB0U
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/0c20f7a1a7e311499a88
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: always     # options: [always|never|change] default: always

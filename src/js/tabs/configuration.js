@@ -239,35 +239,53 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         var dshotBeeper_e = $('.tab-configuration .dshotbeeper');
         var dshotBeacon_e = $('.tab-configuration .dshotbeacon');
         var dshotBeeperSwitch = $('#dshotBeeperSwitch');
-        var dshotBeeperBeaconTone = $('#dshotBeeperBeaconTone');
+        var dshotBeeperBeaconTone = $('select.dshotBeeperBeaconTone');
+        var dshotBeaconCondition_e = $('tbody.dshotBeaconConditions');
+        var dshotBeaconSwitch_e = $('tr.dshotBeaconSwitch');
 
-        dshotBeeperSwitch.change(function() {
-            if ($(this).is(':checked')) {
-                dshotBeacon_e.show();
-                if (dshotBeeperBeaconTone.val() == 0) {
-                    dshotBeeperBeaconTone.val(1).change();
-                }
-            } else {
-                dshotBeeperBeaconTone.val(0).change();
-                dshotBeacon_e.hide();
+        if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
+            for (var i = 1; i <= 5; i++) {
+                dshotBeeperBeaconTone.append('<option value="' + (i) + '">'+ (i) + '</option>');
             }
-        });
+            dshotBeeper_e.show();
+        } else {
+            dshotBeeper_e.hide();
+        }
 
         dshotBeeperBeaconTone.change(function() {
             BEEPER_CONFIG.dshotBeaconTone = dshotBeeperBeaconTone.val();
         });
 
         dshotBeeperBeaconTone.val(BEEPER_CONFIG.dshotBeaconTone);
-        dshotBeeperSwitch.prop('checked', BEEPER_CONFIG.dshotBeaconTone !== 0).change();
 
-        if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
-            dshotBeeper_e.show();
+        var template = $('.beepers .beeper-template');
+        if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+            dshotBeaconSwitch_e.hide();
+            BEEPER_CONFIG.dshotBeaconConditions.generateElements(template, dshotBeaconCondition_e);
+
+            $('input.condition', dshotBeaconCondition_e).change(function () {
+                var element = $(this);
+                BEEPER_CONFIG.dshotBeaconConditions.updateData(element);
+            });
         } else {
-            dshotBeeper_e.hide();
+            dshotBeaconCondition_e.hide();
+
+            dshotBeeperSwitch.change(function() {
+                if ($(this).is(':checked')) {
+                    dshotBeacon_e.show();
+                    if (dshotBeeperBeaconTone.val() == 0) {
+                        dshotBeeperBeaconTone.val(1).change();
+                    }
+                } else {
+                    dshotBeeperBeaconTone.val(0).change();
+                    dshotBeacon_e.hide();
+                }
+            });
+
+            dshotBeeperSwitch.prop('checked', BEEPER_CONFIG.dshotBeaconTone !== 0).change();
         }
 
         // Analog Beeper
-        var template = $('.beepers .beeper-template');
         var destination = $('.beepers .beeper-configuration');
         var beeper_e = $('.tab-configuration .beepers');
 
@@ -576,7 +594,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.24.0"))  {
-            serialRXtypes.push('Spektrum Bidir SRXL');
+            serialRXtypes.push('SPEKTRUM2048/SRXL');
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.35.0"))  {
@@ -616,7 +634,8 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
                 spiRxTypes.push(
                     'FRSKY_X',
                     'A7105_FLYSKY',
-                    'A7105_FLYSKY_2A'
+                    'A7105_FLYSKY_2A',
+                    'NRF24_KN'
                 );
             }
 
@@ -884,7 +903,7 @@ TABS.configuration.initialize = function (callback, scrollPosition) {
             }
         });
 
-        $('input.beeper', beeper_e).change(function () {
+        $('input.condition', beeper_e).change(function () {
             var element = $(this);
             BEEPER_CONFIG.beepers.updateData(element);
         });

@@ -2,7 +2,9 @@
 
 TABS.firmware_flasher = {
     releases: null,
-    releaseChecker: new ReleaseChecker('firmware', 'https://api.github.com/repos/cleanflight/cleanflight/releases')
+    releaseChecker: new ReleaseChecker('firmware', 'https://api.github.com/repos/cleanflight/cleanflight/releases'),
+    jenkinsLoader: new NullJenkinsLoader()
+    //jenkinsLoader: new JenkinsLoader('https://ci.betaflight.tech')
 };
 
 TABS.firmware_flasher.initialize = function (callback) {
@@ -28,7 +30,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                 : "normal");
     }
 
-    $('#content').load("./tabs/firmware_flasher.html", function () {
+    function onDocumentLoad() {
         FirmwareCache.load();
         FirmwareCache.onPutToCache(onFirmwareCacheUpdate);
         FirmwareCache.onRemoveFromCache(onFirmwareCacheUpdate);
@@ -49,15 +51,17 @@ TABS.firmware_flasher.initialize = function (callback) {
         function process_hex(data, summary) {
             intel_hex = data;
 
+            analytics.setFirmwareData(analytics.DATA.FIRMWARE_CHECKSUM, objectHash.sha1(intel_hex));
+
             parse_hex(intel_hex, function (data) {
                 parsed_hex = data;
 
                 if (parsed_hex) {
+                    analytics.setFirmwareData(analytics.DATA.FIRMWARE_SIZE, parsed_hex.bytes_total);
+
                     if (!FirmwareCache.has(summary)) {
                         FirmwareCache.put(summary, intel_hex);
                     }
-
-                    var url;
 
                     $('span.progressLabel').html('<a class="save_firmware" href="#" title="Save Firmware">Loaded Online Firmware: (' + parsed_hex.bytes_total + ' bytes)</a>');
 
@@ -225,17 +229,6 @@ TABS.firmware_flasher.initialize = function (callback) {
             }
         };
 
-        function showOrHideBuildTypeSelect() {
-            var showDevReleases = $(this).is(':checked');
-
-            if (showDevReleases) {
-                $('tr.build_type').show();
-            } else {
-                $('tr.build_type').hide();
-                buildType_e.val(0).trigger('change');
-            }
-        }
-
         var buildTypes = [
             {
                 tag: 'firmwareFlasherOptionLabelBuildTypeRelease',
@@ -244,35 +237,37 @@ TABS.firmware_flasher.initialize = function (callback) {
             {
                 tag: 'firmwareFlasherOptionLabelBuildTypeReleaseCandidate',
                 loader: () => self.releaseChecker.loadReleaseData(releaseData => buildBoardOptions(releaseData, true))
-            },
-            /*
-            {
-                tag: 'firmwareFlasherOptionLabelBuildTypeDevelopment',
-                loader: () => new JenkinsLoader('https://ci.betaflight.tech', 'Betaflight').loadBuilds(buildJenkinsBoardOptions)
-            },
-            {
-                tag: 'firmwareFlasherOptionLabelBuildTypeAKK3_3',
-                loader: () => new JenkinsLoader('https://ci.betaflight.tech', 'Betaflight Maintenance 3.3 (AKK - RDQ VTX Patch)').loadBuilds(buildJenkinsBoardOptions)
-            },
-            {
-                tag: 'firmwareFlasherOptionLabelBuildTypeAKK3_4',
-                loader: () => new JenkinsLoader('https://ci.betaflight.tech', 'Betaflight Maintenance 3.4 (AKK - RDQ VTX Patch)').loadBuilds(buildJenkinsBoardOptions)
             }
-            */
         ];
 
-        var buildType_e = $('select[name="build_type"]');
-        buildTypes.forEach((build, index) => {
-            buildType_e.append($("<option value='{0}' selected>{1}</option>".format(index, i18n.getMessage(build.tag))))
+        var ciBuildsTypes = self.jenkinsLoader._jobs.map(job => {
+            return {
+                title: job.title,
+                loader: () => self.jenkinsLoader.loadBuilds(job.name, buildJenkinsBoardOptions)
+            };
         });
+        var buildTypesToShow;
 
-        showOrHideBuildTypeSelect();
-        $('input.show_development_releases').change(showOrHideBuildTypeSelect);
+        var buildType_e = $('select[name="build_type"]');
+        function buildBuildTypeOptionsList() {
+            buildType_e.empty();
+            buildTypesToShow.forEach((build, index) => {
+                buildType_e.append($("<option value='{0}' selected>{1}</option>".format(index, build.tag ? i18n.getMessage(build.tag) : build.title)))
+            });
+            $('select[name="build_type"]').val($('select[name="build_type"] option:first').val());
+        }
+
+        buildTypesToShow = buildTypes;
+        buildBuildTypeOptionsList();
+        $('tr.build_type').show();
+        buildType_e.val(0).trigger('change');
 
         // translate to user-selected language
         i18n.localizePage();
 
         buildType_e.change(function() {
+            analytics.setFirmwareData(analytics.DATA.FIRMWARE_CHANNEL, $(this).find('option:selected').text());
+
             $("a.load_remote_file").addClass('disabled');
             var build_type = $(this).val();
 
@@ -283,7 +278,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             .append($("<option value='0'>{0}</option>".format(i18n.getMessage('firmwareFlasherOptionLabelSelectFirmwareVersion'))));
 
             if (!GUI.connect_lock) {
-                buildTypes[build_type].loader();
+                buildTypesToShow[build_type].loader();
             }
 
             chrome.storage.local.set({'selected_build_type': build_type});
@@ -329,7 +324,10 @@ TABS.firmware_flasher.initialize = function (callback) {
 
         // UI Hooks
         $('a.load_file').click(function () {
-            chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['hex']}]}, function (fileEntry) {
+            analytics.setFirmwareData(analytics.DATA.FIRMWARE_CHANNEL, undefined);
+            analytics.setFirmwareData(analytics.DATA.FIRMWARE_SOURCE, 'file');
+
+            chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{description: 'HEX files', extensions: ['hex']}]}, function (fileEntry) {
                 if (chrome.runtime.lastError) {
                     console.error(chrome.runtime.lastError.message);
 
@@ -343,6 +341,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                     console.log('Loading file from: ' + path);
 
                     fileEntry.file(function (file) {
+                        analytics.setFirmwareData(analytics.DATA.FIRMWARE_NAME, file.name);
                         var reader = new FileReader();
 
                         reader.onprogress = function (e) {
@@ -359,10 +358,14 @@ TABS.firmware_flasher.initialize = function (callback) {
 
                                 intel_hex = e.target.result;
 
+                                analytics.setFirmwareData(analytics.DATA.FIRMWARE_CHECKSUM, objectHash.sha1(intel_hex));
+
                                 parse_hex(intel_hex, function (data) {
                                     parsed_hex = data;
 
                                     if (parsed_hex) {
+                                        analytics.setFirmwareData(analytics.DATA.FIRMWARE_SIZE, parsed_hex.bytes_total);
+
                                         $('a.flash_firmware').removeClass('disabled');
 
                                         $('span.progressLabel').text(i18n.getMessage('firmwareFlasherFirmwareLocalLoaded', parsed_hex.bytes_total));
@@ -389,7 +392,10 @@ TABS.firmware_flasher.initialize = function (callback) {
             let isCached = FirmwareCache.has(release);
             if (evt.target.value=="0" || isCached) {
                 if (isCached) {
+                    analytics.setFirmwareData(analytics.DATA.FIRMWARE_SOURCE, 'cache');
+
                     FirmwareCache.get(release, cached => {
+                        analytics.setFirmwareData(analytics.DATA.FIRMWARE_NAME, release.file);
                         console.info("Release found in cache: " + release.file);
                         onLoadSuccess(cached.hexdata, release);
                     });
@@ -402,6 +408,7 @@ TABS.firmware_flasher.initialize = function (callback) {
         });
 
         $('a.load_remote_file').click(function (evt) {
+            analytics.setFirmwareData(analytics.DATA.FIRMWARE_SOURCE, 'http');
 
             if ($('select[name="firmware_version"]').val() == "0") {
                 GUI.log(i18n.getMessage('firmwareFlasherNoFirmwareSelected'));
@@ -417,6 +424,7 @@ TABS.firmware_flasher.initialize = function (callback) {
 
             var summary = $('select[name="firmware_version"] option:selected').data('summary');
             if (summary) { // undefined while list is loading or while running offline
+                analytics.setFirmwareData(analytics.DATA.FIRMWARE_NAME, summary.file);
                 $("a.load_remote_file").text(i18n.getMessage('firmwareFlasherButtonDownloading'));
                 $("a.load_remote_file").addClass('disabled');
                 $.get(summary.url, onLoadSuccess).fail(failed_to_load);
@@ -431,14 +439,17 @@ TABS.firmware_flasher.initialize = function (callback) {
                     if (parsed_hex != false) {
                         var options = {};
 
+                        var eraseAll = false;
                         if ($('input.erase_chip').is(':checked')) {
                             options.erase_chip = true;
+
+                            eraseAll = true
                         }
+                        analytics.setFirmwareData(analytics.DATA.FIRMWARE_ERASE_ALL, eraseAll.toString());
 
                         if (String($('div#port-picker #port').val()) != 'DFU') {
                             if (String($('div#port-picker #port').val()) != '0') {
-                                var port = String($('div#port-picker #port').val()),
-                                    baud;
+                                var port = String($('div#port-picker #port').val()), baud;
                                 baud = 115200;
 
                                 if ($('input.updating').is(':checked')) {
@@ -451,6 +462,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                                     baud = parseInt($('#flash_manual_baud_rate').val());
                                 }
 
+                                analytics.sendEvent(analytics.EVENT_CATEGORIES.FIRMWARE, 'Flashing');
 
                                 STM32.connect(port, baud, parsed_hex, options);
                             } else {
@@ -458,6 +470,8 @@ TABS.firmware_flasher.initialize = function (callback) {
                                 GUI.log(i18n.getMessage('firmwareFlasherNoValidPort'));
                             }
                         } else {
+                            analytics.sendEvent(analytics.EVENT_CATEGORIES.FIRMWARE, 'Flashing');
+
                             STM32DFU.connect(usbDevices.STM32DFU, parsed_hex, options);
                         }
                     } else {
@@ -469,7 +483,7 @@ TABS.firmware_flasher.initialize = function (callback) {
 
         $(document).on('click', 'span.progressLabel a.save_firmware', function () {
             var summary = $('select[name="firmware_version"] option:selected').data('summary');
-            chrome.fileSystem.chooseEntry({type: 'saveFile', suggestedName: summary.file, accepts: [{extensions: ['hex']}]}, function (fileEntry) {
+            chrome.fileSystem.chooseEntry({type: 'saveFile', suggestedName: summary.file, accepts: [{description: 'HEX files', extensions: ['hex']}]}, function (fileEntry) {
                 if (chrome.runtime.lastError) {
                     console.error(chrome.runtime.lastError.message);
                     return;
@@ -614,6 +628,7 @@ TABS.firmware_flasher.initialize = function (callback) {
             }).change();
         });
 
+        /*
         chrome.storage.local.get('show_development_releases', function (result) {
             $('input.show_development_releases')
             .prop('checked', result.show_development_releases)
@@ -621,6 +636,7 @@ TABS.firmware_flasher.initialize = function (callback) {
                 chrome.storage.local.set({'show_development_releases': $(this).is(':checked')});
             }).change();
         });
+        */
 
         $(document).keypress(function (e) {
             if (e.which == 13) { // enter
@@ -630,6 +646,10 @@ TABS.firmware_flasher.initialize = function (callback) {
         });
 
         GUI.content_ready(callback);
+    }
+
+    self.jenkinsLoader.loadJobs('Firmware', () => {
+       $('#content').load("./tabs/firmware_flasher.html", onDocumentLoad);
     });
 };
 
@@ -640,6 +660,8 @@ TABS.firmware_flasher.cleanup = function (callback) {
     // unbind "global" events
     $(document).unbind('keypress');
     $(document).off('click', 'span.progressLabel a');
+
+    analytics.resetFirmwareData();
 
     if (callback) callback();
 };

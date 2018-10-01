@@ -23,6 +23,7 @@ const install = require("gulp-install");
 const rename = require('gulp-rename');
 const os = require('os');
 const removeTrailingPathSeparator = require('remove-trailing-path-separator');
+const git = require('gulp-git');
 
 const DIST_DIR = './dist/';
 const APPS_DIR = './apps/';
@@ -30,7 +31,7 @@ const DEBUG_DIR = './debug/';
 const RELEASE_DIR = './release/';
 
 var nwBuilderOptions = {
-    version: '0.31.0',
+    version: '0.32.2',
     files: './dist/**/*',
     macIcns: './src/images/cf_icon.icns',
     macPlist: { 'CFBundleDisplayName': 'Cleanflight Configurator'},
@@ -61,13 +62,16 @@ gulp.task('clean-release', clean_release);
 
 gulp.task('clean-cache', clean_cache);
 
-var distBuild = gulp.series(clean_dist, dist_src, dist_locale, dist_libraries, dist_resources);
-gulp.task('dist', distBuild);
+gulp.task('get-changeset-id', getChangesetId);
 
-var appsBuild = gulp.series(gulp.parallel(clean_apps, distBuild), apps, gulp.parallel(listPostBuildTasks(APPS_DIR)));
+var distBuild = gulp.series(dist_src, dist_locale, dist_libraries, dist_resources, getChangesetId);
+var distRebuild = gulp.series(clean_dist, distBuild);
+gulp.task('dist', distRebuild);
+
+var appsBuild = gulp.series(gulp.parallel(clean_apps, distRebuild), apps, gulp.parallel(listPostBuildTasks(APPS_DIR)));
 gulp.task('apps', appsBuild);
 
-var debugBuild = gulp.series(gulp.parallel(clean_debug, distBuild), debug, gulp.parallel(listPostBuildTasks(DEBUG_DIR)), start_debug)
+var debugBuild = gulp.series(distBuild, debug, gulp.parallel(listPostBuildTasks(DEBUG_DIR)), start_debug)
 gulp.task('debug', debugBuild);
 
 var releaseBuild = gulp.series(gulp.parallel(clean_release, appsBuild), gulp.parallel(listReleaseTasks()));
@@ -433,6 +437,23 @@ function buildNWApps(platforms, flavor, dir, done) {
     }
 }
 
+function getChangesetId(done) {
+    git.exec({args : 'log -1 --format="%h"'}, function (err, stdout) {
+        var version;
+        if (err) {
+            version = 'unsupported';
+        } else {
+            version = stdout.trim();
+        }
+
+        var versionData = { gitChangesetId: version }
+        var destFile = path.join(DIST_DIR, 'version.json');
+
+        fs.writeFile(destFile, JSON.stringify(versionData) , function () {
+            done();
+        });
+    });
+}
 
 function start_debug(done) {
 

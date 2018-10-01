@@ -270,8 +270,9 @@ TABS.auxiliary.initialize = function (callback) {
         }
 
         function update_ui() {
-            for (var i = 0; i < AUX_CONFIG.length; i++) {
-                var modeElement = $('#mode-' + i); 
+            let hasUsedMode = false;
+            for (let i = 0; i < AUX_CONFIG.length; i++) {
+                let modeElement = $('#mode-' + i);
                 if (modeElement.find(' .range').length == 0) {
                     // if the mode is unused, skip it
                     modeElement.removeClass('off').removeClass('on');
@@ -283,7 +284,16 @@ TABS.auxiliary.initialize = function (callback) {
                 } else {
                     $('.mode .name').eq(i).data('modeElement').removeClass('on').addClass('off');
                 }
+                hasUsedMode = true;
             }
+
+            let hideUnused = hideUnusedModes && hasUsedMode;
+            for (let i = 0; i < AUX_CONFIG.length; i++) {
+                let modeElement = $('#mode-' + i);
+                if (modeElement.find(' .range').length == 0) {
+                    modeElement.toggle(!hideUnused);
+                }
+            }    
 
             auto_select_channel(RC.channels);
 
@@ -332,6 +342,18 @@ TABS.auxiliary.initialize = function (callback) {
             return fillPrevChannelsValues();
         }
 
+        let hideUnusedModes = false;
+        chrome.storage.local.get('hideUnusedModes', function (result) {
+            $("input#switch-toggle-unused")
+                .change(function() {
+                    hideUnusedModes = $(this).prop("checked");
+                    chrome.storage.local.set({ hideUnusedModes: hideUnusedModes });
+                    update_ui();
+                })
+                .prop("checked", !!result.hideUnusedModes)
+                .change();
+        });    
+    
         // update ui instantly on first load
         update_ui();
 

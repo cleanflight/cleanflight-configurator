@@ -39,8 +39,12 @@ TABS.pid_tuning.initialize = function (callback) {
     }).then(function() {
         return MSP.promise(MSPCodes.MSP_RC_DEADBAND);
     }).then(function() {
-        $('#content').load("./tabs/pid_tuning.html", process_html);
+        MSP.send_message(MSPCodes.MSP_MIXER_CONFIG, false, false, load_html);
     });
+
+    function load_html() {
+        $('#content').load("./tabs/pid_tuning.html", process_html);        
+    }
 
     function pid_and_rc_to_form() {
         self.setProfile();
@@ -49,142 +53,19 @@ TABS.pid_tuning.initialize = function (callback) {
         }
 
         // Fill in the data from PIDs array
-        var i = 0;
-        $('.pid_tuning .ROLL input').each(function () {
-            switch (i) {
-                case 0:
-                    $(this).val(PIDs[0][i++]);
-                    break;
-                case 1:
-                    $(this).val(PIDs[0][i++]);
-                    break;
-                case 2:
-                    $(this).val(PIDs[0][i++]);
-                    break;
-            }
-        });
 
-        i = 0;
-        $('.pid_tuning .PITCH input').each(function () {
-            switch (i) {
-                case 0:
-                    $(this).val(PIDs[1][i++]);
-                    break;
-                case 1:
-                    $(this).val(PIDs[1][i++]);
-                    break;
-                case 2:
-                    $(this).val(PIDs[1][i++]);
-                    break;
-            }
-        });
+        // For each pid name
+        PID_names.forEach(function(elementPid, indexPid) {
 
-        i = 0;
-        $('.pid_tuning .YAW input').each(function () {
-            switch (i) {
-                case 0:
-                    $(this).val(PIDs[2][i++]);
-                    break;
-                case 1:
-                    $(this).val(PIDs[2][i++]);
-                    break;
-            }
-        });
-        $('.pid_tuning .YAW_JUMP_PREVENTION input').each(function () {
-            switch (i) {
-                case 2:
-                    $(this).val(PIDs[2][i++]);
-                    break;
-            }
-        });
+            // Look into the PID table to a row with the name of the pid
+            var searchRow = $('.pid_tuning .' + elementPid + ' input');
 
-        i = 0;
-        $('.pid_tuning .ALT input').each(function () {
-            switch (i) {
-                case 0:
-                    $(this).val(PIDs[3][i++]);
-                    break;
-                case 1:
-                    $(this).val(PIDs[3][i++]);
-                    break;
-                case 2:
-                    $(this).val(PIDs[3][i++]);
-                    break;
-            }
-        });
-
-        i = 0;
-        $('.pid_tuning .Pos input').each(function () {
-            $(this).val(PIDs[4][i++]);
-        });
-
-        i = 0;
-        $('.pid_tuning .PosR input').each(function () {
-            switch (i) {
-                case 0:
-                    $(this).val(PIDs[5][i++]);
-                    break;
-                case 1:
-                    $(this).val(PIDs[5][i++]);
-                    break;
-                case 2:
-                    $(this).val(PIDs[5][i++]);
-                    break;
-            }
-        });
-
-        i = 0;
-        $('.pid_tuning .NavR input').each(function () {
-            switch (i) {
-                case 0:
-                    $(this).val(PIDs[6][i++]);
-                    break;
-                case 1:
-                    $(this).val(PIDs[6][i++]);
-                    break;
-                case 2:
-                    $(this).val(PIDs[6][i++]);
-                    break;
-            }
-        });
-
-        i = 0;
-        $('.pid_tuning .ANGLE input').each(function () {
-            switch (i) {
-                case 0:
-                    $(this).val(PIDs[7][i++]);
-                    break;
-            }
-        });
-        $('.pid_tuning .HORIZON input').each(function () {
-            switch (i) {
-                case 1:
-                    $(this).val(PIDs[7][i++]);
-                    break;
-                case 2:
-                    $(this).val(PIDs[7][i++]);
-                    break;
-            }
-        });
-
-        i = 0;
-        $('.pid_tuning .MAG input').each(function () {
-            $(this).val(PIDs[8][i++]);
-        });
-
-        i = 0;
-        $('.pid_tuning .Vario input').each(function () {
-            switch (i) {
-                case 0:
-                    $(this).val(PIDs[9][i++]);
-                    break;
-                case 1:
-                    $(this).val(PIDs[9][i++]);
-                    break;
-                case 2:
-                    $(this).val(PIDs[9][i++]);
-                    break;
-            }
+            // Assign each value
+            searchRow.each(function (indexInput) {
+                if (PIDs[indexPid][indexInput] !== undefined) {
+                    $(this).val(PIDs[indexPid][indexInput]);
+                }
+            });
         });
 
         // Fill in data from RC_tuning object
@@ -282,6 +163,11 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.antigravity').hide();
         }
 
+        if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
+            $('.pid_tuning input[name="rc_rate_pitch"]').val(RC_tuning.rcPitchRate.toFixed(2));
+            $('.pid_tuning input[name="rc_pitch_expo"]').val(RC_tuning.RC_PITCH_EXPO.toFixed(2));
+        }
+
         if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
 
             $('.pid_filter input[name="gyroLowpass2Frequency"]').val(FILTER_CONFIG.gyro_lowpass2_hz);
@@ -297,6 +183,129 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.gyroLowpass2').hide();
             $('.gyroLowpass2Type').hide();
             $('.dtermLowpass2').hide();
+        }
+
+        if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+
+            // I Term Rotation
+            $('input[id="itermrotation"]').prop('checked', ADVANCED_TUNING.itermRotation !== 0);
+
+             // Smart Feed Forward
+            $('input[id="smartfeedforward"]').prop('checked', ADVANCED_TUNING.smartFeedforward !== 0);
+
+            // I Term Relax
+            var itermRelaxCheck = $('input[id="itermrelax"]');
+
+            itermRelaxCheck.prop('checked', ADVANCED_TUNING.itermRelax !== 0);
+            $('select[id="itermrelaxAxes"]').val(ADVANCED_TUNING.itermRelax > 0 ? ADVANCED_TUNING.itermRelax : 1);
+            $('select[id="itermrelaxType"]').val(ADVANCED_TUNING.itermRelaxType);
+
+            itermRelaxCheck.change(function() {
+                var checked = $(this).is(':checked');
+
+                if (checked) {
+                    $('.itermrelax .suboption').show();
+                } else {
+                    $('.itermrelax .suboption').hide();
+                }
+            });
+            itermRelaxCheck.change();
+
+            // Absolute Control
+            var absoluteControlGainNumberElement = $('input[name="absoluteControlGain-number"]');
+            var absoluteControlGainRangeElement = $('input[name="absoluteControlGain-range"]');
+
+            absoluteControlGainNumberElement.change(function () {
+                absoluteControlGainRangeElement.val($(this).val());
+            });
+            absoluteControlGainRangeElement.change(function () {
+                absoluteControlGainNumberElement.val($(this).val());
+            });
+            absoluteControlGainNumberElement.val(ADVANCED_TUNING.absoluteControlGain).change();
+
+            // Throttle Boost
+            var throttleBoostNumberElement = $('input[name="throttleBoost-number"]');
+            var throttleBoostRangeElement = $('input[name="throttleBoost-range"]');
+
+            throttleBoostNumberElement.change(function () {
+                throttleBoostRangeElement.val($(this).val());
+            });
+            throttleBoostRangeElement.change(function () {
+                throttleBoostNumberElement.val($(this).val());
+            });
+            throttleBoostNumberElement.val(ADVANCED_TUNING.throttleBoost).change();
+
+            // Acro Trainer
+            var acroTrainerAngleLimitNumberElement = $('input[name="acroTrainerAngleLimit-number"]');
+            var acroTrainerAngleLimitRangeElement = $('input[name="acroTrainerAngleLimit-range"]');
+
+            acroTrainerAngleLimitNumberElement.change(function () {
+                acroTrainerAngleLimitRangeElement.val($(this).val());
+            });
+            acroTrainerAngleLimitRangeElement.change(function () {
+                acroTrainerAngleLimitNumberElement.val($(this).val());
+            });
+            acroTrainerAngleLimitNumberElement.val(ADVANCED_TUNING.acroTrainerAngleLimit).change();
+
+            // Yaw D
+            $('.pid_tuning .YAW input[name="d"]').val(PIDs[2][2]); // PID Yaw D
+
+            // Feedforward
+            $('.pid_tuning .ROLL input[name="f"]').val(ADVANCED_TUNING.feedforwardRoll);
+            $('.pid_tuning .PITCH input[name="f"]').val(ADVANCED_TUNING.feedforwardPitch);
+            $('.pid_tuning .YAW input[name="f"]').val(ADVANCED_TUNING.feedforwardYaw);
+
+            var feedforwardTransitionNumberElement = $('input[name="feedforwardTransition-number"]');
+            var feedforwardTransitionRangeElement = $('input[name="feedforwardTransition-range"]');
+
+            feedforwardTransitionNumberElement.val(ADVANCED_TUNING.feedforwardTransition / 100);
+            feedforwardTransitionRangeElement.val(ADVANCED_TUNING.feedforwardTransition / 100);
+
+            feedforwardTransitionNumberElement.change(function () {
+                feedforwardTransitionRangeElement.val($(this).val());
+            });
+            feedforwardTransitionRangeElement.change(function () {
+                feedforwardTransitionNumberElement.val($(this).val());
+            });
+
+            $('.helpicon[i18n_title="pidTuningPidTuningTip"]').hide();
+
+            // AntiGravity Mode
+            var antiGravityModeSelect = $('.antigravity select[id="antiGravityMode"]');
+            antiGravityModeSelect.change(function () {
+                var antiGravityModeValue = $('.antigravity select[id="antiGravityMode"]').val();
+
+                // Smooth
+                if (antiGravityModeValue == 0) {
+                    $('.antigravity  table th:nth-child(3)').hide();
+                    $('.antigravity  table td:nth-child(3)').hide();
+                } else {
+                    $('.antigravity  table th:nth-child(3)').show();
+                    $('.antigravity  table td:nth-child(3)').show();
+                }
+            });
+
+            antiGravityModeSelect.val(ADVANCED_TUNING.antiGravityMode).change();
+
+        } else {
+            $('.itermrotation').hide();
+            $('.smartfeedforward').hide();
+            $('.itermrelax').hide();
+            $('.absoluteControlGain').hide();
+            $('.throttleBoost').hide();
+            $('.acroTrainerAngleLimit').hide();
+
+            $('.pid_tuning .YAW input[name="d"]').hide();
+
+            // Feedforward column
+            $('#pid_main tr :nth-child(5)').hide();
+            $('#pid_main .pid_titlebar2 th').attr("colspan", 8);
+            $('.helpicon[i18n_title="pidTuningPidTuningTipFeedforward"]').hide();
+
+            $('#pid-tuning .feedforwardTransition').hide();
+
+            $('.antigravity  table th:first-child').hide();
+            $('.antigravity  table td:first-child').hide();
         }
 
         $('input[id="gyroNotch1Enabled"]').change(function() {
@@ -409,60 +418,19 @@ TABS.pid_tuning.initialize = function (callback) {
     function form_to_pid_and_rc() {
         // Fill in the data from PIDs array
         // Catch all the changes and stuff the inside PIDs array
-        var i = 0;
-        $('table.pid_tuning tr.ROLL .pid_data input').each(function () {
-            PIDs[0][i++] = parseFloat($(this).val());
-        });
 
-        i = 0;
-        $('table.pid_tuning tr.PITCH .pid_data input').each(function () {
-            PIDs[1][i++] = parseFloat($(this).val());
-        });
+        // For each pid name
+        PID_names.forEach(function(elementPid, indexPid) {
 
-        i = 0;
-        $('table.pid_tuning tr.YAW .pid_data input').each(function () {
-            PIDs[2][i++] = parseFloat($(this).val());
-        });
-        $('table.pid_tuning tr.YAW_JUMP_PREVENTION .pid_data input').each(function () {
-            PIDs[2][i++] = parseFloat($(this).val());
-        });
+            // Look into the PID table to a row with the name of the pid
+            var searchRow = $('.pid_tuning .' + elementPid + ' input');
 
-        i = 0;
-        $('table.pid_tuning tr.ALT input').each(function () {
-            PIDs[3][i++] = parseFloat($(this).val());
-        });
-
-        i = 0;
-        $('table.pid_tuning tr.Vario input').each(function () {
-            PIDs[9][i++] = parseFloat($(this).val());
-        });
-
-        i = 0;
-        $('table.pid_tuning tr.Pos input').each(function () {
-            PIDs[4][i++] = parseFloat($(this).val());
-        });
-
-        i = 0;
-        $('table.pid_tuning tr.PosR input').each(function () {
-            PIDs[5][i++] = parseFloat($(this).val());
-        });
-
-        i = 0;
-        $('table.pid_tuning tr.NavR input').each(function () {
-            PIDs[6][i++] = parseFloat($(this).val());
-        });
-
-        i = 0;
-        $('div.pid_tuning tr.ANGLE input').each(function () {
-            PIDs[7][i++] = parseFloat($(this).val());
-        });
-        $('div.pid_tuning tr.HORIZON input').each(function () {
-            PIDs[7][i++] = parseFloat($(this).val());
-        });
-
-        i = 0;
-        $('div.pid_tuning tr.MAG input').each(function () {
-            PIDs[8][i++] = parseFloat($(this).val());
+            // Assign each value
+            searchRow.each(function (indexInput) {
+                if ($(this).val()) {
+                    PIDs[indexPid][indexInput] = parseFloat($(this).val());
+                }
+            });
         });
 
         // catch RC_tuning changes
@@ -474,6 +442,8 @@ TABS.pid_tuning.initialize = function (callback) {
         RC_tuning.RC_EXPO = parseFloat($('.pid_tuning input[name="rc_expo"]').val());
         RC_tuning.RC_YAW_EXPO = parseFloat($('.pid_tuning input[name="rc_yaw_expo"]').val());
         RC_tuning.rcYawRate = parseFloat($('.pid_tuning input[name="rc_rate_yaw"]').val());
+        RC_tuning.rcPitchRate = parseFloat($('.pid_tuning input[name="rc_rate_pitch"]').val());
+        RC_tuning.RC_PITCH_EXPO = parseFloat($('.pid_tuning input[name="rc_pitch_expo"]').val());
 
         RC_tuning.throttle_MID = parseFloat($('.throttle input[name="mid"]').val());
         RC_tuning.throttle_EXPO = parseFloat($('.throttle input[name="expo"]').val());
@@ -527,40 +497,80 @@ TABS.pid_tuning.initialize = function (callback) {
             FILTER_CONFIG.gyro_lowpass2_type = parseInt($('.pid_filter select[name="gyroLowpass2Type"]').val());
             FILTER_CONFIG.dterm_lowpass2_hz = parseInt($('.pid_filter input[name="dtermLowpass2Frequency"]').val());
         }
+
+        if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+
+            ADVANCED_TUNING.itermRotation = $('input[id="itermrotation"]').is(':checked') ? 1 : 0;
+            ADVANCED_TUNING.smartFeedforward = $('input[id="smartfeedforward"]').is(':checked') ? 1 : 0;
+
+            ADVANCED_TUNING.itermRelax = $('input[id="itermrelax"]').is(':checked') ? $('select[id="itermrelaxAxes"]').val() : 0;
+            ADVANCED_TUNING.itermRelaxType = $('input[id="itermrelax"]').is(':checked') ? $('select[id="itermrelaxType"]').val() : 0;
+
+            ADVANCED_TUNING.absoluteControlGain = $('input[name="absoluteControlGain-number"]').val();
+
+            ADVANCED_TUNING.throttleBoost = $('input[name="throttleBoost-number"]').val();
+
+            ADVANCED_TUNING.acroTrainerAngleLimit = $('input[name="acroTrainerAngleLimit-number"]').val();
+
+            ADVANCED_TUNING.feedforwardRoll  = parseInt($('.pid_tuning .ROLL input[name="f"]').val());
+            ADVANCED_TUNING.feedforwardPitch = parseInt($('.pid_tuning .PITCH input[name="f"]').val());
+            ADVANCED_TUNING.feedforwardYaw   = parseInt($('.pid_tuning .YAW input[name="f"]').val());
+
+            ADVANCED_TUNING.feedforwardTransition = parseInt($('input[name="feedforwardTransition-number"]').val() * 100);
+
+            ADVANCED_TUNING.antiGravityMode = $('select[id="antiGravityMode"]').val();
+        }
     }
 
     function showAllPids() {
-        $('.tab-pid_tuning .pid_tuning').show();
+
+        // Hide all optional elements
+        $('.pid_optional tr').hide(); // Hide all rows
+        $('.pid_optional table').hide(); // Hide tables
+        $('.pid_optional').hide(); // Hide general div
+
+        // Only show rows supported by the firmware
+        PID_names.forEach(function(elementPid) {
+            // Show rows for the PID
+            $('.pid_tuning .' + elementPid).show();
+
+            // Show titles and other elements needed by the PID
+            $('.needed_by_' + elementPid).show();
+        });
+
+        // Special case
+        if (semver.lt(CONFIG.apiVersion, "1.24.0")) {
+            $('#pid_sensitivity').hide();
+        }
+
     }
 
     function hideUnusedPids() {
-        $('.tab-pid_tuning .pid_tuning').hide();
 
-        $('#pid_main').show();
-
-        if (have_sensor(CONFIG.activeSensors, 'acc')) {
-            $('#pid_accel').show();
-            $('#pid_level').show();
-            $('#pid_sensitivity').show();
+        if (!have_sensor(CONFIG.activeSensors, 'acc')) {
+            $('#pid_accel').hide();
         }
 
-        var showTitle = false;
-        if (have_sensor(CONFIG.activeSensors, 'baro') ||
-            have_sensor(CONFIG.activeSensors, 'sonar')) {
-            $('#pid_baro').show();
-            showTitle = true;
-        }
-        if (have_sensor(CONFIG.activeSensors, 'mag')) {
-            $('#pid_mag').show();
-            showTitle = true;
-        }
-        if (FEATURE_CONFIG.features.isEnabled('GPS')) {
-            $('#pid_gps').show();
-            showTitle = true;
+        var hideSensorPid = function(element, sensorReady) {
+            var isVisible = element.is(":visible");
+            if (!isVisible || !sensorReady) {
+                element.hide();
+                isVisible = false;
+            }
+
+            return isVisible;
         }
 
-        if (showTitle) {
-            $('#pid_optional').show();
+        var isVisibleBaroMagGps = false;
+
+        isVisibleBaroMagGps |= hideSensorPid($('#pid_baro'), have_sensor(CONFIG.activeSensors, 'baro') || have_sensor(CONFIG.activeSensors, 'sonar'));
+
+        isVisibleBaroMagGps |= hideSensorPid($('#pid_mag'), have_sensor(CONFIG.activeSensors, 'mag'));
+
+        isVisibleBaroMagGps |= hideSensorPid($('#pid_gps'), have_sensor(CONFIG.activeSensors, 'GPS'));
+
+        if (!isVisibleBaroMagGps) {
+            $('#pid_baro_mag_gps').hide();
         }
     }
 
@@ -632,13 +642,15 @@ TABS.pid_tuning.initialize = function (callback) {
 
         // Local cache of current rates
         self.currentRates = {
-            roll_rate:   RC_tuning.roll_rate,
-            pitch_rate:  RC_tuning.pitch_rate,
-            yaw_rate:    RC_tuning.yaw_rate,
-            rc_rate:     RC_tuning.RC_RATE,
-            rc_rate_yaw: RC_tuning.rcYawRate,
-            rc_expo:     RC_tuning.RC_EXPO,
-            rc_yaw_expo: RC_tuning.RC_YAW_EXPO,
+            roll_rate:     RC_tuning.roll_rate,
+            pitch_rate:    RC_tuning.pitch_rate,
+            yaw_rate:      RC_tuning.yaw_rate,
+            rc_rate:       RC_tuning.RC_RATE,
+            rc_rate_yaw:   RC_tuning.rcYawRate,
+            rc_expo:       RC_tuning.RC_EXPO,
+            rc_yaw_expo:   RC_tuning.RC_YAW_EXPO,
+            rc_rate_pitch: RC_tuning.rcPitchRate,
+            rc_pitch_expo: RC_tuning.RC_PITCH_EXPO,
             superexpo:   FEATURE_CONFIG.features.isEnabled('SUPEREXPO_RATES'),
             deadband: RC_DEADBAND_CONFIG.deadband,
             yawDeadband: RC_DEADBAND_CONFIG.yaw_deadband
@@ -660,6 +672,11 @@ TABS.pid_tuning.initialize = function (callback) {
         if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
             $('.pid_tuning input[name="sensitivity"]').hide();
             $('.pid_tuning .levelSensitivityHeader').empty();
+        }
+
+        if (semver.lt(CONFIG.apiVersion, "1.37.0")) {
+            self.currentRates.rc_rate_pitch = self.currentRates.rc_rate;
+            self.currentRates.rc_expo_pitch = self.currentRates.rc_expo;
         }
 
         $('.tab-pid_tuning .tab_container .pid').on('click', function () {
@@ -742,6 +759,7 @@ TABS.pid_tuning.initialize = function (callback) {
             }
         }
 
+        showAllPids();
         updatePidDisplay();
 
         showAllButton.on('click', function(){
@@ -850,12 +868,16 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.tab-pid_tuning .note').hide();
 		}
 
+        // Add a name to each row of PIDs if empty
         $('.pid_tuning tr').each(function(){
-          for(i = 0; i < PID_names.length; i++) {
-            if($(this).hasClass(PID_names[i])) {
-              $(this).find('td:first').text(PID_names[i]);
+            for(i = 0; i < PID_names.length; i++) {
+                if($(this).hasClass(PID_names[i])) {
+                    var firstColumn = $(this).find('td:first');
+                    if (!firstColumn.text()) {
+                        firstColumn.text(PID_names[i]);
+                    }
+                }
             }
-          }
         });
 
 
@@ -942,6 +964,16 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.pid_tuning .roll_pitch_rate').hide();
         }
 
+        if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
+            $('.pid_tuning .bracket').hide();
+            $('.pid_tuning input[name=rc_rate]').parent().css('background-color', '')
+            $('.pid_tuning input[name=rc_rate]').parent().attr('rowspan', 1)
+            $('.pid_tuning input[name=rc_expo]').parent().attr('rowspan', 1)
+        } else {
+            $('.pid_tuning input[name=rc_rate_pitch]').parent().hide()
+            $('.pid_tuning input[name=rc_pitch_expo]').parent().hide()
+        }
+
         if (useLegacyCurve) {
             $('.new_rates').hide();
         }
@@ -988,6 +1020,14 @@ TABS.pid_tuning.initialize = function (callback) {
 
                         updateNeeded = true;
                     }
+
+                    if (targetElement.attr('name') === 'rc_rate' && semver.lt(CONFIG.apiVersion, "1.37.0")) {
+                        self.currentRates.rc_rate_pitch = targetValue;
+                    }
+
+                    if (targetElement.attr('name') === 'rc_expo' && semver.lt(CONFIG.apiVersion, "1.37.0")) {
+                        self.currentRates.rc_pitch_expo = targetValue;
+                    }
                 } else { // no event was passed, just force a graph update
                     updateNeeded = true;
                 }
@@ -1001,7 +1041,7 @@ TABS.pid_tuning.initialize = function (callback) {
                     if (!useLegacyCurve) {
                         maxAngularVel = Math.max(
                             printMaxAngularVel(self.currentRates.roll_rate, self.currentRates.rc_rate, self.currentRates.rc_expo, self.currentRates.superexpo, self.currentRates.deadband, self.maxAngularVelRollElement),
-                            printMaxAngularVel(self.currentRates.pitch_rate, self.currentRates.rc_rate, self.currentRates.rc_expo, self.currentRates.superexpo, self.currentRates.deadband, self.maxAngularVelPitchElement),
+                            printMaxAngularVel(self.currentRates.pitch_rate, self.currentRates.rc_rate_pitch, self.currentRates.rc_pitch_expo, self.currentRates.superexpo, self.currentRates.deadband, self.maxAngularVelPitchElement),
                             printMaxAngularVel(self.currentRates.yaw_rate, self.currentRates.rc_rate_yaw, self.currentRates.rc_yaw_expo, self.currentRates.superexpo, self.currentRates.yawDeadband, self.maxAngularVelYawElement));
 
                         // make maxAngularVel multiple of 200deg/s so that the auto-scale doesn't keep changing for small changes of the maximum curve
@@ -1015,7 +1055,7 @@ TABS.pid_tuning.initialize = function (callback) {
 
                     curveContext.lineWidth = 2 * lineScale;
                     drawCurve(self.currentRates.roll_rate, self.currentRates.rc_rate, self.currentRates.rc_expo, self.currentRates.superexpo, self.currentRates.deadband, maxAngularVel, '#ff0000', 0, curveContext);
-                    drawCurve(self.currentRates.pitch_rate, self.currentRates.rc_rate, self.currentRates.rc_expo, self.currentRates.superexpo, self.currentRates.deadband, maxAngularVel, '#00ff00', -4, curveContext);
+                    drawCurve(self.currentRates.pitch_rate, self.currentRates.rc_rate_pitch, self.currentRates.rc_pitch_expo, self.currentRates.superexpo, self.currentRates.deadband, maxAngularVel, '#00ff00', -4, curveContext);
                     drawCurve(self.currentRates.yaw_rate, self.currentRates.rc_rate_yaw, self.currentRates.rc_yaw_expo, self.currentRates.superexpo, self.currentRates.yawDeadband, maxAngularVel, '#0000ff', 4, curveContext);
 
                     self.updateRatesLabels();
@@ -1139,7 +1179,7 @@ TABS.pid_tuning.initialize = function (callback) {
                     case DIALOG_MODE_RATEPROFILE:
                         COPY_PROFILE.type = DIALOG_MODE_RATEPROFILE;    // 1 = rate profile
                         COPY_PROFILE.dstProfile = parseInt(selectRateProfile.val());
-                        COPY_PROFILE.srcProfile = CONFIG.profile;
+                        COPY_PROFILE.srcProfile = CONFIG.rateProfile;
 
                         MSP.send_message(MSPCodes.MSP_COPY_PROFILE, mspHelper.crunch(MSPCodes.MSP_COPY_PROFILE), false, close_dialog);
 
@@ -1372,8 +1412,13 @@ TABS.pid_tuning.updatePidControllerParameters = function () {
     } else {
         $('.pid_tuning .YAW_JUMP_PREVENTION').hide();
 
-        $('#pid-tuning .dtermSetpointTransition').show();
-        $('#pid-tuning .dtermSetpoint').show();
+        if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+            $('#pid-tuning .dtermSetpointTransition').hide();
+            $('#pid-tuning .dtermSetpoint').hide();
+        } else {
+            $('#pid-tuning .dtermSetpointTransition').show();
+            $('#pid-tuning .dtermSetpoint').show();
+        }
 
         $('#pid-tuning .delta').hide();
     }
@@ -1484,81 +1529,78 @@ TABS.pid_tuning.updateRatesLabels = function() {
             yaw     : {color: 'rgba(128,128,255,0.4)', border: 'rgba(128,128,255,0.6)', text: '#000000'}
         };
 
-        var rcStickElement,
-            stickContext;
-
-        if(!rcStickElement) {
-            rcStickElement  = $('.rate_curve canvas#rate_curve_layer1').get(0);
+        var rcStickElement = $('.rate_curve canvas#rate_curve_layer1').get(0);
+        if(rcStickElement) {
             rcStickElement.width = 1000;
             rcStickElement.height = 1000;
+
+            var stickContext = rcStickElement.getContext("2d");
+
+            stickContext.save();
+
+            var
+                maxAngularVelRoll   = self.maxAngularVelRollElement.text()  + ' deg/s',
+                maxAngularVelPitch  = self.maxAngularVelPitchElement.text() + ' deg/s',
+                maxAngularVelYaw    = self.maxAngularVelYawElement.text()   + ' deg/s',
+                currentValues       = [],
+                balloonsDirty       = [],
+                curveHeight         = rcStickElement.height,
+                curveWidth          = rcStickElement.width,
+                maxAngularVel       = self.rateCurve.maxAngularVel,
+                windowScale         = (400 / stickContext.canvas.clientHeight),
+                rateScale           = (curveHeight / 2) / maxAngularVel,
+                lineScale           = stickContext.canvas.width / stickContext.canvas.clientWidth,
+                textScale           = stickContext.canvas.clientHeight / stickContext.canvas.clientWidth;
+
+
+            stickContext.clearRect(0, 0, curveWidth, curveHeight);
+
+            // calculate the fontSize based upon window scaling
+            if(windowScale <= 1) {
+                stickContext.font = "24pt Verdana, Arial, sans-serif";
+            } else {
+                stickContext.font = (24 * windowScale) + "pt Verdana, Arial, sans-serif";
+            }
+
+            if(RC.channels[0] && RC.channels[1] && RC.channels[2]) {
+                currentValues.push(self.rateCurve.drawStickPosition(RC.channels[0], self.currentRates.roll_rate, self.currentRates.rc_rate, self.currentRates.rc_expo, self.currentRates.superexpo, self.currentRates.deadband, maxAngularVel, stickContext, '#FF8080') + ' deg/s');
+                currentValues.push(self.rateCurve.drawStickPosition(RC.channels[1], self.currentRates.pitch_rate, self.currentRates.rc_rate_pitch, self.currentRates.rc_pitch_expo, self.currentRates.superexpo, self.currentRates.deadband, maxAngularVel, stickContext, '#80FF80') + ' deg/s');
+                currentValues.push(self.rateCurve.drawStickPosition(RC.channels[2], self.currentRates.yaw_rate, self.currentRates.rc_rate_yaw, self.currentRates.rc_yaw_expo, self.currentRates.superexpo, self.currentRates.yawDeadband, maxAngularVel, stickContext, '#8080FF') + ' deg/s');
+            } else {
+                currentValues = [];
+            }
+
+            stickContext.lineWidth = lineScale;
+
+            // use a custom scale so that the text does not appear stretched
+            stickContext.scale(textScale, 1);
+
+            // add the maximum range label
+            drawAxisLabel(stickContext, maxAngularVel.toFixed(0) + ' deg/s', ((curveWidth / 2) - 10) / textScale, parseInt(stickContext.font)*1.2, 'right');
+
+            // and then the balloon labels.
+            balloonsDirty = []; // reset the dirty balloon draw area (for overlap detection)
+            // create an array of balloons to draw
+            var balloons = [
+                {value: parseInt(maxAngularVelRoll), balloon: function() {drawBalloonLabel(stickContext, maxAngularVelRoll,  curveWidth, rateScale * (maxAngularVel - parseInt(maxAngularVelRoll)),  'right', BALLOON_COLORS.roll, balloonsDirty);}},
+                {value: parseInt(maxAngularVelPitch), balloon: function() {drawBalloonLabel(stickContext, maxAngularVelPitch, curveWidth, rateScale * (maxAngularVel - parseInt(maxAngularVelPitch)), 'right', BALLOON_COLORS.pitch, balloonsDirty);}},
+                {value: parseInt(maxAngularVelYaw), balloon: function() {drawBalloonLabel(stickContext, maxAngularVelYaw,   curveWidth, rateScale * (maxAngularVel - parseInt(maxAngularVelYaw)),   'right', BALLOON_COLORS.yaw, balloonsDirty);}}
+            ];
+            // and sort them in descending order so the largest value is at the top always
+            balloons.sort(function(a,b) {return (b.value - a.value)});
+
+            // add the current rc values
+            if(currentValues[0] && currentValues[1] && currentValues[2]) {
+                balloons.push(
+                    {value: parseInt(currentValues[0]), balloon: function() {drawBalloonLabel(stickContext, currentValues[0], 10, 150, 'none', BALLOON_COLORS.roll, balloonsDirty);}},
+                    {value: parseInt(currentValues[1]), balloon: function() {drawBalloonLabel(stickContext, currentValues[1], 10, 250, 'none', BALLOON_COLORS.pitch, balloonsDirty);}},
+                    {value: parseInt(currentValues[2]), balloon: function() {drawBalloonLabel(stickContext, currentValues[2], 10, 350,  'none', BALLOON_COLORS.yaw, balloonsDirty);}}
+                );
+            }
+            // then display them on the chart
+            for(var i=0; i<balloons.length; i++) balloons[i].balloon();
+
+            stickContext.restore();
         }
-        if(!stickContext)   stickContext    = rcStickElement.getContext("2d");
-
-        stickContext.save();
-
-        var
-            maxAngularVelRoll   = self.maxAngularVelRollElement.text()  + ' deg/s',
-            maxAngularVelPitch  = self.maxAngularVelPitchElement.text() + ' deg/s',
-            maxAngularVelYaw    = self.maxAngularVelYawElement.text()   + ' deg/s',
-            currentValues       = [],
-            balloonsDirty       = [],
-            curveHeight         = rcStickElement.height,
-            curveWidth          = rcStickElement.width,
-            maxAngularVel       = self.rateCurve.maxAngularVel,
-            windowScale         = (400 / stickContext.canvas.clientHeight),
-            rateScale           = (curveHeight / 2) / maxAngularVel,
-            lineScale           = stickContext.canvas.width / stickContext.canvas.clientWidth,
-            textScale           = stickContext.canvas.clientHeight / stickContext.canvas.clientWidth;
-
-
-        stickContext.clearRect(0, 0, curveWidth, curveHeight);
-
-        // calculate the fontSize based upon window scaling
-        if(windowScale <= 1) {
-            stickContext.font = "24pt Verdana, Arial, sans-serif";
-        } else {
-            stickContext.font = (24 * windowScale) + "pt Verdana, Arial, sans-serif";
-        }
-
-        if(RC.channels[0] && RC.channels[1] && RC.channels[2]) {
-            currentValues.push(self.rateCurve.drawStickPosition(RC.channels[0], self.currentRates.roll_rate, self.currentRates.rc_rate, self.currentRates.rc_expo, self.currentRates.superexpo, self.currentRates.deadband, maxAngularVel, stickContext, '#FF8080') + ' deg/s');
-            currentValues.push(self.rateCurve.drawStickPosition(RC.channels[1], self.currentRates.pitch_rate, self.currentRates.rc_rate, self.currentRates.rc_expo, self.currentRates.superexpo, self.currentRates.deadband, maxAngularVel, stickContext, '#80FF80') + ' deg/s');
-            currentValues.push(self.rateCurve.drawStickPosition(RC.channels[2], self.currentRates.yaw_rate, self.currentRates.rc_rate_yaw, self.currentRates.rc_yaw_expo, self.currentRates.superexpo, self.currentRates.yawDeadband, maxAngularVel, stickContext, '#8080FF') + ' deg/s');
-        } else {
-            currentValues = [];
-        }
-
-        stickContext.lineWidth = lineScale;
-
-        // use a custom scale so that the text does not appear stretched
-        stickContext.scale(textScale, 1);
-
-        // add the maximum range label
-        drawAxisLabel(stickContext, maxAngularVel.toFixed(0) + ' deg/s', ((curveWidth / 2) - 10) / textScale, parseInt(stickContext.font)*1.2, 'right');
-
-        // and then the balloon labels.
-        balloonsDirty = []; // reset the dirty balloon draw area (for overlap detection)
-        // create an array of balloons to draw
-        var balloons = [
-            {value: parseInt(maxAngularVelRoll), balloon: function() {drawBalloonLabel(stickContext, maxAngularVelRoll,  curveWidth, rateScale * (maxAngularVel - parseInt(maxAngularVelRoll)),  'right', BALLOON_COLORS.roll, balloonsDirty);}},
-            {value: parseInt(maxAngularVelPitch), balloon: function() {drawBalloonLabel(stickContext, maxAngularVelPitch, curveWidth, rateScale * (maxAngularVel - parseInt(maxAngularVelPitch)), 'right', BALLOON_COLORS.pitch, balloonsDirty);}},
-            {value: parseInt(maxAngularVelYaw), balloon: function() {drawBalloonLabel(stickContext, maxAngularVelYaw,   curveWidth, rateScale * (maxAngularVel - parseInt(maxAngularVelYaw)),   'right', BALLOON_COLORS.yaw, balloonsDirty);}}
-        ];
-        // and sort them in descending order so the largest value is at the top always
-        balloons.sort(function(a,b) {return (b.value - a.value)});
-
-        // add the current rc values
-        if(currentValues[0] && currentValues[1] && currentValues[2]) {
-            balloons.push(
-                {value: parseInt(currentValues[0]), balloon: function() {drawBalloonLabel(stickContext, currentValues[0], 10, 150, 'none', BALLOON_COLORS.roll, balloonsDirty);}},
-                {value: parseInt(currentValues[1]), balloon: function() {drawBalloonLabel(stickContext, currentValues[1], 10, 250, 'none', BALLOON_COLORS.pitch, balloonsDirty);}},
-                {value: parseInt(currentValues[2]), balloon: function() {drawBalloonLabel(stickContext, currentValues[2], 10, 350,  'none', BALLOON_COLORS.yaw, balloonsDirty);}}
-            );
-        }
-        // then display them on the chart
-        for(var i=0; i<balloons.length; i++) balloons[i].balloon();
-
-        stickContext.restore();
-
     }
 };

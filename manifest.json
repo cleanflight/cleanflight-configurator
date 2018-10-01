@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "38",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "author": "Cleanflight Project",
     "name": "Cleanflight - Configurator",
     "short_name": "Cleanflight",
@@ -18,13 +18,13 @@
         }
     },
     "permissions": [
-        "https://www.google-analytics.com/",
-        "https://maps.googleapis.com/*",    
+        "https://maps.googleapis.com/*",
         "https://*.github.com/",
         "https://*.githubusercontent.com/",
         "http://*.cleanflight.com/",
         "https://*.amazonaws.com/",
         "https://cleanflight.slack.com/*",
+        "https://www.google-analytics.com/",
         "serial",
         "usb",
         "storage",
@@ -52,7 +52,6 @@
             }
         ]
     },
-
     "icons": {
         "128": "images/cf/cf_icon_128.png"
     }

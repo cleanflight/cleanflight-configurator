@@ -120,7 +120,7 @@
     color: #fff;
 }
 
-.text1, .text2, .text3 {
+.text1, .text2, .text3, .text4 {
     margin-top: 15px;
     margin-bottom: 15px;
     font-weight: normal;
@@ -171,7 +171,6 @@
 
 .tab-landing .content_mid .text2 li {
     padding: 5px 0;
-    border-top: 1px dotted silver;
 }
 
 .tab-landing .content_mid .text3 {
@@ -192,6 +191,24 @@
 .tab-landing .content_mid .text3 .donate {
     margin-top: 10px;
     text-align: center;
+}
+
+.tab-landing .content_mid_bottom {
+    padding: 15px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.tab-landing .content_mid_bottom .logo {
+    float: left;
+    width: 40px;
+}
+
+.tab-landing .content_mid_bottom .text4 {
+    margin-top: 0px;
+    margin-left: 5px;
+    display: block;
+    float: left;
 }
 
 /* changelog block */
@@ -264,5 +281,64 @@
 }
 
 #changelog .log p {
+    margin-bottom: 20px;
+}
+
+/* privacy policy block */
+#privacy_policy {
+    width: 500px;
+    height: 100%;
+    position: fixed;
+    right: -495px;
+    top: 0px;
+}
+
+#privacy_policy .wrapper {
+    height: 100%;
+    padding: 0 20px;
+    border-left: 5px solid #ffbb00;
+    overflow-y: auto;
+    display: none;
+}
+
+#privacy_policy .button {
+    transform: rotate(270deg);
+    top: 170px;
+    right: 450px;
+    position: absolute;
+    background: #ffbb00;
+    border-radius: 5px 5px 0 0;
+    border-bottom: none;
+    height: 30px;
+}
+
+#privacy_policy .button a {
+    display: block;
+    padding: 5px 10px;
+    width: 100px;
+    text-align: center;
+    color: #000;
+}
+
+#content.policy_open #privacy_policy {
+    right: 0px;
+    background: white;
+}
+
+#content.policy_open #privacy_policy .wrapper {
+    display: block;
+}
+
+/* privacy policy content */
+#privacy_policy .policy ul {
+    margin: 5px 0 20px 10px;
+}
+
+#privacy_policy .policy li {
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+#privacy_policy .policy p {
     margin-bottom: 20px;
 }

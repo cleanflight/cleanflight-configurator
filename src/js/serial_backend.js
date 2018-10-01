@@ -1,6 +1,8 @@
 'use strict';
 var mspHelper;
 
+var connectionTimestamp;
+
 function initializeSerialBackend() {
 
     GUI.updateManualPortVisibility = function(){
@@ -42,6 +44,8 @@ function initializeSerialBackend() {
             var toggleStatus = function() {
                 thisElement.data("clicks", !clicks);
             };
+
+            GUI.configuration_loaded = false;
 
             var selected_baud = parseInt($('div#port-picker #baud').val());
             var selected_port = $('div#port-picker #port option:selected').data().isManual ?
@@ -122,6 +126,15 @@ function initializeSerialBackend() {
 function finishClose(finishedCallback) {
     var wasConnected = CONFIGURATOR.connectionValid;
 
+    analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'Disconnected');
+    if (connectionTimestamp) {
+        var connectedTime = Date.now() - connectionTimestamp;
+        analytics.sendTiming(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'Connected', connectedTime);
+
+        connectedTime = undefined;
+    }
+    analytics.resetFlightControllerData();
+
     serial.disconnect(onClosed);
 
     MSP.disconnect_cleanup();
@@ -198,15 +211,17 @@ function onOpen(openInfo) {
 
         // request configuration data
         MSP.send_message(MSPCodes.MSP_API_VERSION, false, false, function () {
+            analytics.setFlightControllerData(analytics.DATA.API_VERSION, CONFIG.apiVersion);
+
             GUI.log(i18n.getMessage('apiVersionReceived', [CONFIG.apiVersion]));
 
             if (semver.gte(CONFIG.apiVersion, CONFIGURATOR.apiVersionAccepted)) {
 
                 MSP.send_message(MSPCodes.MSP_FC_VARIANT, false, false, function () {
+                    analytics.setFlightControllerData(analytics.DATA.FIRMWARE_TYPE, CONFIG.flightControllerIdentifier);
                     if (CONFIG.flightControllerIdentifier === 'BTFL' || (CONFIG.flightControllerIdentifier === 'CLFL')) {
                         MSP.send_message(MSPCodes.MSP_FC_VERSION, false, false, function () {
-
-                            googleAnalytics.sendEvent('Firmware', 'Variant', CONFIG.flightControllerIdentifier + ',' + CONFIG.flightControllerVersion);
+                            analytics.setFlightControllerData(analytics.DATA.FIRMWARE_VERSION, CONFIG.flightControllerVersion);
 
                             GUI.log(i18n.getMessage('fcInfoReceived', [CONFIG.flightControllerIdentifier, CONFIG.flightControllerVersion]));
                             updateStatusBarVersion(CONFIG.flightControllerVersion, CONFIG.flightControllerIdentifier);
@@ -230,7 +245,6 @@ function onOpen(openInfo) {
                             
                                 MSP.send_message(MSPCodes.MSP_BUILD_INFO, false, false, function () {
     
-                                    googleAnalytics.sendEvent('Firmware', 'Using', CONFIG.buildInfo);
                                     GUI.log(i18n.getMessage('buildInfoReceived', [CONFIG.buildInfo]));
 
                                     updateStatusBarVersion(CONFIG.flightControllerVersion, CONFIG.flightControllerIdentifier, CONFIG.boardIdentifier);
@@ -238,22 +252,34 @@ function onOpen(openInfo) {
 
                                     MSP.send_message(MSPCodes.MSP_BOARD_INFO, false, false, function () {
     
-                                        googleAnalytics.sendEvent('Board', 'Using', CONFIG.boardIdentifier + ',' + CONFIG.boardVersion);
                                         GUI.log(i18n.getMessage('boardInfoReceived', [CONFIG.boardIdentifier, CONFIG.boardVersion]));
     
                                         MSP.send_message(MSPCodes.MSP_UID, false, false, function () {
-                                            GUI.log(i18n.getMessage('uniqueDeviceIdReceived', [CONFIG.uid[0].toString(16) + CONFIG.uid[1].toString(16) + CONFIG.uid[2].toString(16)]));
+                                            var uniqueDeviceIdentifier = CONFIG.uid[0].toString(16) + CONFIG.uid[1].toString(16) + CONFIG.uid[2].toString(16);
 
-                                            CONFIG.armingDisabled = false;
-                                            mspHelper.setArmingEnabled(false, false, finishOpen);
-                                            
-                                            finishOpen();
+                                            analytics.setFlightControllerData(analytics.DATA.MCU_ID, objectHash.sha1(uniqueDeviceIdentifier));
+                                            analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'Connected');
+                                            connectionTimestamp = Date.now();
+                                            GUI.log(i18n.getMessage('uniqueDeviceIdReceived', [uniqueDeviceIdentifier]));
+
+                                            if (semver.gte(CONFIG.apiVersion, "1.20.0")) {
+                                                MSP.send_message(MSPCodes.MSP_NAME, false, false, function () {
+                                                    GUI.log(i18n.getMessage('craftNameReceived', [CONFIG.name]));
+
+                                                    CONFIG.armingDisabled = false;
+                                                    mspHelper.setArmingEnabled(false, false, setRtc);
+                                                });
+                                            } else {
+                                                setRtc();
+                                            }
                                         });
                                     });
                                 });
                             }
                         });
                     } else {
+                        analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'ConnectionRefused');
+
                         var dialog = $('.dialogConnectWarning')[0];
 
                         $('.dialogConnectWarning-content').html(i18n.getMessage('firmwareTypeNotSupported'));
@@ -268,6 +294,8 @@ function onOpen(openInfo) {
                     }
                 });
             } else {
+                analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'ConnectionRefused');
+
                 var dialog = $('.dialogConnectWarning')[0];
 
                 $('.dialogConnectWarning-content').html(i18n.getMessage('firmwareVersionNotSupported', [CONFIGURATOR.apiVersionAccepted]));
@@ -282,6 +310,8 @@ function onOpen(openInfo) {
             }
         });
     } else {
+        analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'SerialPortFailed');
+
         console.log('Failed to open serial port');
         GUI.log(i18n.getMessage('serialPortOpenFail'));
 
@@ -293,6 +323,14 @@ function onOpen(openInfo) {
 
         // reset data
         $('div#connectbutton a.connect').data("clicks", false);
+    }
+}
+
+function setRtc() {
+    if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
+        MSP.send_message(MSPCodes.MSP_SET_RTC, mspHelper.crunch(MSPCodes.MSP_SET_RTC), false, finishOpen);
+    } else {
+        finishOpen();
     }
 }
 
@@ -318,9 +356,7 @@ function finishOpen() {
 
     onConnect();
 
-    var defaultTab = GUI.allowedTabs[0];
-    
-    $('#tabs ul.mode-connected .tab_' + defaultTab + ' a').click();
+    GUI.selectDefaultTabWhenConnected();
 }
 
 function connectCli() {

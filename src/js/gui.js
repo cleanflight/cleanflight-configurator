@@ -321,5 +321,24 @@ GUI_control.prototype.content_ready = function (callback) {
     if (callback) callback();
 }
 
+GUI_control.prototype.selectDefaultTabWhenConnected = function() {
+    var defaultTab = GUI.allowedTabs[0];
+
+    chrome.storage.local.get(['rememberLastTab', 'lastTab'], function (result) {
+        if (!(result.rememberLastTab 
+                && !!result.lastTab 
+                && result.lastTab.substring(4) != "cli")) {
+            
+            $('#tabs ul.mode-connected .tab_' + defaultTab + ' a').click();
+            return;
+        }
+        var tab = result.lastTab;
+        if (GUI.allowedTabs.indexOf(tab) == -1) {
+            tab = defaultTab;
+        }
+        $("#tabs ul.mode-connected .tab_" + tab + " a").click();
+    });    
+};
+
 // initialize object into GUI variable
 var GUI = new GUI_control();

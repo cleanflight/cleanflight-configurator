@@ -9,7 +9,7 @@ TABS.power.initialize = function (callback) {
 
     if (GUI.active_tab != 'power') {
         GUI.active_tab = 'power';
-        googleAnalytics.sendAppView('Power');
+        analytics.sendAppView('Power');
     }
 
     function load_status() {

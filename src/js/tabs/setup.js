@@ -59,8 +59,19 @@ TABS.setup.initialize = function (callback) {
 
         self.initializeInstruments();
 
-
         $('#arming-disable-flag-row').attr('title', i18n.getMessage('initialSetupArmingDisableFlagsTooltip'));
+
+        if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+            $('.initialSetupRebootBootloader').show();
+
+            $('a.rebootBootloader').click(function () {
+                var buffer = [];
+                buffer.push(1);
+                MSP.send_message(MSPCodes.MSP_SET_REBOOT, buffer, false);
+            });
+        } else {
+            $('.initialSetupRebootBootloader').hide();
+        }
 
         // UI Hooks
         $('a.calibrateAccel').click(function () {

@@ -155,6 +155,8 @@ var FC = {
             dynamic_THR_breakpoint:     0,
             RC_YAW_EXPO:                0,
             rcYawRate:                  0,
+            rcPitchRate:                0,
+            RC_PITCH_EXPO:              0,
         };
 
         AUX_CONFIG =                    [];
@@ -369,6 +371,18 @@ var FC = {
             levelSensitivity:           0,
             itermThrottleThreshold:     0,
             itermAcceleratorGain:       0,
+            itermRotation:              0,
+            smartFeedforward:           0,
+            itermRelax:                 0,
+            itermRelaxType:             0,
+            absoluteControlGain:        0,
+            throttleBoost:              0,
+            acroTrainerAngleLimit:      0,
+            feedforwardRoll:            0,
+            feedforwardPitch:           0,
+            feedforwardYaw:             0,
+            feedforwardTransition:      0,
+            antiGravityMode:            0,
         };
 
         SENSOR_CONFIG = {
@@ -378,20 +392,26 @@ var FC = {
         };
 
         RX_CONFIG = {
-            serialrx_provider:          0,
-            stick_max:                  0,
-            stick_center:               0,
-            stick_min:                  0,
-            spektrum_sat_bind:          0,
-            rx_min_usec:                0,
-            rx_max_usec:                0,
-            rcInterpolation:            0,
-            rcInterpolationInterval:    0,
-            airModeActivateThreshold:   0,
-            rxSpiProtocol:              0,
-            rxSpiId:                    0,
-            rxSpiRfChannelCount:        0,
-            fpvCamAngleDegrees:         0,
+            serialrx_provider:            0,
+            stick_max:                    0,
+            stick_center:                 0,
+            stick_min:                    0,
+            spektrum_sat_bind:            0,
+            rx_min_usec:                  0,
+            rx_max_usec:                  0,
+            rcInterpolation:              0,
+            rcInterpolationInterval:      0,
+            rcInterpolationChannels:      0,
+            airModeActivateThreshold:     0,
+            rxSpiProtocol:                0,
+            rxSpiId:                      0,
+            rxSpiRfChannelCount:          0,
+            fpvCamAngleDegrees:           0,
+            rcSmoothingType:              0,
+            rcSmoothingInputCutoff:       0,
+            rcSmoothingDerivativeCutoff:  0, 
+            rcSmoothingInputType:         0,
+            rcSmoothingDerivativeType:    0,
         };
 
         FAILSAFE_CONFIG = {

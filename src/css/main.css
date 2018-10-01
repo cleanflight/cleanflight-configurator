@@ -1420,6 +1420,12 @@ dialog {
     transition: none;
 }
 
+.connect_b a.connect.disabled {
+    background-color: #808080;
+    pointer-events: none;
+    cursor: default;
+ }
+
 .connect_b a.connect {
     background-image: url(../images/icons/cf_icon_usb2_white.svg);
     background-repeat: no-repeat;

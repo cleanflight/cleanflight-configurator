@@ -129,7 +129,7 @@ FONT.parseMCMFontFile = function(data) {
 
 FONT.openFontFile = function($preview) {
   return new Promise(function(resolve) {
-    chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{extensions: ['mcm']}]}, function (fileEntry) {
+    chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{description: 'MCM files', extensions: ['mcm']}]}, function (fileEntry) {
       FONT.data.loaded_font_file = fileEntry.name;
       if (chrome.runtime.lastError) {
           console.error(chrome.runtime.lastError.message);
@@ -342,7 +342,7 @@ OSD.constants = {
       default_position: -9,
       draw_order: 110,
       positionable: true,
-      preview: FONT.symbol(SYM.THR) + FONT.symbol(SYM.THR1) + '69'
+      preview: FONT.symbol(SYM.THR) + FONT.symbol(SYM.THR1) + ' 69'
     },
     CPU_LOAD: {
       name: 'CPU_LOAD',
@@ -381,7 +381,13 @@ OSD.constants = {
     CROSSHAIRS: {
       name: 'CROSSHAIRS',
       desc: 'osdDescElementCrosshairs',
-      default_position: 193,
+      default_position: function() {
+          var position = 193;
+          if (OSD.constants.VIDEO_TYPES[OSD.data.video_system] != 'NTSC') {
+              position += FONT.constants.SIZES.LINE;
+          }
+          return position;
+      },
       draw_order: 40, 
       positionable: function() {
         return semver.gte(CONFIG.apiVersion, "1.39.0") ? true : false;
@@ -391,7 +397,13 @@ OSD.constants = {
     ARTIFICIAL_HORIZON: {
       name: 'ARTIFICIAL_HORIZON',
       desc: 'osdDescElementArtificialHorizon',
-      default_position: 194,
+      default_position: function() {
+          var position = 74;
+          if (OSD.constants.VIDEO_TYPES[OSD.data.video_system] != 'NTSC') {
+              position += FONT.constants.SIZES.LINE;
+          }
+          return position;
+      },
       draw_order: 10,
       positionable: function() {
         return semver.gte(CONFIG.apiVersion, "1.39.0") ? true : false;
@@ -422,7 +434,13 @@ OSD.constants = {
     HORIZON_SIDEBARS: {
       name: 'HORIZON_SIDEBARS',
       desc: 'osdDescElementHorizonSidebars',
-      default_position: 194,
+      default_position: function() {
+          var position = 194;
+          if (OSD.constants.VIDEO_TYPES[OSD.data.video_system] != 'NTSC') {
+              position += FONT.constants.SIZES.LINE;
+          }
+          return position;
+      },
       draw_order: 50,
       positionable: function() {
         return semver.gte(CONFIG.apiVersion, "1.39.0") ? true : false;
@@ -517,7 +535,7 @@ OSD.constants = {
       name: 'GPS_SPEED',
       desc: 'osdDescElementGPSSpeed',
       default_position: -1,
-      draw_order: 330,
+      draw_order: 430,
       positionable: true,
       preview: function(osd_data) {
         return ' 40' + (osd_data.unit_mode === 0 ? 'M' : 'K');
@@ -527,7 +545,7 @@ OSD.constants = {
       name: 'GPS_SATS',
       desc: 'osdDescElementGPSSats',
       default_position: -1,
-      draw_order: 320,
+      draw_order: 420,
       positionable: true,
       preview: FONT.symbol(SYM.GPS_SAT_L) + FONT.symbol(SYM.GPS_SAT_R) + '14'
     },
@@ -535,7 +553,7 @@ OSD.constants = {
       name: 'GPS_LON',
       desc: 'osdDescElementGPSLon',
       default_position: -1,
-      draw_order: 350,
+      draw_order: 450,
       positionable: true,
       preview: FONT.symbol(SYM.ARROW_EAST) + '-000.0000000'
     },
@@ -543,7 +561,7 @@ OSD.constants = {
       name: 'GPS_LAT',
       desc: 'osdDescElementGPSLat',
       default_position: -1,
-      draw_order: 340,
+      draw_order: 440,
       positionable: true,
       preview: FONT.symbol(SYM.ARROW_NORTH) + '-00.0000000 '
     },
@@ -647,7 +665,7 @@ OSD.constants = {
       name: 'HOME_DIRECTION',
       desc: 'osdDescElementHomeDirection',
       default_position: -1,
-      draw_order: 370,
+      draw_order: 470,
       positionable: true,
       preview: FONT.symbol(SYM.ARROW_SOUTH + 2)
     },
@@ -655,7 +673,7 @@ OSD.constants = {
       name: 'HOME_DISTANCE',
       desc: 'osdDescElementHomeDistance',
       default_position: -1,
-      draw_order: 360,
+      draw_order: 460,
       positionable: true,
       preview:  function(osd_data) {
         return '43' + FONT.symbol(osd_data.unit_mode === 0 ? SYM.FEET : SYM.METRE) + (semver.gte(CONFIG.apiVersion, "1.37.0")?'    ':'');
@@ -701,7 +719,7 @@ OSD.constants = {
       name: 'ESC_TEMPERATURE',
       desc: 'osdDescElementEscTemperature',
       default_position: -1,
-      draw_order: 380,
+      draw_order: 480,
       positionable: true,
       preview: FONT.symbol(SYM.TEMP_C) + '45'
     },
@@ -709,7 +727,7 @@ OSD.constants = {
         name: 'ESC_RPM',
         desc: 'osdDescElementEscRpm',
         default_position: -1,
-        draw_order: 390,
+        draw_order: 490,
         positionable: true,
         preview: '226000'
       },
@@ -725,7 +743,7 @@ OSD.constants = {
         name: 'RTC_DATE_TIME',
         desc: 'osdDescElementRtcDateTime',
         default_position: -1,
-        draw_order: 400,
+        draw_order: 500,
         positionable: true,
         preview: '2017-11-11 16:20:00'
     },
@@ -733,7 +751,7 @@ OSD.constants = {
         name: 'ADJUSTMENT_RANGE',
         desc: 'osdDescElementAdjustmentRange',
         default_position: -1,
-        draw_order: 410,
+        draw_order: 510,
         positionable: true,
         preview: 'PITCH/ROLL P: 42'
     },
@@ -761,12 +779,44 @@ OSD.constants = {
       name: 'CORE_TEMPERATURE',
       desc: 'osdDescElementCoreTemperature',
       default_position: -1,
-      draw_order: 420,
+      draw_order: 520,
       positionable: true,
       preview: function(osd_data) {
         return OSD.generateTemperaturePreview(osd_data, 33);
       }
-    }
+    },
+    ANTI_GRAVITY: {
+        name: 'ANTI_GRAVITY',
+        desc: 'osdDescAntiGravity',
+        default_position: -1,
+        draw_order: 320,
+        positionable: true,
+        preview: 'AG'
+    },
+    G_FORCE: {
+        name: 'G_FORCE',
+        desc: 'osdDescGForce',
+        default_position: -1,
+        draw_order: 15,
+        positionable: true,
+        preview: '1.0G'
+    },
+    LOG_STATUS: {
+        name: 'LOG_STATUS',
+        desc: 'osdDescElementLogStatus',
+        default_position: -1,
+        draw_order: 330,
+        positionable: true,
+        preview: 'L16'
+    },
+    FLIP_ARROW: {
+      name: 'FLIP_ARROW',
+      desc: 'osdDescElementFlipArrow',
+      default_position: -1,
+      draw_order: 340,
+      positionable: true,
+      preview: FONT.symbol(SYM.ARROW_EAST)
+    },
   },
   UNKNOWN_DISPLAY_FIELD: {
       name: 'UNKNOWN_',
@@ -839,6 +889,10 @@ OSD.constants = {
     STAT_BATTERY: {
       name: 'BATTERY_VOLTAGE',
       desc: 'osdDescStatBattery'
+    },
+    MAX_G_FORCE: {
+      name: 'MAX_G_FORCE',
+      desc: 'osdDescStatGForce'
     }
   },
   ALL_WARNINGS: {
@@ -879,7 +933,8 @@ OSD.constants = {
     { file: "extra_large", name: "Extra Large" },
     { file: "cleanflight", name: "Cleanflight" },
     { file: "digital", name: "Digital" },
-    { file: "clarity", name: "Clarity" }
+    { file: "clarity", name: "Clarity" },
+    { file: "vision", name: "Vision" }
   ]
 };
 
@@ -971,14 +1026,30 @@ OSD.chooseFields = function () {
                 F.ESC_RPM
               ]);
               if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
+                OSD.constants.DISPLAY_FIELDS = OSD.constants.DISPLAY_FIELDS.concat([
+                  F.REMAINING_TIME_ESTIMATE,
+                  F.RTC_DATE_TIME,
+                  F.ADJUSTMENT_RANGE,
+                  F.CORE_TEMPERATURE
+                ]);
+                if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
                   OSD.constants.DISPLAY_FIELDS = OSD.constants.DISPLAY_FIELDS.concat([
-                    F.REMAINING_TIME_ESTIMATE,
-                    F.RTC_DATE_TIME,
-                    F.ADJUSTMENT_RANGE,
-                    F.CORE_TEMPERATURE
+                    F.ANTI_GRAVITY
                   ]);
+                  if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+                      OSD.constants.DISPLAY_FIELDS = OSD.constants.DISPLAY_FIELDS.concat([
+                          F.G_FORCE,
+                          F.LOG_STATUS,
+                        ]);
+                    if (semver.gte(CONFIG.apiVersion, "1.41.0")) {
+                        OSD.constants.DISPLAY_FIELDS = OSD.constants.DISPLAY_FIELDS.concat([
+                            F.FLIP_ARROW,
+                          ]);
+                    }
+                  }
+                }
               }
-            }
+          }
           }
         }
       }
@@ -1054,6 +1125,11 @@ OSD.chooseFields = function () {
       F.BLACKBOX,
       F.BLACKBOX_LOG_NUMBER
     ];
+    if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+        OSD.constants.STATISTIC_FIELDS.concat([
+            F.MAX_G_FORCE
+        ])
+    }
   }
 
   // Choose warnings
@@ -1087,7 +1163,7 @@ OSD.updateDisplaySize = function() {
   };
 };
 
-OSD.drawByOrder = function(selectedPosition, field, charCode) {
+OSD.drawByOrder = function(selectedPosition, field, charCode, x, y) {
 
     // Check if there is other field at the same position
     if (OSD.data.preview[selectedPosition] !== undefined) {
@@ -1102,7 +1178,7 @@ OSD.drawByOrder = function(selectedPosition, field, charCode) {
         }
     
         // Default action, overwrite old field
-        OSD.data.preview[selectedPosition++] = [field, charCode];
+        OSD.data.preview[selectedPosition++] = [field, charCode, x, y];
     }
 }
 
@@ -1120,14 +1196,20 @@ OSD.msp = {
     unpack: {
       position: function(bits, c) {
         var display_item = {};
+
+        var positionable = typeof(c.positionable) === 'function'? c.positionable() : c.positionable;
+        var default_position = typeof(c.default_position) === 'function'? c.default_position() : c.default_position;
+
+        display_item.positionable = positionable;
         if (semver.gte(CONFIG.apiVersion, "1.21.0")) {
           // size * y + x
-          display_item.position = FONT.constants.SIZES.LINE * ((bits >> 5) & 0x001F) + (bits & 0x001F);
+          display_item.position = positionable ? FONT.constants.SIZES.LINE * ((bits >> 5) & 0x001F) + (bits & 0x001F) : default_position;
           display_item.isVisible = (bits & OSD.constants.VISIBLE) != 0;
         } else {
-          display_item.position = (bits === -1) ? c.default_position : bits;
+          display_item.position = (bits === -1) ? default_position : bits;
           display_item.isVisible = bits !== -1;
         }
+
         return display_item;
       },
       timer: function(bits, c) {
@@ -1269,7 +1351,6 @@ OSD.msp = {
         desc: c.desc,
         index: j,
         draw_order: c.draw_order,
-        positionable: c.positionable,
         preview: suffix ? c.preview + suffix : c.preview
       }, this.helpers.unpack.position(v, c)));
     }
@@ -1328,9 +1409,6 @@ OSD.msp = {
       if (typeof(item.preview) === 'function') {
         item.preview = item.preview(d);
       }
-      if (typeof(item.positionable) === 'function') {
-          item.positionable = item.positionable(d);
-      }
     }
         
     OSD.updateDisplaySize();
@@ -1349,17 +1427,24 @@ OSD.GUI.preview = {
   },
   onDragStart: function(e) {
     var ev = e.originalEvent;
-
     var display_item = OSD.data.display_items[$(ev.target).data('field').index];
+    var xPos = ev.currentTarget.dataset.x;
+    var yPos = ev.currentTarget.dataset.y;
     var offsetX = 6;
     var offsetY = 9;
+
     if (display_item.preview.constructor === Array) {
         var arrayElements = display_item.preview;
         var limits = OSD.searchLimitsElement(arrayElements);
-        offsetX -= limits.minX*12;
-        offsetY -= limits.minY*12;
+        xPos -= limits.minX;
+        yPos -= limits.minY;
+        offsetX += (xPos) * 12;
+        offsetY += (yPos) * 18;
     }
+
     ev.dataTransfer.setData("text/plain", $(ev.target).data('field').index);
+    ev.dataTransfer.setData("x", ev.currentTarget.dataset.x);
+    ev.dataTransfer.setData("y", ev.currentTarget.dataset.y);
     ev.dataTransfer.setDragImage($(this).data('field').preview_img, offsetX, offsetY);
   },
   onDragOver: function(e) {
@@ -1371,14 +1456,25 @@ OSD.GUI.preview = {
     });
   },
   onDragLeave: function(e) {
-    // brute force unstyling on drag leave
+    // brute force un-styling on drag leave
     $(this).removeAttr('style');
   },
   onDrop: function(e) {
     var ev = e.originalEvent;
-    var position = $(this).removeAttr('style').data('position');
+    
     var field_id = parseInt(ev.dataTransfer.getData('text/plain'))
     var display_item = OSD.data.display_items[field_id];
+    var position = $(this).removeAttr('style').data('position');
+
+    if (display_item.preview.constructor === Array) {
+      console.log('Initial Drop Position: ' + position);
+      var x = parseInt(ev.dataTransfer.getData('x'))
+      var y = parseInt(ev.dataTransfer.getData('y'))
+      console.log('XY Co-ords:' + x + '-' + y);
+      position -= x;
+      position -= (y  * FONT.constants.SIZES.LINE)
+      console.log('Calculated Position: ' + position);
+    } 
     
     var overflows_line = 0;
     // Standard preview, string type
@@ -1387,15 +1483,14 @@ OSD.GUI.preview = {
         if (overflows_line < 0) {
             position += overflows_line;
         }
-        
     // Advanced preview, array type
     } else {
         var arrayElements = display_item.preview;
         var limits = OSD.searchLimitsElement(arrayElements);
-        
+
         var selectedPositionX = position % FONT.constants.SIZES.LINE;
         var selectedPositionY = Math.trunc(position / FONT.constants.SIZES.LINE);
-        
+
         if ((limits.minX < 0) && ((selectedPositionX + limits.minX) < 0)) {
             position += Math.abs(selectedPositionX + limits.minX);
         } else if ((limits.maxX > 0) && ((selectedPositionX + limits.maxX) >= FONT.constants.SIZES.LINE)) {
@@ -1429,17 +1524,18 @@ TABS.osd.initialize = function (callback) {
     }
 
     $('#content').load("./tabs/osd.html", function () {
-
-        // Generate font type buttons
-        var fontbuttons = $('.fontbuttons');
+        // Generate font type select element
+        var fontselect = $('.fontpresets');
         OSD.constants.FONT_TYPES.forEach(function(e, i) {
-          var button = $('<button>', {
+          var option = $('<option>', {
             "data-font-file": e.file,
+            value: e.file,
             text: e.name
           });
-          fontbuttons.append($(button));
+          fontselect.append($(option));
         });
 
+        var fontbuttons = $('.fontpresets_wrapper');
         fontbuttons.append($('<button>', { class: "load_font_file", i18n: "osdSetupOpenFont" }));
 
         // must invoke before i18n.localizePage() since it adds translation keys for expected logo size
@@ -1780,14 +1876,14 @@ TABS.osd.initialize = function (callback) {
             }
             // clear the buffer
             for(var i = 0; i < OSD.data.display_size.total; i++) {
-              OSD.data.preview.push([null, ' '.charCodeAt(0)]);
+              OSD.data.preview.push([null, ' '.charCodeAt(0), null, null]);
             }
             // logo first, so it gets overwritten by subsequent elements
             if (OSD.data.preview_logo) {
               var x = 160;
               for (var i = 1; i < 5; i++) {
                 for (var j = 3; j < 27; j++)
-                    OSD.data.preview[i * 30 + j] = [{name: 'LOGO', positionable: false}, x++];
+                    OSD.data.preview[i * 30 + j] = [{name: 'LOGO', positionable: false}, x++, i, j];
               }
             }
 
@@ -1814,13 +1910,13 @@ TABS.osd.initialize = function (callback) {
                     
                     // Add the character to the preview
                     var charCode = field.preview.charCodeAt(i);
-                    OSD.drawByOrder(selectedPosition++, field, charCode);
+                    OSD.drawByOrder(selectedPosition++, field, charCode, i, 1);
 
                     // Image used when "dragging" the element
                     if (field.positionable) {
                         var img = new Image();
                         img.src = FONT.draw(charCode);
-                        ctx.drawImage(img, i*12, 0);
+                        ctx.drawImage(img, i * 12, 0);
                     }
                   }
               } else {
@@ -1843,13 +1939,13 @@ TABS.osd.initialize = function (callback) {
                    // Add the character to the preview
                       var element = arrayElements[i];
                       var charCode = element.sym;
-                      OSD.drawByOrder(selectedPosition + element.x + element.y*FONT.constants.SIZES.LINE, field, charCode);
+                      OSD.drawByOrder(selectedPosition + element.x + element.y*FONT.constants.SIZES.LINE, field, charCode, element.x, element.y);
 
                       // Image used when "dragging" the element
                       if (field.positionable) {
                           var img = new Image();
                           img.src = FONT.draw(charCode);
-                          ctx.drawImage(img, (element.x + offsetX)*12, (element.y + offsetY)*12);
+                          ctx.drawImage(img, (element.x + offsetX) * 12, (element.y + offsetY) * 18);
                       }
                   }
               }
@@ -1867,6 +1963,8 @@ TABS.osd.initialize = function (callback) {
               if (typeof charCode === 'object') {
                 var field = OSD.data.preview[i][0];
                 var charCode = OSD.data.preview[i][1];
+                var x = OSD.data.preview[i][2];
+                var y = OSD.data.preview[i][3];
               }
               var $img = $('<div class="char" draggable><img src='+FONT.draw(charCode)+'></img></div>')
                 .on('mouseenter', OSD.GUI.preview.onMouseEnter)
@@ -1879,6 +1977,7 @@ TABS.osd.initialize = function (callback) {
               // Required for NW.js - Otherwise the <img /> will
               // consume drag/drop events.
               $img.find('img').css('pointer-events', 'none');
+              $img.attr('data-x', x).attr('data-y', y);
               if (field && field.positionable) {
                 $img
                   .addClass('field-'+field.index)
@@ -1933,24 +2032,27 @@ TABS.osd.initialize = function (callback) {
         // init structs once, also clears current font
         FONT.initData();
 
-        var $fontPicker = $('.fontbuttons button');
-        $fontPicker.click(function(e) {
-          if (!$(this).data('font-file')) { return; }
-          $fontPicker.removeClass('active');
-          $(this).addClass('active');
-          $.get('./resources/osd/' + $(this).data('font-file') + '.mcm', function(data) {
+        var $fontpresets = $('.fontpresets')
+        $fontpresets.change(function(e) {
+          var $font = $('.fontpresets option:selected');
+          $.get('./resources/osd/' + $font.data('font-file') + '.mcm', function(data) {
             FONT.parseMCMFontFile(data);
             FONT.preview($preview);
             LogoManager.drawPreview();
             updateOsdView();
           });
         });
-
+        
         // load the first font when we change tabs
-        $fontPicker.first().click();
+        var $font = $('.fontpresets option:selected');
+        $.get('./resources/osd/' + $font.data('font-file') + '.mcm', function(data) {
+          FONT.parseMCMFontFile(data);
+          FONT.preview($preview);
+          LogoManager.drawPreview();
+          updateOsdView();
+        });
 
         $('button.load_font_file').click(function() {
-          $fontPicker.removeClass('active');
           FONT.openFontFile().then(function() {
             FONT.preview($preview);
             LogoManager.drawPreview();
@@ -2006,7 +2108,7 @@ TABS.osd.initialize = function (callback) {
         })
 
         $(document).on('click', 'span.progressLabel a.save_font', function () {
-            chrome.fileSystem.chooseEntry({type: 'saveFile', suggestedName: 'baseflight', accepts: [{extensions: ['mcm']}]}, function (fileEntry) {
+            chrome.fileSystem.chooseEntry({type: 'saveFile', suggestedName: 'baseflight', accepts: [{description: 'MCM files', extensions: ['mcm']}]}, function (fileEntry) {
                 if (chrome.runtime.lastError) {
                     console.error(chrome.runtime.lastError.message);
                     return;

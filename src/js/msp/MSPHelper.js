@@ -27,6 +27,12 @@ function MspHelper () {
     'RUNCAM_DEVICE_CONTROL': 14, // support communitate with RunCam Device
     'LIDAR_TF': 15
   };
+
+    self.REBOOT_TYPES = {
+        FIRMWARE: 0,
+        BOOTLOADER: 1,
+        MSC: 2
+    };
 }
 
 MspHelper.prototype.reorderPwmProtocols = function (protocol) {
@@ -306,6 +312,13 @@ MspHelper.prototype.process_data = function(dataHandler) {
                     }
                 } else {
                     RC_tuning.RC_YAW_EXPO = 0;
+                }
+                if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
+                    RC_tuning.rcPitchRate = parseFloat((data.readU8() / 100).toFixed(2));
+                    RC_tuning.RC_PITCH_EXPO = parseFloat((data.readU8() / 100).toFixed(2));
+                } else {
+                    RC_tuning.rcPitchRate = 0;
+                    RC_tuning.RC_PITCH_EXPO = 0;
                 }
                 break;
             case MSPCodes.MSP_PID:
@@ -615,6 +628,17 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
 
             case MSPCodes.MSP_SET_REBOOT:
+                if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+                    var rebootType = data.read8();
+                    if (rebootType === self.REBOOT_TYPES.MSC) {
+                        if (data.read8() === 0) {
+                            console.log('Storage device not ready.');
+
+                            showErrorDialog(i18n.getMessage('storageDeviceNotReady'));
+                            break;
+                        }
+                    }
+                }
                 console.log('Reboot request accepted');
                 break;
 
@@ -771,6 +795,14 @@ MspHelper.prototype.process_data = function(dataHandler) {
                         RX_CONFIG.rxSpiId = data.readU32();
                         RX_CONFIG.rxSpiRfChannelCount = data.readU8();
                         RX_CONFIG.fpvCamAngleDegrees = data.readU8();
+                        if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+                            RX_CONFIG.rcInterpolationChannels = data.readU8();
+                            RX_CONFIG.rcSmoothingType = data.readU8();
+                            RX_CONFIG.rcSmoothingInputCutoff = data.readU8();
+                            RX_CONFIG.rcSmoothingDerivativeCutoff = data.readU8();
+                            RX_CONFIG.rcSmoothingInputType = data.readU8();
+                            RX_CONFIG.rcSmoothingDerivativeType = data.readU8();
+                        }
                     } else {
                         RX_CONFIG.rxSpiProtocol = 0;
                         RX_CONFIG.rxSpiId = 0;
@@ -782,6 +814,8 @@ MspHelper.prototype.process_data = function(dataHandler) {
                     RX_CONFIG.rcInterpolationInterval = 0;
                     RX_CONFIG.airModeActivateThreshold = 0;
                 }
+
+                
                 break;
 
             case MSPCodes.MSP_FAILSAFE_CONFIG:
@@ -859,7 +893,11 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 ADVANCED_TUNING.deltaMethod = data.readU8();
                 ADVANCED_TUNING.vbatPidCompensation = data.readU8();
                 if (semver.gte(CONFIG.apiVersion, "1.20.0")) {
-                    ADVANCED_TUNING.dtermSetpointTransition = data.readU8();
+                    if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+                        ADVANCED_TUNING.feedforwardTransition = data.readU8();
+                    } else {
+                        ADVANCED_TUNING.dtermSetpointTransition = data.readU8();
+                    }
                     ADVANCED_TUNING.dtermSetpointWeight = data.readU8();
                     ADVANCED_TUNING.toleranceBand = data.readU8();
                     ADVANCED_TUNING.toleranceBandReduction = data.readU8();
@@ -869,13 +907,29 @@ MspHelper.prototype.process_data = function(dataHandler) {
                     if (semver.gte(CONFIG.apiVersion, "1.24.0")) {
                         ADVANCED_TUNING.levelAngleLimit = data.readU8();
                         ADVANCED_TUNING.levelSensitivity = data.readU8();
-                    }
-                    if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
-                        ADVANCED_TUNING.itermThrottleThreshold = data.readU16();
-                        ADVANCED_TUNING.itermAcceleratorGain = data.readU16();
-                    }
-                    if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
-                        ADVANCED_TUNING.dtermSetpointWeight = data.readU16();
+
+                        if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
+                            ADVANCED_TUNING.itermThrottleThreshold = data.readU16();
+                            ADVANCED_TUNING.itermAcceleratorGain = data.readU16();
+
+                            if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+                                ADVANCED_TUNING.dtermSetpointWeight = data.readU16();
+
+                                if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+                                    ADVANCED_TUNING.itermRotation = data.readU8();
+                                    ADVANCED_TUNING.smartFeedforward = data.readU8();
+                                    ADVANCED_TUNING.itermRelax = data.readU8();
+                                    ADVANCED_TUNING.itermRelaxType = data.readU8();
+                                    ADVANCED_TUNING.absoluteControlGain = data.readU8();
+                                    ADVANCED_TUNING.throttleBoost = data.readU8();
+                                    ADVANCED_TUNING.acroTrainerAngleLimit = data.readU8();
+                                    ADVANCED_TUNING.feedforwardRoll  = data.readU16();
+                                    ADVANCED_TUNING.feedforwardPitch = data.readU16();
+                                    ADVANCED_TUNING.feedforwardYaw   = data.readU16();
+                                    ADVANCED_TUNING.antiGravityMode  = data.readU8();
+                                }
+                            }
+                        }
                     }
                 }
                 break;
@@ -1107,7 +1161,9 @@ MspHelper.prototype.process_data = function(dataHandler) {
             case MSPCodes.MSP_SET_ADJUSTMENT_RANGE:
                 console.log('Adjustment range saved');
                 break;
-
+            case MSPCodes.MSP_SET_BOARD_ALIGNMENT_CONFIG:
+                console.log('Board alignment saved');
+                break;
             case MSPCodes.MSP_PID_CONTROLLER:
                 PID.controller = data.readU8();
                 break;
@@ -1176,10 +1232,18 @@ MspHelper.prototype.process_data = function(dataHandler) {
             case MSPCodes.MSP_ARMING_DISABLE:
                 console.log('Arming disable');
                 break;
+            case MSPCodes.MSP_SET_RTC:
+                console.log('Real time clock set');
+                break;
             default:
                 console.log('Unknown code detected: ' + code);
         } else {
             console.log('FC reports unsupported message error: ' + code);
+
+            switch (code) {
+            case MSPCodes.MSP_SET_REBOOT:
+                showErrorDialog(i18n.getMessage('operationNotSupported'));
+            }
         }
     }
     // trigger callbacks, cleanup/remove callback after trigger
@@ -1201,7 +1265,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
         }
     }
 }
-
 
 /**
  * Encode the request body for the MSP request with the given code and return it as an array of bytes.
@@ -1266,6 +1329,10 @@ MspHelper.prototype.crunch = function(code) {
                 if (semver.gte(CONFIG.apiVersion, "1.16.0")) {
                     buffer.push8(Math.round(RC_tuning.rcYawRate * 100));
                 }
+            }
+            if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
+                buffer.push8(Math.round(RC_tuning.rcPitchRate * 100));
+                buffer.push8(Math.round(RC_tuning.RC_PITCH_EXPO * 100));
             }
             break;
         case MSPCodes.MSP_SET_RX_MAP:
@@ -1355,6 +1422,7 @@ MspHelper.prototype.crunch = function(code) {
                     .push16(BF_CONFIG.batterycapacity)
             }
             break;
+
         case MSPCodes.MSP_SET_RX_CONFIG:
             buffer.push8(RX_CONFIG.serialrx_provider)
                 .push16(RX_CONFIG.stick_max)
@@ -1372,6 +1440,14 @@ MspHelper.prototype.crunch = function(code) {
                         .push32(RX_CONFIG.rxSpiId)
                         .push8(RX_CONFIG.rxSpiRfChannelCount)
                         .push8(RX_CONFIG.fpvCamAngleDegrees);
+                    if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+                        buffer.push8(RX_CONFIG.rcInterpolationChannels)
+                            .push8(RX_CONFIG.rcSmoothingType)
+                            .push8(RX_CONFIG.rcSmoothingInputCutoff)
+                            .push8(RX_CONFIG.rcSmoothingDerivativeCutoff)
+                            .push8(RX_CONFIG.rcSmoothingInputType)
+                            .push8(RX_CONFIG.rcSmoothingDerivativeType);
+                    }
                 }
             }
 
@@ -1502,24 +1578,47 @@ MspHelper.prototype.crunch = function(code) {
                     .push16(ADVANCED_TUNING.yawItermIgnoreRate)
                     .push16(ADVANCED_TUNING.yaw_p_limit)
                     .push8(ADVANCED_TUNING.deltaMethod)
-                    .push8(ADVANCED_TUNING.vbatPidCompensation)
-                    .push8(ADVANCED_TUNING.dtermSetpointTransition)
-                    .push8(Math.min(ADVANCED_TUNING.dtermSetpointWeight, 254))
-                    .push8(ADVANCED_TUNING.toleranceBand)
-                    .push8(ADVANCED_TUNING.toleranceBandReduction)
-                    .push8(ADVANCED_TUNING.itermThrottleGain)
-                    .push16(ADVANCED_TUNING.pidMaxVelocity)
-                    .push16(ADVANCED_TUNING.pidMaxVelocityYaw);
+                    .push8(ADVANCED_TUNING.vbatPidCompensation);
+
+                if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+                    buffer.push8(ADVANCED_TUNING.feedforwardTransition);
+                } else {
+                    buffer.push8(ADVANCED_TUNING.dtermSetpointTransition);
+                }
+
+                buffer.push8(Math.min(ADVANCED_TUNING.dtermSetpointWeight, 254))
+                      .push8(ADVANCED_TUNING.toleranceBand)
+                      .push8(ADVANCED_TUNING.toleranceBandReduction)
+                      .push8(ADVANCED_TUNING.itermThrottleGain)
+                      .push16(ADVANCED_TUNING.pidMaxVelocity)
+                      .push16(ADVANCED_TUNING.pidMaxVelocityYaw);
+
                 if (semver.gte(CONFIG.apiVersion, "1.24.0")) {
                     buffer.push8(ADVANCED_TUNING.levelAngleLimit)
                         .push8(ADVANCED_TUNING.levelSensitivity);
-                }
-                if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
-                    buffer.push16(ADVANCED_TUNING.itermThrottleThreshold)
-                        .push16(ADVANCED_TUNING.itermAcceleratorGain);
-                }
-                if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
-                    buffer.push16(ADVANCED_TUNING.dtermSetpointWeight);
+
+                    if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
+                        buffer.push16(ADVANCED_TUNING.itermThrottleThreshold)
+                            .push16(ADVANCED_TUNING.itermAcceleratorGain);
+
+                        if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
+                            buffer.push16(ADVANCED_TUNING.dtermSetpointWeight);
+
+                            if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
+                                buffer.push8(ADVANCED_TUNING.itermRotation)
+                                      .push8(ADVANCED_TUNING.smartFeedforward)
+                                      .push8(ADVANCED_TUNING.itermRelax)
+                                      .push8(ADVANCED_TUNING.itermRelaxType)
+                                      .push8(ADVANCED_TUNING.absoluteControlGain)
+                                      .push8(ADVANCED_TUNING.throttleBoost)
+                                      .push8(ADVANCED_TUNING.acroTrainerAngleLimit)
+                                      .push16(ADVANCED_TUNING.feedforwardRoll)
+                                      .push16(ADVANCED_TUNING.feedforwardPitch)
+                                      .push16(ADVANCED_TUNING.feedforwardYaw)
+                                      .push8(ADVANCED_TUNING.antiGravityMode);
+                            }
+                        }
+                    }
                 }
             }
             // only supports 1 version pre bf 3.0
@@ -1574,6 +1673,25 @@ MspHelper.prototype.crunch = function(code) {
             }
             // This will be ignored if `armingDisabled` is true
             buffer.push8(value);
+
+            break;
+        case MSPCodes.MSP_SET_RTC:
+            var now = new Date();
+
+            if (semver.gte(CONFIG.apiVersion, "1.41.0")) {
+                var timestamp = now.getTime();
+                var secs = timestamp / 1000;
+                var millis = timestamp % 1000;
+                buffer.push32(secs);
+                buffer.push16(millis);
+            } else {
+                buffer.push16(now.getUTCFullYear());
+                buffer.push8(now.getUTCMonth() + 1);
+                buffer.push8(now.getUTCDate());
+                buffer.push8(now.getUTCHours());
+                buffer.push8(now.getUTCMinutes());
+                buffer.push8(now.getUTCSeconds());
+            }
 
             break;
         default:
@@ -1859,7 +1977,6 @@ MspHelper.prototype.sendCurrentConfig = function(onCompleteCallback) {
     }
 
 }
-
 
 MspHelper.prototype.sendLedStripConfig = function(onCompleteCallback) {
 

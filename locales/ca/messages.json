@@ -437,14 +437,11 @@
     "defaultWelcomeHead": {
         "message": "Hardware"
     },
-    "defaultWelcomeText": {
-        "message": "L'aplicació suporta tot el hardware que pugui fer funcionar Cleanflight. Prova la pestanya flash per a la llista completa de hardware.<br><br> <a href=\"https:\/\/chrome.google.com\/webstore\/detail\/cleanflight-blackbox-explo\/canpiagfkeefejklcojkhojdijglnghc\" target=\"_blank\"> Baixa Cleanflight Blackbox<\/a><br \/><br \/>El codi font del firmware es pot descarregar d'<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\" title=\"www.github.com\" target=\"_blank\">aquí<\/a><br \/>La imatge del nou firmware binari és disponible <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/releases\" title=\"www.github.com\" target=\"_blank\">aquí<\/a><br \/><br \/>Últim <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x Drivers<\/a> es poden descarregar d'<a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">aquí<\/a><br \/>Últim <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP Drivers<\/a> es poden descarregar d'<a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">aquí<\/a><br \/>Últim <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a> per instalar Windows USB driver pots descarregar d'<a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">aquí<\/a><br \/>"
-    },
     "defaultContributingHead": {
         "message": "Contribuir"
     },
     "defaultContributingText": {
-        "message": "Si vols contribuir a fer un Cleanflight encara millor pots ajudar de diverses maneres, incloent:<br \/><ul><li>Responent a altres usuaris les preguntes als forums i IRC.<\/li><li>Aportant codi al firmware i configurador - noves caracteristiques, solucions, millores<\/li><li>Proves <a href=\"https:\/\/github.com\/Cleanflight\/cleanflight\/pulls\" target=\"_blank\">noves caracteristiques\/solucions<\/a> i facilitant feedback.<\/li><li>Ajudar amb <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/issues\" target=\"_blank\">problemes i comentar sol·licituds de funcions<\/a>.<\/li><li><\/li><\/ul>Coŀlabora traduint <a href=\"https:\/\/crowdin.com\/project\/cleanflight-configurator\" target=\"_blank\">al teu idioma.<\/li><li><\/li><\/ul>"
+        "message": "Si vols contribuir a fer un Cleanflight encara millor pots ajudar de diverses maneres, incloent:<br \/><ul><li>Responent a altres usuaris les preguntes als forums i IRC.<\/li><li>Aportant codi al firmware i configurador - noves caracteristiques, solucions, millores<\/li><li>Proves <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/pulls\" target=\"_blank\">noves caracteristiques\/solucions<\/a> i facilitant feedback.<\/li><li>Ajudar amb <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/issues\" target=\"_blank\">problemes i comentar sol·licituds de funcions<\/a>.<\/li><li><\/li><\/ul>Coŀlabora traduint <a href=\"https:\/\/crowdin.com\/project\/cleanflight-configurator\" target=\"_blank\">al teu idioma.<\/li><li><\/li><\/ul>"
     },
     "defaultChangelogAction": {
         "message": "Canvis"
@@ -457,9 +454,6 @@
     },
     "defaultDonateHead": {
         "message": "Codi Lliure \/ Avís de Donació"
-    },
-    "defaultDonateText": {
-        "message": "Aquesta eina és <strong>codi lliure<\/strong> i és gratuïta per als usuaris de  <strong>Cleanflight<\/strong>.<br \/>Si trobes Cleanflight o el seu configurador útil, si us plau considera <strong>ajudar<\/strong> al seu desenvolupament fent una donació."
     },
     "defaultDonate": {
         "message": "Fes una donació"
@@ -477,7 +471,7 @@
         "message": "La wiki de Cleanflight és una gran font d'informació. La pots trobar <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">aquí<\/a>."
     },
     "defaultDocumentation2": {
-        "message": "Les notes de llançament del firmware es poden llegir a la pàgina de novetats de GitHub, <a href=\"https:\/\/github.com\/Cleanflight\/Cleanflight\/releases\" target=\"_blank\">aquí<\/a>."
+        "message": "Les notes de llançament del firmware es poden llegir a la pàgina de novetats de GitHub, <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/releases\" target=\"_blank\">aquí<\/a>."
     },
     "defaultSupportHead": {
         "message": "Suport"
@@ -501,7 +495,7 @@
         "message": "<a href=\"https:\/\/www.youtube.com\/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Videos de Cleanflight de Joshua Bardwell<\/a>"
     },
     "defaultSupport4": {
-        "message": "<a href=\"https:\/\/github.com\/Cleanflight\" target=\"_blank\">GitHub<\/a>"
+        "message": "<a href=\"https:\/\/github.com\/cleanflight\" target=\"_blank\">GitHub<\/a>"
     },
     "defaultSupport5": {
         "message": "<a href=\"http:\/\/cleanflight.com\/slack\" target=\"_blank\">Desenvolupadors Cleanflight a slack<\/a>"
@@ -535,9 +529,6 @@
     },
     "initialSetupButtonRestore": {
         "message": "Restaurar"
-    },
-    "initialSetupBackupRestoreText": {
-        "message": "Fes una <strong>Còpia de Seguretat<\/strong> de la teva configuració per si hi ha problemes, la configuració del <strong>CLI<\/strong>  <span class=\"message-negative\">no<\/span> estan incloses - Revisa la comanda 'dump' al CLI"
     },
     "initialSetupBackupSuccess": {
         "message": "Còpia de seguretat desada <span class=\"message-positive\">correctament<\/span>"
@@ -2057,12 +2048,6 @@
     "firmwareFlasherBaudRate": {
         "message": "Velocitat de bauds"
     },
-    "firmwareFlasherShowDevelopmentReleases": {
-        "message": "Mostra releases inestables"
-    },
-    "firmwareFlasherShowDevelopmentReleasesDescription": {
-        "message": "Mostra Release-Candidate o versions de desenvolupament."
-    },
     "firmwareFlasherOptionLoading": {
         "message": "Carregant ..."
     },
@@ -2645,7 +2630,7 @@
         "message": "Desa"
     },
     "powerFirmwareUpgradeRequired": {
-        "message": "Actualització de firmware <span class=\"message-negative\">requerida<\/span>. La configuració de Batería\/Amperatge\/Voltatge fa servir l'API &lt; 1.33.0 (Versió de Cleanflight &lt;= 3.17) no està suportada."
+        "message": "Actualització de firmware <span class=\"message-negative\">requerida<\/span>. La configuració de Batería\/Amperatge\/Voltatge fa servir l'API &lt; 1.33.0 no està suportada."
     },
     "powerBatteryVoltageMeterSource": {
         "message": "Font del Mesurador de Voltatge"

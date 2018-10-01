@@ -1,27 +1,87 @@
 'use strict';
 
-// Google Analytics
-var googleAnalyticsService = analytics.getService('ice_cream_app');
-var googleAnalytics = googleAnalyticsService.getTracker(atob("VUEtNTI4MjA5MjAtMQ=="));
-var googleAnalyticsConfig = false;
-googleAnalyticsService.getConfig().addCallback(function (config) {
-    googleAnalyticsConfig = config;
-});
+var googleAnalytics = analytics;
+var analytics = undefined;
 
 openNewWindowsInExternalBrowser();
 
-//Asynchronous configuration to be done.
-//When finish the startProcess() function must be called 
 $(document).ready(function () {
-    i18n.init(function() {
-        startProcess();
-        initializeSerialBackend();
+    $.getJSON('version.json', function(data) {
+        CONFIGURATOR.gitChangesetId = data.gitChangesetId;
+
+        i18n.init(function() {
+            startProcess();
+            initializeSerialBackend();
+        });
     });
 });
 
+function checkSetupAnalytics(callback) {
+    if (!analytics) {
+        setTimeout(function () {
+            chrome.storage.local.get(['userId', 'analyticsOptOut', 'checkForConfiguratorUnstableVersions', ], function (result) {
+                if (!analytics) {
+                    setupAnalytics(result);
+                }
+
+                callback(analytics);
+            });
+        });
+    } else if (callback) {
+        callback(analytics);
+    }
+};
+
+function setupAnalytics(result) {
+    var userId;
+    if (result.userId) {
+        userId = result.userId;
+    } else {
+        var uid = new ShortUniqueId();
+        userId = uid.randomUUID(13);
+
+        chrome.storage.local.set({ 'userId': userId });
+    }
+
+    var optOut = !!result.analyticsOptOut;
+    var checkForDebugVersions = !!result.checkForConfiguratorUnstableVersions;
+
+    var debugMode = typeof process === "object" && process.versions['nw-flavor'] === 'sdk';
+
+    analytics = new Analytics(atob("VUEtNTI4MjA5MjAtMQ=="), userId, 'Cleanflight Configurator', getManifestVersion(), CONFIGURATOR.gitChangesetId, GUI.operating_system, checkForDebugVersions, optOut, debugMode);
+
+    function logException(exception) {
+        analytics.sendException(exception.stack);
+    }
+
+    if (typeof process === "object") {
+        process.on('uncaughtException', logException);
+    }
+
+    analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'AppStart', { sessionControl: 'start' });
+
+    function sendCloseEvent() {
+        analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'AppClose', { sessionControl: 'end' })
+    }
+
+    try {
+        var gui = require('nw.gui');
+        var win = gui.Window.get();
+        win.on('close', function () {
+            sendCloseEvent();
+
+            this.close(true);
+        });
+    } catch (ex) {
+        // Looks like we're in Chrome - but the event does not actually get fired
+        chrome.runtime.onSuspend.addListener(sendCloseEvent);
+    }
+
+    $('.connect_b a.connect').removeClass('disabled');
+}
+
 //Process to execute to real start the app
 function startProcess() {
-
     // translate to user-selected language
     i18n.localizePage();
 
@@ -95,6 +155,15 @@ function startProcess() {
                 return;
             }
 
+            $("#tabs ul.mode-connected li").click(function() {
+                // store the first class of the current tab (omit things like ".active") and strip the 'tab_' prefix.
+                var activeTab = $(this).attr("class").split(' ')[0].substring(4);
+                
+                chrome.storage.local.set({
+                    lastTab: activeTab
+                });
+            });
+        
             GUI.tab_switch_in_progress = true;
 
             GUI.tab_switch_cleanup(function () {
@@ -113,8 +182,11 @@ function startProcess() {
 
                 function content_ready() {
                     GUI.tab_switch_in_progress = false;
-                    googleAnalytics.sendAppView(GUI.active_tab);
                 }
+
+                checkSetupAnalytics(function (analytics) {
+                    analytics.sendAppView(tab);
+                });
 
                 switch (tab) {
                     case 'landing':
@@ -205,34 +277,14 @@ function startProcess() {
             el.after('<div id="options-window"></div>');
 
             $('div#options-window').load('./tabs/options.html', function () {
-                googleAnalytics.sendAppView('Options');
-
                 // translate to user-selected language
                 i18n.localizePage();
 
-                // if notifications are enabled, or wasn't set, check the notifications checkbox
-                chrome.storage.local.get('update_notify', function (result) {
-                    if (typeof result.update_notify === 'undefined' || result.update_notify) {
-                        $('div.notifications input').prop('checked', true);
-                    }
-                });
-
-                $('div.notifications input').change(function () {
-                    var checked = $(this).is(':checked');
-                    googleAnalytics.sendEvent('Settings', 'Notifications', checked);
-
-                    chrome.storage.local.set({'update_notify': check});
-                });
-
-                // if tracking is enabled, check the statistics checkbox
-                if (googleAnalyticsConfig.isTrackingPermitted()) {
-                    $('div.statistics input').prop('checked', true);
-                }
-
-                $('div.statistics input').change(function () {
-                    var checked = $(this).is(':checked');
-                    googleAnalytics.sendEvent('Settings', 'GoogleAnalytics', checked);
-                    googleAnalyticsConfig.setTrackingPermitted(check);
+                chrome.storage.local.get('rememberLastTab', function (result) {
+                    $('div.rememberLastTab input')
+                        .prop('checked', !!result.rememberLastTab)
+                        .change(function() { chrome.storage.local.set({rememberLastTab: $(this).is(':checked')}) })
+                        .change();
                 });
 
                 if (GUI.operating_system !== 'ChromeOS') {
@@ -252,6 +304,30 @@ function startProcess() {
                 } else {
                     $('div.checkForConfiguratorUnstableVersions').hide();
                 }
+
+                chrome.storage.local.get('analyticsOptOut', function (result) {
+                    if (result.analyticsOptOut) {
+                        $('div.analyticsOptOut input').prop('checked', true);
+                    }
+
+                    $('div.analyticsOptOut input').change(function () {
+                        var checked = $(this).is(':checked');
+
+                        chrome.storage.local.set({'analyticsOptOut': checked});
+
+                        checkSetupAnalytics(function (analytics) {
+                            if (checked) {
+                                analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'OptOut');
+                            }
+
+                            analytics.setOptOut(checked);
+
+                            if (!checked) {
+                                analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'OptIn');
+                            }
+                        });
+                    }).change();
+                });
 
                 chrome.storage.local.get('userLanguageSelect', function (result) {
 
@@ -396,7 +472,7 @@ function startProcess() {
         $(this).text(state ? i18n.getMessage('logActionHide') : i18n.getMessage('logActionShow'));
         $(this).data('state', state);
     });
-}
+};
 
 function checkForConfiguratorUpdates() {
     var releaseChecker = new ReleaseChecker('configurator', 'https://api.github.com/repos/cleanflight/cleanflight-configurator/releases');
@@ -549,7 +625,7 @@ function updateStatusBarVersion(firmwareVersion, firmwareId, hardwareId) {
         versionText = versionText + ', ';
     }
 
-    versionText = versionText + getConfiguratorVersion();
+    versionText = versionText + getConfiguratorVersion() + ' (' + CONFIGURATOR.gitChangesetId + ')';
 
     $('#status-bar .version').text(versionText);
 }
@@ -582,4 +658,16 @@ function openNewWindowsInExternalBrowser() {
     } catch (ex) {
         console.log("require does not exist, maybe inside chrome");
     }
+}
+
+function showErrorDialog(message) {
+   var dialog = $('.dialogError')[0];
+
+    $('.dialogError-content').html(message);
+
+    $('.dialogError-closebtn').click(function() {
+        dialog.close();
+    });
+
+    dialog.showModal();
 }

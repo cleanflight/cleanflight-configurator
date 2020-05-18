@@ -7,9 +7,10 @@
 # ${VERSION} - Version to generate (x.y.z)
 # ${PLATFORM} - Platform to generate (win32 or win64)
 # ${DEST_FOLDER} - Destination folder for the installer files
+# ${SOURCE_FOLDER} - Source folder for the application files
 
 # Some definitions
-!define SOURCE_FILES          "..\..\apps\cleanflight-configurator\${PLATFORM}\*"
+!define SOURCE_FILES          "..\..\${SOURCE_FOLDER}\cleanflight-configurator\${PLATFORM}\*"
 !define APP_NAME              "Cleanflight Configurator"
 !define COMPANY_NAME          "The Cleanflight open source project."
 !define GROUP_NAME            "Cleanflight"
@@ -18,6 +19,7 @@
 !define FILE_NAME_UNINSTALLER "uninstall-cleanflight-configurator.exe"
 !define FILE_NAME_EXECUTABLE  "cleanflight-configurator.exe"
 !define LICENSE               "..\..\LICENSE"
+#!define MUI_WELCOMEFINISHPAGE_BITMAP ".\cf_installer.bmp"
 
 
 Name "${APP_NAME}"
@@ -28,7 +30,7 @@ BrandingText "${COMPANY_NAME}"
 !define MUI_UNICON ".\cf_uninstaller_icon.ico"
 
 #Define uninstall list name
-!define UninstName "uninbf00"
+!define UninstName "unincf00"
 
 # Request rights user level
 RequestExecutionLevel highest
@@ -46,18 +48,26 @@ OutFile "..\..\${DEST_FOLDER}\${FILE_NAME_INSTALLER}"
 
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "Basque"
 !insertmacro MUI_LANGUAGE "Catalan"
+!insertmacro MUI_LANGUAGE "Croatian"
 !insertmacro MUI_LANGUAGE "French"
+!insertmacro MUI_LANGUAGE "Galician"
 !insertmacro MUI_LANGUAGE "German"
+!insertmacro MUI_LANGUAGE "Hungarian"
+!insertmacro MUI_LANGUAGE "Indonesian"
 !insertmacro MUI_LANGUAGE "Italian"
 !insertmacro MUI_LANGUAGE "Japanese"
 !insertmacro MUI_LANGUAGE "Korean"
 !insertmacro MUI_LANGUAGE "Latvian"
 !insertmacro MUI_LANGUAGE "Portuguese"
+!insertmacro MUI_LANGUAGE "PortugueseBR"
+!insertmacro MUI_LANGUAGE "Polish"
 !insertmacro MUI_LANGUAGE "Russian"
 !insertmacro MUI_LANGUAGE "SimpChinese"
 !insertmacro MUI_LANGUAGE "Spanish"
 !insertmacro MUI_LANGUAGE "Swedish"
+!insertmacro MUI_LANGUAGE "TradChinese"
 
 # detect default install folder
 Function .onInit
@@ -149,9 +159,9 @@ Section
 
     # create shortcuts in the start menu and on the desktop
     CreateDirectory "$SMPROGRAMS\${GROUP_NAME}\${FOLDER_NAME}"    
-    CreateShortCut "$SMPROGRAMS\${GROUP_NAME}\${FOLDER_NAME}\${APP_NAME}.lnk" "$INSTDIR\${FILE_NAME_EXECUTABLE}"
+    CreateShortCut "$SMPROGRAMS\${GROUP_NAME}\${FOLDER_NAME}\${APP_NAME}.lnk" "$INSTDIR\${FILE_NAME_EXECUTABLE}" "" "$INSTDIR\images\cf_icon.ico" "0" "" "" ""
     CreateShortCut "$SMPROGRAMS\${GROUP_NAME}\${FOLDER_NAME}\Uninstall ${APP_NAME}.lnk" "$INSTDIR\${FILE_NAME_UNINSTALLER}"
-    CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${FILE_NAME_EXECUTABLE}"
+    CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${FILE_NAME_EXECUTABLE}" "" "$INSTDIR\images\cf_icon.ico" "0" "" "" ""
 
     # include in add/remove programs
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \

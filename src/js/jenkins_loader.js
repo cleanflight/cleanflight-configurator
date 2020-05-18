@@ -1,4 +1,4 @@
- 'use strict;'
+'use strict';
 
 var NullJenkinsLoader = function (url) {
     this._jobs = [];
@@ -28,8 +28,8 @@ JenkinsLoader.prototype.loadJobs = function (viewName, callback) {
     var self = this;
 
     var viewUrl = `${self._url}/view/${viewName}`;
-    var jobsDataTag = '${viewUrl}JobsData';
-    var cacheLastUpdateTag = '${viewUrl}JobsLastUpdate';
+    var jobsDataTag = `${viewUrl}_JobsData`;
+    var cacheLastUpdateTag = `${viewUrl}_JobsLastUpdate`;
 
     var wrappedCallback = jobs => {
         self._jobs = jobs;
@@ -61,15 +61,16 @@ JenkinsLoader.prototype.loadJobs = function (viewName, callback) {
                 })
 
                 // cache loaded info
-                object = {}
+                let object = {}
                 object[jobsDataTag] = jobs;
                 object[cacheLastUpdateTag] = $.now();
                 chrome.storage.local.set(object);
 
                 wrappedCallback(jobs);
-            }).error(xhr => {
+            }).fail(xhr => {
                 GUI.log(i18n.getMessage('buildServerLoadFailed', ['jobs', `HTTP ${xhr.status}`]));
-            }).fail(cachedCallback);
+                cachedCallback();
+            });
         } else {
             cachedCallback();
         }
@@ -112,15 +113,16 @@ JenkinsLoader.prototype.loadBuilds = function (jobName, callback) {
                     }));
 
                 // cache loaded info
-                object = {}
+                let object = {}
                 object[buildsDataTag] = builds;
                 object[cacheLastUpdateTag] = $.now();
                 chrome.storage.local.set(object);
 
                 self._parseBuilds(jobUrl, jobName, builds, callback);
-            }).error(xhr => {
+            }).fail(xhr => {
                 GUI.log(i18n.getMessage('buildServerLoadFailed', [jobName, `HTTP ${xhr.status}`]));
-            }).fail(cachedCallback);
+                cachedCallback();
+            });
         } else {
             cachedCallback();
         }

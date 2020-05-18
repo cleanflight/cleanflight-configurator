@@ -16,6 +16,16 @@
 .tab-failsafe .number {
     margin-bottom: 5px;
     clear: left;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--subtleAccent);
+    width: 100%;
+    float: left;
+}
+
+.tab-failsafe .number:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .tab-failsafe .number input {
@@ -24,11 +34,15 @@
     height: 20px;
     line-height: 20px;
     text-align: left;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
     border-radius: 3px;
     margin-right: 11px;
     font-size: 12px;
     font-weight: normal;
+}
+
+.tab-failsafe .number .switchery {
+    margin-right: 16px;
 }
 
 .tab-failsafe .number input:disabled {
@@ -44,7 +58,7 @@
     width: 100%;
     margin-bottom: 6px;
     padding-bottom: 5px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
     margin-top: 0;
 }
 
@@ -63,7 +77,8 @@
     background-color: #ededed;
     margin-bottom: 0;
     margin-top: 5px;
-    height: 150px;
+    min-height: 90px;
+    padding-bottom: 10px;
 }
 
 .tab-failsafe .radiobuttons {
@@ -72,7 +87,7 @@
     margin-top: 38px;
     margin-left: 15px;
     font-size: 12px;
-    font-family: 'open_sansregular', sans-serif;
+    font-weight: normal;
 }
 
 .tab-failsafe .radiobuttons input {
@@ -144,19 +159,6 @@
     width: calc(100% - 20px);
 }
 
-.tab-failsafe .number {
-    padding-bottom: 5px;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-    float: left;
-}
-
-.tab-failsafe .number:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-
 .tab-failsafe .gui_box_titlebar {
     margin-bottom: 0;
 }
@@ -169,16 +171,16 @@
 
 .tab-failsafe .gui_box {
     font-style: normal;
-    font-family: 'open_sanssemibold', sans-serif;
+    font-weight: bold;
     margin-bottom: 15px;
     float: left;
 }
 
 .tab-failsafe .gui_box span {
     font-style: normal;
-    font-family: 'open_sansregular', sans-serif;
+    font-weight: normal;
     line-height: 19px;
-    color: #4F4F4F;
+    color: #4f4f4f;
     font-size: 11px;
 }
 
@@ -192,16 +194,16 @@
     width: 95%;
     height: 22px;
     margin: 0;
-    border: 1px solid silver;
-    }
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
+}
 
 .tab-failsafe .modename {
     background-color: #828885;
     border-radius: 3px;
     border: 1px solid #686c6a;
     color: #fff !important;
-    font-weight: normal;
-    font-family: 'open_sanssemibold', sans-serif;
+    font-weight: 600 !important;
     padding-left: 3px;
     padding-right: 3px;
     margin-right: 3px;
@@ -223,17 +225,13 @@
 }
 
 .tab-failsafe .channelsetting {
-    float:left;    
-    width:25%;    
+    float:left;
+    width:25%;
 }
 
 .tab-failsafe .auxiliary {
-    float:left;    
-    width:15%;    
-}
-
-.tab-failsafe .note {
-    margin-bottom: 20px;
+    float:left;
+    width:15%;
 }
 
 .tab-failsafe .cf_tooltiptext {
@@ -244,17 +242,13 @@
     padding-bottom: 7px;
 }
 
-.tab-failsafe .pro1 {
-    height: 90px;
-}
-
 .tab-failsafe .featuresNew {
     width: 100%;
 }
 
 .tab-failsafe .featuresNew tr {
     width: 100%;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
     float: left;
     padding: 0px;
     padding-bottom: 6px;
@@ -283,18 +277,10 @@
     width: 100%;
 }
 
-.tab-failsafe .selectSwitchMode {
-    clear: left;
-    width: 100%;
-    float: left;
-}
-
 .tab-failsafe .switchMode {
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
     margin-right: 5px;
-    width: 80px;
+    min-width: 80px;
 }
 
-@media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
-
-}

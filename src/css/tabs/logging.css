@@ -19,13 +19,14 @@
     margin-left: 130px;
     height: 20px;
     line-height: 20px;
-    color: silver;
+    color: var(--subtleText);
 }
 
 .tab-logging .speed {
     margin-top: 5px;
     width: 80px;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
 }
 
 .tab-logging .info {

@@ -2,62 +2,52 @@
 
 TABS.landing = {};
 TABS.landing.initialize = function (callback) {
-    var self = this;
+  var self = this;
 
-    if (GUI.active_tab != 'landing') {
-        GUI.active_tab = 'landing';
+  if (GUI.active_tab != 'landing') {
+    GUI.active_tab = 'landing';
+  }
+
+  $('#content').load("./tabs/landing.html", function () {
+    function showLang(newLang) {
+      var bottomSection = $('.languageSwitcher');
+      bottomSection.find('a').each(function(index) {
+        var element = $(this);
+        var languageSelected = element.attr('lang');
+        if (newLang == languageSelected) {
+          element.removeClass('selected_language');
+          element.addClass('selected_language');
+        } else {
+          element.removeClass('selected_language');
+        }
+      });
     }
 
-    $('#content').load("./tabs/landing.html", function () {
-        // translate to user-selected language
-        i18n.localizePage();
-
-        $('div.welcome a, div.sponsors a').click(function () {
-            analytics.sendEvent('ExternalUrls', 'Click', $(this).prop('href'));
-        });
-        
-        // load changelog content
-        $('#changelog .log').load('./changelog.html');
-
-        /** changelog trigger **/
-        $("#changelog_toggle").on('click', function() {
-            var state = $(this).data('state2');
-            if (state) {
-                $("#changelog").animate({right: -245}, 200, function () {
-                    $("#content").removeClass('log_open');
-                    });
-                state = false;
-            } else {
-                $("#changelog").animate({right: 0}, 200);
-                $("#content").addClass('log_open');
-                state = true;
-            }
-            $(this).text(state ? i18n.getMessage('close') : i18n.getMessage('defaultChangelogAction'));
-            $(this).data('state2', state);
-        });
-
-        // load privacy policy content
-        $('#privacy_policy .policy').load('./tabs/privacy_policy.html');
-
-        /** changelog trigger **/
-        $("#privacy_policy_toggle").on('click', function() {
-            var state = $(this).data('state2');
-            if (state) {
-                $("#privacy_policy").animate({right: -495}, 200, function () {
-                    $("#content").removeClass('policy_open');
-                    });
-                state = false;
-            } else {
-                $("#privacy_policy").animate({right: 0}, 200);
-                $("#content").addClass('policy_open');
-                state = true;
-            }
-            $(this).text(state ? i18n.getMessage('close') : i18n.getMessage('defaultPrivacyPolicyAction'));
-            $(this).data('state2', state);
-        });
-
-        GUI.content_ready(callback);
+    var bottomSection = $('.languageSwitcher');
+    bottomSection.html(' <span i18n="language_choice_message"></span>');
+    bottomSection.append(' <a href="#" i18n="language_default_pretty" lang="DEFAULT"></a>');
+    var languagesAvailables = i18n.getLanguagesAvailables();
+    languagesAvailables.forEach(function(element) {
+      bottomSection.append(' <a href="#" lang="' + element + '" i18n="language_' + element + '"></a>');
     });
+    bottomSection.find('a').each(function(index) {
+      var element = $(this);
+      element.click(function(){
+        var element = $(this);
+        var languageSelected = element.attr('lang');
+        if (!languageSelected) { return; }
+        if (i18n.selectedLanguage != languageSelected) {
+          i18n.changeLanguage(languageSelected);
+          showLang(languageSelected);
+        }
+      });
+    });
+    showLang(i18n.selectedLanguage);
+    // translate to user-selected language
+    i18n.localizePage();
+
+    GUI.content_ready(callback);
+  });
 
 };
 

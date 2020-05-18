@@ -45,19 +45,15 @@
   box-sizing: border-box;
 }
 
-.tab-motors .plot-control .sensor {
-}
-
 .tab-motors .plot_control .row-container {
   display: table-row-group;
 }
 
 .tab-motors .plot_control .motor-button a {
-  background-color: #ffbb00;
+  background-color: var(--accent);
   border-radius: 3px;
   border: 1px solid #e8b423;
   color: #000;
-  font-family: 'open_sansbold', Arial;
   font-size: 10px;
   line-height: 17px;
   text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
@@ -83,7 +79,8 @@
 }
 .tab-motors .plot_control select {
   width: 100%;
-  border: 1px solid silver;
+  border: 1px solid var(--subtleAccent);
+  border-radius: 3px;
 }
 
 .tab-motors .plot_control .value {
@@ -182,12 +179,12 @@
 
 .tab-motors .left.motors {
     float: left;
-    width: calc(50% - 50px);
+    width: calc(60% - 20px);
 }
 
 .tab-motors .right.servos {
     float: right;
-    width: 50%;
+    width: 40%;
 }
 
 .tab-motors .title {
@@ -200,7 +197,7 @@
     padding-bottom: 2px;
     text-align: center;
     font-size: 12px;
-    font-family: 'open_sanslight', Arial;
+    font-weight: 300;
 }
 
 .tab-motors .titles {
@@ -251,7 +248,12 @@
     bottom: 45px;
     text-align: center;
     font-weight: bold;
+    font-size: 10px;
     color: #474747;
+}
+
+.tab-motors .m-block .label.rpm_info {
+    bottom: 28px;
 }
 
 .tab-motors .m-block .indicator .label {
@@ -274,11 +276,11 @@
 }
 
 .tab-motors .motor_testing {
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .tab-motors .motor_testing .left {
-    width: calc(50% - 50px);
+    width: calc(60% - 20px);
 }
 
 .tab-motors .motor_testing .sliders input {
@@ -296,22 +298,38 @@
     margin-top: 5px;
 }
 
-.tab-motors .motor_testing .values li:first-child {
+.tab-motors .motor_testing .telemetry {
+    display: flow-root;
+    margin-bottom: 5px;
+}
+
+.tab-motors .motor_testing .telemetry .warning {
+    color: var(--error);
+}
+
+.tab-motors .motor_testing .values li:first-child,
+.tab-motors .motor_testing .telemetry li:first-child {
     margin-left: 0px;
 }
 
-.tab-motors .motor_testing .values li {
+.tab-motors .motor_testing .values li,
+.tab-motors .motor_testing .telemetry li {
     float: left;
     width: calc((100% / 9) - 10px);
     margin-left: 10px;
     text-align: center;
+    font-size: 10px;
+}
+
+.tab-motors .motor_testing .telemetry li {
+    white-space: pre;
 }
 
 .tab-motors .motor_testing .notice {
     float: right;
-    width: calc(50% - 24px);
+    width: calc(40% - 24px);
     padding: 5px;
-    border: 2px solid #ccc;
+    border: 2px solid var(--subtleAccent);
     border-radius: 3px;
     background-color: #FFFFFF;
     font-size: 11px;

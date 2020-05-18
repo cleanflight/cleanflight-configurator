@@ -11,22 +11,18 @@
 }
 
 .tab-configuration table th {
-    padding-left: 3px;
     padding: 3px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
 }
 
 .tab-configuration table td {
-    padding-left: 5px;
+    padding: 5px 3px;
+    border-bottom: 1px solid var(--subtleAccent);
 }
 
 .tab-configuration table tr td:first-child {
     text-align: left;
     width: 55px;
-}
-
-.tab-configuration table td {
-    padding: 5px 3px;
 }
 
 .tab-configuration table thead tr:first-child {
@@ -41,7 +37,7 @@
     padding: 0 0 5px 0;
     margin: 0 0 10px 0;
     font-size: 16px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid var(--subtleAccent);
 }
 
 .tab-configuration .leftWrapper {
@@ -60,7 +56,13 @@
     height: 20px;
     margin-top: 5px;
     font-weight: bold;
-    border: 1px solid silver;
+}
+
+.tab-configuration .featuresMultiple {
+    border-collapse: collapse;
+    margin-bottom: 5px;
+    margin-top: -5px;
+    padding: 0px;
 }
 
 .tab-configuration dl.features dt {
@@ -86,7 +88,6 @@
     height: 20px;
     line-height: 20px;
     text-align: left;
-    border: 1px solid silver;
     border-radius: 3px;
     margin-right: 11px;
     font-size: 12px;
@@ -112,7 +113,14 @@
     width: 100px;
     height: 20px;
     margin: 0 10px 5px 0;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
+}
+
+.tab-configuration .gps .select > div:first-child {
+    float: left; 
+    height: 20px; 
+    margin-right: 15px; 
+    margin-left: 3px;
 }
 
 .tab-configuration .gps span {
@@ -176,7 +184,7 @@
     padding-left: 0px;
     margin-top: -5px;
     padding-bottom: 5px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
     width: 100%;
 }
 
@@ -189,15 +197,15 @@
 .tab-configuration .disarm {
     margin-bottom: 5px;
     float: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
     width: 100%;
 }
 
-.disarmdelay {
+.tab-configuration .disarmdelay {
     margin-top: 5px;
     float: left;
     width: 100%;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
 }
 
 .tab-configuration .number,
@@ -206,17 +214,39 @@
     margin-bottom: 5px;
     clear: left;
     padding-bottom: 5px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
     width: 100%;
     float: left;
+ }
+
+.tab-configuration .board_align_inputs,
+.tab-configuration .gyro_alignment_inputs {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    width: 33.3%;
+    float: left;
+    white-space: nowrap;
 }
 
-.tab-configuration .selectProtocol
- {
+.tab-configuration .board_align_inputs input {
+    width: 3.5em;
+    height: 20px;
+    line-height: 20px;
+    padding-left: 3px;
+}
+
+.tab-configuration .board_align_inputs label,
+.tab-configuration .gyro_alignment_inputs label {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tab-configuration .selectProtocol {
     margin-bottom: 5px;
     clear: left;
     padding-bottom: 5px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
     width: 100%;
     float: left;
 }
@@ -258,7 +288,6 @@
 }
 
 .tab-configuration .mixer .gui_box, .tab-configuration .motorstop .gui_box {
-    min-height: 290px;
     float: left;
 }
 
@@ -284,15 +313,12 @@
 }
 
 .tab-configuration select.batterymetertype {
-    border: 1px solid silver;
     margin-right: 5px;
     float: left;
     width: 150px;
 }
 
 .tab-configuration .currentmetertype {
-    border: 1px solid silver;
-    margin-right: 5px;
     float: left;
     width: 150px;
 }
@@ -317,11 +343,14 @@
     padding-top: 0px;
 }
 
-.tab-configuration .serialRX, .spiRx, .rxMode {
-    border: 1px solid silver;
+.tab-configuration input,
+.tab-configuration select {
+    border: 1px solid var(--subtleAccent);
     width: 230px;
+    height: 20px;
     float: left;
     margin-right: 15px;
+    border-radius: 3px;
 }
 
 
@@ -329,6 +358,8 @@
     width: 38px;
 }
 
+.tab-configuration .beeper-configuration tr:last-child td,
+.tab-configuration .dshotBeaconConditions tr:last-child td,
 .tab-configuration .other tr:last-child td {
     border-bottom: 0px;
     padding-bottom: 0px;
@@ -351,151 +382,72 @@
 }
 
 .tab-configuration .gui_box {
-    font-style: bold;
-    font-family: 'open_sanssemibold', Arial;
+    font-weight: bold;
 }
 
 .tab-configuration .gui_box span {
     font-style: normal;
-    font-family: 'open_sansregular', Arial;
+    font-weight: normal;
     line-height: 19px;
-    color: #4F4F4F;
+    color: #4f4f4f;
     font-size: 11px;
 }
 
 .tab-configuration .alignicon {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     float: left;
-    margin-left: -5px;
-    margin-right: 3px;
+    margin: 3px;
 }
 
 .tab-configuration .pitch {
     background-image: url(../../images/icons/cf_icon_pitch.svg);
     background-repeat: no-repeat;
-    background-size: 20px;
     background-position: center;
 }
 
 .tab-configuration .yaw {
     background-image: url(../../images/icons/cf_icon_yaw.svg);
     background-repeat: no-repeat;
-    background-size: 20px;
     background-position: center;
 }
 
 .tab-configuration .roll {
     background-image: url(../../images/icons/cf_icon_roll.svg);
     background-repeat: no-repeat;
-    background-size: 20px;
     background-position: center;
 }
 
 .tab-configuration .board select {
-    /*float: left;*/
-    width: 45%;
+    float: left;
+    width: fit-content;
+    max-width: 50%;
     height: 20px;
-    margin: 0 0px 2px 0;
-    border: 1px solid silver;
+    margin-right: 5px;
     border-radius:3px;
 }
 
-
-#mixercontent .mixerheadline {
-    font-size: 13px;
+.tab-configuration .board_align_content,
+.tab-configuration .gyro_align_content {
     width: 100%;
-    padding-bottom: 0px;
-    float: left;
-    margin-bottom: 7px;
-    font-family: 'open_sanssemibold', Arial;
-}
-
-#mixercontent select {
-    float: left;
-    width: 100%;
-    height: 20px;
-    margin: 0 0px 2px 0;
-    border: 1px solid silver;
-    border-radius:3px;
-    margin-bottom: 20px;
-    margin-top:3px;
-
-}
-
-#mixercontent input {
-    width: 50px;
-    padding-left: 3px;
-    height: 20px;
-    line-height: 20px;
-    text-align: left;
-    border: 1px solid silver;
-    border-radius: 3px;
-    margin-right: 11px;
-    font-size: 12px;
-    font-weight: normal;
-
-}
-
-#mixercontent .mixerletter {
-    width: 23px;
-    height: 23px;
-    background-color: #d0d0d0;
-    line-height: 23px;
-    text-align: center;
-    border-radius: 100px;
-    margin-right: 10px;
-    font-size: 12px;
-    font-weight: bold;
-    float: left;
-}
-
-#mixercontent .number {
-    margin-bottom: 5px;
-    clear: left;
-    padding-top: 5px;
-    border-top: 1px solid #ddd;
-    width: 100%;
-    float: left;
-}
-
-#mixercontent .number:last-child {
-    padding-top: 0px;
-    margin-bottom: 0px;
-}
-
-#mixercontent .mixercanvas {
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    border: 1px solid #e4e4e4;
-    height: 340px;
-    margin-top: 3px;
-}
-
-.tab-configuration .sensoralignment {
-    width: 50%;
-    float: left;
-}
-
-.tab-configuration .board_align_content {
-    width: 50%;
-    float: left;
+    border-bottom: 1px solid var(--subtleAccent);
+    display: inline-block;
 }
 
 .tab-configuration .sensoralignment span {
-    width: 55%;
-    float: left;
+    width: 100%;
 }
 
-.tab-configuration .escprotocol {
-    border: 1px solid silver;
-    margin-right: 5px;
-}
-
-.tab-configuration .gyroSyncDenom, .tab-configuration .pidProcessDenom {
-    border: 1px solid silver;
-    margin-right: 5px;
+.tab-configuration .gyroSyncDenom, .tab-configuration .pidProcessDenom, .tab-configuration .gyroFrequency {
     width:90px;
+}
+
+.tab-configuration .gyroFrequency {
+    border: none;
+    background-color: var(--alternativeBackground);
+    padding-left: 6px;
+    margin-right: 10px;
+    font-weight: bold;
 }
 
 .tab-configuration ._3dSettings {
@@ -514,6 +466,11 @@
     margin-top: 10px; 
 }
 
+.tab-configuration .note.note_adjust {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 @media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
     .tab-configuration .gui_box span {
         line-height: 17px;
@@ -527,11 +484,9 @@
         margin: 0 0 10px 15px;
     }
     .tab-configuration .rssi .gui_box, .tab-configuration .system .gui_box {
-        min-height: 145px;
         float: left;
     }
     .tab-configuration .mixer .gui_box, .tab-configuration .motorstop .gui_box {
-        min-height: 296px;
         float: left;
     }
     .tab-configuration .board .gui_box, .tab-configuration .acc .gui_box {

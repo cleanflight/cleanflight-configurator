@@ -1,3 +1,23 @@
+:root {
+    --accent: #ffbb00;
+    --error: red;
+    --subtleAccent: silver;
+    --quietText: #ffffff;
+    --quietHeader: #828885;
+    --defaultText: #000000;
+    --subtleText: #c0c0c0;
+    --mutedText: #616161;
+    --linkText: #436c2c;
+    --boxBackground: #ffffff;
+    --alternativeBackground: #f9f9f9;
+    --sideBackground: #ffffff;
+    --ledAccent: #adadad;
+    --ledBackground: #e9e9e9;
+    --gimbalBackground: #eee;
+    --gimbalCrosshair: var(--subtleAccent);
+    --switcherysecond: #c4c4c4;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +31,7 @@ html, body {
 }
 
 body {
-    font-family: 'open_sansregular', 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Open Sans', 'Segoe UI', Tahoma, sans-serif;
     font-size: 12px;
     color: #303030;
     background-color: #3d3f3e;
@@ -22,8 +42,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #000;
-    font-family: 'open_sanssemibold', Arial;
+    color: var(--linkText);
 }
 
 a:hover {
@@ -34,6 +53,12 @@ a.disabled {
     pointer-events: none;
     cursor: default;
     color: #999;
+}
+
+.background_paper {
+    background-size: 100%;
+    background-image: url(../images/paper.png);
+    background-position: center;
 }
 
 /* Help-Icon  */
@@ -60,9 +85,10 @@ a.disabled {
 .cf_doc_version_bt a {
     padding: 1px 9px 1px 9px;
     margin-top: -45px;
+    background-color: var(--accent);
     border-radius: 3px;
     float: right;
-    font-family: 'open_sansbold', Arial;
+    font-weight: bold;
     font-size: 10px;
     line-height: 17px;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
@@ -107,15 +133,16 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .message-positive {
-    color: #ffbb00 !important;
+    color: var(--accent) !important;
 }
 
 .message-negative {
-    color: red !important;
+    color: var(--error) !important;
+    font-weight: bold !important;
 }
 
 .headerbar {
-    height:110px;
+    height:115px;
     width:100%;
     background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.15));
 }
@@ -127,25 +154,37 @@ input[type="number"]::-webkit-inner-spin-button {
     height: 70px;
     z-index: 0;
     background-repeat: no-repeat;
-    width: 340px;
+    width: 240px;
     background-position: left center;
     background-size: contain;
     margin-left: 15px;
-    margin-top: 18px;
+    margin-top: 14px;
 }
 
 .logo_text {
     position: absolute;
     height: 20px;
-    width: 200px;
+    width: 300px;
     left: 80px;
     top: 50px;
     color: #949494;
     opacity: 0.5;
+    font-size: 10px;
 }
 
 .logo_text .version {
     float: right;
+}
+
+@media all and (min-width: 1125px) {
+    #logo {
+        margin-top: 9px;
+        width: 340px;
+    }
+
+    .logo_text {
+        font-size: inherit;
+    }
 }
 
 #port-picker {
@@ -183,7 +222,7 @@ input[type="number"]::-webkit-inner-spin-button {
     border-radius: 3px;
     padding: 3px;
     margin-bottom: 5px;
-    color: #ddd;
+    color: var(--subtleAccent);
     position: absolute;
     margin-top: -59px;
     margin-left: -187px;
@@ -194,7 +233,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #port-picker .auto_connect, .gray {
-    color: #ddd;
+    color: var(--subtleAccent);
 }
 
 #header_dataflash {
@@ -204,7 +243,7 @@ input[type="number"]::-webkit-inner-spin-button {
 #sensor-status {
     margin-top: 20px;
     float: right;
-    margin-right: 20px;
+    margin-right: 10px;
     line-height: 2px;
     height: 67px;
     border-radius: 5px;
@@ -212,6 +251,12 @@ input[type="number"]::-webkit-inner-spin-button {
     box-shadow: 0px 2px 0px rgba(92, 92, 92, 0.5);
     background-color: #434343;
     background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.55));
+}
+
+@media all and (min-width: 1125px) {
+    #sensor-status {
+        margin-right: 20px;
+    }
 }
 
 #sensor-status li {
@@ -381,7 +426,7 @@ input[type="number"]::-webkit-inner-spin-button {
     top: 25px;
     padding: 5px;
     line-height: 20px;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
     background-color: white;
     border-radius: 5px;
     z-index: 10000;
@@ -389,15 +434,16 @@ input[type="number"]::-webkit-inner-spin-button {
 
 #options-window input {
     float: left;
-    margin-top: 3px;
+    margin-top: 4px;
     margin-right: 5px;
 }
 
 #options-window .separator {
     padding-bottom: 10px;
     margin-bottom: 10px;
-    border-bottom: 2px solid silver;
+    border-bottom: 2px solid var(--subtleAccent);
 }
+
 #options-window .dropdown {
     float: left;
     width: auto;
@@ -405,7 +451,15 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #options-window select {
-    margin-right: 3em;
+    margin-right: 2px;
+    background: var(--boxBackground);
+    color: var(--defaultText);
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
+}
+
+#options-window span {
+    vertical-align: text-bottom;
 }
 
 /* Log setup*/
@@ -459,7 +513,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #log a {
-    font-weight: regular;
+    font-weight: normal;
 }
 
 #log a:hover {
@@ -491,9 +545,9 @@ input[type="number"]::-webkit-inner-spin-button {
     float: left;
     height: calc(100% - 150px);
     width: 200px;
+    border-right: 4px solid var(--accent);
     background-color: #2e2e2e;
     transition: all 0.2s;
-
 }
 
 .tab_container.logopen {
@@ -533,7 +587,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #tabs li a {
-    font-family: 'open_sansregular', Arial;
+    font-weight: normal;
     padding-left: 33px;
     padding-top: 5px;
     padding-bottom: 3px;
@@ -563,11 +617,13 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #tabs li.active a {
+    background-color: var(--accent);
     transition: none;
 }
 
 #tabs li.active a:hover {
     cursor: default;
+    background-color: var(--accent);
 }
 
 .tabicon {
@@ -783,6 +839,7 @@ li.active .ic_flasher {
 
 .ic_transponder {
     background-image: url(../images/icons/cf_icon_transponder_grey.svg);
+    background-position-y: 2px;
 }
 
 .ic_transponder:hover {
@@ -800,6 +857,14 @@ li.active .ic_transponder {
 
 .ic_osd:hover, li.active .ic_osd {
     background-image: url(../images/icons/icon_osd_white.svg);
+}
+
+.ic_vtx {
+    background-image: url(../images/icons/cf_icon_vtx_grey.svg);
+}
+
+.ic_vtx:hover, li.active .ic_vtx {
+    background-image: url(../images/icons/cf_icon_vtx_white.svg);
 }
 
 .ic_power {
@@ -874,7 +939,7 @@ li.active .ic_mission {
 #content {
     margin-top: 0px;
     padding: 0px;
-    height: calc(100% - 150px);
+    height: calc(100% - 156px);
     /*  (port picker 105px, log CLOSED 25px, status bar: 20px + padding) - was: calc(100% - 171px)*/
     background-color: white;
     overflow-x: hidden;
@@ -887,7 +952,7 @@ li.active .ic_mission {
 #content.logopen {
     margin-top: 0px;
     padding: 0px;
-    height: calc(100% - 234px); /*  (port picker, log OPEN, status bar: 20px + padding) - was: calc(100% - 171px)*/
+    height: calc(100% - 240px); /*  (port picker, log OPEN, status bar: 20px + padding) - was: calc(100% - 171px)*/
     background-color: white;
     overflow-x: hidden;
     overflow-y: auto;
@@ -952,14 +1017,56 @@ dialog {
     border: 1px solid silver;
 }
 
+dialog .dialog_toolbar .btn a {
+    /*  common styles for content toolbar buttons */
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 20px;
+    background-color: var(--accent);
+    border-radius: 3px;
+    color: #000;
+    float: left;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
+    display: block;
+    cursor: pointer;
+    transition: all ease 0.2s;
+    padding: 0px;
+    padding-left: 9px;
+    padding-right: 9px;
+    line-height: 28px;
+}
+
+dialog .dialog_toolbar .btn a:hover {
+    background-color: #ffcc3e;
+    transition: all ease 0.2s;
+}
+
+dialog .dialog_toolbar .btn a:active {
+    background-color: var(--accent);
+    transition: all ease 0.0s;
+    box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.35);
+}
+
+dialog .dialog_toolbar .btn a.disabled {
+    cursor: default;
+    color: #fff;
+    background-color: #AFAFAF;
+    border: 1px solid #AFAFAF;
+    pointer-events: none;
+    text-shadow: none;
+    opacity: 0.5;
+}
 /* Border of the Tab */
 
 /* Tab Title */
 .tab_title {
+    border-bottom: 1px solid var(--accent);
     font-size: 20px;
     line-height: 24px;
     height: 30px;
-    font-family: 'open_sanslight', Arial;
+    font-weight: 300;
     margin-bottom: 15px;
 }
 
@@ -967,20 +1074,16 @@ dialog {
 .note {
     background-color: #fff7cd;
     border: 1px solid #ffe55f;
-    margin-bottom: 7px;
-    margin-top: 3px;
+    margin-bottom: 10px;
+    margin-top: 0px;
     border-radius: 3px;
     font-size: 11px;
-    font-family: 'open_sansregular', Arial;
-}
-
-.note_spacer {
+    font-weight: normal;
     padding: 5px 7px 5px 7px;
 }
 
 .tab_wrapper {
     padding: 20px 15px 15px 15px;
-
 }
 
 .content_wrapper {
@@ -996,7 +1099,7 @@ dialog {
     box-shadow: rgba(0, 0, 0, 0.10) 0 -3px 8px;
     padding: 10px 0;
     overflow: hidden;
-    border-top: 1px solid #F9F9F9;
+    border-top: 1px solid var(--subtleAccent);
 }
 
 .content_toolbar .btn a {
@@ -1004,9 +1107,10 @@ dialog {
     margin-top: 0px;
     margin-bottom: 0px;
     margin-right: 20px;
+    background-color: var(--accent);
     border-radius: 3px;
     float: right;
-    font-family: 'open_sansbold', Arial;
+    font-weight: bold;
     font-size: 12px;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
     display: block;
@@ -1056,10 +1160,22 @@ dialog {
 }
 
 .toolbar_fixed_bottom .content_toolbar {
+    display: flex;
     position: absolute;
     bottom: 0;
     left: 0;
     z-index: 2000; /* for fancy toggle buttons */
+}
+
+.toolbar_fixed_bottom .content_toolbar div:first-child {
+    margin-left: auto;
+}
+
+/** Hack to change the "display: none" by a "visibility:hidden", to apply
+    the margin-left: auto needed by the first element to align to the right the buttons */
+.toolbar_fixed_bottom .content_toolbar div[style='display: none;']:first-child {
+    visibility: hidden;
+    display: block !important;
 }
 
 /* Colums  START> */
@@ -1143,7 +1259,6 @@ dialog {
     float: left;
     width: calc(100% - 2px);
     margin-bottom: 10px;
-    font-family: 'open_sansregular', Arial;
 }
 
 .gui_warning {
@@ -1162,6 +1277,7 @@ dialog {
         rgba(255, 255, 255, .3) 60%, rgba(255, 255, 255, .3) 70%, transparent 70%, transparent 80%,
         rgba(255, 255, 255, .3) 80%, rgba(255, 255, 255, .3) 90%, transparent 90%, transparent 100%,
         rgba(255, 255, 255, .4) 100%, transparent);
+    color: white;
 }
 
 .gui_note .gui_box_titlebar {
@@ -1171,16 +1287,17 @@ dialog {
         rgba(255, 255, 255, .3) 60%, rgba(255, 255, 255, .3) 70%, transparent 70%, transparent 80%,
         rgba(255, 255, 255, .3) 80%, rgba(255, 255, 255, .3) 90%, transparent 90%, transparent 100%,
         rgba(255, 255, 255, .4) 100%, transparent);
+    color: white;
 }
 
 
 .grey {
-    /* background-color:#f5f5f5; */
     background-color: #f9f9f9
 }
 
 .gui_box_titlebar {
-    background-color: #e4e4e4;
+    background-color: var(--quietHeader);
+    color: var(--quietText);
     border-radius: 3px 3px 0px 0px;
     font-size: 13px;
     width: 100%;
@@ -1188,7 +1305,18 @@ dialog {
     padding-bottom: 0px;
     float: left;
     margin-bottom: 7px;
-    font-family: 'open_sanssemibold', Arial;
+    font-weight: 600;
+}
+
+.gui_box_bottombar {
+    background-color: #e4e4e4;
+    border-radius: 0px 0px 3px 3px;
+    font-size: 13px;
+    width: 100%;
+    height: 27px;
+    padding-top: 0px;
+    float: left;
+    font-weight: 600;
 }
 
 .spacer_box {
@@ -1220,10 +1348,11 @@ dialog {
     margin-top: 9px;
     margin-bottom: 0px;
     margin-right: 20px;
+    background-color: var(--accent);
     border-radius: 3px;
     color: #000;
     float: right;
-    font-family: 'open_sansbold', Arial;
+    font-weight: bold;
     font-size: 12px;
     text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
     display: block;
@@ -1254,17 +1383,18 @@ dialog {
     text-align: center;
     border-radius: 4px;
     color: #000;
-    font-family: 'open_sanssemibold', Arial;
+    font-weight: 600;
     font-size: 12px;
     line-height: 13px;
     display: block;
     transition: all ease 0.2s;
     text-decoration:none;
+    cursor: pointer;
 }
 
 .default_btn a.disabled {
     background-color: #f1f1f1;
-    border: 1px solid #ddd;
+    border: 1px solid var(--subtleAccent);
     color: #ccc;
 }
 
@@ -1283,15 +1413,18 @@ dialog {
     box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.35);
 }
 
+.margin-top5 {
+    margin-top: 5px;
+}
+
 .regular-button {
     margin-top: 8px;
     margin-bottom: 8px;
     margin-right: 10px;
-    background-color: #ffbb00;
+    background-color: var(--accent);
     border-radius: 3px;
-    border: 1px solid #dba718;
     color: #000;
-    font-family: 'open_sansbold', Arial;
+    font-weight: bold;
     font-size: 12px;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
     display: inline-block;
@@ -1320,7 +1453,7 @@ dialog {
     border-radius: 3px;
     border: 1px solid #949494;
     color: #fff;
-    font-family: 'open_sanssemibold', Arial;
+    font-weight: 600;
     font-size: 11px;
     line-height: 11px;
     display: block;
@@ -1328,8 +1461,6 @@ dialog {
 }
 
 .small a:hover {
-    color: #000;
-    text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
     transition: all ease 0.2s;
 }
 
@@ -1340,6 +1471,7 @@ dialog {
 }
 
 .green a {
+    background-color: var(--accent);
     transition: all ease 0.2s;
 }
 
@@ -1358,9 +1490,12 @@ dialog {
 
 .cf_table td {
     border: 0px;
-    border-bottom: solid 1px #ccc;
     padding-top: 2px;
     padding-bottom: 5px;
+}
+
+.cf_table tr:not(:last-child) td {
+    border-bottom: solid 1px var(--subtleAccent);
     border-style: dotted;
 }
 
@@ -1386,6 +1521,7 @@ dialog {
 }
 
 .gps_true {
+    background-color: var(--accent);
     padding: 1px 7px 2px 7px;
     border-radius: 3px;
     color: #FFFFFF;
@@ -1403,6 +1539,32 @@ dialog {
     width: 60px;
     margin-right: 20px;
     margin-left: 20px;
+}
+
+@media all and (min-width: 1125px) {
+    .connect_controls {
+        margin-left: 10px;
+        margin-right: 15px;
+    }
+}
+
+/* firmware update button */
+.open_firmware_flasher {
+    position: relative;
+    float: right;
+    left: 0px;
+    top: 19px;
+    height: 70px;
+    width: 60px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+@media all and (min-width: 1125px) {
+    .open_firmware_flasher {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
 }
 
 .connect_b {
@@ -1449,6 +1611,50 @@ dialog {
     background-color: #f21212;
 }
 
+.firmware_b {
+    float: left;
+}
+
+.firmware_b a {
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35);
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 7px;
+    transition: none;
+}
+
+.firmware_b a.flash.disabled {
+    background-color: #808080;
+    pointer-events: none;
+    cursor: default;
+ }
+
+.firmware_b a.flash {
+    background-image: url(../images/icons/cf_icon_flasher_white.svg);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: center 10px;
+    transition: none;
+}
+
+.firmware_b a.flash:hover {
+    background-color: #ffcc3f;
+}
+
+.firmware_b a.flash.active {
+    background-color: #e60000;
+    border: 1px solid #fe0000;
+    background-image: url(../images/icons/cf_icon_flasher_white.svg);
+    transition: none;
+}
+
+.firmware_b a.flash.active:hover {
+    background-color: #f21212;
+}
+
 .connect_state {
     float: left;
     height: 20px;
@@ -1456,7 +1662,19 @@ dialog {
     text-align: center;
     color: #fff;
     font-size: 12px;
-    font-family: 'open_sansregular', Arial;
+    font-weight: normal;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
+    margin-top: -1px;
+}
+
+.flash_state {
+    float: left;
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
     text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
     margin-top: -1px;
 }
@@ -1511,7 +1729,7 @@ dialog {
     margin-top: 20px;
     width:125px;
     float: right;
-    margin-right: 10px;
+    margin-right: 5px;
     line-height: 12px;
     height: 67px;
     border-radius: 5px;
@@ -1523,13 +1741,18 @@ dialog {
     text-shadow: 0px 1px rgba(0, 0, 0, 1.0);
 }
 
-.dataflash-noflash_global {
+@media all and (min-width: 1125px) {
+    #dataflash_wrapper_global {
+        margin-right: 10px;
+    }
+}
+
+.dataflash-contents_global {
     margin-top: 18px;
     color: #818181;
     text-align: center;
     text-shadow: 0px 1px rgba(0, 0, 0, 1.0);
 }
-
 
 .dataflash-haveflash_global {
     margin-left: 5px;
@@ -1537,8 +1760,9 @@ dialog {
     position: relative;
 }
 
-.dataflash-haveflash_global, .dataflash-noflash_global {
-    display: none;
+.dataflash-free_global {
+    background-color: var(--accent);
+    border-radius: 4px;
 }
 
 .dataflash-heading_global {
@@ -1600,9 +1824,9 @@ dialog {
     color: white;
     font-size: 10px;
     margin-top: 20px;
-    width: 90px;
+    min-width: 90px;
     float: right;
-    margin-right: 20px;
+    margin-right: 10px;
     line-height: 12px;
     height: 67px;
     border-radius: 5px;
@@ -1613,13 +1837,18 @@ dialog {
     text-shadow: 0px 1px rgba(0, 0, 0, 1.0);
 }
 
+@media all and (min-width: 1125px) {
+    #quad-status_wrapper {
+        margin-right: 20px;
+    }
+}
+
 .quad-status-contents  {
     display: none;
     margin-top: 10px;
     margin-left: 14px;
     height: 10px;
-    width: 30px;
-    /* width: 30px; */
+    width: 31px;
 }
 
 
@@ -1634,6 +1863,7 @@ dialog {
     text-align: left;
     color: silver;
     margin-left: -8px;
+    padding-right: 4px
 }
 
 .quad-status-contents progress::-webkit-progress-bar {
@@ -1647,11 +1877,26 @@ dialog {
 
 .battery-status {
     height: 11px;
-    position: relative;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.20);
-    border-radius: 0px;
-    /* border-radius: 4px; */
-    margin-top: 0px;
+}
+
+.battery-status.state-ok {
+   background-color: #59AA29;
+}
+.battery-status.state-warning {
+    background-color: var(--error);
+}
+
+.battery-status.state-empty {
+    animation: error-blinker 1s linear infinite;
+}
+
+@keyframes error-blinker {
+  0% {
+    background-color: none;
+  }
+  50% {
+    background-color: var(--error);
+  }
 }
 
 .battery-icon {
@@ -1663,17 +1908,17 @@ dialog {
     width: 60px;
     transition: none;
     margin-top: 4px;
+    margin-left: -4px;
     background-repeat: no-repeat;
 }
+
 
 .armedicon,
 .failsafeicon,
 .linkicon {
-    float: left;
     margin-left: 8px;
-    margin-right: 2px;
+    margin-right: 8px;
     margin-top: 6px;
-    display: block;
     height: 18px;
     width: 18px;
     opacity: 0.8;
@@ -1682,18 +1927,9 @@ dialog {
     transition: none;
 }
 
-.armedicon {
-    background-image: url(../images/icons/cf_icon_armed_grey.svg);
-}
-.failsafeicon {
-    background-image: url(../images/icons/cf_icon_failsafe_grey.svg);
-}
-
-.linkicon {
-    background-image: url(../images/icons/cf_icon_link_grey.svg);
-}
-
 .bottomStatusIcons {
+    display: flex;
+    justify-content: space-between;
     background-color: #272727;
     height: 31px;
     margin-top: 2px;
@@ -1706,8 +1942,8 @@ button {
     border-radius: 4px;
     background-color: #ccc;
     color: #666;
-    border: 1px solid #ddd;
-    font-family: 'open_sanssemibold', Arial;
+    border: 1px solid var(--subtleAccent);
+    font-weight: 600;
     font-size: 10pt;
     cursor: pointer;
 }
@@ -1719,6 +1955,9 @@ button.active {
     max-width: 180px;
 }
 
+.jBox-Widetip {
+    max-width: 300px;
+}
 
 @media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
 
@@ -1729,7 +1968,7 @@ button.active {
 .tab_title {
     font-size: 16px;
     line-height: 18px;
-    font-family: 'open_sanslight', Arial;
+    font-weight: 300;
     margin-bottom: 10px;
     height: 22px;
 }
@@ -1755,7 +1994,7 @@ button.active {
 }
 
 #tabs li a {
-    font-family: 'open_sansregular', Arial;
+    font-weight: normal;
     font-size: 12px;
     padding-left: 60px;
     padding-top: 6px;
@@ -1770,7 +2009,7 @@ button.active {
 }
 
 .tab_container {
-    width: 60px;
+    width: 42px;
 }
 
 .gui_box_titlebar {
@@ -1825,7 +2064,10 @@ input {
     position: initial;
 }
 
+}
 
+.hidden {
+    display: none;
 }
 
 @media only screen and (max-height: 750px) , only screen and (max-device-height: 750px) {
@@ -1835,4 +2077,94 @@ input {
     overflow-y: auto;
 }
 
+}
+
+.darkgrey_box {
+    background-color: #575757;
+    color: white;
+}
+
+.topBorderLine {
+    border-top: 1px solid var(--subtleAccent);
+    padding-top: 5px;
+}
+
+.jBox-container {
+    background: #fff;
+    border:1px solid var(--accent);
+    font-size: 11px;
+    line-height: 13px;
+    color: #525352;
+}
+.jBox-content {
+    padding: 4px 5px;
+}
+.jBox-Modal .jBox-content {
+    padding: 10px 15px;
+}
+.jBox-pointer-top,
+.jBox-pointer-bottom {
+    width: 22px;
+    height: 10px;
+ }
+.jBox-pointer-left,
+.jBox-pointer-right {
+    width: 10px;
+    height: 20px;
+}
+.jBox-pointer:after {
+    width: 10px;
+    height: 9px;
+    border:1px solid var(--accent);
+}
+
+#dialogResetToCustomDefaults-content {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#dialogReportProblems-header {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.dialogReportProblems-listItem {
+    list-style: initial;
+    list-style-type: circle;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+#dialogReportProblems-footer {
+    margin-bottom: 10px;
+}
+
+/*
+   noUi slider stylings
+*/
+
+.noUi-target {
+    background: var(--alternativeBackground);
+    border-color: var(--subtleAccent);
+    box-shadow: none;
+}
+
+.noUi-handle {
+    background: var(--sideBackground);
+    border-color: var(--subtleAccent);
+    box-shadow: none;
+}
+
+.noUi-handle:before,
+.noUi-handle:after {
+    background-color: var(--subtleAccent);
+}
+
+.noUi-background {
+    background: var(--alternativeBackground);
+    box-shadow: none;
+}
+
+.noUi-connect {
+    box-shadow: none;
 }

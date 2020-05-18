@@ -1,16 +1,31 @@
 'use strict';
 
-var googleAnalytics = analytics;
-var analytics = undefined;
-
-openNewWindowsInExternalBrowser();
+window.googleAnalytics = analytics;
+window.analytics = null;
 
 $(document).ready(function () {
     $.getJSON('version.json', function(data) {
+        CONFIGURATOR.version = data.version;
         CONFIGURATOR.gitChangesetId = data.gitChangesetId;
 
+        // Version in the ChromeApp's manifest takes precedence.
+        if(chrome.runtime && chrome.runtime.getManifest) {
+            const manifest = chrome.runtime.getManifest();
+            CONFIGURATOR.version = manifest.version;
+            // manifest.json for ChromeApp can't have a version
+            // with a prerelease tag eg 10.0.0-RC4
+            // Work around is to specify the prerelease version in version_name
+            if (manifest.version_name) {
+                CONFIGURATOR.version = manifest.version_name;
+            }
+        }
         i18n.init(function() {
             startProcess();
+
+            checkSetupAnalytics(function (analyticsService) {
+                analyticsService.sendEvent(analyticsService.EVENT_CATEGORIES.APPLICATION, 'SelectedLanguage', i18n.selectedLanguage);
+            });
+
             initializeSerialBackend();
         });
     });
@@ -19,7 +34,7 @@ $(document).ready(function () {
 function checkSetupAnalytics(callback) {
     if (!analytics) {
         setTimeout(function () {
-            chrome.storage.local.get(['userId', 'analyticsOptOut', 'checkForConfiguratorUnstableVersions', ], function (result) {
+            ConfigStorage.get(['userId', 'analyticsOptOut', 'checkForConfiguratorUnstableVersions', ], function (result) {
                 if (!analytics) {
                     setupAnalytics(result);
                 }
@@ -30,25 +45,30 @@ function checkSetupAnalytics(callback) {
     } else if (callback) {
         callback(analytics);
     }
-};
+}
+
+function getBuildType() {
+    return GUI.Mode;
+}
 
 function setupAnalytics(result) {
-    var userId;
+    let userId;
     if (result.userId) {
         userId = result.userId;
     } else {
-        var uid = new ShortUniqueId();
+        const uid = new ShortUniqueId();
         userId = uid.randomUUID(13);
 
-        chrome.storage.local.set({ 'userId': userId });
+        ConfigStorage.set({ 'userId': userId });
     }
 
-    var optOut = !!result.analyticsOptOut;
-    var checkForDebugVersions = !!result.checkForConfiguratorUnstableVersions;
+    const optOut = !!result.analyticsOptOut;
+    const checkForDebugVersions = !!result.checkForConfiguratorUnstableVersions;
 
-    var debugMode = typeof process === "object" && process.versions['nw-flavor'] === 'sdk';
+    const debugMode = typeof process === "object" && process.versions['nw-flavor'] === 'sdk';
 
-    analytics = new Analytics(atob("VUEtNTI4MjA5MjAtMQ=="), userId, 'Cleanflight Configurator', getManifestVersion(), CONFIGURATOR.gitChangesetId, GUI.operating_system, checkForDebugVersions, optOut, debugMode);
+    window.analytics = new Analytics(atob("VUEtNTI4MjA5MjAtMQ=="), userId, 'Cleanflight Configurator', CONFIGURATOR.version, CONFIGURATOR.gitChangesetId, GUI.operating_system,
+        checkForDebugVersions, optOut, debugMode, getBuildType());
 
     function logException(exception) {
         analytics.sendException(exception.stack);
@@ -60,24 +80,76 @@ function setupAnalytics(result) {
 
     analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'AppStart', { sessionControl: 'start' });
 
-    function sendCloseEvent() {
-        analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'AppClose', { sessionControl: 'end' })
-    }
-
-    try {
-        var gui = require('nw.gui');
-        var win = gui.Window.get();
-        win.on('close', function () {
-            sendCloseEvent();
-
-            this.close(true);
-        });
-    } catch (ex) {
-        // Looks like we're in Chrome - but the event does not actually get fired
-        chrome.runtime.onSuspend.addListener(sendCloseEvent);
-    }
-
     $('.connect_b a.connect').removeClass('disabled');
+    $('.firmware_b a.flash').removeClass('disabled');
+}
+
+function closeSerial() {
+    // automatically close the port when application closes
+    const connectionId = serial.connectionId;
+
+    if (connectionId && CONFIGURATOR.connectionValid) {
+        // code below is handmade MSP message (without pretty JS wrapper), it behaves exactly like MSP.send_message
+        // sending exit command just in case the cli tab was open.
+        // reset motors to default (mincommand)
+
+        let bufferOut = new ArrayBuffer(5),
+        bufView = new Uint8Array(bufferOut);
+
+        bufView[0] = 0x65; // e
+        bufView[1] = 0x78; // x
+        bufView[2] = 0x69; // i
+        bufView[3] = 0x74; // t
+        bufView[4] = 0x0D; // enter
+
+        chrome.serial.send(connectionId, bufferOut, function () {
+            console.log('Send exit');
+        });
+
+        setTimeout(function() {
+            bufferOut = new ArrayBuffer(22);
+            bufView = new Uint8Array(bufferOut);
+            let checksum = 0;
+
+            bufView[0] = 36; // $
+            bufView[1] = 77; // M
+            bufView[2] = 60; // <
+            bufView[3] = 16; // data length
+            bufView[4] = 214; // MSP_SET_MOTOR
+
+            checksum = bufView[3] ^ bufView[4];
+
+            for (let i = 0; i < 16; i += 2) {
+                bufView[i + 5] = MOTOR_CONFIG.mincommand & 0x00FF;
+                bufView[i + 6] = MOTOR_CONFIG.mincommand >> 8;
+
+                checksum ^= bufView[i + 5];
+                checksum ^= bufView[i + 6];
+            }
+
+            bufView[5 + 16] = checksum;
+
+            chrome.serial.send(connectionId, bufferOut, function () {
+                chrome.serial.disconnect(connectionId, function (result) {
+                    console.log(`SERIAL: Connection closed - ${result}`);
+                });
+            });
+        }, 100);
+    } else if (connectionId) {
+        chrome.serial.disconnect(connectionId, function (result) {
+            console.log(`SERIAL: Connection closed - ${result}`);
+        });
+    }
+}
+
+function closeHandler() {
+    this.hide();
+
+    analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'AppClose', { sessionControl: 'end' });
+
+    closeSerial();
+
+    this.close(true);
 }
 
 //Process to execute to real start the app
@@ -85,60 +157,61 @@ function startProcess() {
     // translate to user-selected language
     i18n.localizePage();
 
-    // alternative - window.navigator.appVersion.match(/Chrome\/([0-9.]*)/)[1];
-    GUI.log(i18n.getMessage('infoVersions',{operatingSystem: GUI.operating_system, 
-                                            chromeVersion: window.navigator.appVersion.replace(/.*Chrome\/([0-9.]*).*/, "$1"), 
-                                            configuratorVersion: getManifestVersion()}));
+    GUI.log(i18n.getMessage('infoVersions', {
+        operatingSystem: GUI.operating_system,
+        chromeVersion: window.navigator.appVersion.replace(/.*Chrome\/([0-9.]*).*/, "$1"),
+        configuratorVersion: CONFIGURATOR.version }));
 
-    $('#logo .version').text(getManifestVersion());
+    if (GUI.isNWJS()) {
+        let nwWindow = GUI.nwGui.Window.get();
+        nwWindow.on('new-win-policy', function(frame, url, policy) {
+            // do not open the window
+            policy.ignore();
+            // and open it in external browser
+            GUI.nwGui.Shell.openExternal(url);
+        });
+        nwWindow.on('close', closeHandler);
+    } else if (!GUI.isOther()) {
+        chrome.app.window.onClosed.addListener(closeHandler);
+        // This event does not actually get fired:
+        chrome.runtime.onSuspend.addListener(closeHandler);
+    }
+
+    $('.connect_b a.connect').removeClass('disabled');
+    $('#logo .version').text(CONFIGURATOR.version);
     updateStatusBarVersion();
     updateTopBarVersion();
 
-    // notification messages for various operating systems
-    switch (GUI.operating_system) {
-        case 'Windows':
-            break;
-        case 'MacOS':
-            // var main_chromium_version = window.navigator.appVersion.replace(/.*Chrome\/([0-9.]*).*/,"$1").split('.')[0];
-            break;
-        case 'ChromeOS':
-            break;
-        case 'Linux':
-            break;
-        case 'UNIX':
-            break;
-    }
-
-
-    if (GUI.operating_system !== 'ChromeOS') {
+    if (!GUI.isOther() && GUI.operating_system !== 'ChromeOS') {
         checkForConfiguratorUpdates();
     }
-
-    chrome.storage.local.get('logopen', function (result) {
-        if (result.logopen) {
-            $("#showlog").trigger('click');
-        }
-    });
 
     // log webgl capability
     // it would seem the webgl "enabling" through advanced settings will be ignored in the future
     // and webgl will be supported if gpu supports it by default (canary 40.0.2175.0), keep an eye on this one
-    var canvas = document.createElement('canvas');
+    document.createElement('canvas');
 
     // log library versions in console to make version tracking easier
-    console.log('Libraries: jQuery - ' + $.fn.jquery + ', d3 - ' + d3.version + ', three.js - ' + THREE.REVISION);
+    console.log(`Libraries: jQuery - ${$.fn.jquery}, d3 - ${d3.version}, three.js - ${THREE.REVISION}`);
 
     // Tabs
-    var ui_tabs = $('#tabs > ul');
+    $("#tabs ul.mode-connected li").click(function() {
+        // store the first class of the current tab (omit things like ".active")
+        ConfigStorage.set(
+            {lastTab: $(this).attr("class").split(' ')[0]}
+        );
+    });
+
+    const ui_tabs = $('#tabs > ul');
     $('a', ui_tabs).click(function () {
-        if ($(this).parent().hasClass('active') == false && !GUI.tab_switch_in_progress) { // only initialize when the tab isn't already active
-            var self = this,
-                tabClass = $(self).parent().prop('class');
+        if ($(this).parent().hasClass('active') === false && !GUI.tab_switch_in_progress) { // only initialize when the tab isn't already active
+            const self = this;
+            const tabClass = $(self).parent().prop('class');
 
-            var tabRequiresConnection = $(self).parent().hasClass('mode-connected');
+            const tabRequiresConnection = $(self).parent().hasClass('mode-connected');
 
-            var tab = tabClass.substring(4);
-            var tabName = $(self).text();
+            const tab = tabClass.substring(4);
+            const tabName = $(self).text();
 
             if (tabRequiresConnection && !CONFIGURATOR.connectionValid) {
                 GUI.log(i18n.getMessage('tabSwitchConnectionRequired'));
@@ -150,23 +223,26 @@ function startProcess() {
                 return;
             }
 
-            if (GUI.allowedTabs.indexOf(tab) < 0) {
+            if (GUI.allowedTabs.indexOf(tab) < 0 && tabName === "Firmware Flasher") {
+                if (GUI.connected_to || GUI.connecting_to) {
+                    $('a.connect').click();
+                } else {
+                    self.disconnect();
+                }
+                $('div.open_firmware_flasher a.flash').click();
+            } else if (GUI.allowedTabs.indexOf(tab) < 0) {
                 GUI.log(i18n.getMessage('tabSwitchUpgradeRequired', [tabName]));
                 return;
             }
 
-            $("#tabs ul.mode-connected li").click(function() {
-                // store the first class of the current tab (omit things like ".active") and strip the 'tab_' prefix.
-                var activeTab = $(this).attr("class").split(' ')[0].substring(4);
-                
-                chrome.storage.local.set({
-                    lastTab: activeTab
-                });
-            });
-        
             GUI.tab_switch_in_progress = true;
 
             GUI.tab_switch_cleanup(function () {
+                // disable active firmware flasher if it was active
+                if ($('div#flashbutton a.flash_state').hasClass('active') && $('div#flashbutton a.flash').hasClass('active')) {
+                    $('div#flashbutton a.flash_state').removeClass('active');
+                    $('div#flashbutton a.flash').removeClass('active');
+                }
                 // disable previously active tab highlight
                 $('li', ui_tabs).removeClass('active');
 
@@ -174,7 +250,7 @@ function startProcess() {
                 $(self).parent().addClass('active');
 
                 // detach listeners and remove element data
-                var content = $('#content');
+                const content = $('#content');
                 content.empty();
 
                 // display loading screen
@@ -184,13 +260,19 @@ function startProcess() {
                     GUI.tab_switch_in_progress = false;
                 }
 
-                checkSetupAnalytics(function (analytics) {
-                    analytics.sendAppView(tab);
+                checkSetupAnalytics(function (analyticsService) {
+                    analyticsService.sendAppView(tab);
                 });
 
                 switch (tab) {
                     case 'landing':
                         TABS.landing.initialize(content_ready);
+                        break;
+                    case 'changelog':
+                        TABS.staticTab.initialize('changelog', content_ready);
+                        break;
+                    case 'privacy_policy':
+                        TABS.staticTab.initialize('privacy_policy', content_ready);
                         break;
                     case 'firmware_flasher':
                         TABS.firmware_flasher.initialize(content_ready);
@@ -218,6 +300,9 @@ function startProcess() {
                         break;
                     case 'osd':
                         TABS.osd.initialize(content_ready);
+                        break;
+                    case 'vtx':
+                        TABS.vtx.initialize(content_ready);
                         break;
                     case 'power':
                         TABS.power.initialize(content_ready);
@@ -256,11 +341,11 @@ function startProcess() {
                         TABS.onboard_logging.initialize(content_ready);
                         break;
                     case 'cli':
-                        TABS.cli.initialize(content_ready);
+                        TABS.cli.initialize(content_ready, GUI.nwGui);
                         break;
 
                     default:
-                        console.log('Tab not found:' + tab);
+                        console.log(`Tab not found: ${tab}`);
                 }
             });
         }
@@ -270,7 +355,7 @@ function startProcess() {
 
     // options
     $('a#options').click(function () {
-        var el = $(this);
+        const el = $(this);
 
         if (!el.hasClass('active')) {
             el.addClass('active');
@@ -280,23 +365,23 @@ function startProcess() {
                 // translate to user-selected language
                 i18n.localizePage();
 
-                chrome.storage.local.get('rememberLastTab', function (result) {
+                ConfigStorage.get('rememberLastTab', function (result) {
                     $('div.rememberLastTab input')
                         .prop('checked', !!result.rememberLastTab)
-                        .change(function() { chrome.storage.local.set({rememberLastTab: $(this).is(':checked')}) })
+                        .change(function() { ConfigStorage.set({rememberLastTab: $(this).is(':checked')}); })
                         .change();
                 });
 
                 if (GUI.operating_system !== 'ChromeOS') {
-                    chrome.storage.local.get('checkForConfiguratorUnstableVersions', function (result) {
+                    ConfigStorage.get('checkForConfiguratorUnstableVersions', function (result) {
                         if (result.checkForConfiguratorUnstableVersions) {
                             $('div.checkForConfiguratorUnstableVersions input').prop('checked', true);
                         }
 
                         $('div.checkForConfiguratorUnstableVersions input').change(function () {
-                            var checked = $(this).is(':checked');
+                            const checked = $(this).is(':checked');
 
-                            chrome.storage.local.set({'checkForConfiguratorUnstableVersions': checked});
+                            ConfigStorage.set({'checkForConfiguratorUnstableVersions': checked});
 
                             checkForConfiguratorUpdates();
                         });
@@ -305,55 +390,50 @@ function startProcess() {
                     $('div.checkForConfiguratorUnstableVersions').hide();
                 }
 
-                chrome.storage.local.get('analyticsOptOut', function (result) {
+                ConfigStorage.get('analyticsOptOut', function (result) {
                     if (result.analyticsOptOut) {
                         $('div.analyticsOptOut input').prop('checked', true);
                     }
 
                     $('div.analyticsOptOut input').change(function () {
-                        var checked = $(this).is(':checked');
+                        const checked = $(this).is(':checked');
 
-                        chrome.storage.local.set({'analyticsOptOut': checked});
+                        ConfigStorage.set({'analyticsOptOut': checked});
 
-                        checkSetupAnalytics(function (analytics) {
+                        checkSetupAnalytics(function (analyticsService) {
                             if (checked) {
-                                analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'OptOut');
+                                analyticsService.sendEvent(analyticsService.EVENT_CATEGORIES.APPLICATION, 'OptOut');
                             }
 
-                            analytics.setOptOut(checked);
+                            analyticsService.setOptOut(checked);
 
                             if (!checked) {
-                                analytics.sendEvent(analytics.EVENT_CATEGORIES.APPLICATION, 'OptIn');
+                                analyticsService.sendEvent(analyticsService.EVENT_CATEGORIES.APPLICATION, 'OptIn');
                             }
                         });
                     }).change();
                 });
 
-                chrome.storage.local.get('userLanguageSelect', function (result) {
+                $('div.cliAutoComplete input')
+                    .prop('checked', CliAutoComplete.configEnabled)
+                    .change(function () {
+                        const checked = $(this).is(':checked');
 
-                    var userLanguage_e = $('div.userLanguage select');
-                    var languagesAvailables = i18n.getLanguagesAvailables();
-                    userLanguage_e.append('<option value="DEFAULT">' + i18n.getMessage('language_default') + '</option>');
-                    userLanguage_e.append('<option disabled>------</option>');
-                    languagesAvailables.forEach(function(element) {
-                        var languageName = i18n.getMessage('language_' + element);
-                        userLanguage_e.append('<option value="' + element + '">' + languageName + '</option>');
-                    });
-                    
-                    if (result.userLanguageSelect) {
-                        userLanguage_e.val(result.userLanguageSelect);
-                    }
-                    
-                    userLanguage_e.change(function () {
-                        var languageSelected = $(this).val();
+                        ConfigStorage.set({'cliAutoComplete': checked});
+                        CliAutoComplete.setEnabled(checked);
+                    }).change();
 
-                        // Select the new language, a restart is required
-                        chrome.storage.local.set({'userLanguageSelect': languageSelected});
-                    });
-                });
+                $('#darkThemeSelect')
+                    .val(DarkTheme.configEnabled)
+                    .change(function () {
+                        const value = parseInt($(this).val());
+
+                        ConfigStorage.set({'darkTheme': value});
+                        setDarkTheme(value);
+                    }).change();
 
                 function close_and_cleanup(e) {
-                    if (e.type == 'click' && !$.contains($('div#options-window')[0], e.target) || e.type == 'keyup' && e.keyCode == 27) {
+                    if (e.type === 'click' && !$.contains($('div#options-window')[0], e.target) || e.type === 'keyup' && e.keyCode === 27) {
                         $(document).unbind('click keyup', close_and_cleanup);
 
                         $('div#options-window').slideUp(250, function () {
@@ -372,8 +452,8 @@ function startProcess() {
 
     // listen to all input change events and adjust the value within limits if necessary
     $("#content").on('focus', 'input[type="number"]', function () {
-        var element = $(this),
-            val = element.val();
+        const element = $(this);
+        const val = element.val();
 
         if (!isNaN(val)) {
             element.data('previousValue', parseFloat(val));
@@ -382,41 +462,37 @@ function startProcess() {
 
     $("#content").on('keydown', 'input[type="number"]', function (e) {
         // whitelist all that we need for numeric control
-        var whitelist = [
+        const whitelist = [
             96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // numpad and standard number keypad
             109, 189, // minus on numpad and in standard keyboard
             8, 46, 9, // backspace, delete, tab
             190, 110, // decimal point
-            37, 38, 39, 40, 13 // arrows and enter
+            37, 38, 39, 40, 13, // arrows and enter
         ];
 
-        if (whitelist.indexOf(e.keyCode) == -1) {
+        if (whitelist.indexOf(e.keyCode) === -1) {
             e.preventDefault();
         }
     });
 
     $("#content").on('change', 'input[type="number"]', function () {
-        var element = $(this),
-            min = parseFloat(element.prop('min')),
-            max = parseFloat(element.prop('max')),
-            step = parseFloat(element.prop('step')),
-            val = parseFloat(element.val()),
-            decimal_places;
+        const element = $(this);
+        const min = parseFloat(element.prop('min'));
+        const max = parseFloat(element.prop('max'));
+        const step = parseFloat(element.prop('step'));
+
+        let val = parseFloat(element.val());
 
         // only adjust minimal end if bound is set
-        if (element.prop('min')) {
-            if (val < min) {
-                element.val(min);
-                val = min;
-            }
+        if (element.prop('min') && val < min) {
+            element.val(min);
+            val = min;
         }
 
         // only adjust maximal end if bound is set
-        if (element.prop('max')) {
-            if (val > max) {
-                element.val(max);
-                val = max;
-            }
+        if (element.prop('max') && val > max) {
+            element.val(max);
+            val = max;
         }
 
         // if entered value is illegal use previous value instead
@@ -426,37 +502,33 @@ function startProcess() {
         }
 
         // if step is not set or step is int and value is float use previous value instead
-        if (isNaN(step) || step % 1 === 0) {
-            if (val % 1 !== 0) {
-                element.val(element.data('previousValue'));
-                val = element.data('previousValue');
-            }
+        if ((isNaN(step) || step % 1 === 0) && val % 1 !== 0) {
+            element.val(element.data('previousValue'));
+            val = element.data('previousValue');
         }
 
         // if step is set and is float and value is int, convert to float, keep decimal places in float according to step *experimental*
         if (!isNaN(step) && step % 1 !== 0) {
-            decimal_places = String(step).split('.')[1].length;
+            const decimal_places = String(step).split('.')[1].length;
 
-            if (val % 1 === 0) {
-                element.val(val.toFixed(decimal_places));
-            } else if (String(val).split('.')[1].length != decimal_places) {
+            if (val % 1 === 0 || String(val).split('.')[1].length !== decimal_places) {
                 element.val(val.toFixed(decimal_places));
             }
         }
     });
 
     $("#showlog").on('click', function () {
-        var state = $(this).data('state');
+        let state = $(this).data('state');
         if (state) {
             $("#log").animate({height: 27}, 200, function () {
-                var command_log = $('div#log');
+                const command_log = $('div#log');
                 command_log.scrollTop($('div.wrapper', command_log).height());
             });
             $("#log").removeClass('active');
             $("#content").removeClass('logopen');
             $(".tab_container").removeClass('logopen');
             $("#scrollicon").removeClass('active');
-            chrome.storage.local.set({'logopen': false});
+            ConfigStorage.set({'logopen': false});
 
             state = false;
         } else {
@@ -465,32 +537,61 @@ function startProcess() {
             $("#content").addClass('logopen');
             $(".tab_container").addClass('logopen');
             $("#scrollicon").addClass('active');
-            chrome.storage.local.set({'logopen': true});
+            ConfigStorage.set({'logopen': true});
 
             state = true;
         }
         $(this).text(state ? i18n.getMessage('logActionHide') : i18n.getMessage('logActionShow'));
         $(this).data('state', state);
     });
-};
+
+    ConfigStorage.get('logopen', function (result) {
+        if (result.logopen) {
+            $("#showlog").trigger('click');
+        }
+    });
+
+    ConfigStorage.get('cliAutoComplete', function (result) {
+        CliAutoComplete.setEnabled(typeof result.cliAutoComplete == 'undefined' || result.cliAutoComplete); // On by default
+    });
+
+    ConfigStorage.get('darkTheme', function (result) {
+        if (result.darkTheme === undefined || typeof result.darkTheme !== "number") {
+            // sets dark theme to auto if not manually changed
+            setDarkTheme(2);
+        } else {
+            setDarkTheme(result.darkTheme);
+        }
+    });
+}
+
+function setDarkTheme(enabled) {
+    DarkTheme.setConfig(enabled);
+
+    checkSetupAnalytics(function (analyticsService) {
+        analyticsService.sendEvent(analyticsService.EVENT_CATEGORIES.APPLICATION, 'DarkTheme', enabled);
+    });
+}
 
 function checkForConfiguratorUpdates() {
-    var releaseChecker = new ReleaseChecker('configurator', 'https://api.github.com/repos/cleanflight/cleanflight-configurator/releases');
+    const releaseChecker = new ReleaseChecker('configurator', 'https://api.github.com/repos/cleanflight/cleanflight-configurator/releases');
 
     releaseChecker.loadReleaseData(notifyOutdatedVersion);
 }
 
 function notifyOutdatedVersion(releaseData) {
-    chrome.storage.local.get('checkForConfiguratorUnstableVersions', function (result) {
-        var showUnstableReleases = false;
+    ConfigStorage.get('checkForConfiguratorUnstableVersions', function (result) {
+        let showUnstableReleases = false;
         if (result.checkForConfiguratorUnstableVersions) {
             showUnstableReleases = true;
         }
-         var versions = releaseData.filter(function (version) {
-             var semVerVersion = semver.parse(version.tag_name);
-             if (semVerVersion && (showUnstableReleases || semVerVersion.prerelease.length === 0)) {
-                 return version;
-             }
+        const versions = releaseData.filter(function (version) {
+            const semVerVersion = semver.parse(version.tag_name);
+            if (semVerVersion && (showUnstableReleases || semVerVersion.prerelease.length === 0)) {
+                return version;
+            } else {
+                return null;
+            }
          }).sort(function (v1, v2) {
             try {
                 return semver.compare(v2.tag_name, v1.tag_name);
@@ -499,12 +600,18 @@ function notifyOutdatedVersion(releaseData) {
             }
         });
 
-        if (versions.length > 0 && semver.lt(getManifestVersion(), versions[0].tag_name)) {
-            GUI.log(i18n.getMessage('configuratorUpdateNotice', [versions[0].tag_name, versions[0].html_url]));
+        if (versions.length > 0) {
+            CONFIGURATOR.latestVersion = versions[0].tag_name;
+            CONFIGURATOR.latestVersionReleaseUrl = versions[0].html_url;
+        }
 
-            var dialog = $('.dialogConfiguratorUpdate')[0];
+        if (semver.lt(CONFIGURATOR.version, CONFIGURATOR.latestVersion)) {
+            const message = i18n.getMessage('configuratorUpdateNotice', [CONFIGURATOR.latestVersion, CONFIGURATOR.latestVersionReleaseUrl]);
+            GUI.log(message);
 
-            $('.dialogConfiguratorUpdate-content').html(i18n.getMessage('configuratorUpdateNotice', [versions[0].tag_name, versions[0].html_url]));
+            const dialog = $('.dialogConfiguratorUpdate')[0];
+
+            $('.dialogConfiguratorUpdate-content').html(message);
 
             $('.dialogConfiguratorUpdate-closebtn').click(function() {
                 dialog.close();
@@ -513,7 +620,7 @@ function notifyOutdatedVersion(releaseData) {
             $('.dialogConfiguratorUpdate-websitebtn').click(function() {
                 dialog.close();
 
-                window.open(versions[0].html_url, '_blank');
+                window.open(CONFIGURATOR.latestVersionReleaseUrl, '_blank');
             });
 
             dialog.showModal();
@@ -526,142 +633,184 @@ function update_packet_error(caller) {
 }
 
 function microtime() {
-    var now = new Date().getTime() / 1000;
-
-    return now;
+    return new Date().getTime() / 1000;
 }
 
 function millitime() {
-    var now = new Date().getTime();
-
-    return now;
+    return new Date().getTime();
 }
 
-var DEGREE_TO_RADIAN_RATIO = Math.PI / 180;
+const DEGREE_TO_RADIAN_RATIO = Math.PI / 180;
 
 function degToRad(degrees) {
     return degrees * DEGREE_TO_RADIAN_RATIO;
 }
 
 function bytesToSize(bytes) {
+
+    let outputBytes;
+
     if (bytes < 1024) {
-        bytes = bytes + ' Bytes';
+        outputBytes = `${bytes} Bytes`;
     } else if (bytes < 1048576) {
-        bytes = (bytes / 1024).toFixed(3) + ' KB';
+        outputBytes = `${(bytes / 1024).toFixed(3)} KB`;
     } else if (bytes < 1073741824) {
-        bytes = (bytes / 1048576).toFixed(3) + ' MB';
+        outputBytes = `${(bytes / 1048576).toFixed(3)} MB`;
     } else {
-        bytes = (bytes / 1073741824).toFixed(3) + ' GB';
+        outputBytes = `${(bytes / 1073741824).toFixed(3)} GB`;
     }
 
-    return bytes;
+    return outputBytes;
+}
+
+function isExpertModeEnabled() {
+    return true; // always on in CF configurator.
+}
+
+function updateTabList(features) {
+// CF - No expert mode, tab list is also depends on the type of device connected (e.g. OSD or FC) 
+/* 
+    if (isExpertModeEnabled()) {
+        $('#tabs ul.mode-connected li.tab_failsafe').show();
+        $('#tabs ul.mode-connected li.tab_adjustments').show();
+        $('#tabs ul.mode-connected li.tab_servos').show();
+        $('#tabs ul.mode-connected li.tab_sensors').show();
+        $('#tabs ul.mode-connected li.tab_logging').show();
+    } else {
+        $('#tabs ul.mode-connected li.tab_failsafe').hide();
+        $('#tabs ul.mode-connected li.tab_adjustments').hide();
+        $('#tabs ul.mode-connected li.tab_servos').hide();
+        $('#tabs ul.mode-connected li.tab_sensors').hide();
+        $('#tabs ul.mode-connected li.tab_logging').hide();
+    }
+
+    if (features.isEnabled('GPS') && isExpertModeEnabled()) {
+        $('#tabs ul.mode-connected li.tab_gps').show();
+    } else {
+        $('#tabs ul.mode-connected li.tab_gps').hide();
+    }
+
+    if (features.isEnabled('LED_STRIP')) {
+        $('#tabs ul.mode-connected li.tab_led_strip').show();
+    } else {
+        $('#tabs ul.mode-connected li.tab_led_strip').hide();
+    }
+
+    if (features.isEnabled('TRANSPONDER')) {
+        $('#tabs ul.mode-connected li.tab_transponder').show();
+    } else {
+        $('#tabs ul.mode-connected li.tab_transponder').hide();
+    }
+
+    if (features.isEnabled('OSD')) {
+        $('#tabs ul.mode-connected li.tab_osd').show();
+    } else {
+        $('#tabs ul.mode-connected li.tab_osd').hide();
+    }
+*/
+    if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
+        $('#tabs ul.mode-connected li.tab_power').show();
+    } else {
+        $('#tabs ul.mode-connected li.tab_power').hide();
+    }
+
+    if (semver.gte(CONFIG.apiVersion, "1.42.0")) {
+        $('#tabs ul.mode-connected li.tab_vtx').show();
+    } else {
+        $('#tabs ul.mode-connected li.tab_vtx').hide();
+    }
+
 }
 
 function zeroPad(value, width) {
-    value = "" + value;
 
-    while (value.length < width) {
-        value = "0" + value;
+    let valuePadded = String(value);
+
+    while (valuePadded.length < width) {
+        valuePadded = `0${value}`;
     }
 
-    return value;
+    return valuePadded;
 }
 
 function generateFilename(prefix, suffix) {
-    var date = new Date();
-    var filename = prefix;
+    const date = new Date();
+    let filename = prefix;
 
     if (CONFIG) {
         if (CONFIG.flightControllerIdentifier) {
-            filename = CONFIG.flightControllerIdentifier + '_' + filename;
+            filename = `${CONFIG.flightControllerIdentifier}_${filename}`;
         }
         if(CONFIG.name && CONFIG.name.trim() !== '') {
-            filename = filename + '_' + CONFIG.name.trim().replace(' ', '_');
+            filename = `${filename}_${CONFIG.name.trim().replace(' ', '_')}`;
         }
     }
 
-    filename = filename + '_' + date.getFullYear()
-        + zeroPad(date.getMonth() + 1, 2)
-        + zeroPad(date.getDate(), 2)
-        + '_' + zeroPad(date.getHours(), 2)
-        + zeroPad(date.getMinutes(), 2)
-        + zeroPad(date.getSeconds(), 2);
+    const yyyymmdd = `${date.getFullYear()}${zeroPad(date.getMonth() + 1, 2)}${zeroPad(date.getDate(), 2)}`;
+    const hhmmss = `${zeroPad(date.getHours(), 2)}${zeroPad(date.getMinutes(), 2)}${zeroPad(date.getSeconds(), 2)}`;
+    filename = `${filename}_${yyyymmdd}_${hhmmss}`;
 
-    return filename + '.' + suffix;
+    return `${filename}.${suffix}`;
 }
 
-function getFirmwareVersion(firmwareVersion, firmwareId, hardwareId) {
-    var versionText = '';
+function getTargetVersion(hardwareId) {
+    let versionText = '';
+
+    if (hardwareId) {
+       versionText = `${i18n.getMessage('versionLabelTarget')}: ${hardwareId}`;
+    }
+
+    return versionText;
+}
+
+function getFirmwareVersion(firmwareVersion, firmwareId) {
+    let versionText = '';
 
     if (firmwareVersion) {
-        versionText += i18n.getMessage('versionLabelFirmware') + ': ' + firmwareId + ' ' + firmwareVersion;
-
-        if (hardwareId) {
-           versionText += ' (' + i18n.getMessage('versionLabelTarget') + ': ' + hardwareId + ')';
-        }
+        versionText = `${i18n.getMessage('versionLabelFirmware')}: ${firmwareId} ${firmwareVersion}`;
     }
 
     return versionText;
 }
 
 function getConfiguratorVersion() {
-    return i18n.getMessage('versionLabelConfigurator') + ': ' + getManifestVersion();
+    return `${i18n.getMessage('versionLabelConfigurator')}: ${CONFIGURATOR.version}`;
 }
 
 function updateTopBarVersion(firmwareVersion, firmwareId, hardwareId) {
-    var versionText = getConfiguratorVersion() + '<br />';
 
-    versionText = versionText + getFirmwareVersion(firmwareVersion, firmwareId, hardwareId);
+    const configuratorVersion = getConfiguratorVersion();
+    const firmwareVersionAndId = getFirmwareVersion(firmwareVersion, firmwareId);
+    const targetVersion = getTargetVersion(hardwareId);
+
+    const versionText = `${configuratorVersion}<br />${firmwareVersionAndId}<br />${targetVersion}`;
 
     $('#logo .logo_text').html(versionText);
 }
 
 function updateStatusBarVersion(firmwareVersion, firmwareId, hardwareId) {
-    var versionText = '';
+    let versionText = '';
 
-    versionText = versionText + getFirmwareVersion(firmwareVersion, firmwareId, hardwareId);
+    versionText = versionText + getFirmwareVersion(firmwareVersion, firmwareId);
 
     if (versionText !== '') {
-        versionText = versionText + ', ';
+        versionText = `${versionText}, `;
     }
 
-    versionText = versionText + getConfiguratorVersion() + ' (' + CONFIGURATOR.gitChangesetId + ')';
+    const targetVersion = getTargetVersion(hardwareId);
+    versionText = versionText + targetVersion;
+
+    if (targetVersion !== '') {
+        versionText = `${versionText}, `;
+    }
+
+    versionText = `${versionText}${getConfiguratorVersion()} (${CONFIGURATOR.gitChangesetId})`;
 
     $('#status-bar .version').text(versionText);
 }
 
-function getManifestVersion(manifest) {
-    if (!manifest) {
-        manifest = chrome.runtime.getManifest();
-    }
-
-    var version = manifest.version_name;
-    if (!version) {
-        version = manifest.version;
-    }
-
-    return version;
-}
-
-function openNewWindowsInExternalBrowser() {
-    try {
-        var gui = require('nw.gui');
-
-        //Get the current window
-        var win = gui.Window.get();
-
-        //Listen to the new window event
-        win.on('new-win-policy', function (frame, url, policy) {
-          gui.Shell.openExternal(url);
-          policy.ignore();
-        });
-    } catch (ex) {
-        console.log("require does not exist, maybe inside chrome");
-    }
-}
-
 function showErrorDialog(message) {
-   var dialog = $('.dialogError')[0];
+   const dialog = $('.dialogError')[0];
 
     $('.dialogError-content').html(message);
 

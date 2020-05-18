@@ -1,3 +1,7 @@
+:root {
+    --accent: #59aa29;
+}
+
 #logo {
     background-image: url(../images/cf/cf-light-wide-2.svg);
 }
@@ -26,21 +30,11 @@
 }
 
 #tabs li.active a {
-    background-color: #59aa29;
     color: #fff;
     text-shadow: 0px 1px rgba(0, 0, 0, 0.45);
 }
 
-#tabs li.active a:hover {
-    background-color: #59aa29;
-}
-
-.tab_title {
-    border-bottom: 1px solid #59aa29;
-}
-
 .content_toolbar .btn a {
-    background-color: #59aa29;
     border: 1px solid #4c8829;
     color: #fff;
     text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
@@ -63,8 +57,6 @@
 }
 
 .fixed_band .save_btn a {
-
-    background-color: #59aa29;
     border: 1px solid #4c8829;
     color: #fff;
 }
@@ -74,9 +66,9 @@
 }
 
 .default_btn a {
-    background-color: #fff;
+    background-color: var(--accent);
     border: 1px solid #59aa29;
-    color: #59aa29;
+    color: #fff;
 }
 
 .default_btn a.disabled {
@@ -102,7 +94,6 @@
 }
 
 .green a {
-    background-color: #59aa29;
     text-shadow: 0px 1px rgba(0, 0, 0, 0.25);
     color: #fff;
     border: 1px solid #59aa29;
@@ -115,10 +106,6 @@
     color: #fff;
 }
 
-.gps_true {
-    background-color: #59aa29;
-}
-
 .connect_b a.connect {
     background-color: #56ac1d;
     border: 1px solid #5bbb1b;
@@ -128,18 +115,27 @@
     background-color: #68c02e;
 }
 
-.dataflash-free_global {
-    background-color: #59AA29;
+.firmware_b a.flash {
+    background-color: #56ac1d;
+    border: 1px solid #5bbb1b;
 }
 
-.battery-status {
-    background-color: #59AA29;
+.firmware_b a.flash:hover {
+    background-color: #68c02e;
 }
 
 button.active {
     background-color: #6ac435;
     border: 1px solid #4d9324;
     color: #000;
+}
+
+.regular-button {
+    border: 1px solid #5bbb1b;
+}
+
+dialog .dialog_toolbar .btn a {
+    border: 1px solid #5bbb1b;
 }
 
 .message-positive {
@@ -168,32 +164,47 @@ li.active .ic_welcome {
 
 .gyroicon.active {
     background-image: url(../images/cf/icons/sensor_gyro_on.png);
-    color: #61d514;
 }
 
 .accicon.active {
     background-image: url(../images/cf/icons/sensor_acc_on.png);
-    color: #61d514;
 }
 
 .magicon.active {
     background-image: url(../images/cf/icons/sensor_mag_on.png);
-    color: #61d514;
 }
 
 .baroicon.active {
     background-image: url(../images/cf/icons/sensor_baro_on.png);
-    color: #61d514;
 }
 
 .gpsicon.active {
     background-image: url(../images/cf/icons/sensor_sat_on.png);
-    color: #61d514;
 }
 
 .sonaricon.active {
     background-image: url(../images/cf/icons/sensor_sonar_on.png);
-    color: #61d514;
+}
+
+.armedicon {
+    background-image: url(../images/icons/cf_icon_armed_grey.svg);
+}
+.armedicon.active {
+    background-image: url(../images/cf/icons/cf_icon_armed_active.svg);
+}
+
+.failsafeicon {
+    background-image: url(../images/icons/cf_icon_failsafe_grey.svg);
+}
+.failsafeicon.active {
+    background-image: url(../images/cf/icons/cf_icon_failsafe_active.svg);
+}
+
+.linkicon {
+    background-image: url(../images/icons/cf_icon_link_grey.svg);
+}
+.linkicon.active {
+    background-image: url(../images/cf/icons/cf_icon_link_active.svg);
 }
 
 .tab-landing .content_wrapper {

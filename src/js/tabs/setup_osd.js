@@ -54,7 +54,7 @@ TABS.setup_osd.initialize = function (callback) {
                 element.text(osdVideoMode);
                 
                 element = $('.camera-connected');
-                element.text(OSD_VIDEO_STATE.camera_connected ? i18n.getMessage('osdSetupCameraConnectedValueYes') : i18n.getMessage('osdSetupCameraConnectedValueNo'));
+                element.text(OSD_VIDEO_STATE.camera_connected ? i18n.getMessage('yes') : i18n.getMessage('No'));
             });
             */
         }

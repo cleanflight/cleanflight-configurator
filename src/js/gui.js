@@ -8,15 +8,17 @@ var GUI_control = function () {
     this.connecting_to = false;
     this.connected_to = false;
     this.connect_lock = false;
-    this.active_tab;
+    this.active_tab = null;
     this.tab_switch_in_progress = false;
-    this.operating_system;
+    this.operating_system = null;
     this.interval_array = [];
     this.timeout_array = [];
-    
+
     this.defaultAllowedTabsWhenDisconnected = [
         'landing',
+        'changelog',
         'firmware_flasher',
+        'privacy_policy',
         'help'
     ];
     this.defaultAllowedFCTabsWhenConnected = [
@@ -40,14 +42,9 @@ var GUI_control = function () {
         'receiver',
         'sensors',
         'servos',
+        'vtx',
     ];
-    this.defaultAllowedOSDTabsWhenConnected = [
-        'setup_osd',
-        'osd',
-        'power',
-        'sensors',
-        'transponder',
-    ];
+
     this.allowedTabs = this.defaultAllowedTabsWhenDisconnected;
 
     // check which operating system is user running
@@ -57,6 +54,25 @@ var GUI_control = function () {
     else if (navigator.appVersion.indexOf("Linux") != -1)   this.operating_system = "Linux";
     else if (navigator.appVersion.indexOf("X11") != -1)     this.operating_system = "UNIX";
     else this.operating_system = "Unknown";
+
+    // Check the method of execution
+    this.nwGui = null;
+    try {
+      this.nwGui = require('nw.gui');
+      this.Mode = GUI_Modes.NWJS;
+    } catch (ex) {
+      if (window.chrome && chrome.storage && chrome.storage.local) {
+        this.Mode = GUI_Modes.ChromeApp;
+      } else {
+        this.Mode = GUI_Modes.Other;
+      }
+    }
+};
+
+const GUI_Modes = {
+  NWJS: "NW.js",
+  ChromeApp: "Chrome",
+  Other: "Other"
 };
 
 // Timer managing methods
@@ -199,7 +215,7 @@ GUI_control.prototype.timeout_remove = function (name) {
     return false;
 };
 
-// no input paremeters
+// no input parameters
 // return = returns timers killed in last call
 GUI_control.prototype.timeout_kill_all = function () {
     var timers_killed = 0;
@@ -243,7 +259,7 @@ GUI_control.prototype.tab_switch_cleanup = function (callback) {
     MSP.callbacks_cleanup(); // we don't care about any old data that might or might not arrive
     GUI.interval_kill_all(); // all intervals (mostly data pulling) needs to be removed on tab switch
 
-    if (this.active_tab) {
+    if (this.active_tab && TABS[this.active_tab]) {
         TABS[this.active_tab].cleanup(callback);
     } else {
         callback();
@@ -253,9 +269,11 @@ GUI_control.prototype.tab_switch_cleanup = function (callback) {
 GUI_control.prototype.switchery = function() {
     $('.togglesmall').each(function(index, elem) {
         var switchery = new Switchery(elem, {
-          size: 'small'
+          size: 'small',
+          color: 'var(--accent)',
+          secondaryColor: 'var(--switcherysecond)'
         });
-        $(elem).on("change", function (evt) {
+        $(elem).on("change", function () {
             switchery.setPosition();
         });
         $(elem).removeClass('togglesmall');
@@ -263,8 +281,10 @@ GUI_control.prototype.switchery = function() {
 
     $('.toggle').each(function(index, elem) {
         var switchery = new Switchery(elem, {
+            color: 'var(--accent)',
+            secondaryColor: 'var(--switcherysecond)'
         });
-        $(elem).on("change", function (evt) {
+        $(elem).on("change", function () {
             switchery.setPosition();
         });
         $(elem).removeClass('toggle');
@@ -272,9 +292,11 @@ GUI_control.prototype.switchery = function() {
 
     $('.togglemedium').each(function(index, elem) {
         var switchery = new Switchery(elem, {
-            className: 'switcherymid'
+            className: 'switcherymid',
+            color: 'var(--accent)',
+            secondaryColor: 'var(--switcherysecond)'
          });
-         $(elem).on("change", function (evt) {
+         $(elem).on("change", function () {
              switchery.setPosition();
          });
          $(elem).removeClass('togglemedium');
@@ -290,7 +312,7 @@ GUI_control.prototype.content_ready = function (callback) {
         var documentationButton = $('div#content #button-documentation');
         if (CONFIG.flightControllerIdentifier == 'BTFL') {
             documentationButton.html("Wiki");
-            documentationButton.attr("href","https://github.com/betaflight/betaflight/wiki");
+            documentationButton.attr("href","https://github.com/cleanflight/cleanflight/wiki");
         }
         if (CONFIG.flightControllerIdentifier == 'CLFL') {
             documentationButton.html("Documentation for " + CONFIG.flightControllerVersion);
@@ -299,13 +321,13 @@ GUI_control.prototype.content_ready = function (callback) {
     }
 
     // loading tooltip
-    jQuery(document).ready(function($) {
-        $('cf_tip').each(function() { // Grab all ".cf_tip" elements, and for each...
-        log(this); // ...print out "this", which now refers to each ".cf_tip" DOM element
-    });
+    jQuery(document).ready(function() {
 
-    $('.cf_tip').each(function() {
-        $(this).jBox('Tooltip', {            
+        new jBox('Tooltip', {
+            attach: '.cf_tip',
+            trigger: 'mouseenter',
+            closeOnMouseleave: true,
+            closeOnClick: 'body',
             delayOpen: 100,
             delayClose: 100,
             position: {
@@ -313,20 +335,33 @@ GUI_control.prototype.content_ready = function (callback) {
                 y: 'center'
             },
             outside: 'x'
-            });
+        });
+
+        new jBox('Tooltip', {
+            theme: 'Widetip',
+            attach: '.cf_tip_wide',
+            trigger: 'mouseenter',
+            closeOnMouseleave: true,
+            closeOnClick: 'body',
+            delayOpen: 100,
+            delayClose: 100,
+            position: {
+                x: 'right',
+                y: 'center'
+            },
+            outside: 'x'
         });
     });
 
-
     if (callback) callback();
-}
+};
 
 GUI_control.prototype.selectDefaultTabWhenConnected = function() {
     var defaultTab = GUI.allowedTabs[0];
 
-    chrome.storage.local.get(['rememberLastTab', 'lastTab'], function (result) {
-        if (!(result.rememberLastTab 
-                && !!result.lastTab 
+    ConfigStorage.get(['rememberLastTab', 'lastTab'], function (result) {
+        if (!(result.rememberLastTab
+                && !!result.lastTab
                 && result.lastTab.substring(4) != "cli")) {
             
             $('#tabs ul.mode-connected .tab_' + defaultTab + ' a').click();
@@ -337,8 +372,19 @@ GUI_control.prototype.selectDefaultTabWhenConnected = function() {
             tab = defaultTab;
         }
         $("#tabs ul.mode-connected .tab_" + tab + " a").click();
-    });    
+    });
 };
+
+GUI_control.prototype.isChromeApp = function () {
+  return this.Mode == GUI_Modes.ChromeApp;
+};
+GUI_control.prototype.isNWJS = function () {
+  return this.Mode == GUI_Modes.NWJS;
+};
+GUI_control.prototype.isOther = function () {
+  return this.Mode == GUI_Modes.Other;
+};
+
 
 // initialize object into GUI variable
 var GUI = new GUI_control();

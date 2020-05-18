@@ -1,7 +1,8 @@
 {
     "manifest_version": 2,
-    "minimum_chrome_version": "38",
-    "version": "2.5.0",
+    "minimum_chrome_version": "49",
+    "version": "2.6.0",
+    "version_name": "2.6.0-RC1",
     "author": "Cleanflight Project",
     "name": "Cleanflight - Configurator",
     "short_name": "Cleanflight",
@@ -13,12 +14,12 @@
 
     "app": {
         "background": {
-            "scripts": ["js/eventPage.js"],
+            "scripts": ["js/chromeAppEventPage.js"],
             "persistent": false
         }
     },
     "permissions": [
-        "https://maps.googleapis.com/*",
+        "https://api.openstreetmap.org/",
         "https://*.github.com/",
         "https://*.githubusercontent.com/",
         "http://*.cleanflight.com/",
@@ -28,13 +29,15 @@
         "serial",
         "usb",
         "storage",
+        "clipboardRead",
         "fileSystem",
         "fileSystem.write",
         "fileSystem.retainEntries",
         "notifications",
         "alwaysOnTopWindows",
         {"usbDevices": [
-            {"vendorId": 1155, "productId": 57105}
+            {"vendorId": 1155, "productId": 57105},
+            {"vendorId": 10473, "productId": 393}
         ]},
         "webview",
         "unlimitedStorage"
@@ -48,7 +51,12 @@
         "partitions": [
             {
                 "name": "map",
-                "accessible_resources" : ["tabs/map.html", "js/tabs/map.js", "/images/icons/cf_icon_position.png"]
+                "accessible_resources" : ["tabs/map.html", 
+                                          "js/tabs/map.js", 
+                                          "/js/libraries/openlayers/ol.css", 
+                                          "/js/libraries/openlayers/ol.js",
+                                          "/images/icons/cf_icon_position.png",
+                                          "/images/icons/cf_icon_position_nofix.png"]
             }
         ]
     },

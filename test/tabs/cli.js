@@ -1,5 +1,12 @@
-describe('TABS.cli', () => {
+class MockAnalytics {
+    EVENT_CATEGORIES = {};
 
+    sendEvent() {}
+}
+
+var analytics;
+
+describe('TABS.cli', () => {
     function toArrayBuffer(string) {
         var bufferOut = new ArrayBuffer(string.length);
         var bufView = new Uint8Array(bufferOut);
@@ -14,12 +21,16 @@ describe('TABS.cli', () => {
     describe('output', () => {
         const cliTab = $('<div>').addClass('tab-cli');
         const cliOutput = $('<div>').addClass('wrapper')
-        const cliPrompt = $('<textarea>');
+        const cliPrompt = $('<textarea name="commands">');
 
         cliTab.append($('<div>').addClass('window').append(cliOutput));
         cliTab.append(cliPrompt);
 
+        CliAutoComplete.setEnabled(false); // not testing the client-side autocomplete
+
         before(() => {
+            analytics = new MockAnalytics();
+
             $('body')
                 .append(cliTab);
 
@@ -70,7 +81,7 @@ describe('TABS.cli', () => {
             expect(cliPrompt.val()).to.equal('serialpassthrough');
         });
 
-        it("escape characters (i.e. \033[K) are skipped", () => {
+        it("escape characters are skipped", () => {
             TABS.cli.read({
                 data: toArrayBuffer('\033[K')
             });
@@ -99,7 +110,7 @@ describe('TABS.cli', () => {
     describe('input', () => {
         const content = $('<div>').attr('id', 'content');
         const cliTab = $('<div>').addClass('tab-cli');
-        const cliPrompt = $('<textarea>');
+        const cliPrompt = $('<textarea name="commands">');
         cliTab.append(cliPrompt);
 
         beforeEach(() => {

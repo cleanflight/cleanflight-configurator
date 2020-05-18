@@ -9,14 +9,24 @@
     margin-bottom: 10px;
 }
 
+.tab-auxiliary .toolbox {
+    font-weight: bold;
+    color: rgb(105, 99, 99);
+    padding: 10px 5px;
+}
+
 .tab-auxiliary .range .marker, .tab-auxiliary .channel-slider .noUi-connect {
+    background: var(--accent);
     border-radius: 3px;
 }
 
 .tab-auxiliary .mode.on .info {
+    background: var(--accent);
+    color: black;
 }
 
 .tab-auxiliary .mode.on:nth-child(odd) .info {
+    background: var(--accent);
 }
 
 .tab-auxiliary .mode.off .info {
@@ -28,6 +38,14 @@
 .tab-auxiliary .mode.off:nth-child(odd) .info {
     background: #cb4747;
     background: #828885;
+}
+
+.tab-auxiliary .mode.disabled .info {
+    background: var(--error);
+    color: var(--quietText);}
+
+.tab-auxiliary .mode.disabled:nth-child(odd) .info {
+    background: var(--error);
 }
 
 #tab-auxiliary-templates {
@@ -46,13 +64,14 @@
 }
 
 .tab-auxiliary .mode .name {
-    min-height: 50px;
-    padding: 13px 0px;
+    min-height: 80px;
+    padding: 5px 0px;
 }
 
 .tab-auxiliary .mode .info {
     text-align: center;
     width: 10%;
+    white-space: nowrap;
     position: relative;
     background-color: #e4e4e4;
     border-bottom: 5px solid white;
@@ -67,13 +86,20 @@
 
 .tab-auxiliary .mode .info .buttons {
     position: absolute;
-    bottom: 14px;
+    bottom: 0px;
     width: 100%;
 }
 
 .tab-auxiliary .mode .info .buttons a {
     padding: 2px 5px;
     border-radius: 4px;
+    cursor: pointer;
+    margin: 3px;
+    display: block;
+}
+
+.tab-auxiliary .mode .info .buttons a:hover {
+    background-color: darkgrey;
 }
 
 .tab-auxiliary .ranges {
@@ -88,7 +114,18 @@
     padding-top: 15px;
     padding-left: 0px;
     border-top: 1px solid #fff;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid var(--subtleAccent);
+    background-color: #ececec;
+    padding-bottom: 5px;
+}
+
+.tab-auxiliary .link {
+    position: relative;
+    height: 70px;
+    padding-top: 15px;
+    padding-left: 15px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid var(--subtleAccent);
     background-color: #ececec;
     padding-bottom: 5px;
 }
@@ -98,6 +135,14 @@
 }
 
 .tab-auxiliary .range:last-child {
+    border-bottom: 0px;
+}
+
+.tab-auxiliary .link:first-child {
+    border-top: 0px;
+}
+
+.tab-auxiliary .link:last-child {
     border-bottom: 0px;
 }
 
@@ -115,14 +160,18 @@
     float: left;
     min-width: 90px;
     text-align: center;
-}
-
-.tab-auxiliary .mode .range .channelInfo .limits {
-    padding: 10px 0px;
+    margin-top: -4px;
+    margin-left: 5px;
 }
 
 .tab-auxiliary .range .channel {
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
+    margin-bottom: 3px;
+}
+
+.tab-auxiliary .logic {
+    border: 1px solid var(--subtleAccent);
     border-radius: 3px;
 }
 
@@ -133,13 +182,24 @@
     height: 13px;
     width: 6px;
     margin-left: -3px;
+    z-index: 1000;
 }
 
 .tab-auxiliary .range .channel-slider {
     float: left;
-    width: 80%;
+    width: 77%;
     margin-left: 20px;
-    margin-top: 1px;
+    margin-top: -4px;
+}
+
+.tab-auxiliary .mode .link .modeInfo {
+    float: left;
+}
+
+.tab-auxiliary .link .linkedTo {
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
+    margin-bottom: 3px;
 }
 
 .tab-auxiliary>.buttons {
@@ -198,11 +258,6 @@
 .tab-auxiliary .save_btn a {
     line-height: 28px;
 }
-
-.tab-auxiliary .spacebottom {
-    margin-bottom: 15px;
-}
-
 
 @media only screen and (max-width: 1055px) , only screen and (max-device-width: 1055px) {
     .tab-auxiliary .fixed_band {

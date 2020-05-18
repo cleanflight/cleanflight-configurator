@@ -2,13 +2,10 @@
     <div class="content_wrapper">
         <div i18n="tabFailsafe" class="tab_title"></div>
         <div class="cf_doc_version_bt">
-            <a id="button-documentation" href="https://github.com/cleanflight/cleanflight/releases" target="_blank"></a>
+            <a id="button-documentation" href="https://github.com/cleanflight/cleanflight/releases" target="_blank" rel="noopener noreferrer"></a>
         </div>
         <div class="note">
-            <div class="note_spacer">
                 <p i18n="failsafeFeaturesHelpNew"></p>
-                </p>
-            </div>
         </div>
         <div class="leftWrapper">
             <div class="gui_box grey">
@@ -47,7 +44,7 @@
                     <div class="spacer_box_title" i18n="failsafeSwitchTitle"></div>
                 </div>
                 <div class="spacer_box">
-                    <div class="selectSwitchMode">
+                    <div class="number">
                         <label>
                             <select class="switchMode" name="failsafe_switch_mode">
                                 <option value="0" i18n="failsafeSwitchOptionStage1"></option>
@@ -85,7 +82,7 @@
                         <div class="helpicon cf_tip" i18n_title="failsafeDelayHelp"></div>
                     </div>
                     <div class="number stage2">
-                        <label> <input type="number" name="failsafe_throttle_low_delay" min="0" max="2000" /> <span
+                        <label> <input type="number" name="failsafe_throttle_low_delay" min="0" max="300" /> <span
                             i18n="failsafeThrottleLowItem"></span>
                         </label>
                         <div class="helpicon cf_tip" i18n_title="failsafeThrottleLowHelp"></div>
@@ -108,10 +105,92 @@
                                 </label>
                             </div>
                             <div class="number">
-                                <label> <input type="number" name="failsafe_off_delay" min="0" max="2000" /> <span
+                                <label> <input type="number" name="failsafe_off_delay" min="0" max="200" /> <span
                                     i18n="failsafeOffDelayItem"></span>
                                 </label>
                                 <div class="helpicon cf_tip" i18n_title="failsafeOffDelayHelp"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="radioarea pro4 stage2">
+                        <div class="radiobuttons"><input class="procedure" id="gps_rescue" name="group1" type="radio" checked/>
+                            <label for="gps_rescue" i18n="failsafeProcedureItemSelect4"></label>
+                        </div>
+                        <div class="proceduresettings">
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_angle" min="0" max="200" /> <span
+                                    i18n="failsafeGpsRescueItemAngle"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_initial_altitude" min="20" max="100" /> <span
+                                    i18n="failsafeGpsRescueItemInitialAltitude"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_descent_distance" min="30" max="500" /> <span
+                                    i18n="failsafeGpsRescueItemDescentDistance"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_ground_speed" min="0.30" max="30.00" step="0.01"/> <span
+                                    i18n="failsafeGpsRescueItemGroundSpeed"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_throttle_min" min="1000" max="2000" /> <span
+                                    i18n="failsafeGpsRescueItemThrottleMin"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_throttle_max" min="1000" max="2000" /> <span
+                                    i18n="failsafeGpsRescueItemThrottleMax"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_throttle_hover" min="1000" max="2000" /> <span
+                                    i18n="failsafeGpsRescueItemThrottleHover"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_ascend_rate" min="1.00" max="25.00" step="0.01" /> <span
+                                    i18n="failsafeGpsRescueItemAscendRate"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_descend_rate" min="1.00" max="5.00" step="0.01" /> <span
+                                    i18n="failsafeGpsRescueItemDescendRate"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="number" name="gps_rescue_min_sats" min="5" max="50" /> <span
+                                    i18n="failsafeGpsRescueItemMinSats"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label> <input type="checkbox" name="gps_rescue_allow_arming_without_fix" class="toggle" /> <span
+                                    i18n="failsafeGpsRescueItemAllowArmingWithoutFix"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label>
+                                    <select class="switchMode" name="gps_rescue_altitude_mode">
+                                        <option value="0" i18n="failsafeGpsRescueItemAltitudeModeMaxAlt"></option>
+                                        <option value="1" i18n="failsafeGpsRescueItemAltitudeModeFixedAlt"></option>
+                                        <option value="2" i18n="failsafeGpsRescueItemAltitudeModeCurrentAlt"></option>
+                                    </select>
+                                <span i18n="failsafeGpsRescueItemAltitudeMode"></span>
+                                </label>
+                            </div>
+                            <div class="number">
+                                <label>
+                                    <select class="switchMode" name="gps_rescue_sanity_checks">
+                                        <option value="0" i18n="failsafeGpsRescueItemSanityChecksOff"></option>
+                                        <option value="1" i18n="failsafeGpsRescueItemSanityChecksOn"></option>
+                                        <option value="2" i18n="failsafeGpsRescueItemSanityChecksFSOnly"></option>
+                                    </select>
+                                <span i18n="failsafeGpsRescueItemSanityChecks"></span>
+                                </label>
                             </div>
                         </div>
                     </div>

@@ -515,6 +515,7 @@ function release_win(arch, appDirectory, done) {
     if (!commandExistsSync('makensis')) {
         console.warn('makensis command not found, not generating win package for ' + arch);
         done();
+        return;
     }
 
     // The makensis does not generate the folder correctly, manually
@@ -527,10 +528,11 @@ function release_win(arch, appDirectory, done) {
                 'VERSION': pkg.version,
                 'PLATFORM': arch,
                 'DEST_FOLDER': RELEASE_DIR,
-                'SOURCE_FOLDER': appDirectory,
+                'SOURCE_FOLDER': removeTrailingPathSeparator(appDirectory),
             }
         }
 
+    console.log('makensis options', options);
     var output = makensis.compileSync('./assets/windows/installer.nsi', options);
 
     if (output.status !== 0) {
@@ -574,6 +576,7 @@ function release_deb(arch, appDirectory, done) {
     if (!commandExistsSync('dpkg-deb')) {
         console.warn('dpkg-deb command not found, not generating deb package for ' + arch);
         done();
+        return;
     }
 
     return gulp.src([path.join(appDirectory, pkg.name, arch, '*')])
@@ -603,6 +606,7 @@ function release_rpm(arch, appDirectory, done) {
     if (!commandExistsSync('rpmbuild')) {
         console.warn('rpmbuild command not found, not generating rpm package for ' + arch);
         done();
+        return;
     }
 
     // The buildRpm does not generate the folder correctly, manually

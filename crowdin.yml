@@ -9,6 +9,7 @@ files: [
   # Source files filter
   # e.g. "/resources/en/*.json"
   #
+  "type" : "chrome",
   "source" : "/locales/en/messages.json",
 
   #

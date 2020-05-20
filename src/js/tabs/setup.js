@@ -62,7 +62,11 @@ TABS.setup.initialize = function (callback) {
         $('#arming-disable-flag').attr('title', i18n.getMessage('initialSetupArmingDisableFlagsTooltip'));
 
         if (semver.gte(CONFIG.apiVersion, "1.40.0")) {
-            $('.initialSetupRebootBootloader').show();
+            if (isExpertModeEnabled()) {
+                $('.initialSetupRebootBootloader').show();
+            } else {
+                $('.initialSetupRebootBootloader').hide();
+            }
 
             $('a.rebootBootloader').click(function () {
                 var buffer = [];

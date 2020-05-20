@@ -1,15 +1,16 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="author" content="cTn"/>
-    <link type="text/css" rel="stylesheet" href="./css/main.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="./node_modules/jbox/dist/jBox.min.css"/>
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery.nouislider.min.css"/>
     <link type="text/css" rel="stylesheet" href="./js/libraries/jquery.nouislider.pips.min.css"/>
     <link type="text/css" rel="stylesheet" href="./js/libraries/flightindicators.css"/>
+    <link type="text/css" rel="stylesheet" href="./css/main.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="./css/tabs/static_tab.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/tabs/landing.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/tabs/setup.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="./css/tabs/setup_osd.css" media="all" />
     <link type="text/css" rel="stylesheet" href="./css/tabs/help.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/tabs/ports.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/tabs/configuration.css" media="all"/>
@@ -28,37 +29,44 @@
     <link type="text/css" rel="stylesheet" href="./css/tabs/auxiliary.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/tabs/failsafe.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/tabs/osd.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="./css/tabs/vtx.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/tabs/power.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/tabs/transponder.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="./css/font-awesome/css/font-awesome.min.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./css/tabs/privacy_policy.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/opensans_webfontkit/fonts.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./css/dropdown-lists/css/style_lists.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="./js/libraries/switchery/switchery.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="./js/libraries/jbox/jBox.css"/>
     <link type="text/css" rel="stylesheet" href="./css/theme_cf.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="./css/dark-theme.css" media="all" disabled/>
+
     <script type="text/javascript" src="./node_modules/lru_map/lru.js"></script>
-    <script type="text/javascript" src="./node_modules/i18next/i18next.js"></script>
-    <script type="text/javascript" src="./node_modules/i18next-xhr-backend/i18nextXHRBackend.js"></script>
+    <script type="text/javascript" src="./node_modules/i18next/i18next.min.js"></script>
+    <script type="text/javascript" src="./node_modules/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
     <script type="text/javascript" src="./node_modules/marked/marked.min.js"></script>
     <script type="text/javascript" src="./node_modules/universal-ga/lib/analytics.min.js"></script>
     <script type="text/javascript" src="./node_modules/short-unique-id/dist/short-unique-id.min.js"></script>
     <script type="text/javascript" src="./node_modules/object-hash/dist/object_hash.js"></script>
     <script type="text/javascript" src="./js/libraries/q.js"></script>
-    <script type="text/javascript" src="./js/libraries/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="./js/libraries/jquery-ui-1.11.4.min.js"></script>
+    <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./node_modules/jbox/dist/jBox.min.js"></script>
+    <script type="text/javascript" src="./node_modules/jquery-ui-npm/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./node_modules/djv/djv.js"></script>
     <script type="text/javascript" src="./js/libraries/d3.min.js"></script>
     <script type="text/javascript" src="./js/libraries/jquery.nouislider.all.min.js"></script>
     <script type="text/javascript" src="./js/libraries/three/three.min.js"></script>
     <script type="text/javascript" src="./js/libraries/three/Projector.js"></script>
     <script type="text/javascript" src="./js/libraries/three/CanvasRenderer.js"></script>
     <script type="text/javascript" src="./js/libraries/jquery.flightindicators.js"></script>
-    <script type="text/javascript" src="./js/libraries/semver.js"></script>
-    <script type="text/javascript" src="./js/libraries/jbox/jBox.min.js"></script>
+    <script type="text/javascript" src="./node_modules/semver-min/umd/index.js"></script>
     <script type="text/javascript" src="./js/libraries/switchery/switchery.js"></script>
-    <script type="text/javascript" src="./js/libraries/bluebird.min.js"></script>
+    <script type="text/javascript" src="./node_modules/bluebird/js/browser/bluebird.min.js"></script>
     <script type="text/javascript" src="./js/libraries/jquery.ba-throttle-debounce.min.js"></script>
-    <script type="text/javascript" src="./js/libraries/inflection.min.js"></script>
+    <script type="text/javascript" src="./node_modules/inflection/inflection.min.js"></script>
+    <script type="text/javascript" src="./js/libraries/analytics.js"></script>
+    <script type="text/javascript" src="./js/utils/css.js"></script>
+    <script type="text/javascript" src="./js/utils/window_watchers.js"></script>
     <script type="text/javascript" src="./js/injected_methods.js"></script>
+    <script type="text/javascript" src="./js/ConfigStorage.js"></script>
     <script type="text/javascript" src="./js/data_storage.js"></script>
     <script type="text/javascript" src="./js/fc.js"></script>
     <script type="text/javascript" src="./js/port_handler.js"></script>
@@ -70,6 +78,7 @@
     <script type="text/javascript" src="./js/model.js"></script>
     <script type="text/javascript" src="./js/serial_backend.js"></script>
     <script type="text/javascript" src="./js/msp/MSPCodes.js"></script>
+    <script type="text/javascript" src="./js/msp/MSPConnector.js"></script>
     <script type="text/javascript" src="./js/msp.js"></script>
     <script type="text/javascript" src="./js/msp/MSPHelper.js"></script>
     <script type="text/javascript" src="./js/backup_restore.js"></script>
@@ -84,7 +93,10 @@
     <script type="text/javascript" src="./js/release_checker.js"></script>
     <script type="text/javascript" src="./js/jenkins_loader.js"></script>
     <script type="text/javascript" src="./js/Analytics.js"></script>
+    <script type="text/javascript" src="./js/GitHubApi.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
+    <script type="text/javascript" src="./js/Clipboard.js"></script>
+    <script type="text/javascript" src="./js/tabs/static_tab.js"></script>
     <script type="text/javascript" src="./js/tabs/landing.js"></script>
     <script type="text/javascript" src="./js/tabs/setup.js"></script>
     <script type="text/javascript" src="./js/tabs/setup_osd.js"></script>
@@ -108,8 +120,14 @@
     <script type="text/javascript" src="./js/tabs/failsafe.js"></script>
     <script type="text/javascript" src="./js/LogoManager.js"></script>
     <script type="text/javascript" src="./js/tabs/osd.js"></script>
+    <script type="text/javascript" src="./js/tabs/vtx.js"></script>
     <script type="text/javascript" src="./js/tabs/power.js"></script>
     <script type="text/javascript" src="./js/tabs/transponder.js"></script>
+    <script type="text/javascript" src="./node_modules/jquery-textcomplete/dist/jquery.textcomplete.min.js"></script>
+    <script type="text/javascript" src="./js/CliAutoComplete.js"></script>
+    <script type="text/javascript" src="./js/DarkTheme.js"></script>
+    <script type="text/javascript" src="./js/ConfigInserter.js"></script>
+    <script type="text/javascript" src="./js/TuningSliders.js"></script>
     <title i18n="windowTitle"></title>
 </head>
 <body>
@@ -128,6 +146,12 @@
                     <a class="connect disabled" href="#"></a>
                 </div>
                 <a class="connect_state" i18n="connect"></a>
+            </div>
+            <div class="open_firmware_flasher" id="flashbutton">
+                <div class="firmware_b">
+                    <a class="flash disabled" href="#"></a>
+                </div>
+                <a class="flash_state" i18n="flashTab"></a>
             </div>
             <div id="portsinput">
                 <div class="dropdown dropdown-dark">
@@ -157,7 +181,7 @@
                     <label for="port-override"><span i18n="portOverrideText">Port:</span> <input id="port-override" type="text"
                                                             value="/dev/rfcomm0"/></label>
                 </div>
-                <div>
+                <div id="autoConnectSwitch">
                     <label><input class="auto_connect togglesmall" type="checkbox"/><span
                             class="auto_connect" i18n="autoConnect"></span></label>
                 </div>
@@ -221,17 +245,19 @@
     <div class="tab_container">
         <div id="tabs">
             <ul class="mode-disconnected">
-                <li class="tab_landing"><a href="#" i18n="tabLanding" class="tabicon ic_welcome" i18n_title="tabLanding"></a>
+                <li class="tab_landing" id="tab_landing"><a href="#" i18n="tabLanding" class="tabicon ic_welcome" i18n_title="tabLanding"></a>
                 </li>
-                <li class="tab_help"><a href="#" i18n="tabHelp" class="tabicon ic_help"
+                <li class="tab_changelog"><a href="#" class="tabicon ic_help" i18n="tabChangelog"></a></li>
+                <li class="tab_privacy_policy"><a href="#" class="tabicon ic_help" i18n="tabPrivacyPolicy"></a></li>
+                <li class="tab_help" id="tab_help"><a href="#" i18n="tabHelp" class="tabicon ic_help"
                                         i18n_title="tabHelp"></a></li>
-                <li class="tab_firmware_flasher"><a href="#" i18n="tabFirmwareFlasher" class="tabicon ic_flasher"
+                <li class="tab_firmware_flasher" id="tabFirmware"><a href="#" i18n="tabFirmwareFlasher" class="tabicon ic_flasher"
                                                     i18n_title="tabFirmwareFlasher"></a></li>
             </ul>
             <ul class="mode-connected">
                 <li class="tab_setup"><a href="#" i18n="tabSetup" class="tabicon ic_setup" i18n_title="tabSetup"></a></li>
                 <li class="tab_setup_osd"><a href="#" i18n="tabSetupOSD" class="tabicon ic_setup" i18n_title="tabSetupOSD"></a></li>
-                
+
                 <li class="tab_ports"><a href="#" i18n="tabPorts" class="tabicon ic_ports" i18n_title="tabPorts"></a></li>
                 <li class="tab_configuration"><a href="#" i18n="tabConfiguration" class="tabicon ic_config"
                                                  i18n_title="tabConfiguration"></a></li>
@@ -251,6 +277,7 @@
                 <li class="tab_motors"><a href="#" i18n="tabMotorTesting" class="tabicon ic_motor" i18n_title="tabMotorTesting"></a>
                 </li>
                 <li class="tab_osd"><a href="#" i18n="tabOsd" class="tabicon ic_osd" i18n_title="tabOsd"></a></li>
+                <li class="tab_vtx"><a href="#" i18n="tabVtx" class="tabicon ic_vtx" i18n_title="tabVtx"></a></li>
                 <li class="tab_transponder"><a href="#" i18n="tabTransponder" class="tabicon ic_transponder"
                                                i18n_title="tabTransponder"></a></li>
                 <li class="tab_led_strip"><a href="#" i18n="tabLedStrip" class="tabicon ic_led" i18n_title="tabLedStrip"></a>
@@ -324,6 +351,41 @@
             <a href="#" class="dialogConnectWarning-closebtn regular-button" i18n="close"></a>
         </div>
     </dialog>
+
+    <dialog id="dialogResetToCustomDefaults">
+        <h3 i18n="noticeTitle"></h3>
+        <div class="content">
+            <div id="dialogResetToCustomDefaults-content" i18n="resetToCustomDefaultsDialog"></div>
+        </div>
+        <div>
+            <span class="buttons">
+                <a href="#" id="dialogResetToCustomDefaults-acceptbtn" class="regular-button" i18n="resetToCustomDefaultsAccept"></a>
+            </span>
+            <span class="buttons">
+                <a href="#" id="dialogResetToCustomDefaults-cancelbtn" class="regular-button" i18n="cancel"></a>
+            </span>
+        </div>
+    </dialog>
+
+    <dialog id="dialogReportProblems">
+        <h3 i18n="warningTitle"></h3>
+        <div class="content">
+            <div id="dialogReportProblems-header" i18n="reportProblemsDialogHeader"></div>
+            <ul id="dialogReportProblems-list">
+                <!-- List elements added dynamically -->
+            </ul>
+            <div id="dialogReportProblems-footer" i18n="reportProblemsDialogFooter"></div>
+        </div>
+        <div>
+            <span class="buttons">
+                <a href="#" id="dialogReportProblems-closebtn" class="regular-button" i18n="close"></a>
+            </span>
+        </div>
+    </dialog>
+
+    <ul class="hidden"> <!-- Sonar says so -->
+        <li id="dialogReportProblems-listItemTemplate" class="dialogReportProblems-listItem"></li>
+    </ul>
 
     <dialog class="dialogError">
         <h3 i18n="errorTitle"></h3>

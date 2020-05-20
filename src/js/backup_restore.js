@@ -5,7 +5,7 @@
 function configuration_backup(callback) {
     var activeProfile = null;
 
-    var version = getManifestVersion();
+    var version = CONFIGURATOR.version;
 
     if (version.indexOf(".") === -1) {
         version = version + ".0.0";
@@ -16,7 +16,7 @@ function configuration_backup(callback) {
         'apiVersion': CONFIG.apiVersion,
         'profiles': [],
     };
-    
+
     var profileSpecificData = [
         MSPCodes.MSP_PID_CONTROLLER,
         MSPCodes.MSP_PID,
@@ -35,7 +35,7 @@ function configuration_backup(callback) {
             profileSpecificData.push(MSPCodes.MSP_RC_DEADBAND);
         }
     }
-    
+
     update_profile_specific_data_list();
 
     MSP.send_message(MSPCodes.MSP_STATUS, false, false, function () {
@@ -120,16 +120,18 @@ function configuration_backup(callback) {
             uniqueData.push(MSPCodes.MSP_MOTOR_CONFIG);
             uniqueData.push(MSPCodes.MSP_RSSI_CONFIG);
             uniqueData.push(MSPCodes.MSP_GPS_CONFIG);
-            uniqueData.push(MSPCodes.MSP_COMPASS_CONFIG);
             uniqueData.push(MSPCodes.MSP_FEATURE_CONFIG);
         }
+        if (semver.gte(CONFIG.apiVersion, "1.41.0")) {
+            uniqueData.push(MSPCodes.MSP_MODE_RANGES_EXTRA);
+        }
     }
-    
+
     update_unique_data_list();
 
     function fetch_unique_data() {
         var codeKey = 0;
-        
+
         function fetch_unique_data_item() {
             if (codeKey < uniqueData.length) {
                 MSP.send_message(uniqueData[codeKey], false, false, function () {
@@ -143,6 +145,7 @@ function configuration_backup(callback) {
                 configuration.LED_COLORS = jQuery.extend(true, [], LED_COLORS);
                 configuration.BOARD_ALIGNMENT_CONFIG = jQuery.extend(true, {}, BOARD_ALIGNMENT_CONFIG);
                 configuration.CRAFT_NAME = CONFIG.name;
+                configuration.DISPLAY_NAME = CONFIG.displayName;
                 configuration.MIXER_CONFIG = jQuery.extend(true, {}, MIXER_CONFIG);
                 configuration.SENSOR_CONFIG = jQuery.extend(true, {}, SENSOR_CONFIG);
                 configuration.PID_ADVANCED_CONFIG = jQuery.extend(true, {}, PID_ADVANCED_CONFIG);
@@ -164,14 +167,16 @@ function configuration_backup(callback) {
                     configuration.RXFAIL_CONFIG = jQuery.extend(true, [], RXFAIL_CONFIG);
                 }
                 if (semver.gte(CONFIG.apiVersion, "1.33.0")) {
-                	configuration.RSSI_CONFIG = jQuery.extend(true, {}, RSSI_CONFIG);
+                    configuration.RSSI_CONFIG = jQuery.extend(true, {}, RSSI_CONFIG);
                     configuration.FEATURE_CONFIG = jQuery.extend(true, {}, FEATURE_CONFIG);
                     configuration.MOTOR_CONFIG = jQuery.extend(true, {}, MOTOR_CONFIG);
                     configuration.GPS_CONFIG = jQuery.extend(true, {}, GPS_CONFIG);
-                    configuration.COMPASS_CONFIG = jQuery.extend(true, {}, COMPASS_CONFIG);
                 }
                 if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
                     configuration.BEEPER_CONFIG = jQuery.extend(true, {}, BEEPER_CONFIG);
+                }
+                if (semver.gte(CONFIG.apiVersion, "1.41.0")) {
+                    configuration.MODE_RANGES_EXTRA = jQuery.extend(true, [], MODE_RANGES_EXTRA);
                 }
 
                 save();
@@ -273,7 +278,7 @@ function configuration_backup(callback) {
     }
 
 }
-    
+
 function configuration_restore(callback) {
     var chosenFileEntry = null;
 
@@ -327,7 +332,7 @@ function configuration_restore(callback) {
 
 
                     // validate
-                    if (typeof configuration.generatedBy !== 'undefined' && compareVersions(configuration.generatedBy, CONFIGURATOR.backupFileMinVersionAccepted)) {                    
+                    if (typeof configuration.generatedBy !== 'undefined' && compareVersions(configuration.generatedBy, CONFIGURATOR.BACKUP_FILE_VERSION_MIN_SUPPORTED)) {
                         if (!compareVersions(configuration.generatedBy, "1.14.0") && !migrate(configuration)) {
                             GUI.log(i18n.getMessage('backupFileUnmigratable'));
                             return;
@@ -357,38 +362,38 @@ function configuration_restore(callback) {
         }
         return semver.gte(generated, required);
     }
-    
+
 
     function migrate(configuration) {
         var appliedMigrationsCount = 0;
         var migratedVersion = configuration.generatedBy;
         GUI.log(i18n.getMessage('configMigrationFrom', [migratedVersion]));
-        
+
         if (!compareVersions(migratedVersion, '0.59.1')) {
-            
+
             // variable was renamed
             configuration.RSSI_CONFIG.channel = configuration.MISC.rssi_aux_channel;
             configuration.MISC.rssi_aux_channel = undefined;
-            
+
             migratedVersion = '0.59.1';
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-        
+
         if (!compareVersions(migratedVersion, '0.60.1')) {
-            
+
             // LED_STRIP support was added.
             if (!configuration.LED_STRIP) {
                 configuration.LED_STRIP = [];
             }
-            
+
             migratedVersion = '0.60.1';
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-        
+
         if (!compareVersions(migratedVersion, '0.61.0')) {
-            
+
             // Changing PID controller via UI was added.
             if (!configuration.PIDs && configuration.PID) {
                 configuration.PIDs = configuration.PID;
@@ -396,14 +401,14 @@ function configuration_restore(callback) {
                     controller: 0 // assume pid controller 0 was used.
                 };
             }
-            
+
             migratedVersion = '0.61.0';
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
 
         if (!compareVersions(migratedVersion, '0.63.0')) {
-            
+
             // LED Strip was saved as object instead of array.
             if (typeof(configuration.LED_STRIP) == 'object') {
                 var fixed_led_strip = [];
@@ -415,19 +420,18 @@ function configuration_restore(callback) {
                 configuration.LED_STRIP = fixed_led_strip;
             }
 
-            
             for (var profileIndex = 0; profileIndex < 3; profileIndex++) {
                 var RC = configuration.profiles[profileIndex].RC;
                 // TPA breakpoint was added
                 if (!RC.dynamic_THR_breakpoint) {
                     RC.dynamic_THR_breakpoint = 1500; // firmware default
                 }
-                
+
                 // Roll and pitch rates were split
                 RC.roll_rate = RC.roll_pitch_rate;
                 RC.pitch_rate = RC.roll_pitch_rate;
             }
-            
+
             migratedVersion = '0.63.0';
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
@@ -457,17 +461,17 @@ function configuration_restore(callback) {
                     telemetry_baudrate: 'AUTO',
                     blackbox_baudrate: '115200',
                 };
-                
+
                 switch(oldPort.scenario) {
                     case 1: // MSP, CLI, TELEMETRY, SMARTPORT TELEMETRY, GPS-PASSTHROUGH
                     case 5: // MSP, CLI, GPS-PASSTHROUGH
                     case 8: // MSP ONLY
                         newPort.functions.push('MSP');
                     break;
-                    case 2: // GPS 
+                    case 2: // GPS
                         newPort.functions.push('GPS');
                     break;
-                    case 3: // RX_SERIAL 
+                    case 3: // RX_SERIAL
                         newPort.functions.push('RX_SERIAL');
                     break;
                     case 10: // BLACKBOX ONLY
@@ -478,20 +482,20 @@ function configuration_restore(callback) {
                         newPort.functions.push('BLACKBOX');
                     break;
                 }
-                
+
                 ports.push(newPort);
             }
-            configuration.SERIAL_CONFIG = { 
-                ports: ports 
+            configuration.SERIAL_CONFIG = {
+                ports: ports
             };
-            
+
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-        
+
         if (compareVersions(migratedVersion, '0.63.0') && !compareVersions(configuration.apiVersion, '1.8.0')) {
             // api 1.8 exposes looptime and arming config
-            
+
             if (configuration.FC_CONFIG == undefined) {
                 configuration.FC_CONFIG = {
                     loopTime: 3500
@@ -508,7 +512,7 @@ function configuration_restore(callback) {
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-        
+
         if (compareVersions(migratedVersion, '0.63.0')) {
             // backups created with 0.63.0 for firmwares with api < 1.8 were saved with incorrect looptime
             if (configuration.FC_CONFIG.loopTime == 0) {
@@ -516,25 +520,25 @@ function configuration_restore(callback) {
                 configuration.FC_CONFIG.loopTime = 3500;
             }
         }
-        
+
         if (semver.lt(migratedVersion, '0.66.0')) {
             // api 1.12 updated servo configuration protocol and added servo mixer rules
             for (var profileIndex = 0; profileIndex < configuration.profiles.length; profileIndex++) {
-                
+
                 if (semver.eq(configuration.apiVersion, '1.10.0')) {
                     // drop two unused servo configurations
                     while (configuration.profiles[profileIndex].ServoConfig.length > 8) {
                         configuration.profiles[profileIndex].ServoConfig.pop();
-                    } 
+                    }
                 }
-                
+
                 for (var i = 0; i < configuration.profiles[profileIndex].ServoConfig.length; i++) {
                     var servoConfig = profiles[profileIndex].ServoConfig;
-                    
+
                     servoConfig[i].angleAtMin = 45;
                     servoConfig[i].angleAtMax = 45;
                     servoConfig[i].reversedInputSources = 0;
-                    
+
                     // set the rate to 0 if an invalid value is detected.
                     if (servoConfig[i].rate < -100 || servoConfig[i].rate > 100) {
                         servoConfig[i].rate = 0;
@@ -543,21 +547,21 @@ function configuration_restore(callback) {
 
                 configuration.profiles[profileIndex].ServoRules = [];
             }
-            
+
             migratedVersion = '0.66.0';
 
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-        
+
         if (semver.lt(configuration.apiVersion, '1.14.0') && semver.gte(CONFIG.apiVersion, "1.14.0")) {
             // api 1.14 removed old pid controllers
             for (var profileIndex = 0; profileIndex < configuration.profiles.length; profileIndex++) {
                 var newPidControllerIndex = configuration.profiles[profileIndex].PID.controller;
                 switch (newPidControllerIndex) {
-                    case 3: 
-                    case 4: 
-                    case 5: 
+                    case 3:
+                    case 4:
+                    case 5:
                         newPidControllerIndex = 0;
                         break;
                 }
@@ -567,11 +571,11 @@ function configuration_restore(callback) {
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-        
+
 
         if (compareVersions(migratedVersion, '0.66.0') && !compareVersions(configuration.apiVersion, '1.14.0')) {
             // api 1.14 exposes 3D configuration
-            
+
             if (configuration.MOTOR_3D_CONFIG == undefined) {
                 configuration.MOTOR_3D_CONFIG = {
                     deadband3d_low:         1406,
@@ -584,19 +588,18 @@ function configuration_restore(callback) {
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-        
-        
+
+
         if (compareVersions(migratedVersion, '0.66.0') && !compareVersions(configuration.apiVersion, '1.15.0')) {
             // api 1.15 exposes RCdeadband and sensor alignment
 
-            
             for (var profileIndex = 0; profileIndex < configuration.profiles.length; profileIndex++) {
                  if (configuration.profiles[profileIndex].RCdeadband == undefined) {
                     configuration.profiles[profileIndex].RCdeadband = {
                     deadband:                0,
                     yaw_deadband:            0,
                     alt_hold_deadband:       40,
-                    };                
+                    };
                 }
             }
             if (configuration.SENSOR_ALIGNMENT == undefined) {
@@ -604,9 +607,9 @@ function configuration_restore(callback) {
                     align_gyro:              0,
                     align_acc:               0,
                     align_mag:               0
-                    };                
+                    };
             }
-        
+
             // api 1.15 exposes RX_CONFIG, FAILSAFE_CONFIG and RXFAIL_CONFIG configuration
 
             if (configuration.RX_CONFIG == undefined) {
@@ -665,7 +668,7 @@ function configuration_restore(callback) {
         }
 
         if (compareVersions(migratedVersion, '1.3.1')) {
-            
+
             // LED_COLORS & LED_MODE_COLORS support was added.
             if (!configuration.LED_COLORS) {
                 configuration.LED_COLORS = [];
@@ -679,13 +682,13 @@ function configuration_restore(callback) {
             GUI.log(i18n.getMessage('configMigratedTo', [migratedVersion]));
             appliedMigrationsCount++;
         }
-        
+
         if (appliedMigrationsCount > 0) {
             GUI.log(i18n.getMessage('configMigrationSuccessful', [appliedMigrationsCount]));
-        }        
+        }
         return true;
     }
-    
+
     function configuration_upload(configuration, callback) {
         function upload() {
             var activeProfile = null;
@@ -764,9 +767,26 @@ function configuration_restore(callback) {
                 }
 
                 function upload_mode_ranges() {
+                    if (semver.gte(CONFIG.apiVersion, "1.41.0")) {
+                        if (configuration.MODE_RANGES_EXTRA == undefined) {
+                            MODE_RANGES_EXTRA = [];
+
+                            for (var modeIndex = 0; modeIndex < MODE_RANGES.length; modeIndex++) {
+                                var defaultModeRangeExtra = {
+                                    modeId:     MODE_RANGES[modeIndex].modeId,
+                                    modeLogic:  0,
+                                    linkedTo:   0
+                                };
+                                MODE_RANGES_EXTRA.push(defaultModeRangeExtra);
+                            }
+                        } else {
+                            MODE_RANGES_EXTRA = configuration.MODE_RANGES_EXTRA;
+                        }
+                    }
+
                     mspHelper.sendModeRanges(upload_adjustment_ranges);
                 }
-                
+
                 function upload_adjustment_ranges() {
                     mspHelper.sendAdjustmentRanges(upload_using_specific_commands);
                 }
@@ -782,7 +802,7 @@ function configuration_restore(callback) {
                     MSPCodes.MSP_SET_RX_MAP,
                     MSPCodes.MSP_SET_CF_SERIAL_CONFIG
                 ];
-                
+
                 function update_unique_data_list() {
                     uniqueData.push(MSPCodes.MSP_SET_NAME);
                     uniqueData.push(MSPCodes.MSP_SET_SENSOR_CONFIG);
@@ -804,14 +824,13 @@ function configuration_restore(callback) {
                         uniqueData.push(MSPCodes.MSP_SET_FAILSAFE_CONFIG);
                     }
                     if (semver.gte(CONFIG.apiVersion, "1.33.0")) {
-                    	uniqueData.push(MSPCodes.MSP_SET_FEATURE_CONFIG);
-                    	uniqueData.push(MSPCodes.MSP_SET_MOTOR_CONFIG);
+                        uniqueData.push(MSPCodes.MSP_SET_FEATURE_CONFIG);
+                        uniqueData.push(MSPCodes.MSP_SET_MOTOR_CONFIG);
                         uniqueData.push(MSPCodes.MSP_SET_GPS_CONFIG);
-                        uniqueData.push(MSPCodes.MSP_SET_COMPASS_CONFIG);
                         uniqueData.push(MSPCodes.MSP_SET_RSSI_CONFIG);
                     }
                 }
-                
+
                 function load_objects() {
                     MISC = configuration.MISC;
                     RC_MAP = configuration.RCMAP;
@@ -829,10 +848,10 @@ function configuration_restore(callback) {
                     FEATURE_CONFIG = configuration.FEATURE_CONFIG;
                     MOTOR_CONFIG = configuration.MOTOR_CONFIG;
                     GPS_CONFIG = configuration.GPS_CONFIG;
-                    COMPASS_CONFIG = configuration.COMPASS_CONFIG;
                     RSSI_CONFIG = configuration.RSSI_CONFIG;
                     BOARD_ALIGNMENT_CONFIG = configuration.BOARD_ALIGNMENT_CONFIG;
                     CONFIG.name = configuration.CRAFT_NAME;
+                    CONFIG.displayName = configuration.DISPLAY_NAME;
                     MIXER_CONFIG = configuration.MIXER_CONFIG;
                     SENSOR_CONFIG = configuration.SENSOR_CONFIG;
                     PID_ADVANCED_CONFIG = configuration.PID_ADVANCED_CONFIG;
@@ -877,7 +896,7 @@ function configuration_restore(callback) {
                 else
                     send_rxfail_config();
             }
-            
+
             function send_rxfail_config() {
                 if (semver.gte(CONFIG.apiVersion, "1.15.0")) {
                     mspHelper.sendRxFailConfig(save_to_eeprom);

@@ -2,17 +2,13 @@
     <div class="content_wrapper">
         <div class="tab_title" i18n="tabOnboardLogging"></div>
         <div class="cf_doc_version_bt">
-            <a id="button-documentation" href="https://github.com/cleanflight/cleanflight/releases" target="_blank"></a>
+            <a id="button-documentation" href="https://github.com/cleanflight/cleanflight/releases" target="_blank" rel="noopener noreferrer"></a>
         </div>
         <div class="require-blackbox-unsupported note">
-            <div class="note_spacer">
-                <p i18n="blackboxNotSupported"></p>
-            </div>
+            <p i18n="blackboxNotSupported"></p>
         </div>
         <div class="require-blackbox-maybe-supported note">
-            <div class="note_spacer">
-                <p i18n="blackboxMaybeSupported"></p>
-            </div>
+            <p i18n="blackboxMaybeSupported"></p>
         </div>
         <div class="require-blackbox-supported">
             <div class="gui_box grey require-blackbox-config-supported">
@@ -29,6 +25,11 @@
                         <select name="blackbox_rate">
                         </select>
                         <span i18n="onboardLoggingRateOfLogging"></span>
+                    </div>
+                    <div class="line blackboxDebugMode">
+                        <select name="blackboxDebugMode">
+                        </select>
+                        <span i18n="onboardLoggingDebugMode"></span>
                     </div>
                     <div class="line">
                         <a href="#" class="save-settings regular-button" i18n="blackboxButtonSave"></a>
@@ -95,9 +96,10 @@
                             </li>
                         </ul>
                         
-                        <div>
+                        <div class="dataflash-buttons">
                             <a class="regular-button erase-flash" href="#" i18n="dataflashButtonErase"></a>
-                            <a class="regular-button save-flash" href="#" i18n="dataflashButtonSaveFile"></a>
+                            <a class="regular-button require-msc-not-supported save-flash" href="#" i18n="dataflashButtonSaveFile"></a>
+                            <a class="regular-button require-msc-supported save-flash" href="#"><span i18n="dataflashButtonSaveFileDeprecated"></span><span class="helpicon cf_tip" i18n_title="dataflashSaveFileDepreciationHint"></span></a>
                         </div>
                     </div>
                     
@@ -152,4 +154,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -9,8 +9,24 @@ TABS.motors = {
         sensorAccelRate: 20,
         sensorAccelScale: 2,
         sensorSelectValues: {
-            "gyroScale": {"50":50,"100":100,"200":200,"300":300,"400":400,"500":500,"1000":1000,"2000":2000},
-            "accelScale": {"0.05":0.05,"0.1":0.1,"0.2":0.2,"0.3":0.3,"0.4":0.4,"0.5":0.5,"1":1,"2":2}
+            "gyroScale": {"10" : 10, 
+                          "25" : 25, 
+                          "50" : 50, 
+                          "100" : 100, 
+                          "200" : 200, 
+                          "300" : 300, 
+                          "400" : 400,
+                          "500" : 500,
+                          "1000" : 1000,
+                          "2000" : 2000},
+            "accelScale": {"0.05" : 0.05,
+                           "0.1" : 0.1,
+                           "0.2" : 0.2,
+                           "0.3" : 0.3,
+                           "0.4" : 0.4,
+                           "0.5" : 0.5,
+                           "1" : 1,
+                           "2" : 2}
         },
         // These are translated into proper Dshot values on the flight controller
         DSHOT_DISARMED_VALUE: 1000,
@@ -45,7 +61,15 @@ TABS.motors.initialize = function (callback) {
     }
 
     function load_motor_data() {
-        MSP.send_message(MSPCodes.MSP_MOTOR, false, false, load_mixer_config);
+        MSP.send_message(MSPCodes.MSP_MOTOR, false, false, load_motor_telemetry_data);
+    }
+
+    function load_motor_telemetry_data() {
+        if (MOTOR_CONFIG.use_dshot_telemetry || MOTOR_CONFIG.use_esc_sensor) {
+            MSP.send_message(MSPCodes.MSP_MOTOR_TELEMETRY, false, false, load_mixer_config);
+        } else {
+            load_mixer_config();
+        }
     }
 
     function load_mixer_config() {
@@ -213,6 +237,15 @@ TABS.motors.initialize = function (callback) {
 
         $('#motorsEnableTestMode').prop('checked', false);
 
+        if (semver.lt(CONFIG.apiVersion, "1.42.0") || !(MOTOR_CONFIG.use_dshot_telemetry || MOTOR_CONFIG.use_esc_sensor)) {
+            $(".motor_testing .telemetry").hide();
+        } else {
+            // Hide telemetry from unused motors (to hide the tooltip in an empty blank space)
+            for (let i = MOTOR_CONFIG.motor_count; i < MOTOR_DATA.length; i++) {
+                $(".motor_testing .telemetry .motor-" + i).hide();
+            }
+        }
+
         update_model(MIXER_CONFIG.mixer);
 
         // Always start with default/empty sensor data array, clean slate all
@@ -257,26 +290,6 @@ TABS.motors.initialize = function (callback) {
             }
         });
 
-        // set refresh speeds according to configuration saved in storage
-        chrome.storage.local.get(['motors_tab_sensor_settings', 'motors_tab_gyro_settings', 'motors_tab_accel_settings'], function (result) {
-            if (result.motors_tab_sensor_settings) {
-                var sensor = result.motors_tab_sensor_settings.sensor;
-                $('.tab-motors select[name="sensor_choice"]').val(result.motors_tab_sensor_settings.sensor);
-            }
-
-            if (result.motors_tab_gyro_settings) {
-                TABS.motors.sensorGyroRate = result.motors_tab_gyro_settings.rate;
-                TABS.motors.sensorGyroScale = result.motors_tab_gyro_settings.scale;
-            }
-
-            if (result.motors_tab_accel_settings) {
-                TABS.motors.sensorAccelRate = result.motors_tab_accel_settings.rate;
-                TABS.motors.sensorAccelScale = result.motors_tab_accel_settings.scale;
-            }
-            $('.tab-motors .sensor select:first').change();
-        });
-
-
         function loadScaleSelector(selectorValues, selectedValue) {
             $('.tab-motors select[name="scale"]').find('option').remove();
 
@@ -293,7 +306,7 @@ TABS.motors.initialize = function (callback) {
 
         $('.tab-motors .sensor select').change(function(){
             TABS.motors.sensor = $('.tab-motors select[name="sensor_choice"]').val()
-            chrome.storage.local.set({'motors_tab_sensor_settings': {'sensor': TABS.motors.sensor}});
+            ConfigStorage.set({'motors_tab_sensor_settings': {'sensor': TABS.motors.sensor}});
 
             switch(TABS.motors.sensor){
             case "gyro":
@@ -311,7 +324,6 @@ TABS.motors.initialize = function (callback) {
             $('.tab-motors .rate select:first').change();
         });
 
-
         $('.tab-motors .rate select, .tab-motors .scale select').change(function () {
             var rate = parseInt($('.tab-motors select[name="rate"]').val(), 10);
             var scale = parseFloat($('.tab-motors select[name="scale"]').val());
@@ -320,7 +332,7 @@ TABS.motors.initialize = function (callback) {
 
             switch(TABS.motors.sensor) {
             case "gyro":
-                chrome.storage.local.set({'motors_tab_gyro_settings': {'rate': rate, 'scale': scale}});
+                ConfigStorage.set({'motors_tab_gyro_settings': {'rate': rate, 'scale': scale}});
                 TABS.motors.sensorGyroRate = rate;
                 TABS.motors.sensorGyroScale = scale;
 
@@ -331,7 +343,7 @@ TABS.motors.initialize = function (callback) {
                 }, rate, true);
                 break;
             case "accel":
-                chrome.storage.local.set({'motors_tab_accel_settings': {'rate': rate, 'scale': scale}});
+                ConfigStorage.set({'motors_tab_accel_settings': {'rate': rate, 'scale': scale}});
                 TABS.motors.sensorAccelRate = rate;
                 TABS.motors.sensorAccelScale = scale;
                 accel_helpers = initGraphHelpers('#graph', samples_accel_i, [-scale, scale]);
@@ -399,6 +411,27 @@ TABS.motors.initialize = function (callback) {
             }
         });
 
+
+        // set refresh speeds according to configuration saved in storage
+        ConfigStorage.get(['motors_tab_sensor_settings', 'motors_tab_gyro_settings', 'motors_tab_accel_settings'], function (result) {
+            if (result.motors_tab_sensor_settings) {
+                var sensor = result.motors_tab_sensor_settings.sensor;
+                $('.tab-motors select[name="sensor_choice"]').val(result.motors_tab_sensor_settings.sensor);
+            }
+
+            if (result.motors_tab_gyro_settings) {
+                TABS.motors.sensorGyroRate = result.motors_tab_gyro_settings.rate;
+                TABS.motors.sensorGyroScale = result.motors_tab_gyro_settings.scale;
+            }
+
+            if (result.motors_tab_accel_settings) {
+                TABS.motors.sensorAccelRate = result.motors_tab_accel_settings.rate;
+                TABS.motors.sensorAccelScale = result.motors_tab_accel_settings.scale;
+            }
+            $('.tab-motors .sensor select:first').change();
+        });
+
+
         // Amperage
         function power_data_pull() {
             motor_voltage_e.text(i18n.getMessage('motorsVoltageValue', [ANALOG.voltage]));
@@ -431,7 +464,7 @@ TABS.motors.initialize = function (callback) {
         }
 
         var motors_wrapper = $('.motors .bar-wrapper'),
-        servos_wrapper = $('.servos .bar-wrapper');
+            servos_wrapper = $('.servos .bar-wrapper');
 
         for (var i = 0; i < 8; i++) {
             motors_wrapper.append('\
@@ -589,7 +622,15 @@ TABS.motors.initialize = function (callback) {
         }
 
         function get_motor_data() {
-            MSP.send_message(MSPCodes.MSP_MOTOR, false, false, get_servo_data);
+            MSP.send_message(MSPCodes.MSP_MOTOR, false, false, get_motor_telemetry_data);
+        }
+
+        function get_motor_telemetry_data() {
+            if (MOTOR_CONFIG.use_dshot_telemetry || MOTOR_CONFIG.use_esc_sensor) {
+                MSP.send_message(MSPCodes.MSP_MOTOR_TELEMETRY, false, false, get_servo_data);
+            } else {
+                get_servo_data();
+            }
         }
 
         function get_servo_data() {
@@ -615,6 +656,48 @@ TABS.motors.initialize = function (callback) {
                     'height' : height + 'px',
                     'background-color' : 'rgba(255,187,0,1.'+ color +')'
                 });
+
+                if (i < MOTOR_CONFIG.motor_count && (MOTOR_CONFIG.use_dshot_telemetry || MOTOR_CONFIG.use_esc_sensor)) {
+
+                    const MAX_INVALID_PERCENT = 100,
+                          MAX_VALUE_SIZE = 6;
+
+                    let rpmMotorValue = MOTOR_TELEMETRY_DATA.rpm[i];
+
+                    // Reduce the size of the value if too big
+                    if (rpmMotorValue > 999999) {
+                        rpmMotorValue = (rpmMotorValue / 1000000).toFixed(5 - (rpmMotorValue / 1000000).toFixed(0).toString().length) + "M";  
+                    }
+
+                    rpmMotorValue = rpmMotorValue.toString().padStart(MAX_VALUE_SIZE);
+                    let telemetryText = i18n.getMessage('motorsRPM', {motorsRpmValue: rpmMotorValue});
+
+                    
+                    if (MOTOR_CONFIG.use_dshot_telemetry) {
+
+                        let invalidPercent = MOTOR_TELEMETRY_DATA.invalidPercent[i];
+
+                        let classError = (invalidPercent > MAX_INVALID_PERCENT) ? "warning" : "";
+                        invalidPercent = (invalidPercent / 100).toFixed(2).toString().padStart(MAX_VALUE_SIZE);
+
+                        telemetryText += "<br><span class='" + classError + "'>";
+                        telemetryText += i18n.getMessage('motorsRPMError', {motorsErrorValue: invalidPercent});
+                        telemetryText += "</span>";
+                    }
+
+                    if (MOTOR_CONFIG.use_esc_sensor) {
+
+                        let escTemperature = MOTOR_TELEMETRY_DATA.temperature[i];
+
+                        telemetryText += "<br>";
+                        escTemperature = escTemperature.toString().padStart(MAX_VALUE_SIZE);
+                        telemetryText += i18n.getMessage('motorsESCTemperature', {motorsESCTempValue: escTemperature});
+                    }
+
+                    $('.motor_testing .telemetry .motor-' + i).html(telemetryText);
+                }
+                
+
             }
 
             // servo indicators are still using old (not flexible block scale), it will be changed in the future accordingly

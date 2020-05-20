@@ -1,4 +1,21 @@
 {
+    "yes": {
+        "message": "Да",
+        "description": "General Yes message to be used across the application"
+    },
+    "no": {
+        "message": "Нет",
+        "description": "General No message to be used across the application"
+    },
+    "on": {
+        "message": "Вкл."
+    },
+    "off": {
+        "message": "Выкл."
+    },
+    "auto": {
+        "message": "Авто"
+    },
     "error": {
         "message": "Ошибка: {{errorMessage}}"
     },
@@ -21,7 +38,7 @@
         "message": "Настройка приложения"
     },
     "connect": {
-        "message": "Подключится"
+        "message": "Подключиться"
     },
     "connecting": {
         "message": "Подключение"
@@ -40,6 +57,9 @@
     },
     "close": {
         "message": "Закрыть"
+    },
+    "cancel": {
+        "message": "Отмена"
     },
     "autoConnectEnabled": {
         "message": "Подключаться автоматически - конфигуратор будет подключаться при обнаружении нового порта"
@@ -62,11 +82,18 @@
     "analyticsOptOut": {
         "message": "Отказ от анонимной коллекции статистических данных"
     },
-    "userLanguageSelect": {
-        "message": "Язык (необходимо перезапустить приложение, чтобы изменения вступили в силу)"
+    "language_changed": {
+        "message": "Изменение языка сохранено"
+    },
+    "language_choice_message": {
+        "message": "Изменить язык:",
+        "description": "Try and be brief"
     },
     "language_default": {
         "message": "По умолчанию"
+    },
+    "language_default_pretty": {
+        "message": "Системный по умолчанию ($t(detectedLanguage))"
     },
     "sensorDataFlashNotFound": {
         "message": "Отсутствует <br>модуль памяти",
@@ -80,14 +107,14 @@
         "message": "Гироскоп"
     },
     "sensorStatusGyroShort": {
-        "message": "Гироскоп",
+        "message": "Гиро",
         "description": "Text of the image in the top sensors icons. Please keep it short."
     },
     "sensorStatusAccel": {
         "message": "Акселерометр"
     },
     "sensorStatusAccelShort": {
-        "message": "Акселерометр",
+        "message": "Аксел.",
         "description": "Text of the image in the top sensors icons. Please keep it short."
     },
     "sensorStatusMag": {
@@ -101,7 +128,7 @@
         "message": "Барометр"
     },
     "sensorStatusBaroShort": {
-        "message": "Барометр",
+        "message": "Баро",
         "description": "Text of the image in the top sensors icons. Please keep it short."
     },
     "sensorStatusGPS": {
@@ -112,7 +139,7 @@
         "description": "Text of the image in the top sensors icons. Please keep it short."
     },
     "sensorStatusSonar": {
-        "message": "Сонар\/Дальномер"
+        "message": "Сонар/Дальномер"
     },
     "sensorStatusSonarShort": {
         "message": "Сонар",
@@ -121,20 +148,23 @@
     "checkForConfiguratorUnstableVersions": {
         "message": "Показывать уведомления о появлении нестабильных версий конфигуратора"
     },
-    "configuratorUpdateNotice": {
-        "message": "Вы используете устаревшую версию <b>Cleanflight конфигуратора<\/b>.<br>Новая версия <b>$1<\/b> доступна для скачивания, пожалуйста, посетите <a href=\"$2\" target=\"_blank\">страницу с релизами<\/a> для загрузки и установки самой последней версии с исправлениями и улучшениями.<br>Пожалуйста, закройте окно конфигуратора перед обновлением."
-    },
     "configuratorUpdateWebsite": {
         "message": "Перейти на сайт с релизами"
     },
     "deviceRebooting": {
-        "message": "Device - <span class=\"message-negative\">Перезагружается<\/span>"
+        "message": "Device - <span class=\"message-negative\">Перезагружается</span>"
+    },
+    "deviceRebooting_flashBootloader": {
+        "message": "Устройство - <span class=\"message-negative\">Перезагрузка для прошивки бутлоадера</span>"
+    },
+    "deviceRebooting_romBootloader": {
+        "message": "Устройство - <span class=\"message-negative\">Перезагрузка для загрузки бутлоадера</span>"
     },
     "deviceReady": {
-        "message": "Устройство - <span class=\"message-positive\">Готово<\/span>"
+        "message": "Устройство - <span class=\"message-positive\">Готово</span>"
     },
     "backupFileIncompatible": {
-        "message": "Файл резервной копии был сгенерирован для предыдущей версии и несовместимым с этой версией конфигуратора. Извините"
+        "message": "Файл резервной копии был сгенерирован для предыдущей версии и несовместим с текущей версией конфигуратора. Извините"
     },
     "backupFileUnmigratable": {
         "message": "Файл резервной копии был сгенерирован старой версией конфигуратора и не является мигрируемым для этой версии конфигуратора. Сожалеем."
@@ -153,6 +183,12 @@
     },
     "tabLanding": {
         "message": "Приветствие"
+    },
+    "tabChangelog": {
+        "message": "Изменения"
+    },
+    "tabPrivacyPolicy": {
+        "message": "Политика конфиденциальности"
     },
     "tabHelp": {
         "message": "Документация и поддержка"
@@ -190,6 +226,9 @@
     "tabOsd": {
         "message": "OSD"
     },
+    "tabVtx": {
+        "message": "Видеопередатчик"
+    },
     "tabPower": {
         "message": "Питание и Батарея"
     },
@@ -226,38 +265,50 @@
     "logActionShow": {
         "message": "Показать недавние действия"
     },
+    "serialErrorFrameError": {
+        "message": "Ошибка последовательного соединения: неверный кадр"
+    },
+    "serialErrorParityError": {
+        "message": "Ошибка последовательного соединения: неверная четность"
+    },
     "serialPortOpened": {
-        "message": "Сериний порт <span class=\"message-positive\">успешно<\/span> открыт. ID порта: $1"
+        "message": "Последовательный порт <span class=\"message-positive\">успешно</span> открыт. ID порта: $1"
     },
     "serialPortOpenFail": {
-        "message": "<span class=\"message-negative\">Не удалось<\/span> открыть сериний порт"
+        "message": "<span class=\"message-negative\">Не удалось</span> открыть последовательный порт"
     },
     "serialPortClosedOk": {
-        "message": "Сериний порт <span class=\"message-positive\">успешно<\/span> закрыт"
+        "message": "Последовательный порт <span class=\"message-positive\">успешно</span> закрыт"
     },
     "serialPortClosedFail": {
-        "message": "<span class=\"message-negative\">Не удалось<\/span> закрыть сериний порт"
+        "message": "<span class=\"message-negative\">Не удалось</span> закрыть последовательный порт"
     },
     "serialUnrecoverable": {
-        "message": "Невосстановимый <span class=\"message-negative\">сбой<\/span> последовательного подключения, разъединяюсь..."
+        "message": "Невосстановимый <span class=\"message-negative\">сбой</span> последовательного подключения, разъединяюсь..."
     },
     "usbDeviceOpened": {
-        "message": "USB устройство <span class=\"message-positive\">успешно<\/span> подключено. ID подключения: $1"
+        "message": "USB устройство <span class=\"message-positive\">успешно</span> подключено. ID подключения: $1"
     },
     "usbDeviceOpenFail": {
-        "message": "<span class=\"message-negative\">Сбой<\/span> подключения к USB устройству!"
+        "message": "<span class=\"message-negative\">Сбой</span> подключения к USB устройству!"
     },
     "usbDeviceClosed": {
-        "message": "USB устройство <span class=\"message-positive\">успешно<\/span> отключено"
+        "message": "USB устройство <span class=\"message-positive\">успешно</span> отключено"
     },
     "usbDeviceCloseFail": {
-        "message": "<span class=\"message-negative\">Сбой<\/span> при отключении USB устройства"
+        "message": "<span class=\"message-negative\">Сбой</span> при отключении USB устройства"
     },
     "usbDeviceUdevNotice": {
-        "message": "Правильно ли установлены <strong>udev права<\/strong>? Смотрите инструкцию в документации"
+        "message": "Правильно ли установлены <strong>udev права</strong>? Смотрите инструкцию в документации"
     },
     "stm32UsbDfuNotFound": {
         "message": "USB DFU не найден"
+    },
+    "stm32RebootingToBootloader": {
+        "message": "Перезапуск в режим загрузчика..."
+    },
+    "stm32RebootingToBootloaderFailed": {
+        "message": "Перезапуск в режим загрузчика: ОШИБКА"
     },
     "stm32TimedOut": {
         "message": "STM32 - не отвечает, процесс прошивки: СБОЙ"
@@ -285,6 +336,9 @@
     },
     "stm32LocalErase": {
         "message": "Выполняется локальное стирание ..."
+    },
+    "stm32InvalidHex": {
+        "message": "Неверный hex"
     },
     "stm32Erase": {
         "message": "Очистка ..."
@@ -329,26 +383,32 @@
         "message": "Не удалось начать процесс снятия защиты от чтения"
     },
     "noConfigurationReceived": {
-        "message": "No configuration received within <span class=\"message-negative\">10 seconds<\/span>, communication <span class=\"message-negative\">failed<\/span>"
+        "message": "No configuration received within <span class=\"message-negative\">10 seconds</span>, communication <span class=\"message-negative\">failed</span>"
     },
     "firmwareVersionNotSupported": {
-        "message": "Версия этой прошивки <span class=\"message-negative\">не поддерживается<\/span> данным конфигуратором. Пожалуйста, обновите прошивку, которая поддерживает версию конфигуратора <strong>$1<\/strong> или выше. Используйте командную строку, чтобы сделать резервную копию прошивки перед тем, как обновлять прошивку. Процедура создания\/восстановления резервной копии описана в документации.<br \/>Если вы не хотите обновлять прошивку, то используйте более старую версию конфигуратора."
+        "message": "Версия этой прошивки <span class=\"message-negative\">не поддерживается</span> данным конфигуратором. Пожалуйста, обновите прошивку, которая поддерживает версию конфигуратора <strong>$1</strong> или выше. Используйте командную строку, чтобы сделать резервную копию прошивки перед тем, как обновлять прошивку. Процедура создания/восстановления резервной копии описана в документации.<br />Если вы не хотите обновлять прошивку, то используйте более старую версию конфигуратора."
     },
     "firmwareTypeNotSupported": {
-        "message": "Прошивки, кроме Cleanflight\/Betaflight <span class=\"message-negative\">не поддерживаются<\/span>, но для них доступен режим командной строки."
+        "message": "Прошивки, кроме Cleanflight/Cleanflight <span class=\"message-negative\">не поддерживаются</span>, но для них доступен режим командной строки."
     },
     "firmwareUpgradeRequired": {
-        "message": "Прошивка в этом устройстве нуждается в обновлении до новой версии. Используйте командную строку, чтобы сделать резервную копию перед обновлением прошивки. Процедура создания\/восстановления резервной копии описана в документации.<br \/>Если вы не хотите обновлять прошивку, то используйте более старую версию конфигуратора."
+        "message": "Прошивка в этом устройстве нуждается в обновлении до новой версии. Используйте командную строку, чтобы сделать резервную копию перед обновлением прошивки. Процедура создания/восстановления резервной копии описана в документации.<br />Если вы не хотите обновлять прошивку, то используйте более старую версию конфигуратора."
+    },
+    "resetToCustomDefaultsDialog": {
+        "message": "Для этой платы есть особые параметры по умолчанию. Обычно, плата не будет работать должным образом, если не будут применены такие настройки.<br/>Хотите применить пользовательские настройки по умолчанию для этой платы?"
+    },
+    "resetToCustomDefaultsAccept": {
+        "message": "Применить пользовательские настройки"
     },
     "infoVersions": {
-        "message": "Запуск - ОС: <strong>{{operatingSystem}}<\/strong>, Chrome: <strong>{{chromeVersion}}<\/strong>, Конфигуратор: <strong>{{configuratorVersion}}<\/strong>",
+        "message": "Запуск - ОС: <strong>{{operatingSystem}}</strong>, Chrome: <strong>{{chromeVersion}}</strong>, Конфигуратор: <strong>{{configuratorVersion}}</strong>",
         "description": "Message that appears in the GUI log panel indicating operating system, Chrome version and Configurator version"
     },
     "buildServerLoaded": {
         "message": "Загружена информация о сборках для $1 от сервера сборки."
     },
     "buildServerLoadFailed": {
-        "message": "<b>Не удалось запросить информацию о выпуске $1 из GitHub, используется информация из кэша. Причина: <code>$2<\/code><\/b>"
+        "message": "<b>Не удалось запросить информацию о выпуске $1 из GitHub, используется информация из кэша. Причина: <code>$2</code></b>"
     },
     "buildServerUsingCached": {
         "message": "Использование кэшированной информации о сборках для $1."
@@ -357,7 +417,7 @@
         "message": "Из GitHub загружена информация о выпуске для $1."
     },
     "releaseCheckFailed": {
-        "message": "<b>Не удалось запросить информацию о выпуске $1 из GitHub, используется информация из кэша. Причина: <code>$2<\/code><\/b>"
+        "message": "<b>Не удалось запросить информацию о выпуске $1 из GitHub, используется информация из кэша. Причина: <code>$2</code></b>"
     },
     "releaseCheckCached": {
         "message": "Использована информация из кэша о выпусках $1."
@@ -366,49 +426,49 @@
         "message": "Для $1 отсутствует информация о выпуске."
     },
     "tabSwitchConnectionRequired": {
-        "message": "Вам нужно <strong>подключиться<\/strong> прежде чем увидеть любую из этих вкладок."
+        "message": "Вам нужно <strong>подключиться</strong> прежде чем увидеть любую из этих вкладок."
     },
     "tabSwitchWaitForOperation": {
-        "message": "Вы <span class=\"message-negative\">не можете<\/span> сделать это прямо сейчас, пожалуйста, дождитесь завершения текущей операции ..."
+        "message": "Вы <span class=\"message-negative\">не можете</span> сделать это прямо сейчас, пожалуйста, дождитесь завершения текущей операции ..."
     },
     "tabSwitchUpgradeRequired": {
-        "message": "Вам нужно <strong>обновить<\/strong> прошивку до последней версии Cleanflight прежде чем использовать вкладку $1."
+        "message": "Вам нужно <strong>обновить</strong> прошивку до последней версии Cleanflight прежде чем использовать вкладку $1."
     },
     "firmwareVersion": {
-        "message": "Версия прошивки: <strong>$1<\/strong>"
+        "message": "Версия прошивки: <strong>$1</strong>"
     },
     "apiVersionReceived": {
-        "message": "MultiWii API версия: <strong>$1<\/strong>"
+        "message": "MultiWii API версия: <strong>$1</strong>"
     },
     "uniqueDeviceIdReceived": {
-        "message": "Уникальный ID устройства: <strong>0x$1<\/strong>"
+        "message": "Уникальный ID устройства: <strong>0x$1</strong>"
     },
     "craftNameReceived": {
-        "message": "Позывной пилота: <strong>$1<\/strong>"
+        "message": "Позывной пилота: <strong>$1</strong>"
     },
     "armingDisabled": {
-        "message": "<strong>Arming выключен<\/strong>"
+        "message": "<strong>Arming выключен</strong>"
     },
     "armingEnabled": {
-        "message": "<strong>Arming включён<\/strong>"
+        "message": "<strong>Arming включён</strong>"
     },
     "runawayTakeoffPreventionDisabled": {
-        "message": "<strong>Временное отключение функции Runaway Takeoff Prevention<\/strong>"
+        "message": "<strong>Временное отключение функции Runaway Takeoff Prevention</strong>"
     },
     "runawayTakeoffPreventionEnabled": {
-        "message": "<strong>Функция Runaway Takeoff Prevention включена<\/strong>"
+        "message": "<strong>Функция Runaway Takeoff Prevention включена</strong>"
     },
     "boardInfoReceived": {
-        "message": "Плата: <strong>$1<\/strong>, версия: <strong>$2<\/strong>"
+        "message": "Плата: <strong>$1</strong>, версия: <strong>$2</strong>"
     },
     "buildInfoReceived": {
-        "message": "Используется прошивка, выпущенная в: <strong>$1<\/strong>"
+        "message": "Используется прошивка, выпущенная в: <strong>$1</strong>"
     },
     "fcInfoReceived": {
-        "message": "Информация о полётном контроллере, идентификатор: <strong>$1<\/strong>, версия: <strong>$2<\/strong>"
+        "message": "Информация о полётном контроллере, идентификатор: <strong>$1</strong>, версия: <strong>$2</strong>"
     },
     "versionLabelTarget": {
-        "message": "Цель"
+        "message": "Target"
     },
     "versionLabelFirmware": {
         "message": "Прошивка"
@@ -447,52 +507,37 @@
         "message": "Пожалуйста, используйте \"Программатор\" для доступа к DFU устройств"
     },
     "dfu_erased_kilobytes": {
-        "message": "<span class=\"message-positive\">Успешно<\/span> стёрто $1 kB flash-памяти"
+        "message": "<span class=\"message-positive\">Успешно</span> стёрто $1 kB flash-памяти"
     },
     "dfu_device_flash_info": {
         "message": "Обнаружено устройство с суммарным размером flash-памяти $1 KiB"
     },
     "dfu_error_image_size": {
-        "message": "<span class=\"message-negative\">Ошибка<\/span>: Этот образ прошивки больше, чем flash-память, доступная в этом чипе! Размер образа: $1 kiB, предельный размер: $2 kiB"
+        "message": "<span class=\"message-negative\">Ошибка</span>: Этот образ прошивки больше, чем flash-память, доступная в этом чипе! Размер образа: $1 kiB, предельный размер: $2 kiB"
     },
     "eeprom_saved_ok": {
-        "message": "EEPROM <span class=\"message-positive\">сохранён<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранён</span>"
     },
     "defaultWelcomeIntro": {
-        "message": "Вас приветствует <strong>Cleanflight конфигуратор<\/strong> - утилита разработанная для лёгкого обновления, конфигурации и настройки вашего полётного контроллера."
+        "message": "Вас приветствует <strong>Cleanflight конфигуратор</strong> - утилита разработанная для лёгкого обновления, конфигурации и настройки вашего полётного контроллера."
     },
     "defaultWelcomeHead": {
         "message": "Железо"
     },
-    "defaultWelcomeText": {
-        "message": "Это приложение поддерживает все устройства, которые могут запускаться в Cleanflight конфигураторе. Вы также можете посмотреть весь список поддерживаемых устройств во вкладке \"Программатор\".<br><br><a href=\"https:\/\/github.com\/cleanflight\/blackbox-log-viewer\/releases\" target=\"_blank\"> Скачать Cleanflight Blackbox Log Viewer<\/a><br \/><br \/>Исходный код прошивки можно скачать <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\" title=\"www.github.com\" target=\"_blank\">здесь<\/a><br \/><br \/>Последнюю версию <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">CP210x драйвера<\/a> можно скачать <a href=\"http:\/\/www.silabs.com\/products\/mcu\/pages\/usbtouartbridgevcpdrivers.aspx\" title=\"http:\/\/www.silabs.com\" target=\"_blank\">здесь<\/a><br \/>Последнюю версию <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">STM USB VCP драйвера<\/a> можно скачать <a href=\"http:\/\/www.st.com\/web\/en\/catalog\/tools\/PF257938\" title=\"http:\/\/www.st.com\" target=\"_blank\">здесь<\/a><br \/>Последнюю версию <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">Zadig<\/a> для установки USB драйвера под Windows можно скачать <a href=\"http:\/\/zadig.akeo.ie\/\" title=\"http:\/\/zadig.akeo.ie\" target=\"_blank\">здесь<\/a><br \/>"
-    },
     "defaultContributingHead": {
         "message": "Содействие"
     },
-    "defaultContributingText": {
-        "message": "Если вы хотите сделать Cleanflight лучше, вы можете помочь нам несколькими способами:<br \/><ul><li>Ответами на вопросы других пользователей на форумах и IRC.<\/li><li>Добавлением кода прошивки и конфигуратора с целью: добавления нового функционала, исправления ошибок, улучшений<\/li><li>Тестированием <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/pulls\" target=\"_blank\">нового функционала\/исправленных ошибок<\/a> и сообщая нам результаты.<\/li><li>Помочь нам <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/issues\" target=\"_blank\">обсудить запросы на новые функционалы<\/a>.<\/li><li>Помочь с <a href=\"http:\/\/cleanflight.oneskyapp.com\" target=\"_blank\">переводом конфигуратора<\/a> на свой родной язык.<\/li><li><\/li><\/ul>"
-    },
-    "defaultFacebookText": {
-        "message": "У нас также есть <\/a><a href=\"https:\/\/www.facebook.com\/Cleanflight-582474325195689\/\" target=\"_blank\">группа Facebook <\/a>.<br \/>Присоединяйтесь к нам, чтобы говорить о Cleanflight, задавать вопросы о конфигурации или просто пообщаться с другими пилотами."
-    },
-    "defaultChangelogAction": {
-        "message": "Изменения"
-    },
     "defaultChangelogHead": {
         "message": "Список изменений конфигуратора"
-    },
-    "defaultPrivacyPolicyAction": {
-        "message": "Политика конфиденциальности"
     },
     "defaultButtonFirmwareFlasher": {
         "message": "Программатор"
     },
     "defaultDonateHead": {
-        "message": "Открытый код \/ Пожертвование"
+        "message": "Открытый код / Пожертвование"
     },
-    "defaultDonateText": {
-        "message": "<strong>Cleanflight<\/strong> программное обеспечение для полетного контроллера <strong>с открытым исходным кодом<\/strong> и доступное для свободной модификации <strong>без гарантий<\/strong>для всех пользователей.<br \/>Если вы находите Cleanflight и Betaflight Конфигуратор полезным то <strong>поддержите<\/strong> проект пожертвованиями."
+    "defaultDonateBottom": {
+        "message": "<p>Если вы хотите финансово помогать на постоянной основе, вы можете стать нашим покровителем на $t(patreonLink.message).</p>"
     },
     "defaultDonate": {
         "message": "Пожертвовать"
@@ -501,16 +546,10 @@
         "message": "Спонсоры"
     },
     "defaultDocumentationHead": {
-        "message": "Документация \/ Инструкция"
+        "message": "Документация / Инструкция"
     },
     "defaultDocumentation": {
-        "message": "Cleanflight документация доступна в release notes и на wiki (на сайте Github).<br \/><br \/>"
-    },
-    "defaultDocumentation1": {
-        "message": "Betaflight wiki - это отличный источник информации, который можно найти <a href=\"https:\/\/github.com\/betaflight\/betaflight\/wiki\" target=\"_blank\">здесь<\/a>."
-    },
-    "defaultDocumentation2": {
-        "message": "Информацию о новых прошивках можно почитать на Github в разделе releases <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/releases\" target=\"_blank\">здесь<\/a>."
+        "message": "Cleanflight документация доступна в release notes и на wiki (на сайте Github).<br /><br />"
     },
     "defaultSupportHead": {
         "message": "Нужна помощь?"
@@ -522,37 +561,22 @@
         "message": "Разработчикам"
     },
     "defaultSupport": {
-        "message": "Для помощи сперва поищите на форумах и на wiki или свяжитесь с вашим продавцом.<br \/><br \/>"
-    },
-    "defaultSupport1": {
-        "message": "<a href=\"http://www.rcgroups.com/forums/showthread.php?t=2249574&page=1\" target=\"_blank\">Обсуждения RC Groups<\/a>"
-    },
-    "defaultSupport2": {
-        "message": "<a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\" target=\"_blank\">Cleanflight Wiki</a>"
-    },
-    "defaultSupport3": {
-        "message": "<a href=\"https://www.youtube.com/playlist?list=PLwoDb7WF6c8kdK6yHr7vhsU9iRTr5HxP4\" target=\"_blank\">Joshua Bardwell Videos</a>"
-    },
-    "defaultSupport4": {
-        "message": "<a href=\"https://github.com/cleanflight\" target=\"_blank\">GitHub</a>"
-    },
-    "defaultSupport5": {
-        "message": "<a href=\"http:\/\/cleanflight.com\/slack\" target=\"_blank\"> Разработчики Cleanflight на slack<\/a>"
+        "message": "Для помощи сперва поищите на форумах и на wiki или свяжитесь с вашим продавцом.<br /><br />"
     },
     "initialSetupBackupAndRestoreApiVersion": {
-        "message": "<span class=\"message-negative\">Функционал создания и восстановления из резервной копии не доступен.<\/span> Ваша прошивка имеет API версию конфигуратора <span class=\"message-negative\">$1<\/span>, создание и восстановление из резервной копии требует версию <span class=\"message-positive\">$2<\/span>. Пожалуйста, создайте резервную копию ваших настроек через командную строку; загляните в документацию Cleanflight, чтобы узнать как это сделать."
+        "message": "<span class=\"message-negative\">Функционал создания и восстановления из резервной копии не доступен.</span> Ваша прошивка имеет API версию конфигуратора <span class=\"message-negative\">$1</span>, создание и восстановление из резервной копии требует версию <span class=\"message-positive\">$2</span>. Пожалуйста, создайте резервную копию ваших настроек через командную строку; загляните в документацию Cleanflight, чтобы узнать как это сделать."
     },
     "initialSetupButtonCalibrateAccel": {
         "message": "Калибровать Акселерометр"
     },
     "initialSetupCalibrateAccelText": {
-        "message": "Положите плату или раму на <strong>ровную<\/strong> поверхность и запустите калибровку, не двигая её в процессе калибровки"
+        "message": "Положите плату или раму на <strong>ровную</strong> поверхность и запустите калибровку, не двигая её в процессе калибровки"
     },
     "initialSetupButtonCalibrateMag": {
         "message": "Калибровать Магнитометр"
     },
     "initialSetupCalibrateMagText": {
-        "message": "Покрутите мультикоптер по крайней мере на <strong>360<\/strong> градусов по всем 3-м осям вращения, у Вас есть 30 секунд для этой операции"
+        "message": "Покрутите мультикоптер по крайней мере на <strong>360</strong> градусов по всем 3-м осям вращения, у Вас есть 30 секунд для этой операции"
     },
     "initialSetupButtonCalibratingText": {
         "message": "Калибровка..."
@@ -561,7 +585,7 @@
         "message": "Сбросить Настройки"
     },
     "initialSetupResetText": {
-        "message": "Сбросить настройки <strong>до заводских<\/strong>"
+        "message": "Сбросить настройки <strong>до заводских</strong>"
     },
     "initialSetupButtonBackup": {
         "message": "Сохранить"
@@ -570,19 +594,19 @@
         "message": "Восстановить"
     },
     "initialSetupButtonRebootBootloader": {
-        "message": "Активировать загрузчик \/ DFU"
+        "message": "Активировать загрузчик / DFU"
     },
     "initialSetupBackupRestoreText": {
-        "message": "<strong>Резервное копирование<\/strong> вашей конфигурации в случае аварии, <strong>CLI<\/strong> настройки <span class=\"message-negative\">не<\/span> включены - используете команду «diff all» в CLI для этого."
+        "message": "<strong>Резервное копирование</strong> вашей конфигурации в случае аварии, <strong>CLI</strong> настройки <span class=\"message-negative\">не</span> включены - используете команду «diff all» в CLI для этого."
     },
     "initialSetupRebootBootloaderText": {
-        "message": "Перезагрузить в режим <strong>загрузчика\/ DFU<\/strong>."
+        "message": "Перезагрузить в режим <strong>загрузчика/ DFU</strong>."
     },
     "initialSetupBackupSuccess": {
-        "message": "Конфигурация <span class=\"message-positive\">успешно<\/span> сохранена"
+        "message": "Конфигурация <span class=\"message-positive\">успешно</span> сохранена"
     },
     "initialSetupRestoreSuccess": {
-        "message": "Конфигурация <span class=\"message-positive\">успешно<\/span> восстановлена"
+        "message": "Конфигурация <span class=\"message-positive\">успешно</span> восстановлена"
     },
     "initialSetupButtonResetZaxis": {
         "message": "Сбросить ось Z (ось вращения), смещение: 0 град"
@@ -669,7 +693,103 @@
         "message": "Arming разрешён"
     },
     "initialSetupArmingDisableFlagsTooltip": {
-        "message": "Перечень флагов, объясняющих, почему не происходит arming. Первый и самый важный флаг соответствует числу предупреждающих пищаний, возникающих при включении arming. Пожалуйста, обратитесь в Wiki (на странице \"Arming Sequence & Safety\"), чтобы узнать что означает тот или иной флаг."
+        "message": "Список планов указывающих почему арминг сейчас не разрешен. Наведите курсор мыши на флаг или обратитесь к вики (страница «Последовательность арминга и безопасность») для получения дополнительной информации."
+    },
+    "initialSetupArmingDisableFlagsTooltipNO_GYRO": {
+        "message": "Гироскоп не обнаружен",
+        "description": "Message that pops up to describe the NO_GYRO arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipFAILSAFE": {
+        "message": "Failsafe активен",
+        "description": "Message that pops up to describe the FAILSAFE arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipRX_FAILSAFE": {
+        "message": "Не обнаружен корректный сигнал приёмника",
+        "description": "Message that pops up to describe the RX_FAILSAFE arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipBAD_RX_RECOVERY": {
+        "message": "Ваш приемник только что восстановил связь, но выключатель failsafe включен",
+        "description": "Message that pops up to describe the BAD_RX_RECOVERY arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipBOXFAILSAFE": {
+        "message": "Переключатель 'FAILSAFE' активирован",
+        "description": "Message that pops up to describe the BOXFAILSAFE arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipRUNAWAY_TAKEOFF": {
+        "message": "Взлет с полосы переключен",
+        "description": "Message that pops up to describe the RUNAWAY_TAKEOFF arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipCRASH": {
+        "message": "Отключен из-за обнаружения аварии",
+        "description": "Message that pops up to describe the CRASH arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipTHROTTLE": {
+        "message": "Канал газа слишком высок",
+        "description": "Message that pops up to describe the THROTTLE arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipANGLE": {
+        "message": "Судно не в уровне (достаточном)",
+        "description": "Message that pops up to describe the ANGLE arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipBOOT_GRACE_TIME": {
+        "message": "Арминг слишком рано после включения питания",
+        "description": "Message that pops up to describe the BOOT_GRACE_TIME arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipNOPREARM": {
+        "message": "Переключатель преарма не активен или не был переключен после дизарма",
+        "description": "Message that pops up to describe the NOPREARM arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipLOAD": {
+        "message": "Системная нагрузка слишком высока для полета",
+        "description": "Message that pops up to describe the LOAD arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipCALIBRATING": {
+        "message": "Калибровка датчика все еще продолжается",
+        "description": "Message that pops up to describe the CALIBRATING arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipCLI": {
+        "message": "Интерфейс командной строки активен",
+        "description": "Message that pops up to describe the CLI arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipCMS_MENU": {
+        "message": "CMS (конфигурационное меню) активен - над OSD или другим дисплеем -",
+        "description": "Message that pops up to describe the CMS_MENU arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipOSD_MENU": {
+        "message": "OSD меню активно",
+        "description": "Message that pops up to describe the OSD_MENU arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipBST": {
+        "message": "Black Sheep устройство телеметрии (TBS Core Pro например) дизарм и предварительно арминг",
+        "description": "Message that pops up to describe the BST arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipMSP": {
+        "message": "MSP соединение активно, возможно с этим Cleanflight Configurator",
+        "description": "Message that pops up to describe the MSP arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipPARALYZE": {
+        "message": "Парализный режим активирован",
+        "description": "Message that pops up to describe the PARALYZE arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipGPS": {
+        "message": "Режим восстановления GPS настроен, но требуемое количество спутников не было зафиксировано",
+        "description": "Message that pops up to describe the GPS arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipRESC": {
+        "message": "Переключатель 'GPS Rescue' активирован",
+        "description": "Message that pops up to describe the RESC arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipRPMFILTER": {
+        "message": "Фильтрация на основе RPM включена, но один или более регуляторов моторов не выдают верную DSHOT телеметрию. Проверьте, что регуляторы имеют поддержку двусторонней DSHOT телеметрии и установлена необходимая прошивка для её поддержки.",
+        "description": "Message that pops up to describe the RPMFILTER arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipREBOOT_REQD": {
+        "message": "Изменения в конфигурации требуют перезагрузки",
+        "description": "Message that pops up to describe the REBOOT_REQD arming disable flag"
+    },
+    "initialSetupArmingDisableFlagsTooltipARM_SWITCH": {
+        "message": "Один из других флагов дизарм активен при арминге",
+        "description": "Message that pops up to describe the ARM_SWITCH arming disable flag"
     },
     "initialSetupGPSHead": {
         "message": "GPS"
@@ -690,19 +810,19 @@
         "message": "Калибровка акселерометра начата"
     },
     "initialSetupAccelCalibEnded": {
-        "message": "Калибровка акселерометра <span class=\"message-positive\">завершена<\/span>"
+        "message": "Калибровка акселерометра <span class=\"message-positive\">завершена</span>"
     },
     "initialSetupMagCalibStarted": {
         "message": "Калибровка магнитометра начата"
     },
     "initialSetupMagCalibEnded": {
-        "message": "Калибровка магнитометра <span class=\"message-positive\">окончена<\/span>"
+        "message": "Калибровка магнитометра <span class=\"message-positive\">окончена</span>"
     },
     "initialSetupSettingsRestored": {
-        "message": "Установки восстановлены <strong>по умолчанию<\/strong>"
+        "message": "Установки восстановлены <strong>по умолчанию</strong>"
     },
     "initialSetupEepromSaved": {
-        "message": "EEPROM <span class=\"message-positive\">сохранён<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранён</span>"
     },
     "featureNone": {
         "message": "&lt;Выберите значение&gt;"
@@ -725,8 +845,11 @@
     "featureSERVO_TILT": {
         "message": "Серво-подвес"
     },
+    "featureSERVO_TILTTip": {
+        "message": "Эта функция включает режим CAMSTUB, который может быть использован для удерживания в двух осях при помощи акселерометра"
+    },
     "featureSOFTSERIAL": {
-        "message": "Включить серийный порт основанный на CPU"
+        "message": "Включить программный последовательный порт"
     },
     "featureSOFTSERIALTip": {
         "message": "После включения настройте порты во вкладке Порты."
@@ -783,7 +906,7 @@
         "message": "Поддержка SPI RX"
     },
     "featureESC_SENSOR": {
-        "message": "Использовать телеметрию KISS\/BLHeli_32 ESC в качестве датчиков"
+        "message": "Используйте KISS/BLHeli_32 ESC телеметрию <b>через отдельный провод</b>"
     },
     "featureCHANNEL_FORWARDING": {
         "message": "Перенос aux каналов на серво выходы"
@@ -822,7 +945,7 @@
         "message": "Включить Failsafe"
     },
     "featureFAILSAFETip": {
-        "message": "<strong>Примечание:<\/strong> Когда Этап 2 ВЫКЛЮЧЕН, резервные настройки<strong>Auto<\/strong> используется вместо пользовательских настроек для всех каналов (Roll, Pitch, Yaw и Throttle)."
+        "message": "<strong>Примечание:</strong> Когда Этап 2 ВЫКЛЮЧЕН, резервные настройки<strong>Auto</strong> используется вместо пользовательских настроек для всех каналов (Roll, Pitch, Yaw и Throttle)."
     },
     "featureFAILSAFEOldTip": {
         "message": "Применить настройки Failsafe при потере сигнала с приёмника"
@@ -843,10 +966,10 @@
         "message": "Прочий функционал"
     },
     "configurationReceiver": {
-        "message": "Приемник"
+        "message": "Приёмник"
     },
     "configurationReceiverMode": {
-        "message": "Режимы приемника"
+        "message": "Режимы приёмника"
     },
     "configurationRSSI": {
         "message": "RSSI (Уровень сигнала)"
@@ -855,22 +978,22 @@
         "message": "RSSI - это измерение уровня сигнала, он очень полезен, т.к. вы уже знаете, когда ваш летательный аппарат начинает выходить из зоны приёма или страдает от радиочастотных помех."
     },
     "configurationEscFeatures": {
-        "message": "Настройки ESC\/Моторов"
+        "message": "Настройки ESC/Моторов"
     },
     "configurationFeaturesHelp": {
-        "message": "<strong>Примечание:<\/strong> Не все комбинации настроек допустимы. Когда полётный контроллер обнаруживает недопустимые настройки, то они отключаются.<br \/><strong>Примечание:<\/strong> Настройте серийный порт <span class=\"message-negative\">до<\/span> включения настроек, которые используют данный порт."
+        "message": "<strong>Примечание:</strong> Не все комбинации настроек допустимы. Когда полетный контроллер обнаруживает недопустимые настройки, то они отключаются.<br /><strong>Примечание:</strong> Настройте последовательный порт <span class=\"message-negative\">до</span> включения настроек, которые используют данный порт."
     },
     "configurationSerialRXHelp": {
-        "message": "<strong>Примечание:<\/strong> Не забудьте настроить серийный порт (через вкладку «Порты») и выбрать Приёмник с серийным выходом при использовании функции RX_SERIAL."
+        "message": "<strong>Примечание:</strong> Не забудьте настроить последовательный порт (через вкладку «Порты») и выбрать Приемник с последовательным выходом при использовании функции RX_SERIAL."
     },
     "configurationSpiRxHelp": {
-        "message": "<strong>Примечание:<\/strong> SPI RX вход будет работать только в том случае, если необходимое \"железо\" находится на плате или подключено к шине SPI."
+        "message": "<strong>Примечание:</strong> SPI RX вход будет работать только в том случае, если необходимое \"железо\" находится на плате или подключено к шине SPI."
     },
     "configurationOtherFeaturesHelp": {
-        "message": "<strong>Примечание:<\/strong> Не все полётные контроллеры поддерживает все эти настройки. Если Вы включили специфические настройки и они отключились после нажатия \"Сохранить и Перезагрузить\", это означает, что полётный контроллер их не поддерживает."
+        "message": "<strong>Примечание:</strong> Не все полётные контроллеры поддерживает все эти настройки. Если Вы включили специфические настройки и они отключились после нажатия \"Сохранить и Перезагрузить\", это означает, что полётный контроллер их не поддерживает."
     },
     "configurationBoardAlignment": {
-        "message": "Расположение Платы и Датчиков"
+        "message": "Расположение платы и датчиков"
     },
     "configurationBoardAlignmentRoll": {
         "message": "Roll градусы"
@@ -884,11 +1007,32 @@
     "configurationSensorAlignmentGyro": {
         "message": "Положение Гиро."
     },
+    "configurationSensorGyroToUse": {
+        "message": "ГИРО/АКСЕЛ"
+    },
+    "configurationSensorGyroToUseNotFound": {
+        "message": "Предупреждение: Не найден Гиро/Акксел"
+    },
+    "configurationSensorGyroToUseFirst": {
+        "message": "Первый"
+    },
+    "configurationSensorGyroToUseSecond": {
+        "message": "Второй"
+    },
+    "configurationSensorGyroToUseBoth": {
+        "message": "Оба"
+    },
+    "configurationSensorAlignmentGyro1": {
+        "message": "Первый ГИРО"
+    },
+    "configurationSensorAlignmentGyro2": {
+        "message": "Второй ГИРО"
+    },
     "configurationSensorAlignmentAcc": {
         "message": "Положение Аксел."
     },
     "configurationSensorAlignmentMag": {
-        "message": "Положение Магн."
+        "message": "Положение магнитометра"
     },
     "configurationSensorAlignmentDefaultOption": {
         "message": "По умолчанию"
@@ -915,7 +1059,7 @@
         "message": "Обратное вращение моторов"
     },
     "configurationReverseMotorSwitchHelp": {
-        "message": "Этот параметр настраивает миксер, ожидая что направление вращение двигателя будет реверсивным и пропеллеры будут установлены соответственно. <strong>Внимание:<\/strong> это не реверс двигателя. Используйте инструменты настройки для вашего ESC или переключите ESC - подключением электропроводки. Кроме того, не забудьте проверить со снятыми пропеллерами, что ваши двигатели вращаются в направлениях, показанных на диаграмме выше, прежде чем попытаетесь включить ARM."
+        "message": "Этот параметр настраивает миксер, ожидая что направление вращение двигателя будет реверсивным и пропеллеры будут установлены соответственно. <strong>Внимание:</strong> это не реверс двигателя. Используйте инструменты настройки для вашего ESC или переключите ESC - подключением электропроводки. Кроме того, не забудьте проверить со снятыми пропеллерами, что ваши двигатели вращаются в направлениях, показанных на диаграмме выше, прежде чем попытаетесь включить ARM."
     },
     "configurationAutoDisarmDelay": {
         "message": "Отключать моторы после заданной задержки [в секундах] (Требуется включить функцию MOTOR_STOP)"
@@ -927,10 +1071,15 @@
         "message": "Arming всегда запрещён, если значение газа не низкое. Но будьте осторожны с этой включенной опцией, т.к. вы можете тумблером случайно задизармиться прямо в полёте, отключив тем самым моторы."
     },
     "configurationDigitalIdlePercent": {
-        "message": "Минимальное значение газа [в процентах]"
+        "message": "Минимальное значение газа (в процентах)"
     },
-    "configurationDigitalIdlePercentHelp": {
-        "message": "Это минимальное значение, посылаемое регуляторам оборотов моторов, во время арминга при нулевом значении газа. Это значение измеряется в процентах от максимального значения газа. Чем больше это значение, тем быстрее будет минимальная скорость моторов."
+    "configurationMotorPoles": {
+        "message": "Полюса мотора",
+        "description": "One of the fields of the ESC/Motor configuration"
+    },
+    "configurationMotorPolesLong": {
+        "message": "$t(configurationMotorPoles.message) (количество магнитов в колоколе мотора)",
+        "description": "One of the fields of the ESC/Motor configuration"
     },
     "configurationThrottleMinimum": {
         "message": "Минимальное значение газа (Минимальное значение, посылаемое к ESC при арминге)"
@@ -957,7 +1106,7 @@
         "message": "Тон писка моторами"
     },
     "configurationDshotBeaconHelp": {
-        "message": "Dshot маяк используется для того чтоб ESCs и двигатели производили звук. Это значит, что Dshot маяк не может быть использован когда двигатели вращаются. В Cleanflight 2.4 и новее, когда происходит попытка \"вооружить\" пока Dshot маяк активен, тогда аппарат \"вооружится\" спустя 2 секунды после последнего Dshot маяка. Это должно помешать функциям маяка Dshot мешать командам Dshot, отправленным при вооружении.<br\/><strong>Внимание:<\/strong> Поскольку маяк Dshot пропускает ток через ваши двигатели, когда он активен, то это может привести к чрезмерному перегреву и повреждению ваших двигателей и \/ или ESC, если мощность маяка слишком высока. Используете BLHeli Configurator или BLHeli Suite для регулировки и проверки силы маяка."
+        "message": "Dshot маяк используется для того чтобы ESC и двигатели производили звук. Это значит, что Dshot маяк не может быть использован когда двигатели вращаются. В Cleanflight 3.4 и новее, когда происходит попытка арминга пока Dshot маяк активен, тогда аппарат заармится спустя 2 секунды после последнего Dshot маяка. Это должно помешать функциям маяка Dshot мешать командам Dshot, отправленным при арминге.<br/><strong>Внимание:</strong> Поскольку маяк Dshot пропускает ток через ваши двигатели, когда он активен, то это может привести к чрезмерному перегреву и повреждению ваших двигателей и / или ESC, если мощность маяка слишком высока. Используете BLHeli Configurator или BLHeli Suite для регулировки и проверки силы маяка."
     },
     "configurationBeeper": {
         "message": "Настройка пищалки"
@@ -969,7 +1118,7 @@
         "message": "Пищать, если передатчик отключён или произошла потеря сигнала (пищать, пока не восстановится сигнал)"
     },
     "beeperRX_LOST_LANDING": {
-        "message": "Напискивать SOS, если заармлен и отключена аппаратура управления или при потере сигнала (автопосадка\/автодизарм)"
+        "message": "Напискивать SOS, если заармлен и отключена аппаратура управления или при потере сигнала (автопосадка/автодизарм)"
     },
     "beeperDISARMING": {
         "message": "Пискнуть при дизарминге"
@@ -1025,8 +1174,11 @@
     "beeperCAM_CONNECTION_CLOSE": {
         "message": "Пищать когда 5 клавиша управления камеры отжата"
     },
+    "beeperRC_SMOOTHING_INIT_FAIL": {
+        "message": "Бипер если арминг не прошел инициализацию по фильтрам"
+    },
     "configuration3d": {
-        "message": "3D функционал Моторов\/Регуляторов"
+        "message": "3D функционал Моторов/Регуляторов"
     },
     "configuration3dDeadbandLow": {
         "message": "Нижняя граница нечувствительной зоны 3D режима"
@@ -1047,10 +1199,10 @@
         "message": "Время цикла полетного контроллера"
     },
     "configurationCalculatedCyclesSec": {
-        "message": "Циклы\/Сек. [Гц]"
+        "message": "Циклы/Сек. [Гц]"
     },
     "configurationLoopTimeHelp": {
-        "message": "<strong>Примечание:<\/strong> Убедитесь, что Ваш FC способен работать на этих скоростях! Проверьте ЦП и стабильность времени цикла. Эти изменения могут потребовать подстройки PID. Совет: Отключите Акселерометр и другие сенсоры для повышения производительности."
+        "message": "<strong>Примечание:</strong> Убедитесь, что Ваш FC способен работать на этих скоростях! Проверьте ЦП и стабильность времени цикла. Эти изменения могут потребовать подстройки PID. Совет: Отключите Акселерометр и другие сенсоры для повышения производительности."
     },
     "configurationGPS": {
         "message": "GPS"
@@ -1070,8 +1222,24 @@
     "configurationGPSAutoConfig": {
         "message": "Автонастройка"
     },
+    "configurationGPSGalileo": {
+        "message": "Использовать Галилео",
+        "description": "Option to use Galileo in the GPS configuration"
+    },
+    "configurationGPSGalileoHelp": {
+        "message": "При включении, это заменяет QZSS систему (Япония) на Galileo (Европа).",
+        "description": "Help text for the option to use Galileo in the GPS configuration"
+    },
+    "configurationGPSHomeOnce": {
+        "message": "Установить точку \"Дом\" один раз",
+        "description": "Option to set the Home Point with the first arm only, not with each arm in the GPS Configuration"
+    },
+    "configurationGPSHomeOnceHelp": {
+        "message": "При включении, только первый арм после подключения батареи будет использоваться как домашняя точка. Если выключено - домашняя точка будет обновляться при каждом арме.",
+        "description": "Help text for the option to set the Home Point with the first arm only, not with each arm in the GPS Configuration"
+    },
     "configurationGPSHelp": {
-        "message": "<strong>Примечание:<\/strong> Не забудьте настроить GPS-порт (во вкладке \"Порты\") перед тем, как пользоваться настройками GPS."
+        "message": "<strong>Примечание:</strong> Не забудьте настроить GPS-порт (во вкладке \"Порты\") перед тем, как пользоваться настройками GPS."
     },
     "configurationSerialRX": {
         "message": "Приемник с последовательным выходом"
@@ -1080,7 +1248,7 @@
         "message": "Приемник с выходом шины SPI"
     },
     "configurationEepromSaved": {
-        "message": "EEPROM <span class=\"message-positive\">сохранено<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранено</span>"
     },
     "configurationButtonSave": {
         "message": "Сохранить и Перезагрузить"
@@ -1104,13 +1272,16 @@
         "message": "Периферия"
     },
     "portsHelp": {
-        "message": "<strong>Примечание:<\/strong> не все комбинации этих настроек являются верными и если прошивка контроллера это поймёт, то она сбросит конфигурацию этого порта."
+        "message": "<strong>Примечание:</strong> не все комбинации этих настроек являются верными и если прошивка контроллера это поймёт, то она сбросит конфигурацию этого порта."
+    },
+    "portsVtxTableNotSet": {
+        "message": "<span class=\"message-negative\">ВНИМАНИЕ:</span> Таблица VTX не была правильно настроена и без нее контроль VTX не будет возможен. Пожалуйста, настройте таблицу VTX во вкладке $t(tabVtx.message)."
     },
     "portsMSPHelp": {
-        "message": "<strong>Примечание:<\/strong> <span class=\"message-negative\">НЕ ОТКЛЮЧАЙТЕ<\/span> MSP на первом в списке порту, если вы не знаете, что делаете. Сделав это можно случайно перепрошить и стереть конфигурацию."
+        "message": "<strong>Примечание:</strong> <span class=\"message-negative\">НЕ ОТКЛЮЧАЙТЕ</span> MSP на первом в списке порту, если вы не знаете, что делаете. Сделав это можно случайно перепрошить и стереть конфигурацию."
     },
     "portsFirmwareUpgradeRequired": {
-        "message": "<span class=\"message-negative\">Требуется<\/span> обновление прошивки. Конфигурация последовательного порта в прошивках &lt; 1.8.0 больше не поддерживается."
+        "message": "<span class=\"message-negative\">Требуется</span> обновление прошивки. Конфигурация последовательного порта в прошивках &lt; 1.8.0 больше не поддерживается."
     },
     "portsButtonSave": {
         "message": "Сохранить и Перезагрузить"
@@ -1164,13 +1335,13 @@
         "message": "Запись в Blackbox"
     },
     "portsFunction_TBS_SMARTAUDIO": {
-        "message": "TBS SmartAudio"
+        "message": "VTX (TBS SmartAudio)"
     },
     "portsFunction_IRC_TRAMP": {
-        "message": "IRC Tramp"
+        "message": "VTX (IRC Tramp)"
     },
     "portsFunction_RUNCAM_DEVICE_CONTROL": {
-        "message": "RunCam устройство"
+        "message": "Camera (RunCam Protocol)"
     },
     "pidTuningProfileOption": {
         "message": "Профиль $1"
@@ -1182,10 +1353,13 @@
         "message": "Benewake LIDAR"
     },
     "pidTuningUpgradeFirmwareToChangePidController": {
-        "message": "<span class=\"message-negative\">Менять PID-контроллер запрещено, но его можно поменять в командной строке.<\/span>  Ваша прошивка поддерживает конфигуратор версии <span class=\"message-negative\">$1<\/span>, а этот функционал требует версию прошивки <span class=\"message-positive\">$2<\/span>."
+        "message": "<span class=\"message-negative\">Менять PID-контроллер запрещено, но его можно поменять в командной строке.</span>  Ваша прошивка поддерживает конфигуратор версии <span class=\"message-negative\">$1</span>, а этот функционал требует версию прошивки <span class=\"message-positive\">$2</span>."
     },
     "pidTuningSubTabPid": {
-        "message": "PID-настройки"
+        "message": "Настройка профилей PID"
+    },
+    "pidTuningSubTabRates": {
+        "message": "Настройка rate - профилей"
     },
     "pidTuningSubTabFilter": {
         "message": "Настройки фильтров"
@@ -1194,13 +1368,17 @@
         "message": "Показать все PID-ы"
     },
     "pidTuningHideUnusedPids": {
-        "message": "Скрыть ненужные PID-ы"
+        "message": "Скрыть неиспользуемые PID-ы"
     },
     "pidTuningNonProfilePidSettings": {
         "message": "Настройки PID-контроллера, независящие от настройки профиля"
     },
+    "pidTuningAntiGravity": {
+        "message": "Антигравити"
+    },
     "pidTuningAntiGravityMode": {
-        "message": "Anti Gravity режим"
+        "message": "Режим",
+        "description": "Anti Gravity mode selection parameter"
     },
     "pidTuningAntiGravityModeOptionSmooth": {
         "message": "Гладкая",
@@ -1211,10 +1389,30 @@
         "description": "One of the modes of anti gravity"
     },
     "pidTuningAntiGravityGain": {
-        "message": "Коэффициент Anti Gravity"
+        "message": "Коэффициент усиления",
+        "description": "Anti Gravity Gain Parameter"
     },
     "pidTuningAntiGravityThres": {
-        "message": "Порог Anti Gravity"
+        "message": "Порог",
+        "description": "Anti Gravity Threshold Parameter"
+    },
+    "pidTuningAntiGravityHelp": {
+        "message": "Антигравитация повышает Интегрирующую составляющую, когда обнаруживаются быстрые изменения газа. Высокие значения усиления обеспечивают стабильность и лучшее удержание позиции когда вы газуете."
+    },
+    "pidTuningDMin": {
+        "message": "D Мин",
+        "description": "Table header of the D Min feature in the PIDs tab"
+    },
+    "pidTuningDMinDisabledNote": {
+        "message": "<strong>Примечание:</strong>Функция D Min отключена и её параметры скрыты. Чтобы использовать D Min, включите ее в $t(pidTuningPidSettings.message)."
+    },
+    "pidTuningDMinGain": {
+        "message": "Амплитуда",
+        "description": "Gain of the D Min feature"
+    },
+    "pidTuningDMinAdvance": {
+        "message": "Улучшение",
+        "description": "Advance of the D Min feature"
     },
     "pidTuningPidSettings": {
         "message": "Настройки PID-контроллера"
@@ -1227,6 +1425,10 @@
     },
     "receiverRcSmoothingManual": {
         "message": "Ручной"
+    },
+    "receiverRcSmoothingAutoSmoothness": {
+        "message": "Авто-сглаживание",
+        "description": "Auto Smoothness parameter for RC smoothing"
     },
     "receiverRcDerivativeTypeSelect": {
         "message": "Производный тип среза"
@@ -1244,16 +1446,13 @@
         "message": "Тип RC сглаживания используется"
     },
     "rcSmoothingInputCutoffHelp": {
-        "message": "Частота среза в Гц, используемая входным фильтром. Используя более низких значений приведет к сглаживанию входов и являются приемлемыми для медленных протоколов приемника. Большинство пользователей следует оставить это 0, соответствующий «Auto»."
+        "message": "Частота среза в Гц, используемая входным фильтром. Использование более низких значений приведет к сглаживанию входов и является более приемлемым для медленных протоколов приемника. Большинство пользователей следует оставить это 0, соответствующему «Auto»."
     },
     "rcSmoothingDerivativeCutoffHelp": {
-        "message": "Частота среза в Гц, используется для установки setpoint производной фильтра. Использование более низких значений приведет к сглаживанию входов, что является приемлемыми для медленных протоколов приемника. Большинство пользователей может оставить это 0, соответствующий «Auto»."
+        "message": "Частота среза в Гц, используемая для установки setpoint производной (D) фильтра. Использование более низких значений приведет к сглаживанию входов, что является приемлемым для медленных протоколов приемника. Большинству пользователей следует оставить это в 0, соответствующему \"Auto\"."
     },
     "rcSmoothingChannelsSmoothedHelp": {
-        "message": "Каналы сглаживаются применительно к"
-    },
-    "rcSmoothingDerivativeTypeHelp": {
-        "message": "Тип метода фильтрации, используемый для производной заданного значения. Большинство пользователей должны использовать значение «BIQUAD» по умолчанию, поскольку оно обеспечивает хороший баланс между гладкостью и задержкой. «PT1» слегка уменьшает задержку, но обеспечивает меньшее сглаживание."
+        "message": "Сглаживание каналов применяется к"
     },
     "rcSmoothingInputTypeHelp": {
         "message": "Тип метода фильтрации, используемый для ввода. Большинство пользователей должны использовать значение «BIQUAD» по умолчанию, поскольку оно обеспечивает хороший баланс между гладкостью и задержкой. «PT1» слегка уменьшает задержку, но обеспечивает меньшее сглаживание."
@@ -1279,14 +1478,17 @@
     "receiverRcSmoothingDerivativeTypeOff": {
         "message": "Выкл."
     },
+    "receiverRcSmoothingDerivativeTypeAuto": {
+        "message": "Авто"
+    },
     "receiverRcSmoothingChannel": {
-        "message": "Каналы сглажены"
+        "message": "Сглаженные каналы"
     },
     "receiverRcInterpolation": {
         "message": "RC интерполяция"
     },
     "receiverRcInterpolationHelp": {
-        "message": "Скорость приёма\/передачи в системах радиоуправления не так высока, как скорость обработки PID-ов. Это означает, что при обработке PID-ов существуют пробелы информации, поступающей от радиоаппаратуры. Эта опция выполняет сглаживание сигналов управления в моменты их отсутствия. Она также делает поведение параметров P и D более чистыми, т.к. сглаживаются скачки входящего сигнала."
+        "message": "Скорость приёма/передачи в системах радиоуправления не так высока, как скорость обработки PID-ов. Это означает, что при обработке PID-ов существуют пробелы информации, поступающей от радиоаппаратуры. Эта опция выполняет сглаживание сигналов управления в моменты их отсутствия. Она также делает поведение параметров P и D более чистыми, т.к. сглаживаются скачки входящего сигнала."
     },
     "receiverRcInterpolationIntervalHelp": {
         "message": "Интервал интерполяции [в секундах] в режиме \"ручной\" настройки интерполяции"
@@ -1295,7 +1497,7 @@
         "message": "Выкл."
     },
     "receiverRcSmoothingType": {
-        "message": "Тип Сглаживание"
+        "message": "Тип сглаживания"
     },
     "receiverRcInterpolationDefault": {
         "message": "Предустановка"
@@ -1313,7 +1515,7 @@
         "message": "Feedforward переход"
     },
     "pidTuningFeedforwardTransitionHelp": {
-        "message": "С этим параметром Feedforward может быть уменьшен вблизи центра стиков, что приводит к более плавным флипам и разворотам. <br> Значение представляет собой точку отклонения стика: 0 - центрированное по центру, 1 - полное отклонение. Когда стик находится выше этой точки, Feedforward поддерживается постоянным по своему сконфигурированному значению. Когда стик расположен ниже этой точки, показатель подачи уменьшается пропорционально, достигая 0 в центральном положении. <br> Значение 1 дает максимальный эффект сглаживания, а значение 0 сохраняет фиксированное значение Ф Feedforward на его заданном значении по всему диапазону стиков."
+        "message": "С этим параметром Feedforward может быть уменьшен вблизи центра стиков, что приводит к более плавным флипам и разворотам. <br> Значение представляет собой точку отклонения стика: 0 - центрированное по центру, 1 - полное отклонение. Когда стик находится выше этой точки, Feedforward поддерживается постоянным по своему сконфигурированному значению. Когда стик расположен ниже этой точки, показатель подачи уменьшается пропорционально, достигая 0 в центральном положении. <br> Значение 1 дает максимальный эффект сглаживания, а значение 0 сохраняет фиксированное значение Feedforward на его заданном значении по всему диапазону стиков."
     },
     "pidTuningDtermSetpointTransition": {
         "message": "D Setpoint transition"
@@ -1325,10 +1527,10 @@
         "message": "Этот параметр снижает значение D Setpoint Weight, когда стики находятся в районе центра, что делает завершение флипов и роллов более плавными.<br> Он означает отклонение стика: 0 - стик в центре, 1 - полное отклонение стика. Когда стик находится выше этого значения, то Setpoint Weight имеет установленное значение. Когда стик находится ниже этого значения, то Setpoint Weight уменьшается пропорционально, достигая 0, когда стик находятся в центре.<br> Значение 1 даёт максимальный сглаживающий эффект, а значение 0 сохраняет установленное значение Setpoint Weight при любом отклонении стика."
     },
     "pidTuningDtermSetpointHelp": {
-        "message": "Этот параметр определяет эффект ускорения компоненты D.<br> Значение 0 эквивалентно методу, основанному на измерении (Derivative Method: Measurement), где D учитывает только параметры гироскопа, а значение 1 эквивалентно методу, основанному на ошибке (Derivative Method: Error), в котором учитываются параметры гироскопа и отклонение стиков.<br>Низкое значение соответствует медленной\/плавной отзывчивости стиков, а высокое значение обеспечивает большую отзывчивость на ускорение стиков.<br>Обратите внимание, что рекомендуется включить RC интерполяцию с более высоким значением, чтобы предотвратить скачки управления, создающие шумы."
+        "message": "Этот параметр определяет эффект ускорения компоненты D.<br> Значение 0 эквивалентно методу, основанному на измерении (Derivative Method: Measurement), где D учитывает только параметры гироскопа, а значение 1 эквивалентно методу, основанному на ошибке (Derivative Method: Error), в котором учитываются параметры гироскопа и отклонение стиков.<br>Низкое значение соответствует медленной/плавной отзывчивости стиков, а высокое значение обеспечивает большую отзывчивость на ускорение стиков.<br>Обратите внимание, что рекомендуется включить RC интерполяцию с более высоким значением, чтобы предотвратить скачки управления, создающие шумы."
     },
     "pidTuningDtermSetpointTransitionWarning": {
-        "message": "<span class=\"message-negative\"><strong>$t(warningTitle.message):<\/strong> использование D Setpoint больше 0 и меньше, чем 0.1 не рекомендуется. Это может привести к нестабильности и снижению оперативности стиков когда стик пересекает центральную точку.<\/span>"
+        "message": "<span class=\"message-negative\"><strong>$t(warningTitle.message):</strong> использование D Setpoint больше 0 и меньше, чем 0.1 не рекомендуется. Это может привести к нестабильности и снижению чувствительности стиков когда стик пересекает центральную точку.</span>"
     },
     "pidTuningProportional": {
         "message": "Proportional"
@@ -1346,7 +1548,7 @@
         "message": "RC Rate"
     },
     "pidTuningMaxVel": {
-        "message": "Макс. скор. [град\/сек]"
+        "message": "Макс. скор. [град/сек]"
     },
     "pidTuningRate": {
         "message": "Rate"
@@ -1366,6 +1568,30 @@
     "pidTuningTPABreakPoint": {
         "message": "TPA-порог"
     },
+    "pidTuningThrottleCurvePreview": {
+        "message": "Предпросмотр кривой газа"
+    },
+    "pidTuningThrottleLimitType": {
+        "message": "Предел газа"
+    },
+    "pidTuningThrottleLimitPercent": {
+        "message": "Предел газа %"
+    },
+    "pidTuningThrottleLimitTypeOff": {
+        "message": "Выкл"
+    },
+    "pidTuningThrottleLimitTypeScale": {
+        "message": "Масштаб"
+    },
+    "pidTuningThrottleLimitTypeClip": {
+        "message": "ОБРЕЗ"
+    },
+    "pidTuningThrottleLimitTypeTip": {
+        "message": "Выбор типа ограничения газа. <b> ВЫКЛ. </b> отключает опцию, <b> МАСШТАБ </b> преобразует диапазон дросселя от 0 до выбранного процента, используя полный ход стика, <b> ОБРЕЗ </b> будет устанавливать максимальный газ и удерживать его, движение стика выше этого значения не будет иметь никакого дополнительного эффекта"
+    },
+    "pidTuningThrottleLimitPercentTip": {
+        "message": "Установите желаемый процент ограничения газа. Установка на 100% отключает эту функцию."
+    },
     "pidTuningFilter": {
         "message": "Фильтр"
     },
@@ -1373,7 +1599,7 @@
         "message": "Частота"
     },
     "pidTuningRatesCurve": {
-        "message": "Rates"
+        "message": "Предпросмотр рейтов"
     },
     "throttle": {
         "message": "Газ"
@@ -1421,28 +1647,31 @@
         "message": "Загрузить значения профиля по умолчанию."
     },
     "pidTuningReceivedProfile": {
-        "message": "Установить профиль полетного контроллера: <strong class=\"message-positive\">$1<\/strong>"
+        "message": "Установить профиль полетного контроллера: <strong class=\"message-positive\">$1</strong>"
     },
     "pidTuningReceivedRateProfile": {
-        "message": "Установить Rate профиль полетного контроллера: <strong class=\"message-positive\">$1<\/strong>"
+        "message": "Установить Rate профиль полетного контроллера: <strong class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedProfile": {
-        "message": "Загружен профиль: <strong class=\"message-positive\">$1<\/strong>"
+        "message": "Загружен профиль: <strong class=\"message-positive\">$1</strong>"
     },
     "pidTuningLoadedRateProfile": {
-        "message": "Загружен Rate-профиль: <strong class=\"message-positive\">$1<\/strong>"
+        "message": "Загружен Rate-профиль: <strong class=\"message-positive\">$1</strong>"
     },
     "pidTuningDataRefreshed": {
-        "message": "Данные PID <strong>бновлены<\/strong>"
+        "message": "Данные PID <strong>бновлены</strong>"
     },
     "pidTuningEepromSaved": {
-        "message": "EEPROM <span class=\"message-positive\">сохранено<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранено</span>"
     },
     "receiverHelp": {
-        "message": "Пожалуйста, прочитайте в документации главу \"Приёмник\". Сконфигурируйте последовательный порт (если это необходимо), режим приёмника (serial\/ppm\/pwm), протокол (в режиме serial), забиндите приёмник к аппаратуре, укажите карту каналов, настройте endpoints\/range в передающей аппаратуре таким образом, чтобы все каналы имели значения от ~1000 до ~2000. Укажите значение центра стика (по умолчанию 1500); подтриммируйте каналы в передающей аппаратуре, чтобы стики в центральном положении имели значение 1500; укажите необходимое значение мёртвой зоны стика; также проверьте поведение каналов при выключенной передающей аппаратре.<br \/><span class=\"message-negative\">ВАЖНО:<\/span> Перед полётом ознакомьтесь в документации с главой \"failsafe\" и настройте failsafe."
+        "message": "Пожалуйста, прочитайте в документации главу \"Приёмник\". Сконфигурируйте последовательный порт (если это необходимо), режим приёмника (serial/ppm/pwm), протокол (в режиме serial), забиндите приёмник к аппаратуре, укажите карту каналов, настройте endpoints/range в передающей аппаратуре таким образом, чтобы все каналы имели значения от ~1000 до ~2000. Укажите значение центра стика (по умолчанию 1500); подтриммируйте каналы в передающей аппаратуре, чтобы стики в центральном положении имели значение 1500; укажите необходимое значение мёртвой зоны стика; также проверьте поведение каналов при выключенной передающей аппаратуре.<br /><span class=\"message-negative\">ВАЖНО:</span> Перед полётом ознакомьтесь в документации с главой \"failsafe\" и настройте failsafe."
     },
     "tuningHelp": {
-        "message": "<b>Советы по настройке<\/b><br \/><span class=\"message-negative\">Важно:<\/span> После настройки фильтров, во время первых полётов, убедитесь, что моторы не перегреваются. Более высокое значение фильтра может улучшить стабильность полёта, но, также, вносит больше шумов в моторы, что может вызвать их нагрев.<br>Значение по умолчанию 100 Гц является оптимальным, но для более шумных аппаратов вы можете снизить значение Dterm-фильтра до 50 Гц и, возможно, также понизить значение фильтра гироскопа."
+        "message": "<b>Советы по настройке</b><br /><span class=\"message-negative\">Важно:</span> После настройки фильтров, во время первых полётов, убедитесь, что моторы не перегреваются. Более высокое значение фильтра может улучшить стабильность полёта, но, также, вносит больше шумов в моторы, что может вызвать их нагрев.<br>Значение по умолчанию 100 Гц является оптимальным, но для более шумных аппаратов вы можете снизить значение Dterm-фильтра до 50 Гц и, возможно, также понизить значение фильтра гироскопа."
+    },
+    "filterWarning": {
+        "message": "<span class=\"message-negative\"><b>Предупреждение:</b></span> Количество используемой вами фильтрации опасно мало. Это может сделать аппарат тяжелым в управлении и в результате может привести к улетанию. Настоятельно рекомендуется <b>включить не менее одного Gyro Dynamic Lowpass или Gyro Lowpass 1 и не менее одного D Term Dynamic Lowpass или D Term Lowpass 1</b>."
     },
     "receiverThrottleMid": {
         "message": "Газ Серед."
@@ -1454,7 +1683,7 @@
         "message": "Порог \"Stick Low\""
     },
     "receiverHelpStickMin": {
-        "message": "Максимальное значение (в микросекундах) стика, которое оценивается (на входе команд) как низкое значение газа \/ поворот налево (MIN_CHECK)."
+        "message": "Максимальное значение (в микросекундах) стика, которое оценивается (на входе команд) как низкое значение газа / поворот налево (MIN_CHECK)."
     },
     "receiverStickCenter": {
         "message": "Центр стика"
@@ -1466,25 +1695,25 @@
         "message": "Порог \"Stick High\""
     },
     "receiverHelpStickMax": {
-        "message": "Минимальное значение (в микросекундах) стика, которое оценивается (на входе команд) как высокое значение газа \/ поворот направо (MAX_CHECK)."
+        "message": "Минимальное значение (в микросекундах) стика, которое оценивается (на входе команд) как высокое значение газа / поворот направо (MAX_CHECK)."
     },
     "receiverDeadband": {
         "message": "RC Мертвая зона"
     },
     "receiverHelpDeadband": {
-        "message": "Значение (в микросекундах), на сколько оно должно отличаться от центра стика (Roll\/Pich), чтобы оно считалось верным. Укажите максимальное дрожание (джиттер) стика, относительно центра. Это поможет устранить самопроизвольное смещение летательного аппарата по оси Roll\/Pitch (при отпущенных стиках), вызванное дрожанием (джиттером) стиков."
+        "message": "Значение (в микросекундах), на сколько оно должно отличаться от центра стика (Roll/Pich), чтобы оно считалось верным. Укажите максимальное дрожание (джиттер) стика, относительно центра. Это поможет устранить самопроизвольное смещение летательного аппарата по оси Roll/Pitch (при отпущенных стиках), вызванное дрожанием (джиттером) стиков."
     },
     "receiverYawDeadband": {
         "message": "Yaw мертвая зона"
     },
     "receiverHelpYawDeadband": {
-        "message": "Значение (в микросекундах), на сколько оно должно отличаться от центра стика (Yaw), чтобы оно считалось верным. Укажите максимальное дрожание (джиттер) стика, относительно центра. Это поможет устранить самопроизвольное смещение летательного аппарата по оси Roll\/Pitch (при отпущенных стиках), вызванное дрожанием (джиттером) стиков. <strong>Этот параметр только для стика Yaw.<\/strong>"
+        "message": "Значение (в микросекундах), на сколько оно должно отличаться от центра стика (Yaw), чтобы оно считалось верным. Укажите максимальное дрожание (джиттер) стика, относительно центра. Это поможет устранить самопроизвольное смещение летательного аппарата по оси Roll/Pitch (при отпущенных стиках), вызванное дрожанием (джиттером) стиков. <strong>Этот параметр только для стика Yaw.</strong>"
     },
     "recevier3dDeadbandThrottle": {
         "message": "Мёртв. зона газа в реж. 3D"
     },
     "receiverHelp3dDeadbandThrottle": {
-        "message": "Значение (в микросекундах). Для расширения нейтральной зоны увеличьте это значение.<strong>Этот параметр только для газа в режиме 3D.<\/strong>"
+        "message": "Значение (в микросекундах). Для расширения нейтральной зоны увеличьте это значение.<strong>Этот параметр только для газа в режиме 3D.</strong>"
     },
     "receiverChannelMap": {
         "message": "Таблица каналов"
@@ -1514,25 +1743,25 @@
         "message": "Стики управления"
     },
     "receiverDataRefreshed": {
-        "message": "Данные PID <strong>обновлены<\/strong>"
+        "message": "Данные PID <strong>обновлены</strong>"
     },
     "receiverEepromSaved": {
-        "message": "EEPROM <span class=\"message-positive\">сохранён<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранён</span>"
     },
     "receiverModelPreview": {
         "message": "Предпросмотр"
     },
     "receiverMspWarningText": {
-        "message": "Эти стики позволяют Cleanflight армиться и тестироваться без установленного приемника или передатчика. Тем не менее, <strong>эта фича не предназначена для полетов и пропеллеры должны быть сняты.<\/strong><br><br>Эта фича не гарантирует надежного управления аппаратом. <strong>Если не снять пропеллеры это может привести к серьёзным травмам.<\/strong>"
+        "message": "Эти стики позволяют Cleanflight армиться и тестироваться без установленного приемника или передатчика. Тем не менее, <strong>эта фича не предназначена для полетов и пропеллеры должны быть сняты.</strong><br><br>Эта фича не гарантирует надежного управления аппаратом. <strong>Если не снять пропеллеры это может привести к серьёзным травмам.</strong>"
     },
     "receiverMspEnableButton": {
         "message": "Включить управление"
     },
     "auxiliaryHelp": {
-        "message": "Используйте ползунки диапазона, чтобы назначить соответствующий режим в переключателях вашей аппаратуры управления. Если в приёмнике значение указанного канала будет находится в указанном диапазоне Мин.\/Макс., то соответствующий режим будет активирован. Не забудьте сохранить настройки нажав кнопку \"Сохранить\"."
+        "message": "Настройте режимы здесь, используя комбинацию диапазонов и / или ссылки на другие режимы (ссылки поддерживаются в BF 4.0 и более поздних версиях). Используйте <strong> диапазоны </strong>, чтобы определить переключатели на вашем передатчике и соответствующие режимы. Канал приемника, который дает показание в диапазоне Мин. / Макс., активирует режим. Используйте <strong> ссылку </strong>, чтобы активировать режим, когда активирован другой режим. <strong> Исключения: </strong> ARM не может быть связан с другим режимом или из него, режимы не могут быть связаны с другими режимами, которые настроены с помощью ссылки (связанных ссылок). Несколько диапазонов / ссылок могут быть использованы для активации любого режима. Если для режима определено несколько диапазонов / ссылок, для каждого из них можно установить значение <strong> И </strong> или <strong> ИЛИ </strong>. Режим будет активирован, когда: <br /> - ВСЕ <strong> И </strong> диапазоны / ссылки активны; ИЛИ <br /> - хотя бы одна <strong> ИЛИ </strong> зона / ссылка активна. <br /> <br /> Не забудьте сохранить настройки, нажав кнопку Сохранить."
     },
     "auxiliaryToggleUnused": {
-        "message": "Показать\/скрыть не используемые режимы"
+        "message": "Скрыть неиспользуемые режимы"
     },
     "auxiliaryMin": {
         "message": "Мин."
@@ -1540,29 +1769,45 @@
     "auxiliaryMax": {
         "message": "Макс."
     },
+    "auxiliaryDisabled": {
+        "message": "(ОТКЛЮЧЕНО)",
+        "descripton": "Text to add to the ARM mode (maybe others in the future) in the MODES TAB when it has been disabled for some external reason"
+    },
     "auxiliaryAddRange": {
-        "message": "Доб. диапазон"
+        "message": "Добавить диапазон"
+    },
+    "auxiliaryAddLink": {
+        "message": "Добавить связь"
     },
     "auxiliaryButtonSave": {
         "message": "Сохранить"
     },
     "auxiliaryEepromSaved": {
-        "message": "EEPROM <span class=\"message-positive\">сохранён<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранён</span>"
     },
     "auxiliaryAutoChannelSelect": {
         "message": "АВТО"
     },
+    "auxiliaryModeLogicOR": {
+        "message": "ИЛИ"
+    },
+    "auxiliaryModeLogicAND": {
+        "message": "И"
+    },
     "adjustmentsHelp": {
-        "message": "Установка нас троечных переключателей. Смотри 'in-flight adjustments' секцию руководства. Изменение этих настроек автоматически не сохраняется. Там 4 слота. Каждый переключатель используемый одновременно требует исключительного использования слота."
+        "message": "Установка настроечных переключателей. Смотри 'in-flight adjustments' главу руководства. Изменения, которые делают настроечные функции, автоматически не сохраняются."
+    },
+    "adjustmentSlotsHelp": {
+        "message": "Каждый переключатель, используемый для одновременной настройки, требует эксклюзивного использования слота."
     },
     "adjustmentsExamples": {
-        "message": "Примеры"
+        "message": "Примеры:"
     },
     "adjustmentsExample1": {
-        "message": "Используете Slot 1 и 3POS переключите на AUX1 для выбора между Pitch\/Roll P, I и D и другой 3POS переключатель на AUX2 увеличит или уменьшит значение когда задержан вверх или вниз."
+        "message": "Используйте 3-х позиционный переключатель AUX1 для выбора между Pitch/Roll P, I и D, а 3-х позиционный переключатель AUX2 для увеличения или уменьшения значения при удержании или снижении."
     },
     "adjustmentsExample2": {
-        "message": "Используете Slot 2 и 3POS переключатель в AUX4 для включения Rate Profile секция через тот же 3POS в тот же канал."
+        "message": "Используйте 3-х позиционный переключатель AUX4 чтобы выбрать включение выбора профиля Рейтов при помощи того же 3-х позиционного переключателя на том же канале."
     },
     "adjustmentsColumnEnable": {
         "message": "Если включено"
@@ -1693,11 +1938,17 @@
     "adjustmentsFunction28": {
         "message": "Yaw F корректировка"
     },
+    "adjustmentsFunction29": {
+        "message": "Выбор профиля OSD"
+    },
+    "adjustmentsFunction30": {
+        "message": "Выбор профиля LED"
+    },
     "adjustmentsSave": {
         "message": "Сохранить"
     },
     "adjustmentsEepromSaved": {
-        "message": "EEPROM <span class=\"message-positive\">сохранён<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранён</span>"
     },
     "transponderNotSupported": {
         "message": "Прошивка Вашего полетного контроллера не поддерживает работу транспондера."
@@ -1741,17 +1992,8 @@
     "transponderDataHelp1": {
         "message": "Только хексдецимальные цифры, 0-9, A-F"
     },
-    "transponderHelp1": {
-        "message": "Настройте ваш транспондер здесь. Внимание: Только правильные коды будут приняты системой регистрации времени гонки. Правильные коды транспондера могут быть получены из <a href=\"http:\/\/seriouslypro.com\/transponder-codes\" target=\"_blank\">Seriously Pro<\/a>."
-    },
-    "transponderHelp2": {
-        "message": "Для получения дополнительной информации посетите <a href=\"http:\/\/www.arcitimer.com\/\" title=\"aRCiTimer\" target=\"_blank\">сайт aRCiTimer<\/a>"
-    },
     "transponderDataHelp3": {
-        "message": "Выберете ERLT ID 0-63"
-    },
-    "transponderHelp3": {
-        "message": "Для большей информации посетите <a href=\"https:\/\/github.com\/polyvision\/EasyRaceLapTimer\" title=\"aRCiTimer\" target=\"_blank\">EasyRaceLapTimer site<\/a>"
+        "message": "Выберите ERLT ID 0-63"
     },
     "transponderButtonSave": {
         "message": "Сохранить"
@@ -1760,16 +2002,16 @@
         "message": "Сохранить и Перезагрузить"
     },
     "transponderDataInvalid": {
-        "message": "Информация с транспондера <span class=\"message-negative\">не правильная<\/span>"
+        "message": "Информация с транспондера <span class=\"message-negative\">не правильная</span>"
     },
     "transponderEepromSaved": {
-        "message": "EEPROM <span class=\"message-positive\">сохранён<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранён</span>"
     },
     "servosFirmwareUpgradeRequired": {
         "message": "Сервы требуют firmware &gt;= 1.10.0. и целевую поддержку."
     },
     "servosChangeDirection": {
-        "message": "Изменить направление в TX для соответствия"
+        "message": "Изменить направление в передатчике для соответствия"
     },
     "servosName": {
         "message": "Название"
@@ -1805,7 +2047,7 @@
         "message": "Инвертировать"
     },
     "servosEepromSave": {
-        "message": "EEPROM <span class=\"message-positive\">сохранён<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранён</span>"
     },
     "gpsHead": {
         "message": "GPS"
@@ -1823,10 +2065,10 @@
         "message": "3D фикс.:"
     },
     "gpsFixTrue": {
-        "message": "<span class=\"fixtrue\">Да<\/span>"
+        "message": "<span class=\"fixtrue\">Да</span>"
     },
     "gpsFixFalse": {
-        "message": "<span class=\"fixfalse\">Нет<\/span>"
+        "message": "<span class=\"fixfalse\">Нет</span>"
     },
     "gpsAltitude": {
         "message": "Высота:"
@@ -1865,7 +2107,7 @@
         "message": "Сила тока:"
     },
     "motorsmAhDrawn": {
-        "message": "Потреб. тока:"
+        "message": "Потребление тока:"
     },
     "motorsVoltageValue": {
         "message": "$1 V"
@@ -1942,17 +2184,33 @@
     "motorsSensorAccelSelect": {
         "message": "аксел"
     },
+    "motorsTelemetryHelp": {
+        "message": "Эти цифры показывают телеметрию, полученную от ESC, если она доступна. Это может быть текущая скорость моторов (в RPM, об/мин), количество ошибок связи с моторами и температуры ESC.",
+        "description": "Help text for the telemetry values in the motors tab."
+    },
+    "motorsRPM": {
+        "message": "R: {{motorsRpmValue}}",
+        "description": "To put under the motors in the motors tab. KEEP IT SHORT or not translate. Keep the letters as prefix. Shows the RPM of the motor if telemetry is available."
+    },
+    "motorsRPMError": {
+        "message": "Е: {{motorsErrorValue}}%",
+        "description": "To put under the motors in the motors tab. KEEP IT SHORT or not translate. Shows the error of motor telemetry if available."
+    },
+    "motorsESCTemperature": {
+        "message": "T: {{motorsESCTempValue}}&deg;C",
+        "description": "To put under the motors in the motors tab. KEEP IT SHORT or not translate. Shows the ESC temperature if available."
+    },
     "motorsMaster": {
         "message": "Мастер"
     },
     "motorsNotice": {
-        "message": "<strong>Режим тестирования моторов \/ Предупреждение об арминге:<\/strong><br \/> Перемещение ползунков или арминг вашего аппарата с помощью передающей аппаратуры может привести к <strong>вращению моторов<\/strong>.<br \/>Во избежание травм <strong class=\"message-negative\">снимите все пропеллеры<\/strong> перед использованием этого функционала.<br \/>Включение \"режима тестирования моторов\" также временно отключит режим \"Защиты От Неконтролируемого Полёта\" - всё это предотвратит дизарминг моторов во время стендового тестирования без пропеллеров.<br \/>"
+        "message": "<strong>Режим тестирования моторов / Предупреждение об арминге:</strong><br /> Перемещение ползунков или арминг вашего аппарата с помощью передающей аппаратуры может привести к <strong>вращению моторов</strong>.<br />Во избежание травм <strong class=\"message-negative\">снимите все пропеллеры</strong> перед использованием этого функционала.<br />Включение \"режима тестирования моторов\" также временно отключит режим \"Защиты От Неконтролируемого Полёта\" - всё это предотвратит дизарминг моторов во время стендового тестирования без пропеллеров.<br />"
     },
     "motorsEnableControl": {
-        "message": "<strong>Я понимаю всю опасность<\/strong>, пропеллеры сняты - включить управление моторами и арминг, и отключить \"Режим Защиты От Неконтролируемого Полёта\"."
+        "message": "<strong>Я понимаю всю опасность</strong>, пропеллеры сняты - включить управление моторами и арминг, и отключить \"Режим Защиты От Неконтролируемого Полёта\"."
     },
     "sensorsInfo": {
-        "message": "Имейте в виду, что используя быстрое обновление периодов и рендеринга множества графов достаточно тяжело для ресурсов и будет сжигать вашу батарею быстрее, если вы используете ноутбук.<br \/>мы рекомендуем только отображения графики датчиков интересующих разумное обновление периодов."
+        "message": "Имейте в виду, что используя быстрое обновление периодов и рендеринга множества графов достаточно тяжело для ресурсов и будет сжигать вашу батарею быстрее, если вы используете ноутбук.<br />мы рекомендуем только отображения графики датчиков интересующих разумное обновление периодов."
     },
     "sensorsRefresh": {
         "message": "Обновить:"
@@ -1969,8 +2227,8 @@
     "sensorsMagSelect": {
         "message": "Магнитометр"
     },
-    "sensorsBaroSelect": {
-        "message": "Барометр"
+    "sensorsAltitudeSelect": {
+        "message": "Высота"
     },
     "sensorsSonarSelect": {
         "message": "Сонар"
@@ -1979,7 +2237,7 @@
         "message": "Отладка"
     },
     "sensorsGyroTitle": {
-        "message": "Гироскоп - град\/с"
+        "message": "Гироскоп - град/с"
     },
     "sensorsAccelTitle": {
         "message": "Акселерометр - g"
@@ -1987,8 +2245,8 @@
     "sensorsMagTitle": {
         "message": "Магнитометр - Ga"
     },
-    "sensorsBaroTitle": {
-        "message": "Барометр - метры"
+    "sensorsAltitudeTitle": {
+        "message": "Высота - метры"
     },
     "sensorsSonarTitle": {
         "message": "Сонар - см"
@@ -1997,10 +2255,13 @@
         "message": "Отладка"
     },
     "cliInfo": {
-        "message": "<strong>Примечание<\/strong>: Покидая CLI закладку или нажимая Отключить будет <strong>автоматически<\/strong>  послано\"<strong>выход<\/strong>\" на плату. С последней прошивкой будет сделана <span class=\"message-negative\">перезагрузка<\/span> контроллера и не сохраненные изменения будут <span class=\"message-negative\">потеряны<\/span>."
+        "message": "<strong>Прим.:</strong> Выход из вкладки CLI или нажатие Отключить <strong>автоматически</strong> пошлёт команду\"<strong>выход</strong>\" в полетный контроллер. С последней прошивкой это вызовет его <strong>перезагрузку</strong> и сохраненные изменения будут <strong>потеряны</strong>.<p><strong><span class=\"message-negative\">Предупреждение:</span></strong> Некоторые команды в CLI могут привести к отправке произвольных сигналов на двигатели. И может привести к их запуску, если подключена батарея. Поэтому настоятельно рекомендуется убедиться, что <strong>батарея не подключена, прежде чем вводить команды в CLI</strong>."
     },
     "cliInputPlaceholder": {
-        "message": "Пишите ваши команды здесь"
+        "message": "Напишите вашу команду здесь. Нажмите Tab для АвтоДополнения."
+    },
+    "cliInputPlaceholderBuilding": {
+        "message": "Пожалуйста подождите пока идет построение кэша АвтоДополнения ..."
     },
     "cliEnter": {
         "message": "Обнаружен переход в режим командной строки"
@@ -2011,11 +2272,32 @@
     "cliSaveToFileBtn": {
         "message": "Сохранить в файл"
     },
+    "cliClearOutputHistoryBtn": {
+        "message": "Очистить историю"
+    },
+    "cliCopyToClipboardBtn": {
+        "message": "Копировать в буфер обмена"
+    },
+    "cliCopySuccessful": {
+        "message": "Скопировано!"
+    },
+    "cliLoadFromFileBtn": {
+        "message": "Загрузить из файла"
+    },
+    "cliConfirmSnippetDialogTitle": {
+        "message": "Загружен файл <strong>{{fileName}}</strong>. Проверьте загруженные команды"
+    },
+    "cliConfirmSnippetNote": {
+        "message": "<strong>Примечание</strong>: Вы можете просматривать и редактировать команды перед выполнением."
+    },
+    "cliConfirmSnippetBtn": {
+        "message": "Выполнить"
+    },
     "loggingNote": {
-        "message": "Информация будет логироваться в эту закладку <span class=\"message-negative\">только<\/span>, покидая эту закладку будет <span class=\"message-negative\">отменено<\/span> логировние и приложение вернется в нормальное <strong>\"конфигуратор\"<\/strong> состояние.<br \/> Вы вольны выбрать глобальный период обновления, информация будет записана в лог файл каждые <strong>1<\/strong> секунд по соображениям производительности."
+        "message": "Информация будет логироваться <span class=\"message-negative\">только</span> в этой вкладке, покидание этой вкладки <span class=\"message-negative\">отменит</span> логирование и приложение вернется в нормальное <strong>\"конфигуратор\"</strong> состояние.<br /> Вы вольны выбрать глобальный период обновления, информация будет записана в лог файл раз в <strong>1</strong> секунду по соображениям производительности."
     },
     "loggingSamplesSaved": {
-        "message": "Сэмплы сохранены:"
+        "message": "Сэмплов сохранено:"
     },
     "loggingLogSize": {
         "message": "Размер журнала:"
@@ -2030,10 +2312,10 @@
         "message": "Остановить запись"
     },
     "loggingBack": {
-        "message": "Оставить логинг \/ отключить"
+        "message": "Оставить логинг / отключить"
     },
     "loggingErrorNotConnected": {
-        "message": "Сперва вам нужно <strong>подключиться<\/strong>"
+        "message": "Сперва вам нужно <strong>подключиться</strong>"
     },
     "loggingErrorLogFile": {
         "message": "Пожалуйста выберите файл журнала"
@@ -2042,7 +2324,7 @@
         "message": "Выберите по крайней мере одно свойство для логирования"
     },
     "loggingAutomaticallyRetained": {
-        "message": "Автоматически загружен предыдущий файл журнала: <strong>$1<\/strong>"
+        "message": "Автоматически загружен предыдущий файл журнала: <strong>$1</strong>"
     },
     "blackboxNotSupported": {
         "message": "Прошивка Вашего полетного контроллера не поддерживает запись в Blackbox."
@@ -2066,10 +2348,10 @@
         "message": "SD карта"
     },
     "blackboxLoggingSerial": {
-        "message": "Серийный порт"
+        "message": "Последовательный порт"
     },
     "serialLoggingSupportedNote": {
-        "message": "Вы можете логировать на внешнее логирующее устройство (такое как OpenLog или совместимые клоны) используя последовательный порт. Настройте порт на закладке портов."
+        "message": "Вы можете логировать работу на внешнее устройство (такое как OpenLager) используя последовательный порт. Сконфигурируйте порт во вкладке Порты."
     },
     "sdcardNote": {
         "message": "Полетные логи могут быть записаны в ваш полетный контроллер оборудованный слотом SD карты."
@@ -2097,6 +2379,12 @@
     },
     "dataflashButtonSaveFile": {
         "message": "Сохранено в файл..."
+    },
+    "dataflashButtonSaveFileDeprecated": {
+        "message": "Сохранить в файл... (устарело)"
+    },
+    "dataflashSaveFileDepreciationHint": {
+        "message": "Сохранение журналов черного ящика из конфигуратора происходит медленно и с возможными ошибками. Рекомендуется вместо этого использовать '<b>$t(onboardLoggingRebootMscText.message)</b> для включения режима передачи данных и доступа к вашему полетному контроллеру как к устройству хранения для загрузки файлов журнала."
     },
     "dataflashButtonErase": {
         "message": "Стереть флэш"
@@ -2152,8 +2440,8 @@
     "firmwareFlasherReleaseSummaryHead": {
         "message": "Информация о выпуске"
     },
-    "firmwareFlasherReleaseName": {
-        "message": "Название\/Версия:"
+    "firmwareFlasherReleaseVersion": {
+        "message": "Версия:"
     },
     "firmwareFlasherReleaseVersionUrl": {
         "message": "Перейти на страницу релиза."
@@ -2164,23 +2452,17 @@
     "firmwareFlasherReleaseDate": {
         "message": "Дата:"
     },
-    "firmwareFlasherReleaseStatus": {
-        "message": "Состояние:"
-    },
     "firmwareFlasherReleaseTarget": {
         "message": "Объект:"
     },
     "firmwareFlasherReleaseFile": {
         "message": "Файл прошивки:"
     },
-    "firmwareFlasherReleaseStatusReleaseCandidate": {
-        "message": "<span class=\"message-negative\">ВАЖНО: Это прошивка отмечена как кандидат на релиз. Пожалуйста пишите предложения незамедлительно.<\/span>"
-    },
     "firmwareFlasherReleaseFileUrl": {
         "message": "Скачать самостоятельно."
     },
     "firmwareFlasherTargetWarning": {
-        "message": "<span class=\"message-negative\">Важно<\/span>: Убедитесь, что файл прошивки соответствует Вашему полётному контроллеру. Прошивка, залитая в неподходящий для неё полётный контроллер может привести к <span class=\"message-negative\">плохим последствиям<\/span>."
+        "message": "<span class=\"message-negative\">Важно</span>: Убедитесь, что файл прошивки соответствует Вашему полётному контроллеру. Прошивка, залитая в неподходящий для неё полётный контроллер может привести к <span class=\"message-negative\">плохим последствиям</span>."
     },
     "firmwareFlasherPath": {
         "message": "Путь:"
@@ -2196,6 +2478,9 @@
     },
     "firmwareFlasherLoadFirmwareFile": {
         "message": "Пожалуйста, загрузите файл прошивки"
+    },
+    "firmwareFlasherLoadedConfig": {
+        "message": "Цель загружена, пожалуйста, загрузите файл прошивки"
     },
     "firmwareFlasherNoReboot": {
         "message": "Без перезагрузки"
@@ -2237,7 +2522,7 @@
         "message": "Ручной битрейт"
     },
     "firmwareFlasherManualBaudDescription": {
-        "message": "Выберите скорость передачи вручную, если ваш полётный контроллер не поддерживает стандартную скорость прошивки либо, если Вы прошиваете через bluethooth.<br \/><span class=\"message-negative\">Примечание:<\/span> Не используется при прошивке в режиме DFU"
+        "message": "Выберите скорость передачи вручную, если ваш полётный контроллер не поддерживает стандартную скорость прошивки либо, если Вы прошиваете через bluethooth.<br /><span class=\"message-negative\">Примечание:</span> Не используется при прошивке в режиме DFU"
     },
     "firmwareFlasherBaudRate": {
         "message": "Скорость передачи"
@@ -2267,7 +2552,7 @@
         "message": "3.4 AKK & RDQ VTX Patch"
     },
     "firmwareFlasherOptionLabelSelectFirmware": {
-        "message": "Выбрать Прошивку \/ Плату"
+        "message": "Выбрать Прошивку / Плату"
     },
     "firmwareFlasherOptionLabelSelectBoard": {
         "message": "Выберите полётный контроллер"
@@ -2288,7 +2573,7 @@
         "message": "Загружаеться..."
     },
     "firmwareFlasherFlashFirmware": {
-        "message": "Загрузить прошивку"
+        "message": "Прошить прошивку"
     },
     "firmwareFlasherGithubInfoHead": {
         "message": "GitHub Firmware инфо"
@@ -2309,13 +2594,10 @@
         "message": "Сообщение:"
     },
     "firmwareFlasherWarningText": {
-        "message": "Пожалуйста, <span class=\"message-negative\">не пытайтесь прошивать <\/span> <strong>не поддерживаемые<\/strong> Cleanflight-ом контроллеры этим программатором.<br \/><span class=\"message-negative\">Не <\/span><strong>отключайте<\/strong> кабель от полётного контроллера и <strong>не выключайте<\/strong> ваш компьютер во время прошивки.<br \/><br \/><strong>Примечание:<\/strong> STM32-загрузчик хранится в ROM-памяти, его нельзя затирать.<br \/><strong>Примечание:<\/strong><span class=\"message-negative\"> Подключаться автоматически<\/span> всегда выключено во вкладке \"Программатор\".<br \/><strong>Примечание:<\/strong> Убедитесь, что Вы сделали резервную копию, т. к. различные обновления и возвраты к предыдущей версии могут стереть Ваши настройки. <br \/><strong>Примечание:<\/strong> Если при прошивке возникают проблемы, то попробуйте сперва <strong>отключить все сторонние кабели от полётного контроллера<\/strong>, перезагрузите компьютер, обновите chrome, обновите драйверы.<br \/><strong>Примечание:<\/strong> При прошивке полётных контроллеров непосредственно через USB кабель (особенно новых моделей контроллеров) обязательно ознакомьтесь с разделом USB Flashing в инструкции Cleanflight и убедитесь, что у Вас установлены нужные программы и драйвера"
+        "message": "Пожалуйста, <span class=\"message-negative\">не пытайтесь прошивать </span> <strong>не поддерживаемые</strong> Cleanflight-ом контроллеры этим программатором.<br /><span class=\"message-negative\">Не </span><strong>отключайте</strong> кабель от полётного контроллера и <strong>не выключайте</strong> ваш компьютер во время прошивки.<br /><br /><strong>Примечание:</strong> STM32-загрузчик хранится в ROM-памяти, его нельзя затирать.<br /><strong>Примечание:</strong><span class=\"message-negative\"> Подключаться автоматически</span> всегда выключено во вкладке \"Программатор\".<br /><strong>Примечание:</strong> Убедитесь, что Вы сделали резервную копию, т. к. различные обновления и возвраты к предыдущей версии могут стереть Ваши настройки. <br /><strong>Примечание:</strong> Если при прошивке возникают проблемы, то попробуйте сперва <strong>отключить все сторонние кабели от полётного контроллера</strong>, перезагрузите компьютер, обновите chrome, обновите драйверы.<br /><strong>Примечание:</strong> При прошивке полётных контроллеров непосредственно через USB кабель (особенно новых моделей контроллеров) обязательно ознакомьтесь с разделом USB Flashing в инструкции Cleanflight и убедитесь, что у Вас установлены нужные программы и драйвера"
     },
     "firmwareFlasherRecoveryHead": {
-        "message": "<strong>Потеря связи \/ Восстановление связи<\/strong>"
-    },
-    "firmwareFlasherRecoveryText": {
-        "message": "Если возникла потеря связи с вашим устройством, то следуйте следующим шагам, чтобы восстановить связь:<ul><li>Отключите питание<\/li><li>Включите \"No reboot sequence\", включите \"Полное стирание чипа\".<\/li><li>Замкните контакты \"BOOT\" или удерживайте кнопку BOOT.<\/li><li>Включите питание (светодиод НЕ будет мигать, если всё сделано правильно).<\/li><li>Установите STM32 драйвера и Zadig, если это необходимо (см. раздел <a href=\"https:\/\/github.com\/cleanflight\/cleanflight\/wiki\/Installing-Cleanflight\"target=\"_blank\">USB Flashing<\/a> в инструкции Cleanflight).<\/li><li>Закройте конфигуратор, закройте все Chrome приложения и завершите все chrome процессы, перезапустите конфигуратор.<\/li><li>Отпустите кнопку \"BOOT\", если она есть.<\/li><li>Залейте нужную прошивку (укажите ручной битрейт, если он указан в инструкции вашего полётного контроллера).<\/li><li>Отключите питание<\/li><li>Разомкните контакты \"BOOT\".<\/li><li>Включите питание (светодиод должен мигать).<\/li><li>Пробуйте подключиться.<\/li><\/ul>"
+        "message": "<strong>Потеря связи / Восстановление связи</strong>"
     },
     "firmwareFlasherButtonLeave": {
         "message": "Покинуть программатор"
@@ -2326,32 +2608,50 @@
     "firmwareFlasherFirmwareLocalLoaded": {
         "message": "Загружена локальная прошивка: ($1 bytes)"
     },
+    "firmwareFlasherFirmwareOnlineLoaded": {
+        "message": "Загружена онлайн прошивка: ($1 bytes)"
+    },
     "firmwareFlasherHexCorrupted": {
         "message": "HEX-файл поврежден"
     },
+    "firmwareFlasherConfigCorrupted": {
+        "message": "Конфиг файл повреждён. Допустимы только ASCII символы (коды 0-255)",
+        "description": "shown in the progress bar at the bottom, be brief"
+    },
+    "firmwareFlasherConfigCorruptedLogMessage": {
+        "message": "Конфиг файл повреждён. Допустимы только ASCII символы (коды 0-255). Символы за пределами этого диапазона разрешены только в комментариях",
+        "description": "shown in the log, more wordy"
+    },
     "firmwareFlasherRemoteFirmwareLoaded": {
-        "message": "<span class=\"message-positive\">Удаленная Прошивка загружена, готова для загрузки<\/span>"
+        "message": "<span class=\"message-positive\">Удаленная Прошивка загружена, готова для загрузки</span>"
     },
     "firmwareFlasherFailedToLoadOnlineFirmware": {
         "message": "Не удалось загрузить удаленную прошивку"
     },
+    "firmwareFlasherFailedToLoadUnifiedConfig": {
+        "message": "Не удалось загрузить конфигурацию для {{remote_file}}"
+    },
+    "firmwareFlasherLegacyLabel": {
+        "message": "{{target}} (Устаревш.)",
+        "description": "If we have a Unified target and a old style target available, we are labeling the older one"
+    },
     "firmwareFlasherNoFirmwareSelected": {
-        "message": "<b>Не выбрана прошивка для загрузки<\/b>"
+        "message": "<b>Не выбрана прошивка для загрузки</b>"
     },
     "firmwareFlasherNoValidPort": {
-        "message": "<span class=\"message-negative\">Пожалуйста выберете правильный последовательный порт<\/span>"
+        "message": "<span class=\"message-negative\">Пожалуйста выберите правильный последовательный порт</span>"
     },
     "firmwareFlasherWritePermissions": {
-        "message": "У вас нет <span class=\"message-negative\">разрешения на запись<\/span> в этот файл"
+        "message": "У вас нет <span class=\"message-negative\">разрешения на запись</span> в этот файл"
     },
     "firmwareFlasherFlashTrigger": {
-        "message": "Обнаружено: <strong>$1<\/strong> - переключение памяти при соединении"
+        "message": "Обнаружено: <strong>$1</strong> - переключение памяти при соединении"
     },
     "firmwareFlasherPreviousDevice": {
-        "message": "Обнаружено: <strong>$1<\/strong> - предыдущее устройство все еще подключено, пожалуйста переподключите чтобы попробовать еще"
+        "message": "Обнаружено: <strong>$1</strong> - предыдущее устройство все еще подключено, пожалуйста переподключите чтобы попробовать еще"
     },
     "ledStripHelp": {
-        "message": "Полетный контроллер может контролировать цвет и индивидуальные эффекты светодиодов на ленте.<br \/>Конфигурировать светодиоды на сетке, настроить порядок проводников затем установить светодиоды на ваш аппарат согласно позиции на сетке. Светодиоды без назначения номера цепи сохранены не будут.<br \/>Двойной щелчок на цвете меняет HSV значение."
+        "message": "Полетный контроллер может контролировать цвет и индивидуальные эффекты светодиодов на ленте.<br />Конфигурировать светодиоды на сетке, настроить порядок проводников затем установить светодиоды на ваш аппарат согласно позиции на сетке. Светодиоды без назначения номера цепи сохранены не будут.<br />Двойной щелчок на цвете меняет HSV значение."
     },
     "ledStripButtonSave": {
         "message": "Сохранить"
@@ -2385,7 +2685,7 @@
         "description": "In the LED STRIP, clear all leds"
     },
     "ledStripEepromSaved": {
-        "message": "EEPROM <span class=\"message-positive\">сохранён<\/span>"
+        "message": "EEPROM <span class=\"message-positive\">сохранён</span>"
     },
     "ledStripVtxOverlay": {
         "message": "VTX (использует vtx частоты для присвоения цвета)"
@@ -2425,7 +2725,7 @@
         "description": "One of the modes of the Led Strip"
     },
     "ledStripFunctionRingOption": {
-        "message": "Звонок",
+        "message": "Кольцо",
         "description": "One of the modes of the Led Strip"
     },
     "ledStripColorModifierTitle": {
@@ -2491,7 +2791,7 @@
         "description": "One of the modes in Color Mode in Led Strip"
     },
     "ledStripModeColorsModeDisarmed": {
-        "message": "Выключен",
+        "message": "Disarmed",
         "description": "One of the modes in Color Mode in Led Strip"
     },
     "ledStripModeColorsModeArmed": {
@@ -2662,7 +2962,7 @@
         "message": "AUX 16"
     },
     "pidTuningBasic": {
-        "message": "Basic\/Acro"
+        "message": "Basic/Acro"
     },
     "pidTuningYawJumpPrevention": {
         "message": "Yaw продвижение"
@@ -2674,16 +2974,16 @@
         "message": "Мощность RC Экспо"
     },
     "pidTuningRcExpoPowerHelp": {
-        "message": "Эта экспонента используется при расчете RC Expo. В Cleanflight версиях до 2.0 значение фиксируется на 3."
+        "message": "Эта экспонента используется при расчете RC Expo. В Cleanflight версиях до 3.0 значение фиксируется на 3."
     },
     "pidTuningLevel": {
-        "message": "Angle\/Horizon"
+        "message": "Angle/Horizon"
     },
     "pidTuningAltitude": {
-        "message": "Барометр & Сонар\/высота"
+        "message": "Барометр & Сонар/высота"
     },
     "pidTuningMag": {
-        "message": "Магнитометр\/Направление"
+        "message": "Магнитометр/Направление"
     },
     "pidTuningGps": {
         "message": "GPS Навигация"
@@ -2712,6 +3012,54 @@
     "pidTuningNonProfileFilterSettings": {
         "message": "Настройки фильтра вне зависимости от выбранного профиля"
     },
+    "pidTuningSliderLowFiltering": {
+        "message": "Меньше фильтрации",
+        "description": "Filter tuning slider low header"
+    },
+    "pidTuningSliderDefaultFiltering": {
+        "message": "Фильтрация по умолчанию",
+        "description": "Filter tuning slider default header"
+    },
+    "pidTuningSliderHighFiltering": {
+        "message": "Больше фильтрации",
+        "description": "Filter tuning slider high header"
+    },
+    "pidTuningSliderWarning": {
+        "message": "<span class=\"message-negative\">ВНИМАНИЕ</span>: Текущие позиции слайдеров могут быть причиной улетаний коптера, повреждений моторов и небезопасного поведения. Пожалуйста, продолжайте с осторожностью!",
+        "description": "Warning shown when tuning slider are above safe limits"
+    },
+    "pidTuningSlidersDisabled": {
+        "message": "<strong>Примечание:</strong> Слайдеры отключены, потому что значения были изменены вручную. Нажатие на кнопку '$t(pidTuningSliderEnableButton.message)' активирует их снова. Это сбросит значения и любые несохраненные изменения будут потеряны.",
+        "description": "Tuning sliders disabled note when manual changes are detected"
+    },
+    "pidTuningSliderEnableButton": {
+        "message": "Включить слайдеры",
+        "description": "Button label for enabling sliders"
+    },
+    "pidTuningSlidersNonExpertMode": {
+        "message": "<strong>Примечание:</strong> Диапазон слайдеров ограничен, потому что вы не в экспертном режиме. Этот диапазон подходит для большинства квадрокоптеров и для начинающих.",
+        "description": "Sliders restricted message"
+    },
+    "pidTuningSliderDefault": {
+        "message": "По умолчанию",
+        "description": "Tuning Slider Default header"
+    },
+    "pidTuningPDRatioSlider": {
+        "message": "Баланс PD:",
+        "description": "PD balance tuning slider label"
+    },
+    "pidTuningPDGainSlider": {
+        "message": "Коэффициенты усиления P и D:",
+        "description": "P and D gain tuning slider label"
+    },
+    "pidTuningResponseSlider": {
+        "message": "Коэффициент реакции на движения стиков:",
+        "description": "Response tuning slider label"
+    },
+    "pidTuningMasterSliderHelp": {
+        "message": "В целом, большие квадрокоптеры требуют более высоких коэффициентов PID из-за низкого отношения мощности к весу.<br /><br />Маленькие (микро) квадрокоптеры обычно требует пониженных коэффициентов PID из-за высокого отношения мощности к весу.<br /><br />Высокие значения PID предназначены для менее чувствительных к изменению газа квадрокоптеров и наоборот, низкие значения PID  - для более чувствительных квадрокоптеров.",
+        "description": "Master gain tuning slider helpicon message"
+    },
     "pidTuningGyroLowpassFiltersGroup": {
         "message": "Гиро низкочастотные фильтры"
     },
@@ -2721,11 +3069,23 @@
     "pidTuningGyroLowpassType": {
         "message": "Gyro Lowpass 1 тип фильтра"
     },
+    "pidTuningGyroLowpassDynMinFrequency": {
+        "message": "Gyro Lowpass 1 Dynamic мин. частота среза [Hz]"
+    },
+    "pidTuningGyroLowpassDynMaxFrequency": {
+        "message": "Gyro Lowpass 1 Dynamic макс. частота среза [Hz]"
+    },
+    "pidTuningGyroLowpassDynType": {
+        "message": "Gyro Lowpass 1 Dynamic тип фильтра"
+    },
     "pidTuningGyroLowpass2Frequency": {
         "message": "Gyro Lowpass 2 частота среза [Hz]"
     },
     "pidTuningGyroLowpass2Type": {
         "message": "Gyro Lowpass 2 тип фильтра"
+    },
+    "pidTuningLowpassFilterHelp": {
+        "message": "Фильтры нижних частот бывают статическими и динамическими. Каждый отдельный фильтр может быть или статическим или динамическим. В статическом есть только значение Cutoff, частота среза, и подавляются все частоты входного сигнала выше этой частоты. В динамическом определены 2 частоты среза (Min и Max). Значение частоты среза внутри этого диапазона определяется динамически с движением стика газа."
     },
     "pidTuningGyroNotchFiltersGroup": {
         "message": "Гиро полосно-заграждающие фильтры"
@@ -2745,11 +3105,15 @@
     "pidTuningNotchFilterHelp": {
         "message": "Notch Filter имеет центр и частоту среза. Фильтр симметричный. Центральная частота есть центр фильтра и частота среза в которой Notch filter начинается. Например Notch с частотой среза 160 и центром 260 это значит, что диапазон составляет 160-360 для наибольшего затухания вокруг центра"
     },
+    "pidTuningRpmMinHzHelp": {
+        "message": "Минимальная частота, которая будет использоваться RPM фильтром.",
+        "description": "Help text for one of the parameters of the RPM Filter"
+    },
     "pidTuningFilterSettings": {
         "message": "Настройки фильтра в зависимости от выбранного профиля"
     },
     "pidTuningDTermLowpassFiltersGroup": {
-        "message": "D Term низкочастотные фильтры"
+        "message": "D Term Lowpass фильтры"
     },
     "pidTuningDTermLowpassType": {
         "message": "D Term Lowpass 1 тип фильтра"
@@ -2759,6 +3123,18 @@
     },
     "pidTuningDTermLowpass2Frequency": {
         "message": "D Term Lowpass 2 частота среза [Hz]"
+    },
+    "pidTuningDTermLowpass2Type": {
+        "message": "D Term Lowpass 2 тип фильтра"
+    },
+    "pidTuningDTermLowpassDynMinFrequency": {
+        "message": "D Term Lowpass 1 Dynamic мин. Частота среза [Hz]"
+    },
+    "pidTuningDTermLowpassDynMaxFrequency": {
+        "message": "D Term Lowpass 1 Dynamic макс. частота среза [Hz]"
+    },
+    "pidTuningDTermLowpassDynType": {
+        "message": "D Term Lowpass 1 Dynamic тип фильтра"
     },
     "pidTuningDTermNotchFiltersGroup": {
         "message": "D Term Notch фильтр"
@@ -2800,7 +3176,8 @@
         "message": "Ограничивает накопление I составляющей, когда происходят быстрые движения. Это специально позволяет уменьшить отскоки в конце переворотов и других быстрых движений. Вы можете выбрать активные оси, если быстрое движение определено, используя гироскоп или Setpoint (стика)."
     },
     "pidTuningItermRelaxAxes": {
-        "message": "Oси:"
+        "message": "Oси",
+        "description": "Iterm Relax Axes selection"
     },
     "pidTuningItermRelaxAxesOptionRP": {
         "message": "RP"
@@ -2815,7 +3192,8 @@
         "message": "RPY (только увеличения)"
     },
     "pidTuningItermRelaxType": {
-        "message": "Тип:"
+        "message": "Тип",
+        "description": "Iterm Relax Type selection"
     },
     "pidTuningItermRelaxTypeOptionGyro": {
         "message": "Гиро"
@@ -2823,11 +3201,12 @@
     "pidTuningItermRelaxTypeOptionSetpoint": {
         "message": "Уставка"
     },
+    "pidTuningItermRelaxCutoff": {
+        "message": "Срез",
+        "description": "Cutoff value of the I Term Relax"
+    },
     "pidTuningAbsoluteControlGain": {
         "message": "Абсолютный контроль"
-    },
-    "pidTuningAbsoluteControlGainHelp": {
-        "message": "Эта функция решает некоторые основополагающие проблемы I составляющей вращения и многообещающе должно заменить его в определенный момент. Функция накапливает абсолютную ошибку гироскопа в квадратных координатах и смешивает пропорциональной коррекции в setpoint. Его необходимо включить iterm_relax для RTY."
     },
     "pidTuningThrottleBoost": {
         "message": "Увеличение газа"
@@ -2841,17 +3220,20 @@
     "pidTuningAcroTrainerAngleLimitHelp": {
         "message": "Добавляет новый режим пределов угла для пилотов которые учатся летать в акро режиме. Диапазон правильных 10-80 и должен быть активирован с переключателя в $t(tabAuxiliary.message) закладке."
     },
+    "pidTuningIntegratedYaw": {
+        "message": "Интегрированное рыскание"
+    },
     "configHelp2": {
-        "message": "Произвольное вращение платы в градусах, для разрешения установки в другом направлении \/ вверх ногами \/ повернутое и т. д. При работе с внешними датчиками используется выравнивание датчиков (Gyro, Acc, Mag), чтобы определить положение датчика независимо от ориентации платы. "
+        "message": "Произвольное вращение платы в градусах, для разрешения установки в другом направлении / вверх ногами / повернутое и т. д. При работе с внешними датчиками используется выравнивание датчиков (Gyro, Acc, Mag), чтобы определить положение датчика независимо от ориентации платы. "
     },
     "failsafeFeaturesHelpOld": {
-        "message": "Failsafe конфигурация изменилась существенно. Используете Cleanflight <strong>v1.12.0 +<\/strong> для включения улучшенной конфигурационной панели."
+        "message": "Failsafe конфигурация изменилась существенно. Используете Cleanflight <strong>v1.12.0 +</strong> для включения улучшенной конфигурационной панели."
     },
     "failsafePaneTitleOld": {
-        "message": "Failsafe приемника"
+        "message": "Failsafe приёмника"
     },
     "failsafeFeaturesHelpNew": {
-        "message": "Failesafe проходит в 2 этапа. <strong>Этап 1<\/strong> наступает, если в канале появляются импульсы с недопустимой длительностью, либо, когда приёмник сообщает о режиме failsafe, либо при полном отсутствии сигнала на приёмнике. На этом этапе <span class=\"message-negative\">все каналы<\/span> устанавливаются на короткое время в \"Значения при отсутствии сигнала\". Если сигнал не восстанавливается в течение указанного времени, <span class=\"message-negative\">и если аппарат заармлен<\/span>, то наступает <strong>Этап 2<\/strong>. Каналы по-прежнему будут оставаться в \"Значении каналов при отсутствии сигнала\", если эти значения не перекрываются процедурой Этапа 2.<br \/><strong>Примечание:<\/strong> \"Значения каналов при отсуствии сигнала\" также могу применяться только к отдельным AUX-каналам, имеющим ошибочные импульсы."
+        "message": "Failesafe проходит в 2 этапа. <strong>Этап 1</strong> наступает, если в канале появляются импульсы с недопустимой длительностью, либо, когда приёмник сообщает о режиме failsafe, либо при полном отсутствии сигнала на приёмнике. На этом этапе <span class=\"message-negative\">все каналы</span> устанавливаются на короткое время в \"Значения при отсутствии сигнала\". Если сигнал не восстанавливается в течение указанного времени, <span class=\"message-negative\">и если аппарат заармлен</span>, то наступает <strong>Этап 2</strong>. Каналы по-прежнему будут оставаться в \"Значении каналов при отсутствии сигнала\", если эти значения не перекрываются процедурой Этапа 2.<br /><strong>Примечание:</strong> \"Значения каналов при отсуствии сигнала\" также могу применяться только к отдельным AUX-каналам, имеющим ошибочные импульсы."
     },
     "failsafePulsrangeTitle": {
         "message": "Настройка допустимого диапазона длительности импульсов"
@@ -2869,13 +3251,13 @@
         "message": "Значения каналов при отсутствии сигнала с приёмника"
     },
     "failsafeChannelFallbackSettingsHelp": {
-        "message": "Эти настройки применятся во время сценария 1. <strong>Примечание:\n <\/strong> значения сохраняются шагами в 25 мкс, поэтому небольшие изменения исчезают"
+        "message": "Эти настройки применятся во время сценария 1. <strong>Примечание:\n </strong> значения сохраняются шагами в 25 мкс, поэтому небольшие изменения исчезают"
     },
     "failsafeChannelFallbackSettingsAuto": {
-        "message": "<strong>Auto<\/strong> значит, что Roll, Pitch и Yaw будут находиться в центре, а газ будет иметь низкое значение.<strong>Hold<\/strong> означает оставить последнее принятое значение"
+        "message": "<strong>Auto</strong> значит, что Roll, Pitch и Yaw будут находиться в центре, а газ будет иметь низкое значение.<strong>Hold</strong> означает оставить последнее принятое значение"
     },
     "failsafeChannelFallbackSettingsHold": {
-        "message": "<strong>Hold<\/strong> означает оставить последнее значение принятого сигнала.<strong>Set<\/strong> означает использовать указанное здесь значение"
+        "message": "<strong>Hold</strong> означает оставить последнее значение принятого сигнала.<strong>Set</strong> означает использовать указанное здесь значение"
     },
     "failsafeStageTwoSettingsTitle": {
         "message": "Этап 2 - Настройки"
@@ -2910,11 +3292,50 @@
     "failsafeProcedureItemSelect2": {
         "message": "Падение"
     },
+    "failsafeProcedureItemSelect4": {
+        "message": "GPS спасение"
+    },
+    "failsafeGpsRescueItemAngle": {
+        "message": "Угол"
+    },
+    "failsafeGpsRescueItemInitialAltitude": {
+        "message": "Первоначальная высота (м)"
+    },
+    "failsafeGpsRescueItemDescentDistance": {
+        "message": "Пройденное расстояние (м)"
+    },
+    "failsafeGpsRescueItemGroundSpeed": {
+        "message": "Скорость относительно земли (м/сек)"
+    },
+    "failsafeGpsRescueItemThrottleMin": {
+        "message": "Газ минимум"
+    },
+    "failsafeGpsRescueItemThrottleMax": {
+        "message": "Газ максимум"
+    },
+    "failsafeGpsRescueItemThrottleHover": {
+        "message": "Газ висения"
+    },
+    "failsafeGpsRescueItemMinSats": {
+        "message": "Минимум спутников"
+    },
+    "failsafeGpsRescueItemSanityChecks": {
+        "message": "Проверка на исправность"
+    },
+    "failsafeGpsRescueItemSanityChecksOff": {
+        "message": "Выкл."
+    },
+    "failsafeGpsRescueItemSanityChecksOn": {
+        "message": "Вкл."
+    },
+    "failsafeGpsRescueItemSanityChecksFSOnly": {
+        "message": "Failsafe только"
+    },
     "failsafeKillSwitchItem": {
         "message": "Failsafe - Аварийный тумблер (Failsafe во вкладке \"Режимы\")"
     },
     "failsafeKillSwitchHelp": {
-        "message": "С помощью этой опции можно настроить аварийный переключатель на аппаратуре (во вкладке \"Режимы\"), который будет производить аварийное отключение, минуя процедуру failsafe. <strong>Примечание:<\/strong> если аварийный переключатель failsafe будет находиться в позиции \"включен\", то арминг блокируется"
+        "message": "С помощью этой опции можно настроить аварийный переключатель на аппаратуре (во вкладке \"Режимы\"), который будет производить аварийное отключение, минуя процедуру failsafe. <strong>Примечание:</strong> если аварийный переключатель failsafe будет находиться в позиции \"включен\", то арминг блокируется"
     },
     "failsafeSwitchTitle": {
         "message": "Failsafe переключатель"
@@ -2923,7 +3344,7 @@
         "message": "Failsafe событие переключателя"
     },
     "failsafeSwitchModeHelp": {
-        "message": "Этот параметр определяет, что происходит, когда Failsafe активируется через AUX переключатель:<br\/><strong>Этап 1<\/strong> активирует failsafe Этап 1. Это полезно, если вы хотите имитировать сигнал потери связи failsafe.<br\/><strong>Этап 2<\/strong> пропускает этап 1 и активирует этап 2 немедленно<br\/><strong>Убивая<\/strong> дизарм немедленно (ваш корабль будет поврежден)"
+        "message": "Этот параметр определяет, что происходит, когда Failsafe активируется через AUX переключатель:<br/><strong>Этап 1</strong> активирует failsafe Этап 1. Это полезно, если вы хотите имитировать сигнал потери связи failsafe.<br/><strong>Этап 2</strong> пропускает этап 1 и активирует этап 2 немедленно<br/><strong>Убивая</strong> дизарм немедленно (ваш корабль будет поврежден)"
     },
     "failsafeSwitchOptionStage1": {
         "message": "Этап 1"
@@ -2938,7 +3359,7 @@
         "message": "Сохранить"
     },
     "powerFirmwareUpgradeRequired": {
-        "message": "Firmware <span class=\"message-negative\">требует<\/span> обновления. Батарея\/Ток\/Напряжение конфигурация использует API &lt; 1.33.0 это не поддерживается."
+        "message": "Firmware <span class=\"message-negative\">требует</span> обновления. Батарея/Ток/Напряжение конфигурация использует API &lt; 1.33.0 (Cleanflight release &lt;= 3.17) это не поддерживается."
     },
     "powerBatteryVoltageMeterSource": {
         "message": "Использовать в качестве датчика напряжения"
@@ -2968,7 +3389,7 @@
         "message": "ESC-датчик"
     },
     "powerBatteryCurrentMeterTypeMsp": {
-        "message": "Датчик по MSP-порту \/ OSD Slave"
+        "message": "Датчик по MSP-порту / OSD Slave"
     },
     "powerBatteryMinimum": {
         "message": "Минимальное напряжение на банку"
@@ -2979,11 +3400,50 @@
     "powerBatteryWarning": {
         "message": "Предупреждать, если напряжение на банке"
     },
+    "powerCalibrationManagerButton": {
+        "message": "Калибровка"
+    },
+    "powerCalibrationManagerTitle": {
+        "message": "Менеджер Калибровок"
+    },
+    "powerCalibrationManagerHelp": {
+        "message": "Для калибровки используйте мультиметр и имерьте текущие напряжение и ток (с подключенной батареей). Затем введите полученные значения ниже. Далее, не отключая батарею, нажмите [Calibrate]."
+    },
+    "powerCalibrationManagerNote": {
+        "message": "<strong>Примечание:</strong> Перед калибровкой шкал убедитесь, что значения делителя и множителя для напряжения и значение смещения для амплитуды установлены правильно.<br>Если оставить значения 0, калибровка не произойдет.</br><strong>Не забудьте снять пропеллеры перед подключением батареи!</strong>"
+    },
+    "powerCalibrationManagerWarning": {
+        "message": "<span class=\"message-negative\">Предупреждение:</span> Батарея <span class=\"message-negative\">не подключена</span> или источники измерения напряжения и тока <span class=\"message-negative\">настроены неверно</span>. Убедитесь, что датчики напряжения и/или тока отображают значение выше 0. Иначе калибровка с помощью этого инструмента невозможна."
+    },
+    "powerCalibrationManagerSourceNote": {
+        "message": "<span class=\"message-negative\">Предупреждение:</span> Выбор источников измерения напряжения и/или тока <strong>был изменён но, не сохранён</strong>. Выберите правильные источники измерений и сохраните их до того, как начнете их калибровать."
+    },
+    "powerCalibrationManagerConfirmationTitle": {
+        "message": "Подтверждение менеджера калибровки"
+    },
+    "powerCalibrationSave": {
+        "message": "Откалибровать"
+    },
+    "powerCalibrationApply": {
+        "message": "Применить калибровку"
+    },
+    "powerCalibrationDiscard": {
+        "message": "Отменить калибровку"
+    },
+    "powerCalibrationConfirmHelp": {
+        "message": "Здесь отображаются вновь откалиброванные шкалы. <br>После применения они возымеют действие, но <strong>не сохранятся</strong>.</br> <br>После сохранения убедитесь, что новое напряжение и ток верны.</br>"
+    },
     "powerVoltageHead": {
         "message": "Датчик напряжения"
     },
     "powerVoltageValue": {
         "message": "$1 V"
+    },
+    "powerVoltageCalibration": {
+        "message": "Измеренное напряжение"
+    },
+    "powerVoltageCalibratedScale": {
+        "message": "Откалиброванная шкала напряжения:"
     },
     "powerAmperageValue": {
         "message": "$1 A"
@@ -3121,10 +3581,13 @@
         "message": "$1 mAh"
     },
     "powerAmperageScale": {
-        "message": "Масштаб [1\/10 mV\/A]"
+        "message": "Масштаб [1/10 mV/A]"
     },
     "powerAmperageOffset": {
         "message": "Смещение [mA]"
+    },
+    "powerAmperageCalibration": {
+        "message": "Измеренный ток"
     },
     "powerBatteryHead": {
         "message": "Батарея"
@@ -3157,31 +3620,67 @@
         "message": "OSD"
     },
     "osdSetupPreviewHelp": {
-        "message": "<strong>Примечание:<\/strong> OSD предпросмотр может отображаться не тем шрифтом, который установлен в полётном контроллере."
+        "message": "<strong>Примечание:</strong> OSD предпросмотр может отображаться не тем шрифтом, который установлен в полётном контроллере."
     },
     "osdSetupUnsupportedNote1": {
         "message": "Ваш полётный контроллер не отвечает на команды OSD. Возможно, это означает, что в него не встроен Cleanflight OSD."
     },
-    "osdSetupUnsupportedNote2": {
-        "message": "Обратите внимание, что некоторые полётные контроллеры имеют встроенный <a href=\"https:\/\/www.youtube.com\/watch?v=ikKH_6SQ-Tk\" target=\"_blank\">MinimOSD<\/a>, который можно прошить и сконфигурировать при помощи <a href=\"https:\/\/github.com\/ShikOfTheRa\/scarab-osd\/releases\/latest\" target='_blank'>scarab-osd<\/a>, однако после этого MinimOSD невозможно будет сконфигурировать в этом интерфейсе."
+    "osdSetupProfilesTitle": {
+        "message": "Номер профиля OSD",
+        "description": "Description of the header of the OSD elements column associated to each profile"
     },
     "osdSetupElementsTitle": {
         "message": "Элементы"
     },
-    "osdSetupElementsSwitchAll": {
-        "message": "Выключить все"
-    },
     "osdSetupPreviewTitle": {
-        "message": "Предпросмотр (здесь можно двигать элементы мышкой)"
+        "message": "Перетащите элементы чтобы изменить позицию",
+        "description": "Indicates in the preview window of the OSD that the user can drag the elements to reorder them"
     },
-    "osdSetupPreviewTitleTip": {
-        "message": "Показать\/скрыть логотип в окне предпросмотра. Этот переключатель никак не повлияет на настройки полётного контроллера."
+    "osdSetupPreviewSelectProfileTitle": {
+        "message": "Предпросмотр для",
+        "description": "Label of the selector for the OSD Profile in the preview. KEEP IT SHORT!!!"
+    },
+    "osdSetupSelectedProfileTitle": {
+        "message": "Активный профиль OSD",
+        "description": "Title of the box to select the current active OSD profile"
+    },
+    "osdSetupSelectedProfileLabel": {
+        "message": "Текущий:",
+        "description": "Label for the selection of the curren active OSD profile"
+    },
+    "osdSetupPreviewSelectProfileElement": {
+        "message": "OSD Profile {{profileNumber}}",
+        "description": "Content of the selector for the OSD Profile in the preview"
+    },
+    "osdSetupPreviewSelectFontElement": {
+        "message": "Шрифт {{fontName}}",
+        "description": "Content of the selector for the OSD Font in the preview"
     },
     "osdSetupVideoFormatTitle": {
         "message": "Формат видео"
     },
+    "osdSetupVideoFormatOptionAuto": {
+        "message": "Авто",
+        "description": "Option for the video format in the OSD"
+    },
+    "osdSetupVideoFormatOptionPal": {
+        "message": "PAL",
+        "description": "Option for the video format in the OSD"
+    },
+    "osdSetupVideoFormatOptionNtsc": {
+        "message": "NTSC",
+        "description": "Option for the video format in the OSD"
+    },
     "osdSetupUnitsTitle": {
         "message": "Единицы измерения"
+    },
+    "osdSetupUnitsOptionImperial": {
+        "message": "Имперские",
+        "description": "Option for the units system used in the OSD"
+    },
+    "osdSetupUnitsOptionMetric": {
+        "message": "Метрические",
+        "description": "Option for the units system used in the OSD"
     },
     "osdSetupTimersTitle": {
         "message": "Таймеры"
@@ -3205,7 +3704,11 @@
         "message": "Стили шрифтов:"
     },
     "osdSetupFontPresetsSelector": {
-        "message": "Выберете предустановленный шрифт:"
+        "message": "Выберите предустановленный шрифт:"
+    },
+    "osdSetupFontPresetsSelectorCustomOption": {
+        "message": "Пользовательский шрифт",
+        "description": "Option to show as selected when the user selects a custom local font"
     },
     "osdSetupFontPresetsSelectorOr": {
         "message": "или"
@@ -3229,7 +3732,7 @@
         "message": "Должен содержать зеленые, черные и белые пиксели"
     },
     "osdSetupCustomLogoInfoUploadHint": {
-        "message": "Нажмите <b>$t(osdSetupUploadFont.message)<\/b> для установки собственного логотипа"
+        "message": "Нажмите <b>$t(osdSetupUploadFont.message)</b> для установки собственного логотипа"
     },
     "osdSetupCustomLogoImageSizeError": {
         "message": "Недопустимый размер: {{width}}×{{height}} (ожидаемый $t(logoWidthPx)×$t(logoHeightPx))"
@@ -3239,6 +3742,12 @@
     },
     "osdSetupUploadFont": {
         "message": "Загрузить шрифт"
+    },
+    "osdSetupUploadingFont": {
+        "message": "Загрузка..."
+    },
+    "osdSetupUploadingFontEnd": {
+        "message": "Загрудить все {{length}} символы в OSD"
     },
     "osdSetupSave": {
         "message": "Сохранить"
@@ -3258,257 +3767,840 @@
     "osdSetupCameraConnected": {
         "message": "Камера подключена"
     },
-    "osdSetupCameraConnectedValueYes": {
-        "message": "Да"
-    },
-    "osdSetupCameraConnectedValueNo": {
-        "message": "Нет"
-    },
     "osdSetupResetText": {
         "message": "Сбросить OSD до начального"
     },
     "osdSetupButtonReset": {
         "message": "Сбросить настройки"
     },
+    "osdTextElementMainBattVoltage": {
+        "message": "Напряжение батареи",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementMainBattVoltage": {
         "message": "Мгновенное (дискретное) значение напряжения аккумулятора (замигает, если значение будет ниже заданного порога тревоги)"
+    },
+    "osdTextElementRssiValue": {
+        "message": "Значение RSSI",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementRssiValue": {
         "message": "Мгновенное (дискретное) значение RSSI (замигает, если значение будет ниже заданного порога тревоги)"
     },
+    "osdTextElementTimer": {
+        "message": "Таймер",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementTimer": {
+        "message": "Таймер полета"
+    },
+    "osdTextElementThrottlePosition": {
+        "message": "Положение газа",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementThrottlePosition": {
         "message": "Значение канала газа"
+    },
+    "osdTextElementCpuLoad": {
+        "message": "Загрузка ЦПУ",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementCpuLoad": {
+        "message": "Текущая загрузка ЦПУ"
+    },
+    "osdTextElementVtxChannel": {
+        "message": "Канал VTX",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementVtxChannel": {
+        "message": "Текущие канал и мощность VTX"
+    },
+    "osdTextElementVoltageWarning": {
+        "message": "Предупреждения о напряжении батареи",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementVoltageWarning": {
+        "message": "Показывает предупреждение, когда напряжение находится ниже аварийного значения"
+    },
+    "osdTextElementArmed": {
+        "message": "Включён",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementArmed": {
         "message": "Текстовое сообщение арминга"
     },
+    "osdTextElementDisarmed": {
+        "message": "Disarmed",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementDisarmed": {
         "message": "Индикатор \"disarmed\" в виде текста"
+    },
+    "osdTextElementCrosshairs": {
+        "message": "Прицел",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementCrosshairs": {
         "message": "Перекрестие в центре экрана"
     },
+    "osdTextElementArtificialHorizon": {
+        "message": "Искусственный горизонт",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementArtificialHorizon": {
         "message": "Графический индикатор искусственного горизонта"
+    },
+    "osdTextElementHorizonSidebars": {
+        "message": "Боковые панели искуственного горизонта",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementHorizonSidebars": {
         "message": "Вертикальные линии по бокам индикатора искусственного горизонта"
     },
+    "osdTextElementCurrentDraw": {
+        "message": "Отображение тока батареи",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementCurrentDraw": {
         "message": "Мгновенное (дискретное) значение тока аккумулятора"
+    },
+    "osdTextElementMahDrawn": {
+        "message": "Израсходованная ёмкость батареи (mAh)",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementMahDrawn": {
         "message": "Израсходованная ёмкость аккумулятора"
     },
+    "osdTextElementCraftName": {
+        "message": "Позывной пилота",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementCraftName": {
         "message": "Позывной пилота, установленный во вкладке \"Конфигурация\""
+    },
+    "osdTextElementAltitude": {
+        "message": "Высота",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementAltitude": {
         "message": "Текущая высота (замигает, если значение будет ниже заданного порога тревоги)"
     },
+    "osdTextElementOnTime": {
+        "message": "Время работы",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementOnTime": {
         "message": "Общее время которое судно было запитано"
+    },
+    "osdTextElementFlyTime": {
+        "message": "Время полета",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementFlyTime": {
         "message": "Общее время которое судно было в арминге в текщем цикле мощности (мигает когда ниже порога тревоги)"
     },
+    "osdTextElementFlyMode": {
+        "message": "Режим полёта",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementFlyMode": {
         "message": "Текущий режим полета"
+    },
+    "osdTextElementGPSSpeed": {
+        "message": "Скорость по GPS",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementGPSSpeed": {
         "message": "Скорость, полученная по данным GPS"
     },
+    "osdTextElementGPSSats": {
+        "message": "Спутники GPS",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementGPSSats": {
         "message": "Число пойманных спутников"
     },
+    "osdTextElementGPSLon": {
+        "message": "Долгота GPS",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementGPSLon": {
-        "message": "GPS-Долгота"
+        "message": "Координаты долготы GPS"
+    },
+    "osdTextElementGPSLat": {
+        "message": "Широта GPS",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementGPSLat": {
-        "message": "GPS-Широта"
+        "message": "Координаты широты GPS"
+    },
+    "osdTextElementDebug": {
+        "message": "Отладка",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementDebug": {
         "message": "Показывать Debug-переменные"
     },
+    "osdTextElementPIDRoll": {
+        "message": "PID крена",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementPIDRoll": {
         "message": "PID-коэффициенты по оси Roll"
+    },
+    "osdTextElementPIDPitch": {
+        "message": "PID тангажа",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementPIDPitch": {
         "message": "PID-коэффициенты по оси Pitch"
     },
+    "osdTextElementPIDYaw": {
+        "message": "PID рысканья",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementPIDYaw": {
         "message": "PID-коэффициенты по оси Yaw"
+    },
+    "osdTextElementPower": {
+        "message": "Мощность",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementPower": {
         "message": "Мгновенное (дискретное) значение потребляемой мощности"
     },
+    "osdTextElementPIDRateProfile": {
+        "message": "Профиль: PID и рэйты",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementPIDRateProfile": {
         "message": "Отобразить номера профилей для PID-ов и rate-ов"
+    },
+    "osdTextElementBatteryWarning": {
+        "message": "Предупреждение батареи",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementBatteryWarning": {
         "message": "Предупреждающий текст который появляется когда напряжение батареи падает ниже предупреждающего порога"
     },
+    "osdTextElementAvgCellVoltage": {
+        "message": "Среднее напряжение ячейки батареи",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementAvgCellVoltage": {
-        "message": "Среднее напряжение на банке (напряжение аккумулятора \/ число банок)"
+        "message": "Среднее напряжение на банке (напряжение аккумулятора / число банок)"
+    },
+    "osdTextElementPitchAngle": {
+        "message": "Угол: тангаж",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementPitchAngle": {
         "message": "Угол наклона по тангажу (pitch) в градусах"
     },
+    "osdTextElementRollAngle": {
+        "message": "Угол: крен",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementRollAngle": {
         "message": "Угол наклона по крену (roll) в градусах"
+    },
+    "osdTextElementMainBattUsage": {
+        "message": "Расход батареи",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementMainBattUsage": {
         "message": "Отобразить израсходованную ёмкость батареи в виде шкалы"
     },
+    "osdTextElementArmedTime": {
+        "message": "Таймер: время работы",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementArmedTime": {
         "message": "Момент когда судно было последний раз в арминге"
     },
-    "osdDescElementWarnings": {
-        "message": "Показывать тревоги (напр., о низком заряде), предупреждения (напр., причины: почему не армится, критич. низкий заряд), а также визуально отображать сигнал с пищалки (в виде 4-х мигающих звёздочек)."
-    },
-    "osdDescElementEscTemperature": {
-        "message": "Температура переданная ESC телеметрией"
-    },
-    "osdDescElementEscRpm": {
-        "message": "Обороты переданные ESC телеметрией"
-    },
-    "osdDescElementRtcDateTime": {
-        "message": "Реальное дата \/ время"
-    },
-    "osdDescElementAdjustmentRange": {
-        "message": "В настоящее время активные регулировки диапазона параметров и значения"
+    "osdTextElementHomeDirection": {
+        "message": "Направление домой",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementHomeDirection": {
-        "message": "Стрелка показывает направление домашней позиции"
+        "message": "Стрелка, показывающая направление к месту взлёта"
+    },
+    "osdTextElementHomeDistance": {
+        "message": "Расстояние до дома",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementHomeDistance": {
-        "message": "Дистанция до домашней позиции (в футах или метрах в зависимости от настройки системы единиц)"
+        "message": "Расстояние до места взлёта (в футах или в метрах в зависимости от настроек единиц измерения)"
+    },
+    "osdTextElementNumericalHeading": {
+        "message": "Числовой курс",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementNumericalHeading": {
-        "message": "Числовое значение текущего направления в градусах"
+        "message": "Отображает угол поворота по руддеру (угол рыскания) в градусах"
+    },
+    "osdTextElementNumericalVario": {
+        "message": "Скорость изменения высоты",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementNumericalVario": {
         "message": "Числовое значение вертикальной скорости (в футах или метрах в зависимости от настроек системы единиц)"
     },
-    "osdDescElementCompassBar": {
-        "message": "Графический компас показывающий текущее направление"
+    "osdTextElementCompassBar": {
+        "message": "Шкала компаса",
+        "description": "One of the elements of the OSD"
     },
-    "osdDescElementFlipArrow": {
-        "message": "Стрелка показывает в какой стороне двигатели в режиме черепахи"
+    "osdDescElementCompassBar": {
+        "message": "Отображет шкалу компаса, показывающего текущее направление"
+    },
+    "osdTextElementWarnings": {
+        "message": "Предупреждения",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementWarnings": {
+        "message": "Показывать тревоги (напр., о низком заряде), предупреждения (напр., причины: почему не армится, критич. низкий заряд), а также визуально отображать сигнал с пищалки (в виде 4-х мигающих звёздочек)."
+    },
+    "osdTextElementEscTemperature": {
+        "message": "Температура ESC-и",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementEscTemperature": {
+        "message": "Температура, полученная с телеметрии от ESC"
+    },
+    "osdTextElementEscRpm": {
+        "message": "ESC RPM",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementEscRpm": {
+        "message": "Скорость оборотов, полученная из телеметрии от ESC"
+    },
+    "osdTextElementRemaningTimeEstimate": {
+        "message": "Таймер: оставшееся расчетное время",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementRemaningTimeEstimate": {
+        "message": "Расчётное время до полного разряда батареи"
+    },
+    "osdTextElementRtcDateTime": {
+        "message": "Дата и время RTC",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementRtcDateTime": {
+        "message": "Отображать текущую дату и время"
+    },
+    "osdTextElementAdjustmentRange": {
+        "message": "Диапазон настройки",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementAdjustmentRange": {
+        "message": "В настоящее время активные регулировки диапазона параметров и значения"
+    },
+    "osdTextElementTimer1": {
+        "message": "Таймер 1",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementTimer1": {
         "message": "Показать значение таймера 1"
     },
+    "osdTextElementTimer2": {
+        "message": "Таймер 2",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescElementTimer2": {
         "message": "Показать значение таймера 2"
     },
-    "osdDescElementRemaningTimeEstimate": {
-        "message": "Оценка времени полета"
-    },
-    "osdDescElementUnknown": {
-        "message": "Неизвестный элемент (детали будут добавлены в будущих выпусках)"
+    "osdTextElementCoreTemperature": {
+        "message": "Температура ядра",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementCoreTemperature": {
         "message": "Температура ядра STM32 MCU"
     },
+    "osdTextAntiGravity": {
+        "message": "Анти-Гравитация",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescAntiGravity": {
         "message": "Включает индикатор когда режим антигравити активен"
     },
+    "osdTextGForce": {
+        "message": "Перегрузка",
+        "description": "One of the elements of the OSD"
+    },
     "osdDescGForce": {
-        "message": "Показывает как много G-силы судно испытывает"
+        "message": "Показывает перегрузку, испытываемую судном"
+    },
+    "osdTextElementMotorDiag": {
+        "message": "Диагностика моторов",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementMotorDiag": {
+        "message": "Показывает график работы каждого мотора"
+    },
+    "osdTextElementLogStatus": {
+        "message": "Статус журнала черного ящика",
+        "description": "One of the elements of the OSD"
     },
     "osdDescElementLogStatus": {
         "message": "BlackBox номер и предупреждения"
     },
+    "osdTextElementFlipArrow": {
+        "message": "Направление переворота после падения",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementFlipArrow": {
+        "message": "Стрелка показывает в какой стороне двигатели в режиме черепахи"
+    },
+    "osdTextElementLinkQuality": {
+        "message": "Качество подключения",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementLinkQuality": {
+        "message": "Альтернативный индикатор основанный на потере кадров - использовать с осторожностью"
+    },
+    "osdTextElementFlightDist": {
+        "message": "Расстояние полёта",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementFlightDist": {
+        "message": "Пройденное расстояние за этот полет."
+    },
+    "osdTextElementStickOverlayLeft": {
+        "message": "Оверлей левого стика",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementStickOverlayLeft": {
+        "message": "Схема положения для левого стика передатчика."
+    },
+    "osdTextElementStickOverlayRight": {
+        "message": "Оверлей правого стика",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementStickOverlayRight": {
+        "message": "Схема положения для правого стика передатчика."
+    },
+    "osdTextElementDisplayName": {
+        "message": "Отображаемое имя",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementDisplayName": {
+        "message": "Отображать имя, которое установлено консольной командой \"display_name\""
+    },
+    "osdTextElementEscRpmFreq": {
+        "message": "Частота вращения, полученная от ESC",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementEscRpmFreq": {
+        "message": "Частота RPM, сообщаемая телеметрией регуляторов оборотов"
+    },
+    "osdTextElementRateProfileName": {
+        "message": "Профиль: имя профиля рейтов",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementRateProfileName": {
+        "message": "Показать имя текущего профиля рейтов"
+    },
+    "osdTextElementPidProfileName": {
+        "message": "Профиль: имя PID профиля",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementPidProfileName": {
+        "message": "Отображает имя текущего PID профиля"
+    },
+    "osdTextElementOsdProfileName": {
+        "message": "Профиль: имя профиля OSD",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementOsdProfileName": {
+        "message": "Название профиля OSD, установленное в переменных CLI \"osd_profile_1_name\", \"osd_profile_2_name\" и \"osd_profile_3_name\""
+    },
+    "osdTextElementRssiDbmValue": {
+        "message": "Значение dBm RSSI",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementRssiDbmValue": {
+        "message": "Значение RSSI сигнала в dBm (если доступно)"
+    },
+    "osdTextElementUnknown": {
+        "message": "Неизвестно ($1)",
+        "description": "One of the elements of the OSD"
+    },
+    "osdDescElementUnknown": {
+        "message": "Неизвестный элемент (детали будут добавлены в будущих выпусках)"
+    },
+    "osdTextStatMaxSpeed": {
+        "message": "Максимальная скорость",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
     "osdDescStatMaxSpeed": {
-        "message": "Максимальная фиксированная скорость"
+        "message": "Максимальная зафиксированная скорость"
+    },
+    "osdTextStatMinBattery": {
+        "message": "Минимальный вольтаж батареи",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatMinBattery": {
-        "message": "Минимальное записанное напряжение основной батареи"
+        "message": "Минимальное зафиксированное напряжение батареи"
+    },
+    "osdTextStatMinRssi": {
+        "message": "Минимальный RSSI",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatMinRssi": {
-        "message": "Минимальный фиксированный RSSI"
+        "message": "Минимальный зафиксированный уровень RSSI"
+    },
+    "osdTextStatMaxCurrent": {
+        "message": "Максимальное потребление тока",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatMaxCurrent": {
-        "message": "Максимальный потребляемый ток"
+        "message": "Зафиксированный максимальный ток"
+    },
+    "osdTextStatUsedMah": {
+        "message": "Использовано батареи мАч",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatUsedMah": {
         "message": "Израсход. ёмкость аккум."
     },
+    "osdTextStatMaxAltitude": {
+        "message": "Максимальная высота",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
     "osdDescStatMaxAltitude": {
-        "message": "Максимальная фиксированная высота"
+        "message": "Максимальная зафиксированная высота"
+    },
+    "osdTextStatBlackbox": {
+        "message": "Использование черного ящика",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatBlackbox": {
-        "message": "Процент использования общего blackbox"
+        "message": "Процент заполнения памяти чёрного ящика"
+    },
+    "osdTextStatEndBattery": {
+        "message": "Конечное напряжение батареи",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatEndBattery": {
-        "message": "Напряжение батареи во время отключения"
+        "message": "Напряжение батареи во время дизарма"
+    },
+    "osdTextStatFlyTime": {
+        "message": "Полное время полёта",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatFlyTime": {
         "message": "Общее время которое судно было в режиме арминга в текущем цикле питания"
     },
+    "osdTextStatArmedTime": {
+        "message": "Время полета с последнего включения",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
     "osdDescStatArmedTime": {
         "message": "Момент когда судно было последний раз в арминге"
     },
+    "osdTextStatMaxDistance": {
+        "message": "Максимальное расстояние от дома",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
     "osdDescStatMaxDistance": {
-        "message": "Максимальное расстояние от домашнего местоположения"
+        "message": "Максимальное расстояние от места взлёта"
+    },
+    "osdTextStatBlackboxLogNumber": {
+        "message": "Номер черного ящика",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatBlackboxLogNumber": {
         "message": "Номер лога для этого полета в черном ящике"
     },
+    "osdTextStatTimer1": {
+        "message": "Таймер 1",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
     "osdDescStatTimer1": {
-        "message": "Значение таймера 1 от времени дизарминга"
+        "message": "Значение таймера 1 во время дизарма"
+    },
+    "osdTextStatTimer2": {
+        "message": "Таймер 2",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatTimer2": {
-        "message": "Значение таймера 2 от времени дизарминга"
+        "message": "Значение таймера 2 во время дизарма"
+    },
+    "osdTextStatRtcDateTime": {
+        "message": "Дата и время RTC",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatRtcDateTime": {
-        "message": "Дата и время от часов реального времени"
+        "message": "Дата и время аппаратных часов"
+    },
+    "osdTextStatBattery": {
+        "message": "Напряжение батареи",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
     },
     "osdDescStatBattery": {
         "message": "Напряжение батареи в реальном времени"
     },
+    "osdTextStatGForce": {
+        "message": "Максимальное сила G",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
     "osdDescStatGForce": {
-        "message": "Максимальная G-сила испытываемая судном"
+        "message": "Максимальная перегрузка, которую испытывало судно"
+    },
+    "osdTextStatEscTemperature": {
+        "message": "Максимальная температура ESC-и",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatEscTemperature": {
+        "message": "Максимальная температура ESC"
+    },
+    "osdTextStatEscRpm": {
+        "message": "Максимальный RPM ESC",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatEscRpm": {
+        "message": "Максимальные обороты ESC"
+    },
+    "osdTextStatMinLinkQuality": {
+        "message": "Минимальное качество связи",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatMinLinkQuality": {
+        "message": "Альтернативный минимальный индикатор качества основанный на потере кадров"
+    },
+    "osdTextStatFlightDistance": {
+        "message": "Расстояние полёта",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatFlightDistance": {
+        "message": "Общее расстояние, пройденное за время полета"
+    },
+    "osdTextStatMaxFFT": {
+        "message": "максимум FFT",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatMaxFFT": {
+        "message": "Пиковая частота FFT"
+    },
+    "osdTextStatTotalFlights": {
+        "message": "Общее количество вылетов",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatTotalFlights": {
+        "message": "Общее количество полетов"
+    },
+    "osdTextStatTotalFlightTime": {
+        "message": "Полное время полёта",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatTotalFlightTime": {
+        "message": "Общее время проведенное в полете"
+    },
+    "osdTextStatTotalFlightDistance": {
+        "message": "Полное расстояние полёта",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatTotalFlightDistance": {
+        "message": "Общая пройденная дистанция"
+    },
+    "osdTextStatMinRssiDbm": {
+        "message": "Мин. дБм RSSI",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatMinRssiDbm": {
+        "message": "Мин. значение дБм RSSI"
+    },
+    "osdTextStatUnknown": {
+        "message": "Неизвестно ($1)",
+        "description": "One of the statistics that can be shown at the end of the flight in the OSD"
+    },
+    "osdDescStatUnknown": {
+        "message": "Неизвесные данные (будут добавлены в следующих релизах)"
+    },
+    "osdDescribeFontVersion1": {
+        "message": "Версия шрифта: 1 (Cleanflight 4.0 и старше)"
+    },
+    "osdDescribeFontVersion2": {
+        "message": "Версия шрифта: 2 (Cleanflight 4.1 и новее)"
+    },
+    "osdDescribeFontVersionCUSTOM": {
+        "message": "Версия шрифта: пользовательский"
     },
     "osdTimerSource": {
         "message": "Источник:"
     },
     "osdTimerSourceTooltip": {
-        "message": "Выберете источник таймера, это управляет продолжительностью\/событием измерений этого таймера"
+        "message": "Выберите источник таймера, это управляет продолжительностью/событием измерений этого таймера"
+    },
+    "osdTimerSourceOptionOnTime": {
+        "message": "Время работы",
+        "description": "One of the options for the source timer. This options shows the amount of time has passed since the battery was plugged"
+    },
+    "osdTimerSourceOptionTotalArmedTime": {
+        "message": "Полный период работы",
+        "description": "One of the options for the source timer. This options shows the amount of time the craft was armed since the battery was plugged"
+    },
+    "osdTimerSourceOptionLastArmedTime": {
+        "message": "Время последнего арма",
+        "description": "One of the options for the source timer. This options shows the amount of time the craft was armed the latest time"
+    },
+    "osdTimerSourceOptionOnArmTime": {
+        "message": "Время включения/арма",
+        "description": "One of the options for the source timer. This option shows On time when craft is disarmed, and Armed time when armed"
     },
     "osdTimerPrecision": {
         "message": "Точность:"
     },
     "osdTimerPrecisionTooltip": {
-        "message": "Выберите точность таймера, это определяет, с какой точностью время сообщается в"
+        "message": "Выберите точность таймера, с этой точностью будет отображаться время в отчётах"
+    },
+    "osdTimerPrecisionOptionSecond": {
+        "message": "Секунд",
+        "description": "Selectable option for the precision of the timer in the OSD"
+    },
+    "osdTimerPrecisionOptionHundredth": {
+        "message": "Сотни",
+        "description": "Selectable option for the precision of the timer in the OSD"
+    },
+    "osdTimerPrecisionOptionTenth": {
+        "message": "Десятки",
+        "description": "Selectable option for the precision of the timer in the OSD"
     },
     "osdTimerAlarm": {
         "message": "Тревога:"
     },
     "osdTimerAlarmTooltip": {
-        "message": "Выберите для таймера порог сигнализации в минутах, когда время превышает это значение элемент OSD будет мигать, это значение в 0 отключает сигнал тревоги"
+        "message": "Выберите порог тревоги для таймера в минутах, если время превысит это значение - элемент OSD будет мигать. Если выставить значение 0, то таймер будет отключён"
+    },
+    "osdTimerAlarmOptionRssi": {
+        "message": "RSSI",
+        "description": "Text of the RSSI alarm"
+    },
+    "osdTimerAlarmOptionCapacity": {
+        "message": "Ёмкость",
+        "description": "Text of the capacity alarm"
+    },
+    "osdTimerAlarmOptionAltitude": {
+        "message": "Высота",
+        "description": "Text of the altitude alarm"
+    },
+    "osdWarningTextArmingDisabled": {
+        "message": "Arming выключен",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
     },
     "osdWarningArmingDisabled": {
-        "message": "Сообщает о самой серьезной причине не арминга"
+        "message": "Отобразить самые основные причины не-арминг"
+    },
+    "osdWarningTextBatteryNotFull": {
+        "message": "Батарея недозаряжена",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
     },
     "osdWarningBatteryNotFull": {
-        "message": "Тревога когда батарея подключена и не полностью заряжена"
+        "message": "Тревога когда подключенная батарея не полностью заряжена"
+    },
+    "osdWarningTextBatteryWarning": {
+        "message": "Предупреждение батареи",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
     },
     "osdWarningBatteryWarning": {
         "message": "Тревога когда напряжение батареи падает ниже предупреждающего порога"
     },
+    "osdWarningTextBatteryCritical": {
+        "message": "Критически низкий заряд батареи",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
     "osdWarningBatteryCritical": {
         "message": "Тревога когда напряжение батареи падает ниже минимального среднего для каждой банки"
     },
+    "osdWarningTextVisualBeeper": {
+        "message": "Визуальный бипер",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
     "osdWarningVisualBeeper": {
-        "message": "Показана визуализация бипера (показана как 4 звездочки)"
+        "message": "Визуализировать звуковой сигнал зуммера (в виде 4 звёздочек)"
+    },
+    "osdWarningTextCrashFlipMode": {
+        "message": "Режим переворота после падения",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
     },
     "osdWarningCrashFlipMode": {
-        "message": "Предупреждает, когда флип после режима аварии активируется"
+        "message": "Отображать предупреждение, если активирован режим черепахи (режим переворота)"
+    },
+    "osdWarningTextEscFail": {
+        "message": "Ошибка ESC-и",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
     },
     "osdWarningEscFail": {
-        "message": "Перечисляет список с ЭСК\/двигатели, которые не удавшиеся (об\/мин или температура находятся вне настроенного порогового значения)"
+        "message": "Перечисляет список с ЭСК/двигатели, которые не удавшиеся (об/мин или температура находятся вне настроенного порогового значения)"
+    },
+    "osdWarningTextCoreTemperature": {
+        "message": "Температура ядра",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningCoreTemperature": {
+        "message": "Предупреждает, когда температура MCU превышает настроенный порог"
+    },
+    "osdWarningTextRcSmoothingFailure": {
+        "message": "Ошибка сглаживания RC",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningRcSmoothingFailure": {
+        "message": "Предупреждает когда инициализация RC не работает (нарушена)"
+    },
+    "osdWarningTextFailsafe": {
+        "message": "Failsafe",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningFailsafe": {
+        "message": "Предупреждает когда происходит failsafe"
+    },
+    "osdWarningTextLaunchControl": {
+        "message": "Контроль взлета",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningLaunchControl": {
+        "message": "Предупреждает, когда Режим контроля запуска активирован"
+    },
+    "osdWarningTextGpsRescueUnavailable": {
+        "message": "GPS-возврат невозможен",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningGpsRescueUnavailable": {
+        "message": "Предупреждает, когда GPS не доступен и не может быть активирован"
+    },
+    "osdWarningTextGpsRescueDisabled": {
+        "message": "GPS-возврат отключен",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningGpsRescueDisabled": {
+        "message": "Предупреждает, когда GPS отключён"
+    },
+    "osdWarningTextRSSI": {
+        "message": "RSSI",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningRSSI": {
+        "message": "Предупреждение, когда сигнал RSSI низкий"
+    },
+    "osdWarningTextLinkQuality": {
+        "message": "Качество подключения",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningLinkQuality": {
+        "message": "Предупреждение, когда качество связи низкое"
+    },
+    "osdWarningTextRssiDbm": {
+        "message": "RSSI дБм",
+        "description": "One of the warnings that can be selected to be shown in the OSD"
+    },
+    "osdWarningRssiDbm": {
+        "message": "Предупреждение, когда сигнал RSSI низкий"
+    },
+    "osdWarningTextUnknown": {
+        "message": "Неизвестно ($1)"
+    },
+    "osdWarningUnknown": {
+        "message": "Неизвестное предупреждение (детали буду добавлены в будущем выпуске)"
     },
     "osdSectionHelpElements": {
         "message": "Включение или отключение элементов OSD."
@@ -3523,22 +4615,266 @@
         "message": "Настройка таймеров полета."
     },
     "osdSectionHelpAlarms": {
-        "message": "Установите пороговые значения, используемые для элементов OSD с предупреждающими состояниями."
+        "message": "Установка пороговых значений для OSD-элементов, имеющих режим тревоги."
     },
     "osdSectionHelpStats": {
         "message": "Установить значения показывающиеся на пост полетном статистическом экране."
     },
     "osdSectionHelpWarnings": {
-        "message": "Включить или выключить предупреждения которые показаны на ПРЕДУПРЕЖДАЮЩИХ элементах."
+        "message": "Включение и отключение предупреждений, которые будут отображаться в элементе \"Warnings\"."
     },
     "osdSettingsSaved": {
         "message": "OSD настройки сохранены"
     },
     "osdWritePermissions": {
-        "message": "У вас нет <span class=\"message-negative\">разрешения на запись<\/span> в этот файл"
+        "message": "У вас нет <span class=\"message-negative\">разрешения на запись</span> в этот файл"
     },
     "osdButtonSaved": {
         "message": "Сохранено"
+    },
+    "vtxMessageNotSupported": {
+        "message": "<span class=\"message-negative\">ВНИМАНИЕ:</span> Ваш видеопередатчик не настроен или не поддерживается. Поэтому вы не можете изменять настройки видеопередатчика здесь. Это будет возможно только в том случае, если полётный контроллер соединён с видеопередатчиком посредством протокола Tramp или SmartAudio и корректно настроен во вкладке $t(tabPorts.message).",
+        "description": "Message to show when the VTX is not supported in the VTX tab"
+    },
+    "vtxMessageTableNotConfigured": {
+        "message": "<span class=\"message-negative\">Внимание:</span> До того, как использовать поля $t(vtxSelectedMode.message) вы должны настроить и сохранить Таблицу VTX.",
+        "description": "Message to show when the VTX is not supported in the VTX tab"
+    },
+    "vtxMessageVerifyTable": {
+        "message": "<span class=\"message-negative\">Внимание:</span> Значения Таблицы VTX были загружены, но ещё не были сохранены в полётном контроллере. Вам нужно проверить и поправить значения, чтобы быть уверенным что они правильны и разрешены в вашей стране. После этого нажмите кнопку $t(vtxButtonSave.message) чтобы сохранить их в полётном контроллере.",
+        "description": "Message to show when the VTX Table has been loaded from a external source"
+    },
+    "vtxFrequencyChannel": {
+        "message": "Ввести частоту напрямую",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxFrequencyChannelHelp": {
+        "message": "Если это включено, Конфигуратор позволит вам выбирать частоту напрямую вместо комбинации сетка/канал. Видеопередатчик должен поддерживать такую возможность.",
+        "description": "Help text for the frequency or channel select field of the VTX tab"
+    },
+    "vtxSelectedMode": {
+        "message": "Выбранный режим",
+        "description": "Title for the actual mode header of the VTX"
+    },
+    "vtxActualState": {
+        "message": "Текущие значения",
+        "description": "Title for the actual values header of the VTX"
+    },
+    "vtxType": {
+        "message": "Тип видеопередатчика",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxType_0": {
+        "message": "Не поддерживается",
+        "description": "Text for one of the types of the VTX type in VTX tab"
+    },
+    "vtxType_1": {
+        "message": "RTC607",
+        "description": "Text for one of the types of the VTX type in VTX tab"
+    },
+    "vtxType_3": {
+        "message": "SmartAudio",
+        "description": "Text for one of the types of the VTX type in VTX tab"
+    },
+    "vtxType_4": {
+        "message": "Tramp",
+        "description": "Text for one of the types of the VTX type in VTX tab"
+    },
+    "vtxType_255": {
+        "message": "Неизвестно",
+        "description": "Text for one of the types of the VTX type in VTX tab"
+    },
+    "vtxBand": {
+        "message": "Сетка",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxBandHelp": {
+        "message": "Здесь можете выбрать сетку частот для вашего VTX",
+        "description": "Help text for the band field of the VTX tab"
+    },
+    "vtxBand_0": {
+        "message": "Нет",
+        "description": "Text of one of the options for the band field of the VTX tab"
+    },
+    "vtxBand_X": {
+        "message": "Сетка {{bandName}}",
+        "description": "Text of one of the options for the band field of the VTX tab"
+    },
+    "vtxChannel_0": {
+        "message": "Нет",
+        "description": "Text of one of the options for the channel field of the VTX tab"
+    },
+    "vtxChannel_X": {
+        "message": "Канал {{channelName}}",
+        "description": "Text of one of the options for the channel field of the VTX tab"
+    },
+    "vtxPower_0": {
+        "message": "Нет",
+        "description": "Text of one of the options for the power field of the VTX tab"
+    },
+    "vtxPower_X": {
+        "message": "Уровень {{powerLevel}}",
+        "description": "Text of one of the options for the power field of the VTX tab"
+    },
+    "vtxChannel": {
+        "message": "Канал",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxChannelHelp": {
+        "message": "Здесь вы можете выбрать канал для вашего VTX",
+        "description": "Help text for the channel field of the VTX tab"
+    },
+    "vtxFrequency": {
+        "message": "Частота",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxFrequencyHelp": {
+        "message": "Здесь можете выбрать частоту для вашего VTX, если она поддерживается",
+        "description": "Help text for the frequency field of the VTX tab"
+    },
+    "vtxDeviceReady": {
+        "message": "Устройство готово",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxPower": {
+        "message": "Мощность",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxPowerHelp": {
+        "message": "Это выбранная мощность видеопередатчика. Она может быть другой, если включен $t(vtxPitMode.message) или $t(vtxLowPowerDisarm.message)",
+        "description": "Help text for the power field of the VTX tab"
+    },
+    "vtxPitMode": {
+        "message": "Режим пит-стопа",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxPitModeHelp": {
+        "message": "Когда включен, видеопередатчик входит в режим очень низкой мощности, для того чтобы позволить кваду быть включенным и не мешать другим пилотам. Обычно дистанция приёма в этом режиме меньше чем 5м. <br /><br />ЗАМЕТКА: Некоторые протоколы, например SmartAudio, не позволяют программно включить режим пит-стопа после подачи питания.",
+        "description": "Help text for the pit mode field of the VTX tab"
+    },
+    "vtxPitModeFrequency": {
+        "message": "Частота режима пит-стоп",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxPitModeFrequencyHelp": {
+        "message": "Частота, на которую переходит видеопередатчик, когда включает режим пит-стопа.",
+        "description": "Help text for the pit mode field of the VTX tab"
+    },
+    "vtxLowPowerDisarm": {
+        "message": "Низкая мощность при дизарме",
+        "description": "Text of one of the fields of the VTX tab"
+    },
+    "vtxLowPowerDisarmHelp": {
+        "message": "Если включен, то видеопередатчик в состоянии дизарма использует наименьшую возможную мощность (за исключением срабатывания failsafe).",
+        "description": "Help text for the low power disarm field of the VTX tab"
+    },
+    "vtxLowPowerDisarmOption_0": {
+        "message": "Выкл",
+        "description": "One of the options for the Low Power Disarm mode of the VTX"
+    },
+    "vtxLowPowerDisarmOption_1": {
+        "message": "Вкл",
+        "description": "One of the options for the Low Power Disarm mode of the VTX"
+    },
+    "vtxLowPowerDisarmOption_2": {
+        "message": "Включено до первого арма",
+        "description": "One of the options for the Low Power Disarm mode of the VTX"
+    },
+    "vtxTable": {
+        "message": "Таблица VTX",
+        "description": "Text of the header of the VTX Table element in the VTX tab"
+    },
+    "vtxTablePowerLevels": {
+        "message": "Количество уровней мощности",
+        "description": "Text of one of the fields of the VTX Table element in the VTX tab"
+    },
+    "vtxTablePowerLevelsHelp": {
+        "message": "Настройка количество уровней мощности, поддерживаемых VTX",
+        "description": "Help for the number of power levels field of the VTX Table element in the VTX tab"
+    },
+    "vtxTablePowerLevelsTableHelp": {
+        "message": "Эта таблица представляет разные значения мощности, которые может использовать видеопередатчик. Она состоит из: <br/><b>$t(vtxTablePowerLevelsValue.message):</b> каждому уровню мощности нужно значение, определённое производителем. За правильным значением мощности можно обратиться либо на сайт производителя видеопередатчика, либо поискать на Cleanflight wiki, в разделе \"VTX Tables\".<br /><b>$t(vtxTablePowerLevelsLabel.message):</b> вы можете задать здесь любое название (метку) для каждого уровня мощности. Можно использовать цифры (25, 200, 600, 1.2), буквы (OFF, MIN, MAX), или их комбинации.<br /><br />Используйте <b>только</b> разрешённые в вашей стране уровни мощности!",
+        "description": "Help for the table of power levels (value-label) that appears in the VTX tab"
+    },
+    "vtxTablePowerLevelsValue": {
+        "message": "Значение",
+        "description": "Text of one of the fields of the VTX Table element in the VTX tab"
+    },
+    "vtxTablePowerLevelsLabel": {
+        "message": "Метка",
+        "description": "Text of one of the fields of the VTX Table element in the VTX tab"
+    },
+    "vtxTableBands": {
+        "message": "Количество сеток",
+        "description": "Text of one of the fields of the VTX Table element in the VTX tab"
+    },
+    "vtxTableChannels": {
+        "message": "Количество каналов в сетке частот",
+        "description": "Text of one of the fields of the VTX Table element in the VTX tab"
+    },
+    "vtxTableBandsChannelsHelp": {
+        "message": "Это определяет количество сеток частот и количество каналов в сетке для вашего видеопередатчика.",
+        "description": "Help for the number of bands and channels field of the VTX Table element in the VTX tab"
+    },
+    "vtxTableBandTitleName": {
+        "message": "Название",
+        "description": "Text of one of the titles of the VTX Table element in the VTX tab"
+    },
+    "vtxTableBandTitleLetter": {
+        "message": "Буква",
+        "description": "Text of one of the titles of the VTX Table element in the VTX tab"
+    },
+    "vtxTableBandTitleFactory": {
+        "message": "Заводские",
+        "description": "Text of one of the titles of the VTX Table element in the VTX tab"
+    },
+    "vtxTableBandsChannelsTableHelp": {
+        "message": "Эта таблица представляет все частоты, которые могут быть использованы для вашего видеопередатчика. У вас может быть несколько сеток частот и для каждой сетки вы должны настроить:<br /><b>$t(vtxTableBandTitleName.message):</b> Название, которое вы хотите присвоить этой сетке, например BOSCAM_A, FATSHARK или RACEBAND.<br /><b>$t(vtxTableBandTitleLetter.message):</b> Буква, представляющая сетку.<br /><b>$t(vtxTableBandTitleFactory.message):</b> Показывает, заводская ли это сетка. Если включено, Cleanflight посылает в видеопередатчик сетку и номер канала. Видеопередатчик затем использует свою встроенную таблицу частот, а значения частот, настроенные в таблице на этой странице в конфигураторе используются только для показа в OSD и в других местах. Если выключено, Cleanflight посылает в видеопередатчик значения частот, заданные в этой таблице.<br/><b>Частоты:</b> Частоты для этой сетки.<br /><br />Учитывайте, что не все частоты разрешены в вашей стране. Поставьте <b>0</b> в каждую запрещённую частоту, чтобы отключить её.",
+        "description": "Help for the table of bands-channels that appears in the VTX tab"
+    },
+    "vtxSavedFileOk": {
+        "message": "Конфиг файл для видеопередатчика <span class=\"message-positive\">сохранён</span>",
+        "description": "Message in the GUI log when the VTX Config file is saved"
+    },
+    "vtxSavedFileKo": {
+        "message": "<span class=\"message-negative\">Ошибка</span> во время сохранения конфиг файла видеопередатчика",
+        "description": "Message in the GUI log when the VTX Config file is saved"
+    },
+    "vtxLoadFileOk": {
+        "message": "Конфиг файл для видеопередатчика <span class=\"message-positive\">загружен</span>",
+        "description": "Message in the GUI log when the VTX Config file is loaded"
+    },
+    "vtxLoadFileKo": {
+        "message": "<span class=\"message-negative\">Ошибка</span> во время загрузки конфиг файла видеопередатчика",
+        "description": "Message in the GUI log when the VTX Config file is loaded"
+    },
+    "vtxLoadClipboardOk": {
+        "message": "Конфигурация для видеопередатчика <span class=\"message-positive\">загружена</span> из буфера обмена",
+        "description": "Message in the GUI log when the VTX Config file is pasted from clipboard"
+    },
+    "vtxLoadClipboardKo": {
+        "message": "<span class=\"message-negative\">Ошибка</span> во время загрузки конфигурации видеопередатчика из буфера обмена. Возможно содержимое содержит ошибки",
+        "description": "Message in the GUI log when the VTX Config file is pasted from clipboard"
+    },
+    "vtxButtonSaveFile": {
+        "message": "Сохранить в файл",
+        "description": "Save to file button in the VTX tab"
+    },
+    "vtxButtonLoadFile": {
+        "message": "Загрузить из файла",
+        "description": "Load to file button in the VTX tab"
+    },
+    "vtxButtonLoadClipboard": {
+        "message": "Загрузить из буфера обмена",
+        "description": "Paste from clipboard button in the VTX tab"
+    },
+    "vtxButtonSave": {
+        "message": "Сохранить",
+        "description": "Save button in the VTX tab"
+    },
+    "vtxButtonSaved": {
+        "message": "Сохранено",
+        "description": "Saved action button in the VTX tab"
     },
     "mainHelpArmed": {
         "message": "Моторы Арминг"
@@ -3550,16 +4886,23 @@
         "message": "Статус последовательного соединения"
     },
     "configurationEscProtocol": {
-        "message": "Протокол ESC \/ Мотора"
+        "message": "Протокол ESC / Мотора"
     },
     "configurationEscProtocolHelp": {
         "message": "Выберите ESC-протокол.<br>Убедитесь, что выбранный протокол поддерживается вашим ESC, информация об этом указана на сайте производителя.<br><b>Обратите внимание, при выборе протоколов DSHOT900 и DSHOT1200, не так много ESC поддерживают эти протоколы"
+    },
+    "configurationEscProtocolHelpNoDSHOT1200": {
+        "message": "Выберите протокол для моторов. <br>Удостоверьтесь, что этот протокол поддерживается вашими ESC. Эта информация должна быть на сайте производителя."
     },
     "configurationunsyndePwm": {
         "message": "Скорость двигателя PWM отделенного от PID скорость"
     },
     "configurationUnsyncedPWMFreq": {
         "message": "Частота PWM мотора"
+    },
+    "configurationDshotBidir": {
+        "message": "Двухсторонний DShot (требуется поддерживаемая прошивка ESC)",
+        "description": "Feature for the ESC/Motor"
     },
     "configurationGyroSyncDenom": {
         "message": "Частота обновления гироскопа"
@@ -3586,7 +4929,7 @@
         "message": "Магнитометр (если поддерживается)"
     },
     "configurationSmallAngle": {
-        "message": "Макс. наклон при котором разрешён arming коптера [degrees]"
+        "message": "Максимальный наклон коптера (в градусах) при котором разрешён arming"
     },
     "configurationSmallAngleHelp": {
         "message": "Коптер не заармится, если он наклонён сильнее, чем указанное значение. Это условие применяется, если включён акселерометр. Значение 180 фактически отключает эту проверку"
@@ -3619,7 +4962,7 @@
         "message": "Датчик тока"
     },
     "configurationCurrentScale": {
-        "message": "Соотношение вых. напряжения и тока [1\/10th mV\/A]"
+        "message": "Соотношение вых. напряжения и тока [1/10th mV/A]"
     },
     "configurationCurrentOffset": {
         "message": "Смещение в миливольтных шагах"
@@ -3631,13 +4974,16 @@
         "message": "Профиль"
     },
     "pidTuningProfileTip": {
-        "message": "Максимум 3 (2 для некоторых контроллеров) профиля PID-ов могут храниться в памяти полётного контроллера. PID-профили хранят в себе параметры D setpoint и настройки angle\/horizon (в этой вкладке). С помощью комбинаций стиков (см. инструкцию) можно переключаться между профилями."
+        "message": "Максимум 3 (2 для некоторых контроллеров) профиля PID-ов могут храниться в памяти полётного контроллера. PID-профили хранят в себе параметры D setpoint и настройки angle/horizon (в этой вкладке). С помощью комбинаций стиков (см. инструкцию) можно переключаться между профилями."
     },
     "pidTuningRateProfile": {
         "message": "Rate-профиль"
     },
     "pidTuningRateProfileTip": {
         "message": "Максимум 3 Rate-профиля могут храниться в памяти полётного контроллера. Rate-профили хранят в себе параметры: \"RC Rate\", \"Rate\", \"RC Expo\", \"Настройки экспоненты газа\" и \"TPA\". Переключаться между профилями можно \"в полёте\" с использованием трёх-позиционного переключателя, который привязан к параметру \"Rate Profile Selection\" во вкладке \"Корректирование в полёте\"."
+    },
+    "pidTuningRateSetup": {
+        "message": "Обычные/Акро рейты"
     },
     "pidTuningDelta": {
         "message": "Производный метод"
@@ -3649,19 +4995,13 @@
         "message": "Measurement"
     },
     "pidTuningDeltaTip": {
-        "message": "<b>Derivative from Error<\/b> обеспечивает более резкую отзывчивость стиков и это предпочтительнее для гонок. <br><br><b>Derivative from Measurement<\/b> обеспечивает более плавную отзывчивость стиков, что больше подходит для фристайла"
+        "message": "<b>Derivative from Error</b> обеспечивает более резкую отзывчивость стиков и это предпочтительнее для гонок. <br><br><b>Derivative from Measurement</b> обеспечивает более плавную отзывчивость стиков, что больше подходит для фристайла"
     },
     "pidTuningPidControllerTip": {
-        "message": "<b>Legacy vs Betaflight (float):<\/b> PID коэффициенты и PID логика абсолютно те же. Нет необходимости их перенастраивать. Legacy - это старый betaflight, чей PID-контроллер был основан на целочисленных вычислениях. PID-контроллер Betaflight использует вычисления с дробными числами и имеет множество новых возможностей, специально разработанных для мультироторных приложений. <br> <b>Float vs Integer:<\/b> PID коэффициенты и PID логика абсолютно те же. Перенастройка не нужна. Полётные контроллеры F1 не имели встроенного FPU и вычисления с дробными числами увеличивают нагрузку на CPU, а вычисления с целыми числами повышают повышают производительность, но вычисления с дробными числами немного увеличивают точность."
+        "message": "<b>Legacy vs Cleanflight (float):</b> PID коэффициенты и PID логика абсолютно те же. Нет необходимости их перенастраивать. Legacy - это старый cleanflight, чей PID-контроллер был основан на целочисленных вычислениях. PID-контроллер Cleanflight использует вычисления с дробными числами и имеет множество новых возможностей, специально разработанных для мультироторных приложений. <br> <b>Float vs Integer:</b> PID коэффициенты и PID логика абсолютно те же. Перенастройка не нужна. Полётные контроллеры F1 не имели встроенного FPU и вычисления с дробными числами увеличивают нагрузку на CPU, а вычисления с целыми числами повышают повышают производительность, но вычисления с дробными числами немного увеличивают точность."
     },
     "pidTuningFilterTip": {
-        "message": "<b>Gyro сглаж. фильтр:<\/b> Фильтр нижних частот для гироскопа. Чем ниже значение, тем больше фильтрация. <br><b>D Term фильтр:<\/b> Фильтр нижних частот для параметра D (в PID-ах). Может повлиять на настройку D. Чем ниже значение, тем больше фильтрация. <br><b>Yaw-фильтр:<\/b> Фильтрует рыскание (yaw). Может помочь в аппаратурах с шумными стиками по yaw."
-    },
-    "pidTuningPidTuningTip": {
-        "message": "<b>Proportional:<\/b> Увеличивает сопротивление к воздействию внешних факторов, сдвигающих коптер<br><b>Integral:<\/b> Увеличивает способность удерживать общее начальное положение и уменьшает дрейф, но также увеличивает задержку при возврате в исходное положение. <br><b>Derivative:<\/b> Увеличивает скорость установления в заданный угол наклона, но увеличивает шум. <br><b>Rates и Expo<\/b>: Определяют чувствительность стиков. Используйте график и 3D модель, чтобы настроить чувствительность на свой вкус"
-    },
-    "pidTuningPidTuningTipFeedforward": {
-        "message": "<b>Пропорциональная:<\/b> Увеличивает сопротивление к воздействию внешних факторов, сдвигающих коптер<br><b>Интегральная:<\/b> Увеличивает способность удерживать общее начальное положение и уменьшает дрейф, но также увеличивает задержку при возврате в исходное положение. <br><b>Дифференциальная:<\/b> улучшает скорость, с которой восстанавливаются отклонения, но увеличивает шум<br><b>Feedforward:<\/b> Обычно ПИД-регулятор реагирует на ошибку. Функция Feedforward ожидает ошибки, основанной на вводе стика, обеспечивая отзывчивость квадрокоптера<br><b>Rates и Expo<\/b>: Определяют чувствительность стиков. Используйте график и 3D модель, чтобы настроить чувствительность на свой вкус"
+        "message": "<b>Gyro сглаж. фильтр:</b> Фильтр нижних частот для гироскопа. Чем ниже значение, тем больше фильтрация. <br><b>D Term фильтр:</b> Фильтр нижних частот для параметра D (в PID-ах). Может повлиять на настройку D. Чем ниже значение, тем больше фильтрация. <br><b>Yaw-фильтр:</b> Фильтрует рыскание (yaw). Может помочь в аппаратурах с шумными стиками по yaw."
     },
     "pidTuningRatesTip": {
         "message": "Меняя rates вы можете увидеть их влияние на график стиков"
@@ -3676,13 +5016,19 @@
         "message": "Позывной пилота"
     },
     "configurationFpvCamAngleDegrees": {
-        "message": "Угол наклона FPV-камеры [degrees]"
+        "message": "Угол наклона FPV-камеры (градусы)"
     },
     "onboardLoggingBlackbox": {
         "message": "Устройство для записи в Blackbox"
     },
     "onboardLoggingRateOfLogging": {
         "message": "Частота записи в Blackbox"
+    },
+    "onboardLoggingDebugMode": {
+        "message": "Режим отладки черного ящика"
+    },
+    "onboardLoggingDebugModeUnknown": {
+        "message": "НЕИЗВЕСТНО"
     },
     "onboardLoggingSerialLogger": {
         "message": "Внешнее устройство записи"
@@ -3700,7 +5046,7 @@
         "message": "Режим запоминающего устройства"
     },
     "onboardLoggingMscNote": {
-        "message": "Перезагрузка в режим <strong>запоминающее устройство (ЗУ)<\/strong>. После активации бортовая флэш или SD-карта на вашем контроллере полета будут распознаны вашим компьютером как запоминающее устройство и позволит вам загружать файлы журнала. Извлеките и включите питание вашего контроллера полета, чтобы выйти из режима запоминающего устройства."
+        "message": "Перезагрузка в режим <strong>запоминающее устройство (ЗУ)</strong>. После активации бортовая флэш или SD-карта на вашем контроллере полета будут распознаны вашим компьютером как запоминающее устройство и позволит вам загружать файлы журнала. Извлеките и включите питание вашего контроллера полета, чтобы выйти из режима запоминающего устройства."
     },
     "onboardLoggingRebootMscText": {
         "message": "Активировать режим запоминающего устройства"
@@ -3728,5 +5074,14 @@
     },
     "modeCameraChangeMode": {
         "message": "КАМЕРА: РЕЖИМ НАСТРОЙКИ"
+    },
+    "flashTab": {
+        "message": "Обновить прошивку"
+    },
+    "cliAutoComplete": {
+        "message": "Расширенное автозаполнение консоли"
+    },
+    "darkTheme": {
+        "message": "Включить тёмную тему"
     }
 }

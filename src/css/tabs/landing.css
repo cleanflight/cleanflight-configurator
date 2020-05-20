@@ -66,9 +66,9 @@
     margin-right: auto;
     margin-top: 5px;
     width: 800px;
-    color: black;
+    color: var(--defaultText);
     font-size: 14px;
-    font-family: 'open_sanslight', Arial;
+    font-weight: 300;
 }
 
 .tab-landing .logowrapper img {
@@ -78,7 +78,14 @@
 
 .tab-landing .logowrapper span {
     font-size: 22px;
-    font-family: 'open_sanslight', Arial;
+    font-weight: 300;
+}
+
+.text1, .text2, .text3, .text4 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-weight: normal;
+    font-size: 12px;
 }
 
 /* sponsors blocks */
@@ -112,20 +119,11 @@
     line-height: 22px;
     color: white;
     font-weight: normal;
-    font-family: 'open_sanslight', Arial;
 }
 
 .sponsors li a:hover {
     background-color: rgba(255, 255, 255, 0.30);
     color: #fff;
-}
-
-.text1, .text2, .text3, .text4 {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-weight: normal;
-    font-family: 'open_sansregular', Arial;
-    font-size: 12px;
 }
 
 /* text columns */
@@ -166,11 +164,14 @@
 }
 
 .tab-landing .content_mid .text2 ul {
-    margin-top: 10px;
+    margin-top: 2px;
 }
 
 .tab-landing .content_mid .text2 li {
-    padding: 5px 0;
+    padding: 2px 0;
+    list-style: initial;
+    list-style-type: circle;
+    margin-left: 30px;
 }
 
 .tab-landing .content_mid .text3 {
@@ -178,11 +179,11 @@
 }
 
 .tab-landing .content_mid .text3 .wrap2 {
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
     border-radius: 5px;
     background: white;
-    margin-right: 25px;
-    margin-left: 20px;
+    margin-right: 20px;
+    margin-left: 10px;
     margin-top: 5px;
     min-height: 187px;
     font-size: 11px;
@@ -197,6 +198,8 @@
     padding: 15px;
     padding-top: 0px;
     padding-bottom: 0px;
+    overflow: hidden;
+    float: left;
 }
 
 .tab-landing .content_mid_bottom .logo {
@@ -207,138 +210,24 @@
 .tab-landing .content_mid_bottom .text4 {
     margin-top: 0px;
     margin-left: 5px;
-    display: block;
-    float: left;
+    display: inline-block;
 }
 
-/* changelog block */
-#changelog {
-    width: 250px;
-    height: 100%;
-    position: fixed;
-    right: -245px;
-    top: 0px;
-}
-
-#changelog .wrapper {
-    height: 100%;
-    padding: 0 20px;
-    overflow-y: auto;
-    display: none;
-}
-
-#changelog .button {
-    transform: rotate(270deg);
-    top: 50px;
-    right: 215px;
-    position: absolute;
-    border-radius: 5px 5px 0 0;
-    border-bottom: none;
-    height: 30px;
-}
-
-#changelog .button a {
-    display: block;
-    padding: 5px 10px;
-    width: 70px;
-    text-align: center;
-    color: #000;
-}
-
-#changelog .title {
-    margin: 20px 0;
-    font-size: 16px;
-}
-
-#content.log_open #changelog {
-    right: 0px;
-    background: white;
-}
-
-#content.log_open #changelog .wrapper {
-    display: block;
-}
-
-/* changelog content */
-#changelog .log {
-    line-height: 17px;
-}
-
-#changelog .log span {
-    display: block;
+.tab-landing .languageSwitcher .selected_language {
     font-weight: bold;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #ddd;
 }
-
-#changelog .log ul {
-    margin: 5px 0 20px 10px;
-}
-
-#changelog .log li {
-    font-weight: normal;
-    margin-bottom: 5px;
-}
-
-#changelog .log p {
-    margin-bottom: 20px;
-}
-
-/* privacy policy block */
-#privacy_policy {
-    width: 500px;
-    height: 100%;
-    position: fixed;
-    right: -495px;
-    top: 0px;
-}
-
-#privacy_policy .wrapper {
-    height: 100%;
-    padding: 0 20px;
-    border-left: 5px solid #ffbb00;
-    overflow-y: auto;
-    display: none;
-}
-
-#privacy_policy .button {
-    transform: rotate(270deg);
-    top: 170px;
-    right: 450px;
-    position: absolute;
-    background: #ffbb00;
-    border-radius: 5px 5px 0 0;
-    border-bottom: none;
-    height: 30px;
-}
-
-#privacy_policy .button a {
-    display: block;
-    padding: 5px 10px;
-    width: 100px;
+.tab-landing .languageSwitcher {
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-    color: #000;
+    color: silver;
 }
-
-#content.policy_open #privacy_policy {
-    right: 0px;
-    background: white;
-}
-
-#content.policy_open #privacy_policy .wrapper {
-    display: block;
-}
-
-/* privacy policy content */
-#privacy_policy .policy ul {
-    margin: 5px 0 20px 10px;
-}
-
-#privacy_policy .policy li {
+.tab-landing .languageSwitcher a {
+    color: silver;
     font-weight: normal;
-    margin-bottom: 5px;
+    white-space: nowrap;
 }
-
-#privacy_policy .policy p {
-    margin-bottom: 20px;
+.tab-landing .languageSwitcher a:not(:last-child):after {
+    content: ", ";
+    font-weight: normal;
 }

@@ -1,6 +1,8 @@
 'use strict';
 
-const pkg = require('./package.json');
+var pkg = require('./package.json');
+// remove gulp-appdmg from the package.json we're going to write
+delete pkg.optionalDependencies['gulp-appdmg'];
 
 const child_process = require('child_process');
 const fs = require('fs');
@@ -19,19 +21,26 @@ const targz = require('targz');
 
 const gulp = require('gulp');
 const concat = require('gulp-concat');
-const install = require("gulp-install");
+const yarn = require("gulp-yarn");
 const rename = require('gulp-rename');
 const os = require('os');
 const removeTrailingPathSeparator = require('remove-trailing-path-separator');
 const git = require('gulp-git');
+const source = require('vinyl-source-stream');
+const stream = require('stream');
 
 const DIST_DIR = './dist/';
 const APPS_DIR = './apps/';
 const DEBUG_DIR = './debug/';
 const RELEASE_DIR = './release/';
 
+const LINUX_INSTALL_DIR = '/opt/cleanflight';
+
+// Global variable to hold the change hash from when we get it, to when we use it.
+var gitChangeSetId;
+
 var nwBuilderOptions = {
-    version: '0.32.2',
+    version: '0.44.2',
     files: './dist/**/*',
     macIcns: './src/images/cf_icon.icns',
     macPlist: { 'CFBundleDisplayName': 'Cleanflight Configurator'},
@@ -62,20 +71,28 @@ gulp.task('clean-release', clean_release);
 
 gulp.task('clean-cache', clean_cache);
 
+// Function definitions are processed before function calls.
+const getChangesetId = gulp.series(getHash, writeChangesetId);
 gulp.task('get-changeset-id', getChangesetId);
 
-var distBuild = gulp.series(dist_src, dist_locale, dist_libraries, dist_resources, getChangesetId);
-var distRebuild = gulp.series(clean_dist, distBuild);
+// dist_yarn MUST be done after dist_src
+const distBuild = gulp.series(dist_src, dist_changelog, dist_yarn, dist_locale, dist_libraries, dist_resources, getChangesetId);
+const distRebuild = gulp.series(clean_dist, distBuild);
 gulp.task('dist', distRebuild);
 
-var appsBuild = gulp.series(gulp.parallel(clean_apps, distRebuild), apps, gulp.parallel(listPostBuildTasks(APPS_DIR)));
+const appsBuild = gulp.series(gulp.parallel(clean_apps, distRebuild), apps, gulp.parallel(listPostBuildTasks(APPS_DIR)));
 gulp.task('apps', appsBuild);
 
-var debugBuild = gulp.series(distBuild, debug, gulp.parallel(listPostBuildTasks(DEBUG_DIR)), start_debug)
+const debugAppsBuild = gulp.series(gulp.parallel(clean_debug, distRebuild), debug, gulp.parallel(listPostBuildTasks(DEBUG_DIR)));
+
+const debugBuild = gulp.series(distBuild, debug, gulp.parallel(listPostBuildTasks(DEBUG_DIR)), start_debug);
 gulp.task('debug', debugBuild);
 
-var releaseBuild = gulp.series(gulp.parallel(clean_release, appsBuild), gulp.parallel(listReleaseTasks()));
+const releaseBuild = gulp.series(gulp.parallel(clean_release, appsBuild), gulp.parallel(listReleaseTasks(APPS_DIR)));
 gulp.task('release', releaseBuild);
+
+const debugReleaseBuild = gulp.series(gulp.parallel(clean_release, debugAppsBuild), gulp.parallel(listReleaseTasks(DEBUG_DIR)));
+gulp.task('debug-release', debugReleaseBuild);
 
 gulp.task('default', debugBuild);
 
@@ -95,10 +112,13 @@ function getInputPlatforms() {
     for (var i = 3; i < process.argv.length; i++) {
         var arg = process.argv[i].match(regEx)[1];
         if (supportedPlatforms.indexOf(arg) > -1) {
-             platforms.push(arg);
+            platforms.push(arg);
+        } else if (arg == 'nowinicon') {
+            console.log('ignoring winIco')
+            delete nwBuilderOptions['winIco'];
         } else {
-             console.log('Unknown platform: ' + arg);
-             process.exit();
+            console.log('Unknown platform: ' + arg);
+            process.exit();
         }
     }
 
@@ -187,28 +207,28 @@ function getRunDebugAppCommand(arch) {
 }
 
 function getReleaseFilename(platform, ext) {
-    return 'cleanflight-configurator_' + pkg.version + '_' + platform + '.' + ext;
+    return `${pkg.name}_${pkg.version}_${platform}.${ext}`;
 }
 
 function clean_dist() {
     return del([DIST_DIR + '**'], { force: true });
-};
+}
 
 function clean_apps() {
     return del([APPS_DIR + '**'], { force: true });
-};
+}
 
 function clean_debug() {
     return del([DEBUG_DIR + '**'], { force: true });
-};
+}
 
 function clean_release() {
     return del([RELEASE_DIR + '**'], { force: true });
-};
+}
 
 function clean_cache() {
     return del(['./cache/**'], { force: true });
-};
+}
 
 // Real work for dist task. Done in another task to call it via
 // run-sequence.
@@ -216,20 +236,33 @@ function dist_src() {
     var distSources = [
         './src/**/*',
         '!./src/css/dropdown-lists/LICENSE',
-        '!./src/css/font-awesome/css/font-awesome.css',
-        '!./src/css/opensans_webfontkit/*.{txt,html}',
         '!./src/support/**'
     ];
+    var packageJson = new stream.Readable;
+    packageJson.push(JSON.stringify(pkg,undefined,2));
+    packageJson.push(null);
 
-    return gulp.src(distSources, { base: 'src' })
+    return packageJson
+        .pipe(source('package.json'))
+        .pipe(gulp.src(distSources, { base: 'src' }))
         .pipe(gulp.src('manifest.json', { passthrougth: true }))
-        .pipe(gulp.src('package.json', { passthrougth: true }))
-        .pipe(gulp.src('changelog.html', { passthrougth: true }))
-        .pipe(gulp.dest(DIST_DIR))
-        .pipe(install({
-            npm: '--production --ignore-scripts'
+        .pipe(gulp.src('yarn.lock', { passthrougth: true }))
+        .pipe(gulp.dest(DIST_DIR));
+}
+
+function dist_changelog() {
+    return gulp.src('changelog.html')
+        .pipe(gulp.dest(DIST_DIR+"tabs/"));
+}
+
+// This function relies on files from the dist_src function
+function dist_yarn() {
+    return gulp.src(['./dist/package.json', './dist/yarn.lock'])
+        .pipe(gulp.dest('./dist'))
+        .pipe(yarn({
+            production: true
         }));
-};
+}
 
 function dist_locale() {
     return gulp.src('./locales/**/*', { base: 'locales'})
@@ -242,7 +275,7 @@ function dist_libraries() {
 }
 
 function dist_resources() {
-    return gulp.src('./resources/**/*', { base: '.'})
+    return gulp.src(['./resources/**/*', '!./resources/osd/**/*.png'], { base: '.'})
         .pipe(gulp.dest(DIST_DIR));
 }
 
@@ -437,22 +470,27 @@ function buildNWApps(platforms, flavor, dir, done) {
     }
 }
 
-function getChangesetId(done) {
-    git.exec({args : 'log -1 --format="%h"'}, function (err, stdout) {
-        var version;
+function getHash(cb) {
+    git.revParse({args: '--short HEAD'}, function (err, hash) {
         if (err) {
-            version = 'unsupported';
+            gitChangeSetId = 'unsupported';
         } else {
-            version = stdout.trim();
+            gitChangeSetId = hash;
         }
-
-        var versionData = { gitChangesetId: version }
-        var destFile = path.join(DIST_DIR, 'version.json');
-
-        fs.writeFile(destFile, JSON.stringify(versionData) , function () {
-            done();
-        });
+        cb();
     });
+}
+
+function writeChangesetId() {
+    var versionJson = new stream.Readable;
+    versionJson.push(JSON.stringify({
+        gitChangesetId: gitChangeSetId,
+        version: pkg.version
+        }, undefined, 2));
+    versionJson.push(null);
+    return versionJson
+        .pipe(source('version.json'))
+        .pipe(gulp.dest(DIST_DIR))
 }
 
 function start_debug(done) {
@@ -471,12 +509,13 @@ function start_debug(done) {
 }
 
 // Create installer package for windows platforms
-function release_win(arch, done) {
+function release_win(arch, appDirectory, done) {
 
     // Check if makensis exists
     if (!commandExistsSync('makensis')) {
         console.warn('makensis command not found, not generating win package for ' + arch);
-        return done();
+        done();
+        return;
     }
 
     // The makensis does not generate the folder correctly, manually
@@ -488,10 +527,12 @@ function release_win(arch, done) {
             define: {
                 'VERSION': pkg.version,
                 'PLATFORM': arch,
-                'DEST_FOLDER': RELEASE_DIR
+                'DEST_FOLDER': RELEASE_DIR,
+                'SOURCE_FOLDER': removeTrailingPathSeparator(appDirectory),
             }
         }
 
+    console.log('makensis options', options);
     var output = makensis.compileSync('./assets/windows/installer.nsi', options);
 
     if (output.status !== 0) {
@@ -502,10 +543,10 @@ function release_win(arch, done) {
 }
 
 // Create distribution package (zip) for windows and linux platforms
-function release_zip(arch) {
-    var src = path.join(APPS_DIR, pkg.name, arch, '**');
-    var output = getReleaseFilename(arch, 'zip');
-    var base = path.join(APPS_DIR, pkg.name, arch);
+function release_zip(arch, appDirectory) {
+    const src = path.join(appDirectory, pkg.name, arch, '**');
+    const output = getReleaseFilename(arch, 'zip');
+    const base = path.join(appDirectory, pkg.name, arch);
 
     return compressFiles(src, base, output, 'Cleanflight Configurator');
 }
@@ -529,15 +570,16 @@ function compressFiles(srcPath, basePath, outputFile, zipFolder) {
                .pipe(gulp.dest(RELEASE_DIR));
 }
 
-function release_deb(arch, done) {
+function release_deb(arch, appDirectory, done) {
 
     // Check if dpkg-deb exists
     if (!commandExistsSync('dpkg-deb')) {
         console.warn('dpkg-deb command not found, not generating deb package for ' + arch);
-        return done();
+        done();
+        return;
     }
 
-    return gulp.src([path.join(APPS_DIR, pkg.name, arch, '*')])
+    return gulp.src([path.join(appDirectory, pkg.name, arch, '*')])
         .pipe(deb({
              package: pkg.name,
              version: pkg.version,
@@ -546,31 +588,35 @@ function release_deb(arch, done) {
              architecture: getLinuxPackageArch('deb', arch),
              maintainer: pkg.author,
              description: pkg.description,
-             postinst: ['xdg-desktop-menu install /opt/cleanflight/cleanflight-configurator/cleanflight-configurator.desktop'],
-             prerm: ['xdg-desktop-menu uninstall cleanflight-configurator.desktop'],
+             preinst: [`rm -rf ${LINUX_INSTALL_DIR}/${pkg.name}`],
+             postinst: [`chown root:root ${LINUX_INSTALL_DIR}`, `chown -R root:root ${LINUX_INSTALL_DIR}/${pkg.name}`, `xdg-desktop-menu install ${LINUX_INSTALL_DIR}/${pkg.name}/${pkg.name}.desktop`],
+             prerm: [`xdg-desktop-menu uninstall ${pkg.name}.desktop`],
              depends: 'libgconf-2-4',
              changelog: [],
-             _target: 'opt/cleanflight/cleanflight-configurator',
-             _out: removeTrailingPathSeparator(RELEASE_DIR),
+             _target: `${LINUX_INSTALL_DIR}/${pkg.name}`,
+             _out: RELEASE_DIR,
              _copyright: 'assets/linux/copyright',
              _clean: true
     }));
 }
 
-function release_rpm(arch, done) {
+function release_rpm(arch, appDirectory, done) {
 
     // Check if dpkg-deb exists
     if (!commandExistsSync('rpmbuild')) {
         console.warn('rpmbuild command not found, not generating rpm package for ' + arch);
-        return done();
+        done();
+        return;
     }
 
     // The buildRpm does not generate the folder correctly, manually
     createDirIfNotExists(RELEASE_DIR);
 
+    var regex = /-/g;
+
     var options = {
              name: pkg.name,
-             version: pkg.version,
+             version: pkg.version.replace(regex, '_'), // RPM does not like release candidate versions
              buildArch: getLinuxPackageArch('rpm', arch),
              vendor: pkg.author,
              summary: pkg.description,
@@ -578,15 +624,16 @@ function release_rpm(arch, done) {
              requires: 'libgconf-2-4',
              prefix: '/opt',
              files:
-                 [ { cwd: path.join(APPS_DIR, pkg.name, arch),
+                 [ { cwd: path.join(appDirectory, pkg.name, arch),
                      src: '*',
-                     dest: '/opt/cleanflight/cleanflight-configurator' } ],
-             postInstallScript: ['xdg-desktop-menu install /opt/cleanflight/cleanflight-configurator/cleanflight-configurator.desktop'],
-             preUninstallScript: ['xdg-desktop-menu uninstall cleanflight-configurator.desktop'],
+                     dest: `${LINUX_INSTALL_DIR}/${pkg.name}` } ],
+             postInstallScript: [`xdg-desktop-menu install ${LINUX_INSTALL_DIR}/${pkg.name}/${pkg.name}.desktop`],
+             preUninstallScript: [`xdg-desktop-menu uninstall ${pkg.name}.desktop`],
              tempDir: path.join(RELEASE_DIR,'tmp-rpm-build-' + arch),
              keepTemp: false,
              verbose: false,
-             rpmDest: RELEASE_DIR
+             rpmDest: RELEASE_DIR,
+             execOpts: { maxBuffer: 1024 * 1024 * 16 },
     };
 
     buildRpm(options, function(err, rpm) {
@@ -620,7 +667,7 @@ function getLinuxPackageArch(type, arch) {
     return packArch;
 }
 // Create distribution package for macOS platform
-function release_osx64() {
+function release_osx64(appDirectory) {
     var appdmg = require('gulp-appdmg');
 
     // The appdmg does not generate the folder correctly, manually
@@ -630,7 +677,7 @@ function release_osx64() {
     return gulp.src(['.'])
         .pipe(appdmg({
             target: path.join(RELEASE_DIR, getReleaseFilename('macOS', 'dmg')),
-            basepath: path.join(APPS_DIR, pkg.name, 'osx64'),
+            basepath: path.join(appDirectory, pkg.name, 'osx64'),
             specification: {
                 title: 'Cleanflight Configurator',
                 contents: [
@@ -662,7 +709,7 @@ function createDirIfNotExists(dir) {
 }
 
 // Create a list of the gulp tasks to execute for release
-function listReleaseTasks(done) {
+function listReleaseTasks(appDirectory) {
 
     var platforms = getPlatforms();
 
@@ -674,47 +721,49 @@ function listReleaseTasks(done) {
 
     if (platforms.indexOf('linux64') !== -1) {
         releaseTasks.push(function release_linux64_zip() {
-            return release_zip('linux64');
+            return release_zip('linux64', appDirectory);
         });
         releaseTasks.push(function release_linux64_deb(done) {
-            return release_deb('linux64', done);
+            return release_deb('linux64', appDirectory, done);
         });
         releaseTasks.push(function release_linux64_rpm(done) {
-            return release_rpm('linux64', done);
+            return release_rpm('linux64', appDirectory, done);
         });
     }
 
     if (platforms.indexOf('linux32') !== -1) {
         releaseTasks.push(function release_linux32_zip() {
-            return release_zip('linux32');
+            return release_zip('linux32', appDirectory);
         });
         releaseTasks.push(function release_linux32_deb(done) {
-            return release_deb('linux32', done);
+            return release_deb('linux32', appDirectory, done);
         });
         releaseTasks.push(function release_linux32_rpm(done) {
-            return release_rpm('linux32', done);
+            return release_rpm('linux32', appDirectory, done);
         });
     }
 
     if (platforms.indexOf('armv7') !== -1) {
         releaseTasks.push(function release_armv7_zip() {
-            return release_zip('armv7');
+            return release_zip('armv7', appDirectory);
         });
     }
 
     if (platforms.indexOf('osx64') !== -1) {
-        releaseTasks.push(release_osx64);
+        releaseTasks.push(function () {
+            return release_osx64(appDirectory);
+        });
     }
 
     if (platforms.indexOf('win32') !== -1) {
         releaseTasks.push(function release_win32(done) {
-            return release_win('win32', done);
+            return release_win('win32', appDirectory, done);
         });
     }
 
     if (platforms.indexOf('win64') !== -1) {
         releaseTasks.push(function release_win64(done) {
-            return release_win('win64', done);
+            return release_win('win64', appDirectory, done);
         });
     }
 

@@ -7,8 +7,8 @@ var Features = function (config) {
         {bit: 0, group: 'rxMode', mode: 'select', name: 'RX_PPM'},
         {bit: 2, group: 'other', name: 'INFLIGHT_ACC_CAL'},
         {bit: 3, group: 'rxMode', mode: 'select', name: 'RX_SERIAL'},
-        {bit: 4, group: 'esc', name: 'MOTOR_STOP'},
-        {bit: 5, group: 'other', name: 'SERVO_TILT'},
+        {bit: 4, group: 'escMotorStop', name: 'MOTOR_STOP'},
+        {bit: 5, group: 'other', name: 'SERVO_TILT', haveTip: true},
         {bit: 6, group: 'other', name: 'SOFTSERIAL', haveTip: true},
         {bit: 7, group: 'gps', name: 'GPS', haveTip: true},
         {bit: 9, group: 'other', name: 'SONAR'},
@@ -78,7 +78,7 @@ var Features = function (config) {
         if (semver.gte(CONFIG.apiVersion, "1.31.0")) {
             features.push(
                 {bit: 25, group: 'rxMode', mode: 'select', name: 'RX_SPI'},
-                {bit: 27, group: 'other', name: 'ESC_SENSOR'}
+                {bit: 27, group: 'escSensor', name: 'ESC_SENSOR'}
             );
         }
 
@@ -167,11 +167,9 @@ Features.prototype.generateElements = function (featuresElements) {
                     + self._features[i].name
                     + '" title="'
                     + self._features[i].name
-                    + '" type="checkbox"/></td><td><label for="feature-'
-                    + i
-                    + '">'
+                    + '" type="checkbox"/></td><td><div>'
                     + self._features[i].name
-                    + '</label></td><td><span i18n="feature' + self._features[i].name + '"></span>'
+                    + '</div></td><td><span i18n="feature' + self._features[i].name + '"></span>'
                     + feature_tip_html + '</td></tr>');
 
             var feature_e = newElement.find('input.feature');

@@ -14,11 +14,13 @@
     height: 20px;
     line-height: 20px;
     text-align: left;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
     border-radius: 3px;
     margin-right: 11px;
     font-size: 12px;
     font-weight: normal;
+    background: var(--boxBackground);
+    color: var(--defaultText);
 }
 
 .tab-transponder .text .disabled {
@@ -44,7 +46,7 @@
     margin-bottom: 5px;
     clear: left;
     padding-bottom: 5px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--subtleAccent);
     width: 100%;
     float: left;
 }
@@ -63,9 +65,8 @@
 
 .tab-transponder .gui_box span {
     font-style: normal;
-    font-family: 'open_sansregular', Arial;
     line-height: 19px;
-    color: #4F4F4F;
+    color: #4f4f4f;
     font-size: 11px;
 }
 
@@ -84,5 +85,8 @@
 
 .tab-transponder select {
     min-width: 100px;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
+    background: var(--boxBackground);
+    color: var(--defaultText);
 }

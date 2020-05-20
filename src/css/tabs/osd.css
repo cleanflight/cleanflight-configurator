@@ -17,18 +17,22 @@
   /* text-shadow: 1px 0px 2px rgba(0, 0, 0, 0.9);*/
 }
 
-
-.darkgrey {
-  background-color: #575757;
-}
-
 .tab-osd .spacer_box_title {
   float: none;
+  font-weight: normal;
+}
+
+.tab-osd .spacer_box_title .profileOsdHeader {
+    padding: 6px;
 }
 
 .tab-osd .info {
   float: left;
   width: 100%;
+}
+
+.info .progressLabel {
+    color: white;
 }
 
 .info .progressLabel a {
@@ -43,7 +47,7 @@
   width: 100%;
   height: 26px;
   border-radius: 5px;
-  border: 1px solid silver;
+  border: 1px solid var(--subtleAccent);
 }
 
 .info .progress {
@@ -111,7 +115,7 @@
 .tab-osd .options select {
   width: 300px;
   height: 20px;
-  border: 1px solid silver;
+  border: 1px solid var(--subtleAccent);
 }
 
 .tab-osd .options .releases select {
@@ -152,7 +156,7 @@
   text-align: center;
   font-weight: bold;
   color: white;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid var(--subtleAccent);
   background-color: #3f4241;
 }
 
@@ -179,7 +183,7 @@
 .tab-osd .git_info {
   display: none;
   margin-bottom: 10px;
-  border: 1px solid silver;
+  border: 1px solid var(--subtleAccent);
 }
 
 .tab-osd .git_info .title {
@@ -187,7 +191,7 @@
   text-align: center;
   font-weight: bold;
   color: white;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid var(--subtleAccent);
   background-color: #3f4241;
 }
 
@@ -201,52 +205,6 @@
 
 .tab-osd .git_info p a:hover {
   text-decoration: underline;
-}
-
-.tab-osd .buttons {
-  width: calc(100% - 20px);
-  margin-top: 10px;
-  bottom: 10px;
-}
-
-.tab-osd .buttons a {
-  display: block;
-  float: left;
-  margin: 0 10px 0 0;
-  padding: 0 15px 0 15px;
-  height: 28px;
-  line-height: 28px;
-  text-align: center;
-  font-weight: bold;
-  border: 1px solid silver;
-  background-color: #ececec;
-}
-
-.tab-osd .buttons a:hover {
-  background-color: #dedcdc;
-}
-
-.tab-osd .buttons a.flash_font.locked {
-  background-color: #b8b8b8;
-}
-
-.tab-osd .buttons a.flash_font.locked:hover {
-  cursor: default;
-  background-color: #b8b8b8;
-}
-
-.tab-osd .buttons a.load_remote_file.locked {
-  background-color: #b8b8b8;
-}
-
-.tab-osd .buttons a.load_remote_file.locked:hover {
-  cursor: default;
-  background-color: #b8b8b8;
-}
-
-.tab-osd .buttons .back {
-  float: right;
-  margin: 0;
 }
 
 .tab-osd .btn .disabled {
@@ -270,7 +228,7 @@
 
 .tab-osd .display-layout input.position{
   width: 5em;
-  border-bottom: 1px solid #ccc
+  border-bottom: 1px solid var(--subtleAccent);
 }
 
 .tab-osd .hide {
@@ -298,6 +256,27 @@
   position: relative;
 }
 
+.tab-osd .preview .gui_box_titlebar label {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: text-bottom;
+}
+
+.tab-osd .preview .gui_box_titlebar select {
+    max-width: 100px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: normal;
+    font-family: 'Open Sans', 'Segoe UI', Tahoma, sans-serif;
+}
+
+.tab-osd .preview .gui_box_bottombar {
+  text-align: center;
+}
+
 .tab-osd .preview .char {
   display: inline-block;
   padding: 0;
@@ -322,11 +301,6 @@
 
 .tab-osd .preview .char[draggable="true"] {
   cursor: move;
-}
-
-.tab-osd .preview-logo {
-  position: absolute;
-  right: 0;
 }
 
 .tab-osd .preview .row {
@@ -397,7 +371,7 @@
 
 button {
   padding: 4px 10px !important;
-  font-family: 'open_sanssemibold', Arial;
+  font-weight: 600;
   font-size: 9pt !important;
   cursor: pointer;
 }
@@ -410,29 +384,37 @@ button {
 }
 
 .fontpresets {
-  border: 1px solid #cccccc;
+  background: var(--boxBackground);
+  color: var(--defaultText);
+  border: 1px solid var(--subtleAccent);
+  border-radius: 3px;
 }
 
 .tab-osd .switchable-field {
   padding: 3px;
   border: 1px solid transparent;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--subtleAccent);
 }
 
 .tab-osd .switchable-field.mouseover {
-  background: #fff;
-  border: 1px solid #ccc;
+  background: var(--boxBackground);
+  border: 1px solid var(--subtleAccent);
   font-weight: 800;
 }
 
 .tab-osd .switchable-field input {
-  float: right;
-  width: 50px;
   border-radius: 3px;
-  border: 1px solid #ddd;
-  padding:2px;
-  margin-top: -2px;
+  border: 1px solid var(--subtleAccent);
+  padding: 2px;
+}
+
+.tab-osd .switchable-field input[type=number] {
+  float: right;
   display: none;
+  line-height: 23px;
+  height: 23px;
+  box-sizing: border-box;
+  padding-right: 0px;
 }
 
 .tab-osd .switchable-field label {
@@ -449,7 +431,6 @@ button {
 .spacer_box_title span {
   font-size: 11px;
   font-weight: normal;
-  font-family: 'open_sansregular', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .spacer_box div input {
@@ -465,11 +446,20 @@ button {
   border-bottom: 0px;
 }
 
-.tab-osd .preview {
-  width: 360px;
+.tab-osd input,
+.tab-osd select {
+  background: var(--boxBackground);
+  color: var(--defaultText);
+  border: 1px solid var(--subtleAccent);
+  border-radius: 3px;
 }
 
 .tab-osd .preview {
+  width: 360px;
+  float: left; 
+  position: sticky;
+  top: 0px;
+
   /* please don't copy the generic background image from another project
    * and replace the one that @nathantsoi took :)
    */
@@ -482,7 +472,7 @@ button {
 .tab-osd .alarms label {
   display: block;
   width:100%;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--subtleAccent);
   margin-top:5px;
   padding-bottom: 5px
 }
@@ -498,7 +488,6 @@ button {
   height: 18px;
   line-height: 20px;
   text-align: left;
-  border: 1px solid silver;
   border-radius: 3px;
   margin-right: 11px;
   font-size: 11px;

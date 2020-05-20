@@ -26,21 +26,11 @@
 }
 
 #tabs li.active a {
-    background-color: #ffbb00;
     color: #000;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.45);
 }
 
-#tabs li.active a:hover {
-    background-color: #ffbb00;
-}
-
-.tab_title {
-    border-bottom: 1px solid #ffbb00;
-}
-
 .content_toolbar .btn a {
-    background-color: #ffbb00;
     border: 1px solid #dba718;
     color: #000;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
@@ -51,7 +41,7 @@
 }
 
 .content_toolbar .btn a:active {
-    background-color: #ffbb00;
+    background-color: var(--accent);
 }
 
 .gui_note {
@@ -59,12 +49,10 @@
 }
 
 .gui_note .gui_box_titlebar {
-    background-color: #ffbb00;
+    background-color: var(--accent);
 }
 
 .fixed_band .save_btn a {
-
-    background-color: #ffbb00;
     border: 1px solid #dba718;
     color: #000;
 }
@@ -74,7 +62,7 @@
 }
 
 .default_btn a {
-    background-color: #ffbb00;
+    background-color: var(--accent);
     border: 1px solid #dba718;
     color: #000;
 }
@@ -95,10 +83,10 @@
 }
 
 .small a:hover {
-    background-color: #ffbb00;
+    background-color: var(--accent);
     color: #000;
     text-shadow: 0px 1px rgba(255, 255, 255, 0.25);
-    border: 1px solid #ffbb00;
+    border: 1px solid var(--accent);
 }
 
 .green a {
@@ -115,12 +103,9 @@
     color: #000;
 }
 
-.gps_true {
-    background-color: #ffbb00;
-}
 
 .connect_b a.connect {
-    background-color: #ffbb00;
+    background-color: var(--accent);
     border: 1px solid #dba718;
 }
 
@@ -128,18 +113,27 @@
     background-color: #ffcc3f;
 }
 
-.dataflash-free_global {
-    background-color: #ffbb00;
+.firmware_b a.flash {
+    background-color: var(--accent);
+    border: 1px solid #dba718;
 }
 
-.battery-status {
-    background-color: #ffbb00;
+.firmware_b a.flash:hover {
+    background-color: #ffcc3f;
 }
 
 button.active {
-    background-color: #ffbb00;
+    background-color: var(--accent);
     border: 1px solid #dba718;
     color: #000;
+}
+
+.regular-button {
+    border: 1px solid #dba718;
+}
+
+dialog .dialog_toolbar .btn a {
+    border: 1px solid #dba718;
 }
 
 .message-positive {
@@ -196,6 +190,27 @@ li.active .ic_welcome {
     color: #818181;
 }
 
+.armedicon {
+    background-image: url(../images/bf/icons/cf_icon_armed_grey.svg);
+}
+.armedicon.active {
+    background-image: url(../images/bf/icons/cf_icon_armed_active.svg);
+}
+
+.failsafeicon {
+    background-image: url(../images/bf/icons/cf_icon_failsafe_grey.svg);
+}
+.failsafeicon.active {
+    background-image: url(../images/bf/icons/cf_icon_failsafe_active.svg);
+}
+
+.linkicon {
+    background-image: url(../images/bf/icons/cf_icon_link_grey.svg);
+}
+.linkicon.active {
+    background-image: url(../images/bf/icons/cf_icon_link_active.svg);
+}
+
 .tab-landing .content_wrapper {
     background-color: #2e2e2e;
 }
@@ -207,7 +222,7 @@ li.active .ic_welcome {
 }
 
 .tab-landing .content_mid {
-    background-color: #ffbb00;
+    background-color: var(--accent);
 }
 
 .tab-landing .logowrapper {

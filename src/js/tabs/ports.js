@@ -96,7 +96,10 @@ TABS.ports.initialize = function (callback, scrollPosition) {
         '57600',
         '115200',
         '230400',
-        '250000'
+        '250000',
+        '1500000',
+        '2000000',
+        '2470000'
     ];
 
     var columns = ['configuration', 'peripherals', 'sensors', 'telemetry', 'rx'];
@@ -108,7 +111,15 @@ TABS.ports.initialize = function (callback, scrollPosition) {
     load_configuration_from_fc();
 
     function load_configuration_from_fc() {
-        MSP.send_message(MSPCodes.MSP_CF_SERIAL_CONFIG, false, false, on_configuration_loaded_handler);
+        let promise;
+        if(semver.gte(CONFIG.apiVersion, "1.42.0")) {
+            promise = MSP.promise(MSPCodes.MSP_VTX_CONFIG);
+        } else {
+            promise = Promise.resolve();
+        }
+        promise.then(function() {
+            mspHelper.loadSerialConfig(on_configuration_loaded_handler);
+        });
 
         function on_configuration_loaded_handler() {
             $('#content').load("./tabs/ports.html", on_tab_loaded_handler);
@@ -128,6 +139,8 @@ TABS.ports.initialize = function (callback, scrollPosition) {
         }
 
         $(".tab-ports").addClass("supported");
+
+        const VCP_PORT_IDENTIFIER = 20;
 
         var portIdentifierToNameMapping = {
            0: 'UART1',
@@ -165,6 +178,7 @@ TABS.ports.initialize = function (callback, scrollPosition) {
             blackbox_baudrate_e.append('<option value="' + blackboxBaudRates[i] + '">' + blackboxBaudRates[i] + '</option>');
         }
 
+        let lastVtxControlSelected;
         var ports_e = $('.tab-ports .ports');
         var port_configuration_template_e = $('#tab-ports-templates .portConfiguration');
 
@@ -227,12 +241,18 @@ TABS.ports.initialize = function (callback, scrollPosition) {
                             checkbox_e.prop("checked", true);
                         }
 
+                        if (serialPort.identifier == VCP_PORT_IDENTIFIER && functionName == "MSP") {
+                            var checkbox_e = functions_e.find('#' + checkboxId);
+                            checkbox_e.prop("checked", true);
+                            checkbox_e.prop("disabled", true);
+                        }
+
                     } else {
                         var selectElementName = 'function-' + column;
                         var selectElementSelector = 'select[name=' + selectElementName + ']';
                         select_e = functions_e.find(selectElementSelector);
 
-                        if (select_e.size() == 0) {
+                        if (select_e.length == 0) {
                             functions_e.prepend('<span class="function"><select name="' + selectElementName + '" /></span>');
                             select_e = functions_e.find(selectElementSelector);
                             var disabledText = i18n.getMessage('portsTelemetryDisabled');
@@ -242,6 +262,10 @@ TABS.ports.initialize = function (callback, scrollPosition) {
 
                         if (serialPort.functions.indexOf(functionName) >= 0) {
                             select_e.val(functionName);
+
+                            if (column === 'peripherals' && (functionName === "TBS_SMARTAUDIO" || functionName === "IRC_TRAMP")) {
+                                lastVtxControlSelected = functionName;
+                            }
                         }
 
                         if (column === 'telemetry') {
@@ -262,6 +286,42 @@ TABS.ports.initialize = function (callback, scrollPosition) {
 
             ports_e.find('tbody').append(port_configuration_e);
         }
+
+        let vtxTableNotConfigured = true;
+        if (semver.gte(CONFIG.apiVersion, "1.42.0")) {
+            vtxTableNotConfigured = VTX_CONFIG.vtx_table_available &&
+                                        (VTX_CONFIG.vtx_table_bands == 0 ||
+                                        VTX_CONFIG.vtx_table_channels == 0 ||
+                                        VTX_CONFIG.vtx_table_powerlevels == 0);
+        } else {
+            $('.vtxTableNotSet').hide();
+        }
+
+        const pheripheralsSelectElement = $('select[name="function-peripherals"]');
+        pheripheralsSelectElement.change(function() {
+            let vtxControlSelected = undefined;
+            pheripheralsSelectElement.each(function() {
+                const el = $(this);
+                if (el.val() === "TBS_SMARTAUDIO" || el.val() === "IRC_TRAMP") {
+                    vtxControlSelected = el.val();
+                }
+            });
+
+            if (lastVtxControlSelected !== vtxControlSelected) {
+                self.analyticsChanges['VtxControl'] = vtxControlSelected;
+
+                lastVtxControlSelected = vtxControlSelected;
+            }
+
+            if (semver.gte(CONFIG.apiVersion, "1.42.0")) {
+                if (vtxControlSelected && vtxTableNotConfigured) {
+                    $('.vtxTableNotSet').show();
+                } else {
+                    $('.vtxTableNotSet').hide();
+                }
+            }
+        });
+        pheripheralsSelectElement.change();
     }
 
     function on_tab_loaded_handler() {
@@ -334,7 +394,7 @@ TABS.ports.initialize = function (callback, scrollPosition) {
             SERIAL_CONFIG.ports.push(serialPort);
         });
 
-        MSP.send_message(MSPCodes.MSP_SET_CF_SERIAL_CONFIG, mspHelper.crunch(MSPCodes.MSP_SET_CF_SERIAL_CONFIG), false, save_to_eeprom);
+        mspHelper.sendSerialConfig(save_to_eeprom);
 
         function save_to_eeprom() {
             MSP.send_message(MSPCodes.MSP_EEPROM_WRITE, false, false, on_saved_handler);
@@ -344,26 +404,9 @@ TABS.ports.initialize = function (callback, scrollPosition) {
             GUI.log(i18n.getMessage('configurationEepromSaved'));
 
             GUI.tab_switch_cleanup(function() {
-                MSP.send_message(MSPCodes.MSP_SET_REBOOT, false, false, on_reboot_success_handler);
+                MSP.send_message(MSPCodes.MSP_SET_REBOOT, false, false);
+                reinitialiseConnection(self);
             });
-        }
-
-        function on_reboot_success_handler() {
-            GUI.log(i18n.getMessage('deviceRebooting'));
-
-            if (BOARD.find_board_definition(CONFIG.boardIdentifier).vcp) { // VCP-based flight controls may crash old drivers, we catch and reconnect
-                $('a.connect').click();
-                GUI.timeout_add('start_connection',function start_connection() {
-                    $('a.connect').click();
-                },2500);
-            } else {
-                GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
-                    MSP.send_message(MSPCodes.MSP_STATUS, false, false, function() {
-                        GUI.log(i18n.getMessage('deviceReady'));
-                        TABS.ports.initialize(false, $('#content').scrollTop());
-                    });
-               },  1500); // seems to be just the right amount of delay to prevent data request timeouts
-            }
         }
     }
 };

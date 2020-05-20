@@ -35,6 +35,7 @@
     padding-left: 10px;
     padding-top: 10px;
     text-align: left;
+    float: left;
 }
 
 .tab-sensors .plot_control dl {
@@ -60,7 +61,8 @@
 .tab-sensors .plot_control select {
     float: right;
     width: 80px;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
 }
 
 .tab-sensors .plot_control .x {

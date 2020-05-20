@@ -12,12 +12,6 @@
     border: 0;
 }
 
-.tab-receiver .help {
-    padding: 10px;
-    background-color: #ffcb18;
-    margin-bottom: 10px;
-}
-
 .tab-receiver .bars {
     float: left;
     width: calc(50% - 20px);
@@ -51,7 +45,7 @@
     margin-top: 2px;
     width: calc(100% - 2px);
     height: 15px;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
     background-color: #f4f4f4;
     border-radius: 3px;
 }
@@ -142,14 +136,19 @@
     background-color: #14407a;
 }
 
+.tab-receiver .fc_column {
+    float: right;
+    width: 50%;
+    margin-left: 20px;
+}
+
 .tab-receiver .tunings {
     float: right;
     position: relative;
-    margin: 0px 0px 20px 0;
+    margin: 0px 0px 10px 0;
     width: 100%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    background-color: #DEDEDE;
 }
 
 .tab-receiver .tunings .head {
@@ -161,7 +160,7 @@
     background: #828885;
     color: white;
     border-top-left-radius: 3px;
-    border-right: 1px solid silver;
+    border-right: 1px solid var(--subtleAccent);
 }
 .tab-receiver .tunings table {
     width: 100%;
@@ -175,9 +174,9 @@
 }
 
 .tab-receiver .tunings table th {
-    background: #828885;
-    color: white;
-    border-right: 1px solid silver;
+    background: var(--quietHeader);
+    color: var(--quietText);
+    border-right: 1px solid var(--subtleAccent);
     font-weight: normal;
 }
 
@@ -191,13 +190,8 @@
 }
 
 .tab-receiver .tunings table td {
-    background: #DEDEDE;
-    border-right: 1px solid silver;
-}
-
-.tab-receiver .smoothing table td {
-    background: #DEDEDE;
-    border-right: 0px;
+    border-right: 1px solid var(--subtleAccent);
+    padding: 1px;
 }
 
 .tab-receiver .tunings table td:first-child {
@@ -209,84 +203,88 @@
     border-right: 0px;
 }
 
-.tab-receiver .tunings table td {
-    padding: 1px;
-}
-
-.tab-receiver .tunings table tr:nth-child(odd) {
-    background-color: #ececec;
-}
-
 .tab-receiver .tunings table input {
     width: calc(100% - 8px);
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
     border-radius: 3px;
-    height: 20px;
-    margin: 3px;
-    line-height: 20px;
+    height: 22px;
+    margin: 4px;
+    line-height: 22px;
     text-align: right;
+    box-sizing: border-box;
+}
+
+.tab-receiver .input-helpicon-flex {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.tab-receiver .input-helpicon-flex .helpicon {
+    min-width: 14px;
+    margin-left: 4px;
+}
+
+.tab-receiver .tunings .sticks th,
+.tab-receiver .tunings .deadband th {
+    width: 33%;
 }
 
 .tab-receiver .rssi_channel_wrapper {
     float: right;
-    margin: 0px 0px 20px 0;
+    margin: 0px 0px 10px 0;
     border-left: 0;
     width: 30%;
+    box-sizing: border-box;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    background-color: #DEDEDE;
-}
-
-.tab-receiver .rssi_channel_wrapper select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
-}
-.tab-receiver .rssi_channel_wrapper .head {
-    height: 15px;
-    padding: 4px;
-    text-align: left;
-    padding-left: 6px;
-    font-weight: normal;
-    background: #828885;
-    color: white;
-    border-top-right-radius: 3px;
-}
-
-.tab-receiver .rssi_channel_wrapper select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
+    border-right: 1px solid var(--subtleAccent);
+    border-bottom: 1px solid var(--subtleAccent);
 }
 
 .tab-receiver .rcmap_wrapper {
     float: right;
     position: relative;
-    margin: 0px 0px 20px 0;
-    width: calc(70% - 0px);
+    margin: 0px 0px 10px 0;
+    width: 70%;
+    box-sizing: border-box;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    background-color: #DEDEDE;
+    border-left: 1px solid var(--subtleAccent);
+    border-bottom: 1px solid var(--subtleAccent);
 }
 
+.tab-receiver .rssi_channel_wrapper .head,
 .tab-receiver .rcmap_wrapper .head {
     height: 15px;
     padding: 4px;
     text-align: left;
-    padding-left: 6px;
     font-weight: normal;
-    background: #828885;
-    color: white;
+    background: var(--quietHeader);
+    color: var(--quietText);
+}
+
+.tab-receiver .rcmap_wrapper .head {
+    border-right: 1px solid var(--subtleAccent);
     border-top-left-radius: 3px;
-    border-right: 1px solid silver;
+    padding-left: 6px;
+}
+.tab-receiver .rssi_channel_wrapper .head {
+    border-top-right-radius: 3px;
+}
+
+.tab-receiver .rssi_channel_wrapper select {
+    width: calc(100% - 10px);
 }
 
 .tab-receiver .hybrid_element {
-    border-right: 1px solid silver;
+    border-right: 1px solid var(--subtleAccent);
+}
+
+.tab-receiver .hybrid_element select {
+    height: 22px;
+    z-index: 1;
+    margin: 4px;
+    width: calc(100% - 10px);
 }
 
 .tab-receiver .hybrid_element input {
@@ -296,41 +294,18 @@
     height: 20px;
     z-index: 2;
     border-radius: 0px;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
     margin: 4px;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
 }
 
-.tab-receiver .hybrid_element select {
-    height: 22px;
-    z-index: 1;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 10px);
-}
-
-.tab-receiver .rcSmoothing-derivative-manual select {
+.tab-receiver select {
     height: 22px;
     padding-left: 5px;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
     margin: 4px;
-}
-
-.tab-receiver .rcSmoothing-input-manual select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
-}
-
-.tab-receiver .rcSmoothing-input-manual select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
 }
 
 .tab-receiver .rc-smoothing-type {
@@ -344,68 +319,26 @@
     margin-bottom: 5px;
     clear: left;
     padding-bottom: 5px;
-    border-bottom: 1px solid silver;
+    border-bottom: 1px solid var(--subtleAccent);
     width: 100%;
 }
 
-.tab-receiver .rc-smoothing-type select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
+.tab-receiver .rcSmoothing table td {
+    border-right: none;
 }
 
-.tab-receiver .rc-smoothing-channels select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
+.tab-receiver .rcSmoothing table select,
+.tab-receiver .rcSmoothing table input {
+    width: 90%;
 }
 
-.tab-receiver .rcSmoothing-input-type select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
-}
-
-.tab-receiver .rcSmoothing-input-type select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
-}
-
-.tab-receiver .rcInterpolation select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
-    float: left;
-}
-
-.tab-receiver .rcInterpolation-label {
-    margin-top: 6px;
-    border-right: 1px solid silver;
-}
-
-.tab-receiver .rcSmoothing-derivative-type select {
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid silver;
-    margin: 4px;
-    width: calc(100% - 8px);
+.tab-receiver .rcSmoothing table .helpicon {
+    margin-top: 0px;
 }
 
 .tab-receiver .rcSmoothing td:first-child {
     width: 120px;
-    padding-left:8px;
-    border-right: none;
+    padding-left: 8px;
 }
 
 .tab-receiver .rcSmoothing td:last-child {
@@ -416,29 +349,9 @@
     -webkit-appearance: slider-horizontal;
 }
 
-.tab-receiver .curves {
-    float: left;
-    margin-right: 10px;
-}
-
-.tab-receiver .rcInterpolation-label {
-    border-right: none;
-}
-
-.tab-receiver .throttle_curve {
-    margin: 0 0px 0px 0;
-    width: 200px;
-    height: 117px;
-    border: 1px solid silver;
-    border-radius: 3px;
-    background-image: url(../../images/paper.jpg);
-    background-size: 200%;
-    background-position: center;
-}
-
 .tab-receiver select[name="rx_refresh_rate"] {
     float: right;
-    border: 1px solid silver;
+    border: 1px solid var(--subtleAccent);
 }
 
 .tab-receiver #RX_plot {
@@ -561,9 +474,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url(../../images/paper.jpg);
-    background-size: 100%;
-    background-position: center;
     margin-top: -1px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;

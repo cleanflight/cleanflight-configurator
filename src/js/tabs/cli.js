@@ -4,7 +4,10 @@ TABS.cli = {
     lineDelayMs: 15,
     profileSwitchDelayMs: 100,
     outputHistory: "",
-    cliBuffer: ""
+    cliBuffer: "",
+    GUI: {
+        snippetPreviewWindow: null,
+    },
 };
 
 function removePromptHash(promptText) {
@@ -41,6 +44,33 @@ function getCliCommand(command, cliBuffer) {
     return commandWithBackSpaces(command, buffer, noOfCharsToDelete);
 }
 
+function copyToClipboard(text) {
+    function onCopySuccessful() {
+        analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'CliCopyToClipboard', text.length);
+        const button = $('.tab-cli .copy');
+        const origText = button.text();
+        const origWidth = button.css("width");
+        button.text(i18n.getMessage("cliCopySuccessful"));
+        button.css({
+            width: origWidth,
+            textAlign: "center",
+        });
+        setTimeout(() => {
+            button.text(origText);
+            button.css({
+                width: "",
+                textAlign: "",
+            });
+        }, 1500);
+    }
+
+    function onCopyFailed(ex) {
+        console.warn(ex);
+    }
+
+    Clipboard.writeText(text, onCopySuccessful, onCopyFailed);
+}
+
 TABS.cli.initialize = function (callback) {
     var self = this;
 
@@ -51,13 +81,53 @@ TABS.cli.initialize = function (callback) {
     self.outputHistory = "";
     self.cliBuffer = "";
 
+    const enterKeyCode = 13;
+
+    function executeCommands(out_string) {
+        self.history.add(out_string.trim());
+
+        var outputArray = out_string.split("\n");
+        Promise.reduce(outputArray, function(delay, line, index) {
+            return new Promise(function (resolve) {
+                GUI.timeout_add('CLI_send_slowly', function () {
+                    var processingDelay = self.lineDelayMs;
+                    line = line.trim();
+                    if (line.toLowerCase().startsWith('profile')) {
+                        processingDelay = self.profileSwitchDelayMs;
+                    }
+                    const isLastCommand = outputArray.length === index + 1;
+                    if (isLastCommand && self.cliBuffer) {
+                        line = getCliCommand(line, self.cliBuffer);
+                    }
+                    self.sendLine(line, function () {
+                        resolve(processingDelay);
+                    });
+                }, delay)
+            })
+        }, 0);
+}
+
     $('#content').load("./tabs/cli.html", function () {
         // translate to user-selected language
         i18n.localizePage();
 
         CONFIGURATOR.cliActive = true;
 
-        var textarea = $('.tab-cli textarea');
+        var textarea = $('.tab-cli textarea[name="commands"]');
+
+        CliAutoComplete.initialize(textarea, self.sendLine.bind(self), writeToOutput);
+        $(CliAutoComplete).on('build:start', function() {
+            textarea
+                .val('')
+                .attr('placeholder', i18n.getMessage('cliInputPlaceholderBuilding'))
+                .prop('disabled', true);
+        });
+        $(CliAutoComplete).on('build:stop', function() {
+            textarea
+                .attr('placeholder', i18n.getMessage('cliInputPlaceholder'))
+                .prop('disabled', false)
+                .focus();
+        });
 
         $('.tab-cli .save').click(function() {
             var prefix = 'cli';
@@ -102,6 +172,81 @@ TABS.cli.initialize = function (callback) {
             });
         });
 
+        $('.tab-cli .clear').click(function() {
+            self.outputHistory = "";
+            $('.tab-cli .window .wrapper').empty();
+        });
+
+        if (Clipboard.available) {
+            $('.tab-cli .copy').click(function() {
+                copyToClipboard(self.outputHistory);
+            });
+        } else {
+            $('.tab-cli .copy').hide();
+        }
+
+        $('.tab-cli .load').click(function() {
+            var accepts = [
+                {
+                    description: 'Config files', extensions: ["txt", "config"],
+                },
+                {
+                    description: 'All files',
+                },
+            ];
+
+            chrome.fileSystem.chooseEntry({type: 'openFile', accepts: accepts}, function(entry) {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                    return;
+                }
+
+                if (!entry) {
+                    console.log('No file selected');
+                    return;
+                }
+                
+                let previewArea = $("#snippetpreviewcontent textarea#preview");
+
+                function executeSnippet(fileName) {
+                    const commands = previewArea.val();
+
+                    analytics.sendEvent(analytics.EVENT_CATEGORIES.FLIGHT_CONTROLLER, 'CliExecuteFromFile', fileName);
+
+                    executeCommands(commands);
+                    self.GUI.snippetPreviewWindow.close();
+                }
+
+                function previewCommands(result, fileName) {
+                    if (!self.GUI.snippetPreviewWindow) {
+                        self.GUI.snippetPreviewWindow = new jBox("Modal", {
+                            id: "snippetPreviewWindow",
+                            width: 'auto',
+                            height: 'auto',
+                            closeButton: 'title',
+                            animation: false,
+                            isolateScroll: false,
+                            title: i18n.getMessage("cliConfirmSnippetDialogTitle", { fileName: fileName }),
+                            content: $('#snippetpreviewcontent'),
+                            onCreated: () =>  
+                                $("#snippetpreviewcontent a.confirm").click(() => executeSnippet(fileName))
+                            ,
+                        });
+                    }
+                    previewArea.val(result);
+                    self.GUI.snippetPreviewWindow.open();
+                }
+
+                entry.file((file) => {
+                    let reader = new FileReader();
+                    reader.onload = 
+                        () => previewCommands(reader.result, file.name);
+                    reader.onerror = () => console.error(reader.error);
+                    reader.readAsText(file);
+                });
+            });
+        });
+
         // Tab key detection must be on keydown,
         // `keypress`/`keyup` happens too late, as `textarea` will have already lost focus.
         textarea.keydown(function (event) {
@@ -109,43 +254,34 @@ TABS.cli.initialize = function (callback) {
             if (event.which == tabKeyCode) {
                 // prevent default tabbing behaviour
                 event.preventDefault();
-                const outString = textarea.val();
-                const lastCommand = outString.split("\n").pop();
-                const command = getCliCommand(lastCommand, self.cliBuffer);
-                if (command) {
-                    self.sendAutoComplete(command);
-                    textarea.val('');
+
+                if (!CliAutoComplete.isEnabled()) {
+                    // Native FC autoComplete
+                    const outString = textarea.val();
+                    const lastCommand = outString.split("\n").pop();
+                    const command = getCliCommand(lastCommand, self.cliBuffer);
+                    if (command) {
+                        self.sendNativeAutoComplete(command);
+                        textarea.val('');
+                    }
+                }
+                else if (!CliAutoComplete.isOpen() && !CliAutoComplete.isBuilding()) {
+                    // force show autocomplete on Tab
+                    CliAutoComplete.openLater(true);
                 }
             }
         });
 
         textarea.keypress(function (event) {
-            const enterKeyCode = 13;
             if (event.which == enterKeyCode) {
                 event.preventDefault(); // prevent the adding of new line
 
+                if (CliAutoComplete.isBuilding()) {
+                    return; // silently ignore commands if autocomplete is still building
+                }
+
                 var out_string = textarea.val();
-                self.history.add(out_string.trim());
-
-                var outputArray = out_string.split("\n");
-                Promise.reduce(outputArray, function(delay, line, index) {
-                    return new Promise(function (resolve) {
-                        GUI.timeout_add('CLI_send_slowly', function () {
-                            var processingDelay = self.lineDelayMs;
-                            if (line.toLowerCase().startsWith('profile')) {
-                                processingDelay = self.profileSwitchDelayMs;
-                            }
-                            const isLastCommand = outputArray.length === index + 1;
-                            if (isLastCommand && self.cliBuffer) {
-                                line = getCliCommand(line, self.cliBuffer);
-                            }
-                            self.sendLine(line, function () {
-                                resolve(processingDelay);
-                            });
-                        }, delay)
-                    })
-                }, 0);
-
+                executeCommands(out_string);
                 textarea.val('');
             }
         });
@@ -153,6 +289,10 @@ TABS.cli.initialize = function (callback) {
         textarea.keyup(function (event) {
             var keyUp = {38: true},
                 keyDown = {40: true};
+
+            if (CliAutoComplete.isOpen()) {
+                return; // disable history keys if autocomplete is open
+            }
 
             if (event.keyCode in keyUp) {
                 textarea.val(self.history.prev());
@@ -210,7 +350,16 @@ function writeToOutput(text) {
 }
 
 function writeLineToOutput(text) {
-    writeToOutput(text + "<br>");
+    if (CliAutoComplete.isBuilding()) {
+        CliAutoComplete.builderParseLine(text);
+        return; // suppress output if in building state
+    }
+
+    if (text.startsWith("###ERROR")) {
+        writeToOutput('<span class="error_message">' + text + '</span><br>');
+    } else {
+        writeToOutput(text + "<br>");
+    }
 }
 
 function setPrompt(text) {
@@ -274,36 +423,23 @@ TABS.cli.read = function (readInfo) {
                 break;
             case backspaceCode:
                 this.cliBuffer = this.cliBuffer.slice(0, -1);
-                break;
+                this.outputHistory = this.outputHistory.slice(0, -1);
+                continue;
 
             default:
                 this.cliBuffer += currentChar;
         }
 
-        this.outputHistory += currentChar;
+        if (!CliAutoComplete.isBuilding()) {
+            // do not include the building dialog into the history
+            this.outputHistory += currentChar;
+        }
 
         if (this.cliBuffer == 'Rebooting') {
             CONFIGURATOR.cliActive = false;
             CONFIGURATOR.cliValid = false;
             GUI.log(i18n.getMessage('cliReboot'));
-            GUI.log(i18n.getMessage('deviceRebooting'));
-
-            if (BOARD.find_board_definition(CONFIG.boardIdentifier).vcp) { // VCP-based flight controls may crash old drivers, we catch and reconnect
-                $('a.connect').click();
-                GUI.timeout_add('start_connection', function start_connection() {
-                    $('a.connect').click();
-                }, 2500);
-            } else {
-
-                GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
-                    MSP.send_message(MSPCodes.MSP_STATUS, false, false, function () {
-                        GUI.log(i18n.getMessage('deviceReady'));
-                        if (!GUI.tab_switch_in_progress) {
-                            $('#tabs ul.mode-connected .tab_setup a').click();
-                        }
-                    });
-                }, 1500); // 1500 ms seems to be just the right amount of delay to prevent data request timeouts
-            }
+            reinitialiseConnection(self);
         }
 
     }
@@ -311,17 +447,28 @@ TABS.cli.read = function (readInfo) {
     if (!CONFIGURATOR.cliValid && validateText.indexOf('CLI') !== -1) {
         GUI.log(i18n.getMessage('cliEnter'));
         CONFIGURATOR.cliValid = true;
+        // begin output history with the prompt (last line of welcome message)
+        // this is to match the content of the history with what the user sees on this tab
+        const lastLine = validateText.split("\n").pop();
+        this.outputHistory = lastLine;
         validateText = "";
+
+        if (CliAutoComplete.isEnabled() && !CliAutoComplete.isBuilding()) {
+            // start building autoComplete
+            CliAutoComplete.builderStart();
+        }
     }
 
-    setPrompt(removePromptHash(this.cliBuffer));
+    if (!CliAutoComplete.isEnabled())
+        // fallback to native autocomplete
+        setPrompt(removePromptHash(this.cliBuffer));
 };
 
 TABS.cli.sendLine = function (line, callback) {
     this.send(line + '\n', callback);
 };
 
-TABS.cli.sendAutoComplete = function (line, callback) {
+TABS.cli.sendNativeAutoComplete = function (line, callback) {
     this.send(line + '\t', callback);
 };
 
@@ -337,8 +484,15 @@ TABS.cli.send = function (line, callback) {
 };
 
 TABS.cli.cleanup = function (callback) {
+    if (TABS.cli.GUI.snippetPreviewWindow) {
+        TABS.cli.GUI.snippetPreviewWindow.destroy();
+        TABS.cli.GUI.snippetPreviewWindow = null;
+    }
     if (!(CONFIGURATOR.connectionValid && CONFIGURATOR.cliValid && CONFIGURATOR.cliActive)) {
-        if (callback) callback();
+        if (callback) {
+            callback();
+        }
+
         return;
     }
     this.send(getCliCommand('exit\r', this.cliBuffer), function (writeInfo) {
@@ -346,9 +500,14 @@ TABS.cli.cleanup = function (callback) {
         // (another approach is however much more complicated):
         // we can setup an interval asking for data lets say every 200ms, when data arrives, callback will be triggered and tab switched
         // we could probably implement this someday
-        GUI.timeout_add('waiting_for_bootup', function waiting_for_bootup() {
-            if (callback) callback();
-        }, 1000); // if we dont allow enough time to reboot, CRC of "first" command sent will fail, keep an eye for this one
+        if (callback) {
+            callback();
+        }
+
         CONFIGURATOR.cliActive = false;
+        CONFIGURATOR.cliValid = false;
     });
+
+    CliAutoComplete.cleanup();
+    $(CliAutoComplete).off();
 };

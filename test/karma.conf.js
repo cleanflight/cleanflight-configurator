@@ -11,11 +11,13 @@ module.exports = function(config) {
             './src/js/serial.js',
             './src/js/data_storage.js',
             './src/js/localization.js',
+            './src/js/fc.js',
             './src/js/gui.js',
             './src/js/CliAutoComplete.js',
             './src/js/tabs/cli.js',
             './test/**/*.js'
         ],
+        logLevel: config.LOG_DEBUG,
         browsers: ['ChromeHeadlessNoSandbox'],
         customLaunchers: {
             ChromeHeadlessNoSandbox: {

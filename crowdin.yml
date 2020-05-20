@@ -20,10 +20,12 @@ files: [
   #
   # Often software projects have custom names for locale directories. crowdin-cli allows you to map your own languages to be understandable by Crowdin.
   #
+  
+  # CF - The directories match the two_letters_code now. 
   "languages_mapping" : {
     "two_letters_code" : {
-      "pt-BR" : "pt_BR",
-      "zh-CN" : "zh_CN"
+      "pt_BR" : "pt_BR",
+      "zh_CN" : "zh_CN"
      }
   }
  }

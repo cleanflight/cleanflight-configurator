@@ -133,6 +133,7 @@ describe('TABS.cli', () => {
                 });
 
             TABS.cli.cliBuffer = "";
+            CONFIG = {};
         });
 
         afterEach(() => {

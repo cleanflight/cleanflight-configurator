@@ -27,7 +27,7 @@ TABS.firmware_flasher.initialize = function (callback) {
     self.intel_hex = undefined;
     self.parsed_hex = undefined;
 
-    var unifiedSource = 'https://api.github.com/repos/betaflight/unified-targets/contents/configs/default';
+    var unifiedSource = 'https://api.github.com/repos/cleanflight/unified-targets/contents/configs/default';
 
     function onFirmwareCacheUpdate(release) {
         $('select[name="firmware_version"] option').each(function () {

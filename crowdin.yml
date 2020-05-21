@@ -1,7 +1,13 @@
+# See docs/developer/crowdin.md
+
+
+"base_path": "locales/"
+"base_url": "https://crowdin.com"
+
 #
 # Files configuration
 #
-"preserve_hierarchy": false
+"preserve_hierarchy": true
 
 files: [
  {
@@ -9,21 +15,32 @@ files: [
   # Source files filter
   # e.g. "/resources/en/*.json"
   #
-  "source" : "/locales/en/messages.json",
+  "type" : "chrome",
+  "source" : "/en/messages.json",
 
   #
   # where translations live
   # e.g. "/resources/%two_letters_code%/%original_file_name%"
   #
-  "translation" : "/locales/%two_letters_code%/%original_file_name%",
+  "translation" : "/%two_letters_code%/%original_file_name%",
 
+  # "preserve translations of changed strings and remove validations of those translations if they exist"
+  "update_option": "update_as_unapproved",
+  
   #
   # Often software projects have custom names for locale directories. crowdin-cli allows you to map your own languages to be understandable by Crowdin.
   #
+  
+  # CF - This doesn't seem to have any effect now, it appears there's a button in the Crowdin UI instead - see https://support.crowdin.com/configuration-file/#language-mapping
+  # CF - A mapping is required in the UI so the '%two_letters_code%' can be used in the export settings.  When there are no '%two_letters_code%' code conflicts it works. 
   "languages_mapping" : {
     "two_letters_code" : {
+      "sv-SE" : "sv", 
+      "es-ES" : "es", 
+      "pt-PT" : "pt",
       "pt-BR" : "pt_BR",
-      "zh-CN" : "zh_CN"
+      "zh-CN" : "zh_CN",
+      "zh-TW" : "zh_TW"
      }
   }
  }

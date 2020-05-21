@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Crowdin identities
+crowdin-*.yml
+
 # Configurator Build process
 cache/
 apps/
@@ -31,3 +34,4 @@ nbproject/
 # Eclipse
 .project
 .settings/
+

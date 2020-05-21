@@ -417,7 +417,7 @@ TABS.pid_tuning.initialize = function (callback) {
         if (semver.gte(CONFIG.apiVersion, API_VERSION_1_43)) {
             const ratesTypeListElement = $('select[id="ratesType"]'); // generates list
             const ratesList = [
-                {name: "Betaflight"},
+                {name: "Cleanflight"},
                 {name: "Raceflight"},
                 {name: "KISS"},
                 {name: "Actual"},
@@ -2569,8 +2569,8 @@ TABS.pid_tuning.changeRatesTypeLogo = function() {
             break;
 
         // add future rates types here
-        default: // BetaFlight
-            ratesLogoElement.attr("src", "../images/rate_logos/betaflight.svg");
+        default: // Cleanflight
+            ratesLogoElement.attr("src", "../images/rate_logos/cleanflight.svg");
 
             break;
     }

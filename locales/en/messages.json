@@ -144,7 +144,7 @@
         "description": "Don't translate!!!"
     },
     "language_hu": {
-        "message": "magyar",
+        "message": "Magyar",
         "description": "Don't translate!!!"
     },
     "language_id": {
@@ -1575,6 +1575,9 @@
     },
     "portsFunction_RUNCAM_DEVICE_CONTROL": {
         "message": "Camera (RunCam Protocol)"
+    },
+    "portsFunction_FRSKY_OSD": {
+        "message": "OSD (FrSky Protocol)"
     },
     "pidTuningProfileOption": {
         "message": "Profile $1"

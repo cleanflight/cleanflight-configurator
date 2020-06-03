@@ -1,7 +1,7 @@
 {
   "name": "cleanflight-configurator",
   "description": "Crossplatform configuration tool for Cleanflight flight control system.",
-  "version": "2.6.0-RC2",
+  "version": "2.6.0-RC3",
   "main": "main.html",
   "chromium-args" : "--disable-features=nw2",
   "default_locale": "en",
